@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>হিসাব</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* প্যালেট: সোনালি মূল রঙ (#B8892B → #E2C275, ডার্কে #E0B84F → #F2D88A) · ব্রোঞ্জ #8A6420 · এসপ্রেসো #2B2118 · ক্রিম #FBF7EE · উষ্ণ কালো #0C0A07 */
+:root{--a:#B8892B;--a2:#E2C275;--g:#8A6420;--p:#7A5614;--on:#1F1608;--bb:var(--t);--bt:var(--a2);--bd:var(--a);--bg:#FBF7EE;--c:rgba(255,252,244,.8);--t:#2B2118;--m:#7A6A55;--b:rgba(120,90,30,.15);--cb:rgba(184,137,43,.42);--sh:rgba(184,137,43,.38);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-d="1"]{--bg:#0C0A07;--c:rgba(32,25,14,.72);--t:#F6EDD8;--m:#B3A68B;--b:rgba(224,184,79,.2);--cb:rgba(224,184,79,.34);--a:#E0B84F;--a2:#F2D88A;--g:#A47A20;--p:#F2D88A;--on:#1A1304;--bb:var(--a);--bt:var(--on);--bd:var(--a2);--sh:rgba(224,184,79,.22)}
+/* থিম: গোল্ড + এমারেল্ড */
+:root[data-t="1"]:not([data-d="1"]){--g:#0D4C3C;--p:#0D4C3C;--t:#10241D;--m:#5E6F66;--bg:#F8F6EC}
+:root[data-t="1"][data-d="1"]{--bg:#07100D;--c:rgba(14,59,46,.45);--g:#1F8A68}
+/* থিম: গোল্ড + মিডনাইট নেভি */
+:root[data-t="2"]:not([data-d="1"]){--g:#16213E;--p:#16213E;--t:#0F172A;--m:#5F6878;--bg:#F7F6F1}
+:root[data-t="2"][data-d="1"]{--bg:#0A0F1E;--c:rgba(22,33,62,.6);--g:#2A3B6B}
+/* থিম: গোল্ড + বারগান্ডি */
+:root[data-t="3"]:not([data-d="1"]){--g:#5B1A2B;--p:#5B1A2B;--t:#2A0F16;--m:#76616A;--bg:#FAF5EF}
+:root[data-t="3"][data-d="1"]{--bg:#0E0709;--c:rgba(91,26,43,.42);--g:#8A2D45}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,"Noto Serif Bengali",serif;color:var(--t);background:var(--bg);min-height:100vh;transition:background .4s}
+body::before{content:"";position:fixed;inset:-20% -10% auto;height:70vh;background:radial-gradient(60% 60% at 30% 30%,color-mix(in srgb,var(--g) 24%,transparent),transparent),radial-gradient(50% 50% at 80% 20%,color-mix(in srgb,var(--a) 16%,transparent),transparent);z-index:-1;animation:fl 14s ease-in-out infinite alternate}
+@keyframes fl{to{transform:translate(3%,6%) scale(1.08)}}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.bn,button,input,select,h1,h2,h3,label{font-family:"Noto Serif Bengali",Inter,serif}
+main{max-width:1080px;margin:auto;padding:20px 16px 60px}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+h1{font-size:clamp(24px,5vw,34px);margin:0;font-weight:700}
+.sub{color:var(--m);font-size:14px;margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.card{background:var(--c);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--cb);border-radius:20px;padding:18px;box-shadow:0 12px 32px -14px var(--sh);animation:up .6s both;transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden}
+.card::after{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,var(--a),var(--g))}
+.card:hover{transform:translateY(-3px);box-shadow:0 16px 40px -12px var(--sh)}
+.wide{grid-column:1/-1}
+h2{font-size:17px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+h2::before{content:"";width:6px;height:18px;border-radius:3px;background:linear-gradient(var(--g),var(--a))}
+.big{font-size:clamp(34px,8vw,52px);font-weight:700;letter-spacing:-1px;background:linear-gradient(90deg,var(--a),var(--g));-webkit-background-clip:text;background-clip:text;color:transparent;font-family:"Noto Serif Bengali"}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px dashed var(--b)}
+.row:last-child{border:0}
+.m{color:var(--m);font-size:13px}
+button{border:1px solid var(--bd);border-radius:10px;padding:10px 22px;background:var(--bb);color:var(--bt);font-weight:600;letter-spacing:.3px;cursor:pointer;font-size:14px;box-shadow:0 1px 2px rgba(0,0,0,.12);transition:background .2s,color .2s,border-color .2s,box-shadow .2s}
+button:hover{background:color-mix(in srgb,var(--bb) 86%,var(--bt));box-shadow:0 4px 14px -6px var(--sh)}
+button:active{transform:translateY(1px)}
+button:focus-visible{outline:2px solid var(--g);outline-offset:2px}
+button.g{background:transparent;color:var(--t);border:1px solid var(--cb);font-weight:500;box-shadow:none}
+button.g:hover{background:color-mix(in srgb,var(--a) 12%,transparent);border-color:var(--a)}
+.row button:not(.x){padding:6px 14px}
+input,select{border:1px solid var(--b);background:var(--c);color:var(--t);border-radius:12px;padding:9px 12px;font-size:14px;min-width:0}
+input:focus,select:focus{outline:2px solid var(--g)}
+.chk{appearance:none;width:24px;height:24px;border-radius:8px;border:2px solid var(--cb);cursor:pointer;display:grid;place-items:center;transition:.2s;padding:0;flex:none}
+.chk:checked{background:linear-gradient(135deg,var(--pc,var(--a)),var(--pc2,var(--a2)));border-color:transparent}
+.chk[style]{border-color:color-mix(in srgb,var(--pc) 55%,transparent)}
+.chk:checked::after{content:"✓";color:var(--on);font-size:14px}
+.chk:disabled{opacity:.4;cursor:not-allowed}
+.pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;background:color-mix(in srgb,var(--a) 20%,transparent);color:var(--p);font-weight:600}
+.bad{background:rgba(220,60,60,.14);color:#d33}
+.bar{height:8px;border-radius:9px;background:var(--b);overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--a),var(--g));transition:width .6s}
+.sw{display:flex;gap:10px;flex-wrap:wrap}
+.sw b{width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .2s}
+.sw b:hover{transform:scale(1.2)}.sw b.on{border-color:var(--t)}
+form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}form input{flex:1 1 110px}
+.st{display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:center}
+.st div{padding:10px;border-radius:14px;background:var(--b)}
+.x{background:none;border:0;box-shadow:none;color:var(--m);padding:4px 8px}
+.x:hover{background:none;box-shadow:none;color:#d33}
+.dots{display:grid;grid-template-columns:repeat(auto-fill,minmax(32px,1fr));gap:6px;margin-top:10px}
+.dots b{display:grid;place-items:center;height:32px;border-radius:9px;background:var(--b);font-size:12px;font-weight:500;cursor:pointer;transition:.2s}
+.dots b:hover{transform:scale(1.1)}
+.dots b.on{background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on)}
+
+.cd{text-align:center}
+.cd h2{justify-content:center}
+.cdw{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:18px 22px;margin:6px 0 4px}
+.ring{position:relative;width:138px;height:138px;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg);overflow:visible}
+.ring .tr{fill:none;stroke:var(--b);stroke-width:7}
+.ring .pg{fill:none;stroke:url(#rg);stroke-width:7;stroke-linecap:round;filter:drop-shadow(0 0 6px var(--sh));transition:stroke-dashoffset 1s linear}
+.ring .dc{fill:none;stroke:var(--pc);stroke-width:1;stroke-dasharray:1 6;opacity:.45;animation:spin 60s linear infinite;transform-origin:70px 70px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.rc b{font-size:22px;font-weight:700;font-family:"Noto Serif Bengali";background:linear-gradient(90deg,var(--pc),var(--pc2));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.2}
+.rc span{font-size:12px;color:var(--m)}
+.tiles{display:flex;align-items:center;gap:6px}
+.tl{min-width:62px;padding:10px 6px 8px;border-radius:16px;background:linear-gradient(160deg,color-mix(in srgb,var(--pc) 20%,transparent),color-mix(in srgb,var(--pc2) 8%,transparent));border:1px solid color-mix(in srgb,var(--pc) 45%,transparent);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 8px 18px -12px var(--pc)}
+.tl b{display:block;font-size:30px;font-weight:700;line-height:1.15;font-family:"Noto Serif Bengali";background:linear-gradient(180deg,var(--pc2),var(--pc));-webkit-background-clip:text;background-clip:text;color:transparent}
+.tl small{font-size:11px;color:var(--m)}
+.cl{font-size:24px;color:var(--pc);opacity:.7;margin-top:-14px}
+.cds{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.cdc{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;font-size:12px;color:var(--m);border:1px solid color-mix(in srgb,var(--pc) 40%,transparent);transition:.3s}
+.cdc::before{content:"";width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,var(--pc2),var(--pc))}
+.cdc.past{opacity:.5;text-decoration:line-through;text-decoration-color:var(--b)}
+.cdc.on{background:linear-gradient(135deg,var(--pc),var(--pc2));color:#fff;border-color:transparent;font-weight:600;box-shadow:0 6px 14px -6px var(--pc)}
+.cdc.on::before{background:#fff}
+.cd{border-color:color-mix(in srgb,var(--pc) 50%,transparent);box-shadow:0 12px 32px -14px var(--pc)}
+.cd::after{background:linear-gradient(90deg,var(--pc),var(--pc2))}
+.cd h2{color:var(--t)}
+
+.warn{margin:12px 0 0;padding:10px 14px;border-radius:14px;background:rgba(220,60,60,.12);border:1px solid rgba(220,60,60,.4);color:#d33;font-size:13px;font-weight:600;line-height:1.6}
+.warn b{font-size:18px;letter-spacing:.5px;margin:0 4px}
+.okb{margin:10px 0 0;padding:9px 14px;border-radius:14px;background:rgba(31,157,107,.13);border:1px solid rgba(31,157,107,.4);color:#1f9d6b;font-size:13px;font-weight:600}
+:root[data-d="1"] .warn{color:#ff8a8a}:root[data-d="1"] .okb{color:#4fd7a0}
+.sp{margin-top:16px;text-align:left}
+.spt{font-size:12px;font-weight:600;color:var(--m);letter-spacing:.4px;margin:12px 0 4px;padding-bottom:4px;border-bottom:1px solid var(--b)}
+.sr{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:6px 8px;border-radius:10px;font-size:13px;color:var(--m)}
+.sr span:first-child{display:flex;align-items:center;gap:8px;color:var(--t)}
+.sr span:first-child::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--b);flex:none}
+.sr.on{font-weight:600}
+.sr.on.f{background:rgba(220,60,60,.12);color:#d33}.sr.on.f span:first-child::before{background:#d33;box-shadow:0 0 0 4px rgba(220,60,60,.2)}
+.sr.on.n{background:rgba(31,157,107,.13);color:#1f9d6b}.sr.on.n span:first-child::before{background:#1f9d6b;box-shadow:0 0 0 4px rgba(31,157,107,.2)}
+:root[data-d="1"] .sr.on.f{color:#ff8a8a}:root[data-d="1"] .sr.on.n{color:#4fd7a0}
+.ram{border-color:var(--g)}
+</style></head><body><main id="app"></main>
+<script>
+const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
+const $=document.getElementById('app'),root=document.documentElement;
+let S={theme:0,dark:0,fin:[]};
+try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
+const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
+const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const MON=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
+function render(){const now=new Date(),mk=key(now).slice(0,7);root.dataset.t=S.theme||0;root.dataset.d=S.dark||0;
+const mf=S.fin.map((f,i)=>({...f,i})).filter(f=>f.d.startsWith(mk)),inc=mf.filter(f=>f.t=='in').reduce((a,f)=>a+f.a,0),exp=mf.filter(f=>f.t=='out').reduce((a,f)=>a+f.a,0);
+$.innerHTML=`<header><div><h1>💰 হিসাব</h1><div class="sub">${MON[now.getMonth()]} ${bn(now.getFullYear())}</div></div><div style="display:flex;gap:8px"><a href="dinlipi-emerald-gold.html"><button class="g">← হোমে ফিরুন</button></a></div></header>
+<div class="grid"><section class="card"><h2>এ মাসের হিসাব</h2><div class="st"><div><div class="m">আয়</div><b>৳ ${bn(inc)}</b></div><div><div class="m">ব্যয়</div><b>৳ ${bn(exp)}</b></div></div><div class="row"><span>অবশিষ্ট</span><b>৳ ${bn(inc-exp)}</b></div>
+<form data-f="fin"><select name="t"><option value="out">ব্যয়</option><option value="in">আয়</option></select><input name="a" type="number" placeholder="টাকা" required><input name="n" placeholder="বিবরণ"><button>যোগ</button></form></section>
+<section class="card"><h2>এ মাসের তালিকা <span class="pill">${bn(mf.length)} টি</span></h2>${mf.length?mf.slice().reverse().map(f=>`<div class="row"><span>${f.n||(f.t=='in'?'আয়':'ব্যয়')}<span class="m"> · ${bn(f.d.slice(8))} ${MON[+f.d.slice(5,7)-1]}</span></span><span><b style="color:${f.t=='in'?'#1f9d6b':'#d33'}">${f.t=='in'?'+':'−'} ৳ ${bn(f.a)}</b> <button class="x" data-del="${f.i}">✕</button></span></div>`).join(''):'<div class="m">এ মাসে এখনো কোনো হিসাব নেই।</div>'}</section></div>`}
+$.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);if(e.target.dataset.f=='fin'){S.fin.push({t:f.get('t'),a:+f.get('a'),n:f.get('n'),d:key(new Date())});save();render()}});
+$.addEventListener('click',e=>{const d=e.target.dataset.del;if(d==null)return;S.fin.splice(+d,1);save();render()});
+render();
+</script></body></html>
