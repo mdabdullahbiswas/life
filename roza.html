@@ -128,7 +128,7 @@ return r.length?['নফল রোজার দিন: '+r.join(', '),0]:['আ�
 function render(){const now=new Date(),K=key(now),h=hij(now),fi=fastInfo(now,h);root.dataset.t=S.theme||0;root.dataset.d=S.dark||0;
 const kd=n=>K.slice(0,8)+String(n).padStart(2,'0'),dim=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
 const fy=Object.keys(S.fast).filter(k=>k.startsWith(K.slice(0,4))).length,fm=Object.keys(S.fast).filter(k=>k.startsWith(K.slice(0,7))).length,canF=!fi[1]&&h.m!=9;
-$.innerHTML=`<header><div><h1>🌙 রোজা</h1><div class="sub">নফল রোজা ট্র্যাকার</div></div><div style="display:flex;gap:8px"><a href="dinlipi-emerald-gold.html"><button class="g">← হোমে ফিরুন</button></a></div></header>
+$.innerHTML=`<header><div><h1>🌙 রোজা</h1><div class="sub">নফল রোজা ট্র্যাকার</div></div><div style="display:flex;gap:8px"><a href="index.html"><button class="g">← হোমে ফিরুন</button></a></div></header>
 <div class="grid"><section class="card"><h2>নফল রোজা ট্র্যাকার <span class="pill">${bn(fm)} এ মাসে</span></h2><div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="ft" ${S.fast[K]?'checked':''} ${canF?'':'disabled'}>আজ নফল রোজা রেখেছি</label><span class="m">${bn(fy)} টি এ বছর</span></div><div class="dots">${Array.from({length:dim},(_,i)=>`<b data-a="fd" data-i="${i+1}" class="${S.fast[kd(i+1)]?'on':''}">${bn(i+1)}</b>`).join('')}</div><div class="m" style="margin-top:8px">${fi[0]}</div></section></div>`}
 $.addEventListener('click',e=>{const a=e.target.dataset.a,i=e.target.dataset.i,K=key(new Date());if(!a)return;
 if(a=='ft')S.fast[K]?delete S.fast[K]:S.fast[K]=1;
