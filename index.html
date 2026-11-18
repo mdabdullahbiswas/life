@@ -122,6 +122,11 @@ form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}form input{flex:1 1 110
 .ram{border-color:var(--g)}
 
 .rdy .card{animation:none}
+.wx{background:linear-gradient(135deg,color-mix(in srgb,var(--wt) 22%,var(--c)),var(--c) 70%);border-color:color-mix(in srgb,var(--wt) 50%,transparent);box-shadow:0 12px 32px -16px var(--wt)}
+.wx::after{background:linear-gradient(90deg,var(--wt),var(--a2))}
+.wx .ic{font-size:44px;line-height:1;filter:drop-shadow(0 6px 10px color-mix(in srgb,var(--wt) 55%,transparent))}
+.wx .chp{padding:3px 10px;border-radius:99px;background:color-mix(in srgb,var(--wt) 14%,transparent);border:1px solid color-mix(in srgb,var(--wt) 28%,transparent);font-size:12px;font-weight:600;white-space:nowrap}
+.wx .fc{padding:5px 0;border-radius:12px;background:color-mix(in srgb,var(--wt) 10%,transparent);border:1px solid color-mix(in srgb,var(--wt) 20%,transparent);line-height:1.25}
 </style></head><body><script src="header.js"></script><main id="app"></main>
 <script>
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
@@ -217,14 +222,15 @@ const wxi=(c,day=1)=>c==0?[day?'☀️':'🌙','পরিষ্কার আক�
 function loadWX(force){
  try{const c=JSON.parse(localStorage.getItem('dw')||'null');if(c&&c.d){window.WX=c.d}if(!force&&c&&Date.now()-c.t<18e5)return}catch(e){}
  fetch(WXURL).then(r=>{if(!r.ok)throw 0;return r.json()}).then(d=>{if(!d||!d.current||!d.daily)throw 0;window.WX=d;window.WXE=0;try{localStorage.setItem('dw',JSON.stringify({t:Date.now(),d}))}catch(e){}render()}).catch(()=>{window.WXE=1;render()})}
+const wxt=(c,day)=>c==0?(day?'#F0B429':'#3B4B8A'):c<3?(day?'#E0A33B':'#5B6B9A'):c==3?'#7C8DA6':c<50?'#94A3B8':c<70?'#4F73F0':c<80?'#8FB8DE':c<90?'#4F73F0':'#6A4FD0';
 function wxCardHTML(){const wx=window.WX,r=n=>bn(Math.round(+n||0));
- let b;
- if(!wx)b=window.WXE?`<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span class="m">আবহাওয়া আনা যায়নি। ইন্টারনেট সংযোগ দেখুন।</span><button class="g" style="padding:5px 14px" data-a="wr">আবার চেষ্টা</button></div>`:'<div class="m">লোড হচ্ছে…</div>';
- else{const w=wx.current,d=wx.daily,[ic,tx]=wxi(w.weather_code,w.is_day),ch=(t,v)=>`<span title="${t}" style="padding:3px 10px;border-radius:99px;background:var(--b);font-size:12px;font-weight:600">${v}</span>`;
-  b=`<div style="display:flex;align-items:center;gap:10px"><div style="font-size:34px;line-height:1">${ic}</div><div><div class="big" style="font-size:30px;line-height:1.1">${r(w.temperature_2m)}°</div><div class="m">${tx}</div></div><div style="margin-left:auto;text-align:right;font-size:13px"><div><b>↑${r(d.temperature_2m_max[0])}°</b> <span class="m">↓${r(d.temperature_2m_min[0])}°</span></div><div class="m">অনুভূত ${r(w.apparent_temperature)}°</div></div></div>
-<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">${ch('আর্দ্রতা','💧 '+r(w.relative_humidity_2m)+'%')}${ch('বাতাস','💨 '+r(w.wind_speed_10m)+' কিমি/ঘ')}${ch('বৃষ্টির সম্ভাবনা','🌧️ '+r(d.precipitation_probability_max[0])+'%')}</div>
-<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:8px;text-align:center">${d.time.slice(0,5).map((t,i)=>`<div style="padding:4px 0;border-radius:10px;background:var(--b);line-height:1.25"><div class="m" style="font-size:11px">${i?WSD[new Date(t+'T00:00').getDay()]:'আজ'}</div><div style="font-size:15px">${wxi(d.weather_code[i])[0]}</div><div style="font-size:11px;font-weight:600">${r(d.temperature_2m_max[i])}°<span class="m">/${r(d.temperature_2m_min[i])}°</span></div></div>`).join('')}</div>`}
- return `<section class="card" style="padding:14px 16px"><h2 style="margin-bottom:8px">আবহাওয়া <span class="pill">ঢাকা</span></h2>${b}</section>`}
+ const sh=(t,b)=>`<section class="card wide wx" style="--wt:${t};padding:14px 18px">${b}</section>`;
+ if(!wx)return sh('var(--a)',window.WXE?`<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span class="m">আবহাওয়া আনা যায়নি। ইন্টারনেট সংযোগ দেখুন।</span><button class="g" style="padding:5px 14px" data-a="wr">আবার চেষ্টা</button></div>`:'<div class="m">লোড হচ্ছে…</div>');
+ const w=wx.current,d=wx.daily,[ic,tx]=wxi(w.weather_code,w.is_day),ch=(t,v)=>`<span class="chp" title="${t}">${v}</span>`;
+ return sh(wxt(w.weather_code,w.is_day),`<div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px">
+<div style="display:flex;align-items:center;gap:12px"><div class="ic">${ic}</div><div><div class="m" style="font-size:12px">ঢাকা · আবহাওয়া</div><div class="big" style="font-size:34px;line-height:1.1">${r(w.temperature_2m)}°</div><div class="m">${tx} · অনুভূত ${r(w.apparent_temperature)}°</div></div></div>
+<div style="display:grid;gap:6px;justify-items:start"><div style="font-size:14px"><b>↑${r(d.temperature_2m_max[0])}°</b> <span class="m">↓${r(d.temperature_2m_min[0])}°</span></div><div style="display:flex;gap:6px;flex-wrap:wrap">${ch('আর্দ্রতা','💧 '+r(w.relative_humidity_2m)+'%')}${ch('বাতাস','💨 '+r(w.wind_speed_10m)+' কিমি/ঘ')}${ch('বৃষ্টির সম্ভাবনা','🌧️ '+r(d.precipitation_probability_max[0])+'%')}</div></div>
+<div style="flex:1 1 280px;display:grid;grid-template-columns:repeat(5,1fr);gap:5px;text-align:center">${d.time.slice(0,5).map((t,i)=>`<div class="fc"><div class="m" style="font-size:11px">${i?WSD[new Date(t+'T00:00').getDay()]:'আজ'}</div><div style="font-size:16px">${wxi(d.weather_code[i])[0]}</div><div style="font-size:11px;font-weight:600">${r(d.temperature_2m_max[i])}°<span class="m">/${r(d.temperature_2m_min[i])}°</span></div></div>`).join('')}</div></div>`)}
 function navR(){}
 function render(){render1();navR()}
 document.addEventListener('click',e=>{const bt=e.target.closest('button,input,b');if(bt)e={target:bt};const a=e.target.dataset.a,i=e.target.dataset.i,K=key(new Date());if(!a)return;
