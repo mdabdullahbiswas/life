@@ -132,7 +132,7 @@ const dn=L.filter(t=>(S.done[key(d)]||{})[t.id]).length;if(dn==L.length)n++;else
 function render(){const now=new Date(),K=key(now);root.dataset.t=S.theme||0;root.dataset.d=S.dark||0;
 const tt=S.tasks.filter(t=>due(t,now)).sort(byTime),dn=tt.filter(t=>(S.done[K]||{})[t.id]),pct=tt.length?Math.round(dn.length/tt.length*100):0;
 const week=Array.from({length:7},(_,i)=>{const d=new Date(now);d.setDate(d.getDate()+i);const L=S.tasks.filter(t=>due(t,d)).sort(byTime);return{d,L}});
-$.innerHTML=`<header><div><h1>✅ কাজ</h1><div class="sub">${DAY[now.getDay()]}, ${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())}</div></div><div style="display:flex;gap:8px"><a href="dinlipi-emerald-gold.html"><button class="g">← হোমে ফিরুন</button></a></div></header>
+$.innerHTML=`<header><div><h1>✅ কাজ</h1><div class="sub">${DAY[now.getDay()]}, ${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())}</div></div><div style="display:flex;gap:8px"><a href="index.html"><button class="g">← হোমে ফিরুন</button></a></div></header>
 <div class="grid"><section class="card wide"><h2>আজকের কাজ <span class="pill">${bn(dn.length)}/${bn(tt.length)}</span></h2>
 ${tt.length?tt.map(t=>`<div class="row"><label style="display:flex;gap:10px;align-items:center;${(S.done[K]||{})[t.id]?'opacity:.55;text-decoration:line-through':''}"><input type="checkbox" class="chk" data-a="task" data-i="${t.id}" ${(S.done[K]||{})[t.id]?'checked':''}>${t.title}</label><span class="m">${t.time?bn(t.time)+' · ':''}${lbl(t)}</span></div>`).join(''):'<div class="m">আজ কোনো কাজ নেই। নিচে নতুন কাজ যোগ করুন।</div>'}
 <div class="bar"><i style="width:${pct}%"></i></div>
