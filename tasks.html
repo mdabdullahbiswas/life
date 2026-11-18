@@ -110,8 +110,33 @@ form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}form input{flex:1 1 110
 .sr.on.n{background:rgba(31,157,107,.13);color:#1f9d6b}.sr.on.n span:first-child::before{background:#1f9d6b;box-shadow:0 0 0 4px rgba(31,157,107,.2)}
 :root[data-d="1"] .sr.on.f{color:#ff8a8a}:root[data-d="1"] .sr.on.n{color:#4fd7a0}
 .ram{border-color:var(--g)}
-</style></head><body><main id="app"></main>
-</head><body><main id="app"></main>
+.nvw{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;padding:10px 16px 0}
+.nv{max-width:1080px;margin:auto;display:flex;align-items:center;gap:14px;padding:8px 10px 8px 14px;border-radius:20px;position:relative;overflow:hidden;
+background:color-mix(in srgb,var(--bg) 74%,transparent);backdrop-filter:blur(22px) saturate(1.4);-webkit-backdrop-filter:blur(22px) saturate(1.4);
+border:1px solid var(--cb);box-shadow:0 14px 34px -16px var(--sh),inset 0 1px 0 rgba(255,255,255,.18)}
+.nv::after{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,transparent,var(--a),var(--a2),var(--a),transparent)}
+.nvb{display:flex;align-items:center;gap:10px;flex:none;pointer-events:none}
+.nvlg{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;font:700 19px "Noto Serif Bengali",serif;color:var(--on);background:linear-gradient(135deg,var(--a),var(--a2));box-shadow:0 6px 16px -6px var(--sh),inset 0 1px 0 rgba(255,255,255,.45)}
+.nvt{font:700 17px "Noto Serif Bengali",serif;letter-spacing:.2px;background:linear-gradient(90deg,var(--t),var(--a));-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap}
+.nvls{display:flex;gap:4px;flex:1;justify-content:center;overflow-x:auto;scrollbar-width:none;padding:2px}
+.nvls::-webkit-scrollbar{display:none}
+.nv button{font-family:"Noto Serif Bengali",Inter,serif}
+.nv button.nvl{background:transparent;border:1px solid transparent;color:var(--m);box-shadow:none;border-radius:12px;padding:8px 16px;font-size:14px;font-weight:500;white-space:nowrap;position:relative}
+.nv button.nvl:hover{color:var(--t);background:color-mix(in srgb,var(--a) 12%,transparent);box-shadow:none}
+.nv button.nvl.on{color:var(--on);font-weight:700;background:linear-gradient(135deg,var(--a),var(--a2));box-shadow:0 6px 16px -8px var(--sh),inset 0 1px 0 rgba(255,255,255,.4)}
+.nva{display:flex;gap:6px;flex:none}
+.nv button.nvi{width:38px;height:38px;padding:0;border-radius:12px;display:grid;place-items:center;font-size:16px;background:transparent;border:1px solid var(--b);color:var(--t);box-shadow:none}
+.nv button.nvi:hover{border-color:var(--a);background:color-mix(in srgb,var(--a) 14%,transparent);box-shadow:none}
+.nv button.nvi.on{border-color:var(--a);background:color-mix(in srgb,var(--a) 22%,transparent)}
+.nv button span{pointer-events:none}
+@media(max-width:700px){.nv{flex-wrap:wrap;gap:8px;padding:8px 10px}.nvls{order:3;flex:1 1 100%;justify-content:flex-start}.nva{margin-left:auto}.nvt{font-size:16px}}
+.nv a.nvl{font-family:"Noto Serif Bengali",Inter,serif;text-decoration:none;color:var(--m);border:1px solid transparent;border-radius:12px;padding:8px 16px;font-size:14px;font-weight:500;white-space:nowrap}
+.nv a.nvl:hover{color:var(--t);background:color-mix(in srgb,var(--a) 12%,transparent)}
+.nv a.nvl.on{color:var(--on);font-weight:700;background:linear-gradient(135deg,var(--a),var(--a2));box-shadow:0 6px 16px -8px var(--sh),inset 0 1px 0 rgba(255,255,255,.4)}
+.nvb{text-decoration:none;pointer-events:auto;color:inherit}
+body::after{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:49;pointer-events:none}
+header .hb{display:none}
+</style></head><body><div class="nvw"><nav class="nv"><a class="nvb" href="index.html"><span class="nvlg">দ</span><span class="nvt">আমার দিনলিপি</span></a><div class="nvls"><a class="nvl" href="index.html">হোম</a><a class="nvl on" href="tasks.html">কাজ</a><a class="nvl" href="namaz.html">নামাজ</a><a class="nvl" href="roza.html">রোজা</a><a class="nvl" href="hisab.html">হিসাব</a><a class="nvl" href="settings.html">সেটিং</a></div></nav></div><main id="app"></main>
 <script>
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
 const $=document.getElementById('app'),root=document.documentElement;
@@ -132,7 +157,7 @@ const dn=L.filter(t=>(S.done[key(d)]||{})[t.id]).length;if(dn==L.length)n++;else
 function render(){const now=new Date(),K=key(now);root.dataset.t=S.theme||0;root.dataset.d=S.dark||0;
 const tt=S.tasks.filter(t=>due(t,now)).sort(byTime),dn=tt.filter(t=>(S.done[K]||{})[t.id]),pct=tt.length?Math.round(dn.length/tt.length*100):0;
 const week=Array.from({length:7},(_,i)=>{const d=new Date(now);d.setDate(d.getDate()+i);const L=S.tasks.filter(t=>due(t,d)).sort(byTime);return{d,L}});
-$.innerHTML=`<header><div><h1>✅ কাজ</h1><div class="sub">${DAY[now.getDay()]}, ${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())}</div></div><div style="display:flex;gap:8px"><a href="index.html"><button class="g">← হোমে ফিরুন</button></a></div></header>
+$.innerHTML=`<header><div><h1>✅ কাজ</h1><div class="sub">${DAY[now.getDay()]}, ${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())}</div></div></header>
 <div class="grid"><section class="card wide"><h2>আজকের কাজ <span class="pill">${bn(dn.length)}/${bn(tt.length)}</span></h2>
 ${tt.length?tt.map(t=>`<div class="row"><label style="display:flex;gap:10px;align-items:center;${(S.done[K]||{})[t.id]?'opacity:.55;text-decoration:line-through':''}"><input type="checkbox" class="chk" data-a="task" data-i="${t.id}" ${(S.done[K]||{})[t.id]?'checked':''}>${t.title}</label><span class="m">${t.time?bn(t.time)+' · ':''}${lbl(t)}</span></div>`).join(''):'<div class="m">আজ কোনো কাজ নেই। নিচে নতুন কাজ যোগ করুন।</div>'}
 <div class="bar"><i style="width:${pct}%"></i></div>
