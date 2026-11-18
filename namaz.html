@@ -111,6 +111,59 @@ form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}form input{flex:1 1 110
 :root[data-d="1"] .sr.on.f{color:#ff8a8a}:root[data-d="1"] .sr.on.n{color:#4fd7a0}
 .ram{border-color:var(--g)}
 .rdy .card{animation:none}
+
+/* ── Premium polish ── */
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--a) 55%,transparent) transparent}
+::selection{background:var(--a2);color:#1F1608}
+html::before{content:"";position:fixed;right:-15%;bottom:-25%;width:65vw;height:65vh;background:radial-gradient(50% 50% at 50% 50%,color-mix(in srgb,var(--a) 15%,transparent),transparent);z-index:-1;pointer-events:none}
+h1{background:linear-gradient(100deg,var(--t) 35%,var(--a) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:-.3px;line-height:1.25}
+.sub{display:inline-flex;align-items:center;margin-top:10px;padding:5px 14px;border-radius:99px;border:1px solid var(--cb);background:linear-gradient(135deg,color-mix(in srgb,var(--a) 12%,transparent),color-mix(in srgb,var(--a2) 5%,transparent));font-size:13px;font-weight:500}
+.card{border-color:color-mix(in srgb,var(--a) 38%,transparent);box-shadow:0 20px 42px -26px var(--sh),0 2px 6px -3px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.55)}
+:root[data-d="1"] .card{box-shadow:0 20px 42px -26px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.07)}
+.card::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(125deg,rgba(255,255,255,.34),transparent 38%);opacity:.55}
+:root[data-d="1"] .card::before{opacity:.07}
+.card::after{height:2px;opacity:.9}
+h2{font-size:16px;font-weight:700;letter-spacing:.2px}
+h2::before{width:4px;height:16px;background:linear-gradient(var(--a2),var(--a));box-shadow:0 0 10px -1px var(--sh)}
+.pill{border:1px solid color-mix(in srgb,var(--a) 42%,transparent);background:linear-gradient(135deg,color-mix(in srgb,var(--a) 22%,transparent),color-mix(in srgb,var(--a2) 10%,transparent))}
+.chk:checked{box-shadow:0 4px 12px -4px var(--sh)}
+.sr{padding:9px 10px;border-bottom:1px solid var(--b)}.sr:last-of-type{border:0}
+.grid>.card:nth-child(1){animation-delay:0s}.grid>.card:nth-child(2){animation-delay:.06s}.grid>.card:nth-child(3){animation-delay:.12s}.grid>.card:nth-child(4){animation-delay:.18s}.grid>.card:nth-child(5){animation-delay:.24s}
+/* হিরো · রিং */
+.hero{display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;padding:24px 26px;background:linear-gradient(125deg,color-mix(in srgb,var(--g) 20%,var(--c)),var(--c) 62%)}
+.hd{font-size:clamp(30px,6vw,44px);font-weight:700;line-height:1.25;margin:2px 0 6px;font-family:"Noto Serif Bengali",serif}
+.hn{display:flex;flex-direction:column;gap:2px;margin-top:8px}
+.hn b{font-size:clamp(30px,8vw,44px);letter-spacing:.5px;font-variant-numeric:tabular-nums;font-family:"Noto Serif Bengali",serif;background:linear-gradient(90deg,var(--a),var(--g));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.3}
+.hcs{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.hrs{display:flex;gap:20px}
+.mr{display:flex;flex-direction:column;align-items:center;gap:6px}
+.mrw{position:relative;width:96px;height:96px}
+.mrw svg{width:100%;height:100%;transform:rotate(-90deg)}
+.mrw .t{fill:none;stroke:var(--b);stroke-width:6}
+.mrw .p{fill:none;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .5s;filter:drop-shadow(0 0 5px var(--sh))}
+.mrw b{position:absolute;inset:0;display:grid;place-items:center;font-size:17px;font-family:"Noto Serif Bengali",serif}
+.mr>span{font-size:12px;color:var(--m);font-weight:600}
+/* তাসবিহ */
+.tsw{display:flex;justify-content:center;margin:4px 0}
+.tsb{background:none;border:0;box-shadow:none;padding:6px;border-radius:50%;touch-action:manipulation;-webkit-tap-highlight-color:transparent;color:var(--t)}
+.tsb:hover{background:none;box-shadow:none}
+.tsb .mrw{width:150px;height:150px;transition:transform .12s}.tsb .mrw b{font-size:38px}
+.tsb:active .mrw{transform:scale(.95)}
+button.opt{padding:6px 14px;border-radius:99px;border:1px solid var(--cb);background:transparent;color:var(--t);font-size:13px;font-weight:600;box-shadow:none;letter-spacing:0}
+button.opt:hover{background:color-mix(in srgb,var(--a) 14%,transparent);box-shadow:none}
+button.opt.on{background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on);border-color:transparent}
+.chs{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+/* সাপ্তাহিক */
+.wk{display:flex;gap:8px;height:150px;margin-top:6px}
+.wc{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px}
+.wv{font-size:11px;color:var(--m);height:14px;font-weight:600}
+.wbw{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center;border-radius:10px;background:color-mix(in srgb,var(--a) 7%,transparent)}
+.wb{display:block;width:62%;max-width:38px;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,var(--a2),var(--a));opacity:.72;transition:height .6s}
+.wb.td{opacity:1;box-shadow:0 8px 18px -8px var(--sh)}
+.wb.ok{background:linear-gradient(180deg,#4fd7a0,#1f9d6b);opacity:1}
+.wd{font-size:12px;color:var(--m);font-weight:500}.wd.on{color:var(--t);font-weight:700}
+.lg{width:10px;height:10px;border-radius:3px;background:linear-gradient(180deg,#4fd7a0,#1f9d6b);display:inline-block}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style></head><body><script src="header.js"></script><main id="app"></main>
 <script>
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
@@ -121,9 +174,16 @@ function guard(el){let last=null;Object.defineProperty(el,'innerHTML',{configura
 setTimeout(()=>document.body.classList.add('rdy'),900);
 const typing=()=>{const a=document.activeElement;return !!a&&/^(INPUT|SELECT|TEXTAREA)$/.test(a.tagName)&&a.type!=='checkbox'};
 guard($);
-let S={theme:0,dark:0,pr:{}};
+let S={theme:0,dark:0,pr:{},qaza:[0,0,0,0,0,0],ts:{c:0,t:33,tot:{}}};
 try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
+if(!S.pr||typeof S.pr!='object')S.pr={};if(!Array.isArray(S.qaza)||S.qaza.length<6)S.qaza=[0,0,0,0,0,0];if(!S.ts||typeof S.ts!='object')S.ts={c:0,t:33,tot:{}};if(!S.ts.tot)S.ts.tot={};
 const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
+const MON=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
+const WSD=['রবি','সোম','মঙ্গল','বুধ','বৃহ','শুক্র','শনি'];
+const WFD=['রবিবার','সোমবার','মঙ্গলবার','বুধবার','বৃহস্পতিবার','শুক্রবার','শনিবার'];
+const RG=2*Math.PI*34;
+const mr=(p,c,txt,lb)=>`<div class="mr"><div class="mrw"><svg viewBox="0 0 80 80"><circle class="t" cx="40" cy="40" r="34"/><circle class="p" cx="40" cy="40" r="34" style="stroke:${c}" stroke-dasharray="${RG}" stroke-dashoffset="${RG*(1-Math.min(1,p))}"/></svg><b>${txt}</b></div><span>${lb}</span></div>`;
+const cdf=ms=>{const q=Math.max(0,Math.ceil(ms/1000)),p=n=>String(n).padStart(2,'0');return bn(p(Math.floor(q/3600))+':'+p(Math.floor(q%3600/60))+':'+p(q%60))};
 const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 function calc(d){const r=Math.PI/180,lat=23.8103*r,lon=90.4125,N=Math.floor((d-new Date(d.getFullYear(),0,0))/864e5);
 const B=360/365*(N-81)*r,E=9.87*Math.sin(2*B)-7.53*Math.cos(B)-1.5*Math.sin(B),dec=23.45*Math.sin(B)*r;
@@ -140,9 +200,33 @@ const wst=w=>{let a=w[1],b=w[2];if(b<a)b+=24;for(const o of [0,24,-24]){const x=
 const WS=W.map(w=>[w,wst(w)]);
 const row=([w,r],chk)=>`<div class="sr ${r.on?'on '+w[3]:''}"><span>${chk!=null?`<input type="checkbox" class="chk" data-i="n${chk}" ${pd['n'+chk]?'checked':''}>`:''}${w[0]}</span><span>${T(w[1])} – ${T(w[2])} · ${r.on?'চলছে · '+dur(r.left)+' বাকি':'শুরু '+dur(r.in)+' পর'}</span></div>`;
 const nf=WS.filter(([w])=>w[3]=='n');
-$.innerHTML=`<header><div><h1>🕌 নামাজ</h1><div class="sub">নফল নামাজ ও নিষিদ্ধ সময়</div></div></header>
-<div class="grid"><section class="card"><h2>নফল নামাজের সময়</h2>${nf.map((x,i)=>row(x,i)).join('')}</section>
-<section class="card"><h2>নিষিদ্ধ সময়</h2>${WS.filter(([w])=>w[3]=='f').map(x=>row(x)).join('')}<div class="m" style="margin-top:10px">ঢাকার সময় অনুযায়ী (আনুমানিক)</div></section></div>`}
-$.addEventListener('change',e=>{const i=e.target.dataset.i;if(!i)return;const K=key(new Date());(S.pr[K]=S.pr[K]||{})[i]=e.target.checked;save()});
+const FW=[['ফজর',c.fajr,c.sunrise,'n'],['যোহর',c.noon+.05,c.asr,'n'],['আসর',c.asr,c.maghrib-.25,'n'],['মাগরিব',c.maghrib,c.isha,'n'],['এশা',c.isha,c.fajr+24,'n']];
+const fs=FW.map(w=>{const r=wst(w);return{w,r,past:!r.on&&(((w[1]%24)+24)%24)<=cur}});
+const fd=FW.filter((_,i)=>pd['f'+i]).length,nd=nf.filter((_,i)=>pd['n'+i]).length;
+const fc=k=>{const o=S.pr[k]||{};return [0,1,2,3,4].filter(i=>o['f'+i]).length};
+const dd=n=>new Date(now.getFullYear(),now.getMonth(),now.getDate()-n);
+let stk=fc(K)==5?1:0;for(let i=1;i<400;i++){if(fc(key(dd(i)))==5)stk++;else break}
+const wk=Array.from({length:7},(_,i)=>{const d=dd(6-i);return{d,n:fc(key(d))}}),wsum=wk.reduce((a,x)=>a+x.n,0);
+let nxt=null;const bt=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
+FW.forEach(w=>{let t=bt+Math.round((((w[1]%24)+24)%24)*60)*6e4;if(t<=now.getTime())t+=864e5;if(!nxt||t<nxt.t)nxt={n:w[0],t}});
+const curW=fs.find(x=>x.r.on);
+let hj='';try{hj=new Intl.DateTimeFormat('bn-BD-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'}).format(now)}catch(e){}
+const frow=(x,i)=>{const{w,r,past}=x,dn=!!pd['f'+i];return `<div class="sr ${r.on?'on n':''}"><span><input type="checkbox" class="chk" data-i="f${i}" ${dn?'checked':''} aria-label="${w[0]}">${w[0]}</span><span>${T(w[1])} – ${T(w[2])} · ${dn?'আদায় হয়েছে ✓':r.on?'চলছে · '+dur(r.left)+' বাকি':past?'ওয়াক্ত শেষ':'শুরু '+dur(r.in)+' পর'}</span></div>`};
+const hero=`<section class="card hero wide"><div><div class="m">${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())}${hj?' · '+hj+' (আনুমানিক)':''}</div><div class="hd">${WFD[now.getDay()]}</div><div class="hn"><span class="m">পরবর্তী ওয়াক্ত · ${nxt.n}</span><b id="nx" data-t="${nxt.t}">${cdf(nxt.t-now.getTime())}</b></div><div class="hcs">${curW?`<span class="pill">এখন চলছে: ${curW.w[0]}</span>`:''}${stk?`<span class="pill">🔥 ${bn(stk)} দিন সব ওয়াক্ত</span>`:''}</div></div><div class="hrs">${mr(fd/5,'var(--a)',bn(fd)+'/'+bn(5),'ফরজ')}${mr(nd/nf.length,'#1f9d6b',bn(nd)+'/'+bn(nf.length),'নফল')}</div></section>`;
+const fard=`<section class="card"><h2>ফরজ নামাজ <span class="pill">${bn(fd)}/${bn(5)}</span></h2>${fs.map(frow).join('')}<div class="m" style="margin-top:10px">আদায় করলে টিক দিন</div></section>`;
+const ts=S.ts,tasbih=`<section class="card"><h2>তাসবিহ <span class="pill">আজ ${bn(ts.tot[K]||0)}</span></h2><div class="tsw"><button class="tsb" data-a="ts" aria-label="গণনা">${mr(ts.c/ts.t,'var(--a)',bn(ts.c),'/ '+bn(ts.t))}</button></div><div class="chs">${[33,99,100].map(n=>`<button class="opt ${ts.t==n?'on':''}" data-a="tt" data-i="${n}">${bn(n)}</button>`).join('')}<button class="g opt" data-a="tr">↺ রিসেট</button></div></section>`;
+const qaza=`<section class="card"><h2>কাযা হিসাব <span class="pill">মোট ${bn(S.qaza.reduce((a,b)=>a+b,0))}</span></h2>${['ফজর','যোহর','আসর','মাগরিব','এশা','বিতর'].map((n,i)=>`<div class="row"><b>${n}</b><span style="display:flex;align-items:center;gap:10px"><button class="g opt" data-a="q" data-i="${i}" data-v="-1" aria-label="কমান">−</button><b style="min-width:34px;text-align:center">${bn(S.qaza[i])}</b><button class="g opt" data-a="q" data-i="${i}" data-v="1" aria-label="বাড়ান">+</button></span></div>`).join('')}<div class="m" style="margin-top:8px">+ বাকি বাড়ায়, − আদায় হিসেবে কমায়</div></section>`;
+const week=`<section class="card wide"><h2>এ সপ্তাহের ফরজ <span class="pill">${bn(wsum)}/${bn(35)}</span></h2><div class="wk">${wk.map((x,i)=>`<div class="wc" title="${bn(x.n)}/${bn(5)}"><div class="wv">${x.n?bn(x.n):''}</div><div class="wbw"><i class="wb ${x.n==5?'ok':''} ${i==6?'td':''}" style="height:${x.n/5*100}%"></i></div><div class="wd ${i==6?'on':''}">${i==6?'আজ':WSD[x.d.getDay()]}</div></div>`).join('')}</div><div class="m" style="margin-top:10px;display:flex;gap:6px;align-items:center"><i class="lg"></i>সব ওয়াক্ত আদায়</div></section>`;
+$.innerHTML=`<header><div><h1>🕌 নামাজ</h1><div class="sub">ফরজ, নফল ও নিষিদ্ধ সময়ের হিসাব</div></div></header>
+<div class="grid">${hero}${fard}<section class="card"><h2>নফল নামাজের সময় <span class="pill">${bn(nd)}/${bn(nf.length)}</span></h2>${nf.map((x,i)=>row(x,i)).join('')}</section>
+<section class="card"><h2>নিষিদ্ধ সময়</h2>${WS.filter(([w])=>w[3]=='f').map(x=>row(x)).join('')}<div class="m" style="margin-top:10px">ঢাকার সময় অনুযায়ী (আনুমানিক)</div></section>${tasbih}${qaza}${week}</div>`}
+$.addEventListener('change',e=>{const i=e.target.dataset.i;if(!i)return;const K=key(new Date());(S.pr[K]=S.pr[K]||{})[i]=e.target.checked;save();render()});
 let lastR='';render();setInterval(()=>{const n=new Date(),m=n.getHours()*60+n.getMinutes();if(m!==lastR&&!typing()){lastR=m;render()}},5000);
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;const a=t.dataset.a,i=+t.dataset.i,K=key(new Date()),ts=S.ts;
+ if(a=='ts'){if(ts.c>=ts.t)ts.c=0;ts.c++;ts.tot[K]=(ts.tot[K]||0)+1;try{navigator.vibrate&&navigator.vibrate(ts.c==ts.t?[40,40,40]:8)}catch(x){}}
+ if(a=='tt'){ts.t=i;ts.c=0}
+ if(a=='tr')ts.c=0;
+ if(a=='q')S.qaza[i]=Math.max(0,S.qaza[i]+ +t.dataset.v);
+ save();render()});
+setInterval(()=>{const el=document.getElementById('nx');if(!el)return;const ms=+el.dataset.t-Date.now();if(ms<=0){lastR='';render();return}el.textContent=cdf(ms)},1000);
 </script></body></html>
