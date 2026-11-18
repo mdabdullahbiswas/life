@@ -180,6 +180,36 @@ form select{flex:1 1 110px}
 .srow.on{background:color-mix(in srgb,var(--a) 14%,transparent);box-shadow:inset 3px 0 0 var(--a)}
 .okb.wide{text-align:center}
 
+/* ── হিরো · রুটিন · হিটম্যাপ ── */
+.hero{display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;padding:24px 26px;background:linear-gradient(125deg,color-mix(in srgb,var(--g) 20%,var(--c)),var(--c) 62%)}
+.hd{font-size:clamp(30px,6vw,44px);font-weight:700;line-height:1.25;margin:2px 0 6px;font-family:"Noto Serif Bengali",serif}
+.hmsg{font-size:15px;line-height:1.7;max-width:34ch}
+.hcs{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.hrs{display:flex;gap:20px}
+.mr{display:flex;flex-direction:column;align-items:center;gap:6px}
+.mrw{position:relative;width:96px;height:96px}
+.mrw svg{width:100%;height:100%;transform:rotate(-90deg)}
+.mrw .t{fill:none;stroke:var(--b);stroke-width:6}
+.mrw .p{fill:none;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .8s;filter:drop-shadow(0 0 5px var(--sh))}
+.mrw b{position:absolute;inset:0;display:grid;place-items:center;font-size:17px;font-family:"Noto Serif Bengali",serif}
+.mr>span{font-size:12px;color:var(--m);font-weight:600}
+.dys{flex:1 1 100%;display:flex;gap:6px;flex-wrap:wrap}
+.dy{position:relative;cursor:pointer}
+.dy input{position:absolute;opacity:0;width:0;height:0;min-width:0;padding:0;flex:none}
+.dy span{display:inline-block;padding:6px 13px;border-radius:99px;border:1px solid var(--cb);font-size:13px;font-weight:600;color:var(--m);transition:.2s}
+.dy input:checked+span{background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on);border-color:transparent;box-shadow:0 6px 14px -8px var(--sh)}
+.dy input:focus-visible+span{outline:2px solid var(--g);outline-offset:2px}
+.rt.dn .rn,.rt.dn .m{opacity:.5}.rt.dn .rn{text-decoration:line-through}
+.hm5{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.hw{text-align:center;font-size:11px;color:var(--m);font-weight:600}
+.hx{display:block;height:30px;border-radius:8px;background:var(--b)}
+.hx.f{background:none;border:1px dashed var(--b)}
+.hx.l1{background:color-mix(in srgb,var(--a) 24%,transparent)}.hx.l2{background:color-mix(in srgb,var(--a) 48%,transparent)}.hx.l3{background:color-mix(in srgb,var(--a) 74%,transparent)}
+.hx.l4{background:linear-gradient(135deg,var(--a),var(--a2));box-shadow:0 4px 10px -5px var(--sh)}
+.hx.td{outline:2px solid var(--g);outline-offset:1px}
+.lgd{margin-top:12px;display:flex;align-items:center;gap:6px}.lgd .hx{width:14px;height:14px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
 </style></head>
 <body><script src="header.js"></script>
 <main id="app"></main>
@@ -194,9 +224,10 @@ const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+Stri
 let S={theme:0,dark:0,tasks:[],done:{},pr:{},fin:[],url:'',notif:0,qaza:[0,0,0,0,0,0],fast:{},ram:{},rm:0};
 try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
 if(!TH[S.theme])S.theme=0;
-const D=S.st=Object.assign({subj:[],log:{},ses:{},goal:120,exams:[],pre:[25,5],mode:'f',sel:0,run:null},S.st||{});
+const D=S.st=Object.assign({subj:[],log:{},ses:{},goal:120,exams:[],pre:[25,5],mode:'f',sel:0,run:null,rt:[],rd:{}},S.st||{});
 if(!Array.isArray(D.subj))D.subj=[];if(!Array.isArray(D.exams))D.exams=[];if(!Array.isArray(D.pre)||D.pre.length!=2)D.pre=[25,5];
 if(!D.log||typeof D.log!='object')D.log={};if(!D.ses||typeof D.ses!='object')D.ses={};
+if(!Array.isArray(D.rt))D.rt=[];if(!D.rd||typeof D.rd!='object')D.rd={};
 const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
 const $=document.getElementById('app'),root=document.documentElement;
 const COL=['#4F73F0','#DB9A12','#E8782B','#D8456B','#6A4FD0','#1F9D6B','#0EA5B7','#8A6420'];
@@ -208,6 +239,11 @@ const fm=m=>{m=Math.round(m);const h=Math.floor(m/60),r=m%60;return h?bn(h)+' �
 const nm=id=>{const x=D.subj.find(s=>s.id==id);return x?x.name:'সাধারণ'};
 const cl=id=>{const x=D.subj.find(s=>s.id==id);return x?x.c:'#B8892B'};
 const addMin=(id,m)=>{if(!(m>0))return;const k=key(new Date()),L=D.log[k]=D.log[k]||{};L[id]=(L[id]||0)+m};
+const WFD=['রবিবার','সোমবার','মঙ্গলবার','বুধবার','বৃহস্পতিবার','শুক্রবার','শনিবার'];
+const subMin=(k,id,m)=>{const L=D.log[k];if(L&&m>0){L[id]=Math.max(0,(L[id]||0)-m);if(!L[id])delete L[id]}};
+const dsum=d=>d.length==7?'প্রতিদিন':d.slice().sort((a,b)=>a-b).map(x=>WSD[x]).join(', ');
+const RG=2*Math.PI*34;
+const mr=(p,c,txt,lb)=>`<div class="mr"><div class="mrw"><svg viewBox="0 0 80 80"><circle class="t" cx="40" cy="40" r="34"/><circle class="p" cx="40" cy="40" r="34" style="stroke:${c}" stroke-dasharray="${RG}" stroke-dashoffset="${RG*(1-Math.min(1,p))}"/></svg><b>${txt}</b></div><span>${lb}</span></div>`;
 const tmTot=()=>D.run?D.run.tot:(D.mode=='f'?D.pre[0]:D.pre[1])*60000;
 const tmRem=()=>{const r=D.run;return r?(r.end?Math.max(0,r.end-Date.now()):r.left):tmTot()};
 const mmss=ms=>{const q=Math.ceil(ms/1000);return String(Math.floor(q/60)).padStart(2,'0')+':'+String(q%60).padStart(2,'0')};
@@ -265,9 +301,30 @@ ${ex.length?ex.map(e=>{const dt=new Date(e.d+'T00:00'),n=Math.round((dt-new Date
  return `<div class="row" style="${n<0?'opacity:.55':''}"><div style="min-width:0"><b style="overflow-wrap:anywhere">${esc(e.n)}</b><div class="m">${bn(dt.getDate())} ${MON[dt.getMonth()]} ${bn(dt.getFullYear())}</div></div><span style="display:flex;align-items:center;gap:6px;flex:none"><span class="pill ${n>=0&&n<=7?'bad':''}">${lb}</span><button class="x" data-a="ed" data-i="${e.id}" aria-label="মুছুন">✕</button></span></div>`}).join(''):'<div class="m">কোনো পরীক্ষা নেই</div>'}
 <form data-f="ex"><input name="n" maxlength="40" placeholder="পরীক্ষার নাম" required><input name="d" type="date" required><button>যোগ করুন</button></form></section>`;
 
+ const dow=now.getDay();
+ const due=D.rt.filter(r=>r.d.includes(dow)).sort((a,b)=>(a.t||'99')<(b.t||'99')?-1:1);
+ const rdn=D.rd[K]||{},rdone=due.filter(r=>rdn[r.id]).length,rpct=due.length?rdone/due.length:0;
+ const later=D.rt.filter(r=>!r.d.includes(dow));
+ const nx=ex.find(e=>e.d>=K),nxn=nx?Math.round((new Date(nx.d+'T00:00')-new Date(K+'T00:00'))/864e5):0;
+ const msg=pct>=100?'আজকের লক্ষ্য পূরণ হয়েছে। এই ধারাবাহিকতাই আসল শক্তি।':(tdm==0&&!rdone)?'আজকের প্রথম সেশনটা এখনই শুরু করুন।':'লক্ষ্যে পৌঁছাতে আর '+fm(D.goal-tdm)+' বাকি।';
+
+ const hero=`<section class="card hero wide"><div><div class="m">${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())}</div><div class="hd">${WFD[dow]}</div><div class="hmsg">${msg}</div><div class="hcs">${st?`<span class="pill">🔥 ${bn(st)} দিনের ধারা</span>`:''}${nx?`<span class="pill ${nxn<=7?'bad':''}">${esc(nx.n)} · ${nxn==0?'আজ':bn(nxn)+' দিন বাকি'}</span>`:''}</div></div><div class="hrs">${mr(pct/100,'var(--a)',bn(pct)+'%','দৈনিক লক্ষ্য')}${mr(rpct,'#1f9d6b',due.length?bn(rdone)+'/'+bn(due.length):'—','রুটিন')}</div></section>`;
+
+ const rows=due.map(r=>{const sid=D.subj.some(s=>s.id==r.s)?r.s:0,dn=!!rdn[r.id];return `<div class="row rt ${dn?'dn':''}"><label style="display:flex;align-items:center;gap:12px;min-width:0;flex:1;cursor:pointer"><input type="checkbox" class="chk" data-a="rc" data-i="${r.id}" ${dn?'checked':''} style="--pc:${cl(sid)};--pc2:${cl(sid)}" aria-label="${esc(r.n)}"><span style="min-width:0"><b class="rn" style="overflow-wrap:anywhere">${esc(r.n)}</b><div class="m"><i class="dt" style="background:${cl(sid)};display:inline-block;margin-right:6px"></i>${esc(nm(sid))}${r.t?' · '+bn(r.t):''}${r.m?' · '+fm(r.m):''}</div></span></label><button class="x" data-a="rd" data-i="${r.id}" aria-label="মুছুন">✕</button></div>`}).join('');
+ const lt=later.length?`<div class="spt">অন্যান্য দিনের রুটিন</div>`+later.map(r=>`<div class="row" style="opacity:.7"><div style="min-width:0"><b style="overflow-wrap:anywhere">${esc(r.n)}</b><div class="m">${dsum(r.d)}${r.t?' · '+bn(r.t):''}${r.m?' · '+fm(r.m):''}</div></div><button class="x" data-a="rd" data-i="${r.id}" aria-label="মুছুন">✕</button></div>`).join(''):'';
+ const dyc=WSD.map((w,j)=>`<label class="dy"><input type="checkbox" name="d" value="${j}" checked><span>${w}</span></label>`).join('');
+ const routine=`<section class="card wide"><h2>দৈনিক রুটিন ${due.length?`<span class="pill">${bn(rdone)}/${bn(due.length)} সম্পন্ন</span>`:''}</h2>
+${due.length?`<div class="bar" style="margin:0 0 6px"><i style="width:${Math.round(rpct*100)}%;background:linear-gradient(90deg,#4fd7a0,#1f9d6b)"></i></div>${rows}`:`<div class="m">${D.rt.length?'আজকের জন্য কোনো রুটিন নেই।':'প্রতিদিনের নির্দিষ্ট পড়া এখানে ঠিক করে রাখুন, যেমন "গণিত · ৪৫ মিনিট"। টিক দিলে সময়টা সেই বিষয়ে যোগ হবে।'}</div>`}
+${lt}
+<form data-f="rt"><input name="n" maxlength="40" placeholder="কী পড়বেন? যেমন: গণিত অনুশীলন" required style="flex:2 1 200px"><select name="s" aria-label="কোন বিষয়">${opts(selId)}</select><input name="m" type="number" min="0" max="600" placeholder="মিনিট" style="flex:0 1 90px"><input name="t" type="time" aria-label="সময়" style="flex:0 1 120px"><div class="dys">${dyc}</div><button>রুটিনে যোগ করুন</button></form></section>`;
+
+ const h0=dayAt(dow+28);let act=0;
+ const cells=Array.from({length:35},(_,i)=>{const d=new Date(h0.getFullYear(),h0.getMonth(),h0.getDate()+i);if(d>now)return '<i class="hx f"></i>';const m=tot(key(d)),q=m<=0?0:m<D.goal*.34?1:m<D.goal*.67?2:m<D.goal?3:4;if(m>0)act++;return `<i class="hx l${q} ${key(d)==K?'td':''}" title="${bn(d.getDate())} ${MON[d.getMonth()]} · ${fm(m)}"></i>`}).join('');
+ const heat=`<section class="card"><h2>৫ সপ্তাহের ধারাবাহিকতা <span class="pill">${bn(act)}/${bn(35)} দিন</span></h2><div class="hm5">${WSD.map(w=>`<span class="hw">${w}</span>`).join('')}${cells}</div><div class="m lgd">কম <i class="hx l1"></i><i class="hx l2"></i><i class="hx l3"></i><i class="hx l4"></i> বেশি</div></section>`;
+
  document.title=L('পড়াশোনা')+' · Hayat';
  $.innerHTML=`<header><div><h1>পড়াশোনা</h1><div class="sub">ফোকাস করুন, ধারাবাহিকতা ধরে রাখুন</div></div></header>
-<div class="grid">${window.MSG?`<div class="okb wide">${window.MSG}</div>`:''}${timer}${today}${week}${subs}${exams}</div>`}
+<div class="grid">${window.MSG?`<div class="okb wide">${window.MSG}</div>`:''}${hero}${routine}${timer}${today}${subs}${week}${exams}${heat}</div>`}
 
 document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;const a=t.dataset.a,i=t.dataset.i;
  if(a=='sub')return;
@@ -281,12 +338,15 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t
  if(a=='ss'){D.sel=+i;if(D.run&&D.run.m=='f')D.run.s=+i}
  if(a=='sd'){if(!confirm('বিষয়টি মুছে ফেলবেন?'))return;const id=+i;D.subj=D.subj.filter(s=>s.id!=id);for(const k in D.log){const L=D.log[k];if(L[id]){L[0]=(L[0]||0)+L[id];delete L[id]}}if(D.sel==id)D.sel=0;if(D.run&&D.run.s==id)D.run.s=0}
  if(a=='ed')D.exams=D.exams.filter(x=>x.id!=i);
+ if(a=='rc'){const id=+i,r=D.rt.find(x=>x.id==id);if(r){const k=key(new Date()),dn=D.rd[k]=D.rd[k]||{};if(dn[id]){subMin(k,dn[id].s,dn[id].m);delete dn[id]}else{const sid=D.subj.some(s=>s.id==r.s)?r.s:0;dn[id]={s:sid,m:r.m};addMin(sid,r.m)}}}
+ if(a=='rd'){if(!confirm('রুটিনটি মুছে ফেলবেন?'))return;D.rt=D.rt.filter(x=>x.id!=+i)}
  save();render()});
 document.addEventListener('change',e=>{const t=e.target;if(t.dataset&&t.dataset.a=='sub'){D.sel=+t.value;if(D.run&&D.run.m=='f')D.run.s=+t.value;save();render()}});
 $.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target),k=e.target.dataset.f;
  if(k=='man'){addMin(+f.get('s')||0,Math.round(+f.get('m')||0))}
  if(k=='sj'){const n=String(f.get('n')||'').trim();if(n)D.subj.push({id:Date.now(),name:n,c:COL[D.subj.length%COL.length]})}
  if(k=='ex'){const n=String(f.get('n')||'').trim(),d=f.get('d');if(n&&d)D.exams.push({id:Date.now(),n,d})}
+ if(k=='rt'){const n=String(f.get('n')||'').trim(),d=f.getAll('d').map(Number);if(n&&d.length)D.rt.push({id:Date.now(),n,s:+f.get('s')||0,m:Math.max(0,Math.min(600,Math.round(+f.get('m')||0))),t:String(f.get('t')||''),d})}
  save();render()});
 let LK=key(new Date());
 setInterval(()=>{
