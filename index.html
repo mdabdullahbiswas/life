@@ -219,16 +219,12 @@ function loadWX(force){
  fetch(WXURL).then(r=>{if(!r.ok)throw 0;return r.json()}).then(d=>{if(!d||!d.current||!d.daily)throw 0;window.WX=d;window.WXE=0;try{localStorage.setItem('dw',JSON.stringify({t:Date.now(),d}))}catch(e){}render()}).catch(()=>{window.WXE=1;render()})}
 function wxCardHTML(){const wx=window.WX,r=n=>bn(Math.round(+n||0));
  let b;
- if(!wx)b=window.WXE?`<div class="m">আবহাওয়া আনা যায়নি। ইন্টারনেট সংযোগ দেখুন।</div><div style="margin-top:10px"><button class="g" data-a="wr">আবার চেষ্টা</button></div>`:'<div class="m">লোড হচ্ছে…</div>';
- else{const w=wx.current,d=wx.daily,[ic,tx]=wxi(w.weather_code,w.is_day);
-  b=`<div style="display:flex;align-items:center;gap:14px"><div style="font-size:52px;line-height:1">${ic}</div><div><div class="big">${r(w.temperature_2m)}°</div><div class="m">${tx}</div></div></div>
-<div class="row"><span class="m">অনুভূত</span><b>${r(w.apparent_temperature)}°</b></div>
-<div class="row"><span class="m">সর্বোচ্চ / সর্বনিম্ন</span><b>${r(d.temperature_2m_max[0])}° / ${r(d.temperature_2m_min[0])}°</b></div>
-<div class="row"><span class="m">আর্দ্রতা</span><b>${r(w.relative_humidity_2m)}%</b></div>
-<div class="row"><span class="m">বাতাস</span><b>${r(w.wind_speed_10m)} কিমি/ঘ</b></div>
-<div class="row"><span class="m">বৃষ্টির সম্ভাবনা</span><b>${r(d.precipitation_probability_max[0])}%</b></div>
-<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:12px;text-align:center">${d.time.slice(0,5).map((t,i)=>`<div style="padding:8px 2px;border-radius:14px;background:var(--b)"><div class="m">${i?WSD[new Date(t+'T00:00').getDay()]:'আজ'}</div><div style="font-size:20px;margin:2px 0">${wxi(d.weather_code[i])[0]}</div><div style="font-size:12px;font-weight:600">${r(d.temperature_2m_max[i])}°</div><div class="m" style="font-size:11px">${r(d.temperature_2m_min[i])}°</div></div>`).join('')}</div>`}
- return `<section class="card"><h2>আবহাওয়া <span class="pill">ঢাকা</span></h2>${b}</section>`}
+ if(!wx)b=window.WXE?`<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span class="m">আবহাওয়া আনা যায়নি। ইন্টারনেট সংযোগ দেখুন।</span><button class="g" style="padding:5px 14px" data-a="wr">আবার চেষ্টা</button></div>`:'<div class="m">লোড হচ্ছে…</div>';
+ else{const w=wx.current,d=wx.daily,[ic,tx]=wxi(w.weather_code,w.is_day),ch=(t,v)=>`<span title="${t}" style="padding:3px 10px;border-radius:99px;background:var(--b);font-size:12px;font-weight:600">${v}</span>`;
+  b=`<div style="display:flex;align-items:center;gap:10px"><div style="font-size:34px;line-height:1">${ic}</div><div><div class="big" style="font-size:30px;line-height:1.1">${r(w.temperature_2m)}°</div><div class="m">${tx}</div></div><div style="margin-left:auto;text-align:right;font-size:13px"><div><b>↑${r(d.temperature_2m_max[0])}°</b> <span class="m">↓${r(d.temperature_2m_min[0])}°</span></div><div class="m">অনুভূত ${r(w.apparent_temperature)}°</div></div></div>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">${ch('আর্দ্রতা','💧 '+r(w.relative_humidity_2m)+'%')}${ch('বাতাস','💨 '+r(w.wind_speed_10m)+' কিমি/ঘ')}${ch('বৃষ্টির সম্ভাবনা','🌧️ '+r(d.precipitation_probability_max[0])+'%')}</div>
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:8px;text-align:center">${d.time.slice(0,5).map((t,i)=>`<div style="padding:4px 0;border-radius:10px;background:var(--b);line-height:1.25"><div class="m" style="font-size:11px">${i?WSD[new Date(t+'T00:00').getDay()]:'আজ'}</div><div style="font-size:15px">${wxi(d.weather_code[i])[0]}</div><div style="font-size:11px;font-weight:600">${r(d.temperature_2m_max[i])}°<span class="m">/${r(d.temperature_2m_min[i])}°</span></div></div>`).join('')}</div>`}
+ return `<section class="card" style="padding:14px 16px"><h2 style="margin-bottom:8px">আবহাওয়া <span class="pill">ঢাকা</span></h2>${b}</section>`}
 function navR(){}
 function render(){render1();navR()}
 document.addEventListener('click',e=>{const bt=e.target.closest('button,input,b');if(bt)e={target:bt};const a=e.target.dataset.a,i=e.target.dataset.i,K=key(new Date());if(!a)return;
