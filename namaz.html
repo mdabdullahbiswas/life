@@ -140,7 +140,7 @@ const wst=w=>{let a=w[1],b=w[2];if(b<a)b+=24;for(const o of [0,24,-24]){const x=
 const WS=W.map(w=>[w,wst(w)]);
 const row=([w,r],chk)=>`<div class="sr ${r.on?'on '+w[3]:''}"><span>${chk!=null?`<input type="checkbox" class="chk" data-i="n${chk}" ${pd['n'+chk]?'checked':''}>`:''}${w[0]}</span><span>${T(w[1])} – ${T(w[2])} · ${r.on?'চলছে · '+dur(r.left)+' বাকি':'শুরু '+dur(r.in)+' পর'}</span></div>`;
 const nf=WS.filter(([w])=>w[3]=='n');
-$.innerHTML=`<header><div><h1>🕌 নামাজ</h1><div class="sub">নফল নামাজ ও নিষিদ্ধ সময়</div></div><div style="display:flex;gap:8px"><a href="dinlipi-emerald-gold.html"><button class="g">← হোমে ফিরুন</button></a></div></header>
+$.innerHTML=`<header><div><h1>🕌 নামাজ</h1><div class="sub">নফল নামাজ ও নিষিদ্ধ সময়</div></div><div style="display:flex;gap:8px"><a href="index.html"><button class="g">← হোমে ফিরুন</button></a></div></header>
 <div class="grid"><section class="card"><h2>নফল নামাজের সময়</h2>${nf.map((x,i)=>row(x,i)).join('')}</section>
 <section class="card"><h2>নিষিদ্ধ সময়</h2>${WS.filter(([w])=>w[3]=='f').map(x=>row(x)).join('')}<div class="m" style="margin-top:10px">ঢাকার সময় অনুযায়ী (আনুমানিক)</div></section></div>`}
 $.addEventListener('change',e=>{const i=e.target.dataset.i;if(!i)return;const K=key(new Date());(S.pr[K]=S.pr[K]||{})[i]=e.target.checked;save()});
