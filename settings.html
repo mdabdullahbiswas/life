@@ -140,7 +140,7 @@ button.dg{background:transparent;color:#d33;border:1px solid rgba(220,60,60,.5);
 button.dg:hover{background:rgba(220,60,60,.12);border-color:#d33}
 :root[data-d="1"] button.dg{color:#ff8a8a}
 </style></head>
-<body><div class="nvw"><nav class="nv"><div class="nvb"><span class="nvlg">দ</span><span class="nvt">আমার দিনলিপি</span></div><div class="nvls"><button class="nvl" data-a="hm">হোম</button><button class="nvl" data-a="nz">নামাজ</button><button class="nvl" data-a="rz">রোজা</button><button class="nvl" data-a="hs">হিসাব</button><button class="nvl on" data-a="st">সেটিং</button></div></nav></div>
+<body><div class="nvw"><nav class="nv"><div class="nvb"><span class="nvlg">দ</span><span class="nvt">আমার দিনলিপি</span></div><div class="nvls"><button class="nvl" data-a="hm">হোম</button><button class="nvl" data-a="tk">কাজ</button><button class="nvl" data-a="nz">নামাজ</button><button class="nvl" data-a="rz">রোজা</button><button class="nvl" data-a="hs">হিসাব</button><button class="nvl on" data-a="st">সেটিং</button></div></nav></div>
 <main id="app"></main>
 <script>
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
@@ -168,6 +168,7 @@ $.innerHTML=`<header><div><h1>⚙ সেটিং</h1><div class="sub">সব �
 function exportData(){const b=new Blob([JSON.stringify(S,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),l=document.createElement('a');l.href=u;l.download='dinlipi-backup-'+key(new Date())+'.json';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;const a=t.dataset.a,i=t.dataset.i;
 if(a=='hm'){location.href='index.html';return}
+if(a=='tk'){location.href='tasks.html';return}
 if(a=='nz'){location.href='namaz.html';return}
 if(a=='rz'){location.href='roza.html';return}
 if(a=='hs'){location.href='hisab.html';return}
