@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="bn"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>আমার দিনলিপি</title>
+<title>Hayat</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 /* প্যালেট: সোনালি মূল রঙ (#B8892B → #E2C275, ডার্কে #E0B84F → #F2D88A) · ব্রোঞ্জ #8A6420 · এসপ্রেসো #2B2118 · ক্রিম #FBF7EE · উষ্ণ কালো #0C0A07 */
@@ -219,7 +219,7 @@ ${tt.length?tt.map(t=>`<div class="row"><label style="display:flex;gap:10px;alig
 <form data-f="task"><input name="title" placeholder="কাজের নাম" required style="flex:2 1 160px"><select name="type"><option value="daily">প্রতিদিন</option><option value="every">নির্দিষ্ট দিন পর পর</option><option value="monthly">প্রতি মাসে</option><option value="yearly">প্রতি বছর</option></select><input name="n" type="number" min="1" value="3" title="কত দিন পর পর" style="flex:0 1 80px"><input name="time" type="time"><button>যোগ করুন</button></form></section>
 </div>`}
 function navR(){const L=[['hm','হোম'],['tk','কাজ'],['nz','নামাজ'],['rz','রোজা'],['hs','হিসাব'],['st','সেটিং']];
-document.getElementById('nav').innerHTML=`<div class="nvb"><span class="nvlg">দ</span><span class="nvt">আমার দিনলিপি</span></div><div class="nvls">${L.map(([a,t])=>`<button class="nvl ${a=='hm'?'on':''}" data-a="${a}">${t}</button>`).join('')}</div>`}
+document.getElementById('nav').innerHTML=`<div class="nvb"><span class="nvlg">H</span><span class="nvt">Hayat</span></div><div class="nvls">${L.map(([a,t])=>`<button class="nvl ${a=='hm'?'on':''}" data-a="${a}">${t}</button>`).join('')}</div>`}
 function render(){render1();navR()}
 document.addEventListener('click',e=>{const bt=e.target.closest('button,input,b');if(bt)e={target:bt};const a=e.target.dataset.a,i=e.target.dataset.i,K=key(new Date());if(!a)return;
 if(a=='hm'){scrollTo({top:0,behavior:'smooth'});return}
