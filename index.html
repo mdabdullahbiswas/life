@@ -196,10 +196,11 @@ const cdCard=`<section class="card cd" style="${pcs(kk)}"><h2>${cw>=0?'এখন
 <div class="tiles"><div class="tl"><b id="cdh">${p2(Math.floor(sc/3600))}</b><small>ঘণ্টা</small></div><span class="cl">:</span><div class="tl"><b id="cdm">${p2(Math.floor(sc%3600/60))}</b><small>মিনিট</small></div><span class="cl">:</span><div class="tl"><b id="cds">${p2(sc%60)}</b><small>সেকেন্ড</small></div></div></div><div class="m" style="margin-top:2px">${cw>=0?P[cw]+' ওয়াক্ত শেষ হতে বাকি':P[nxt]+' শুরু হতে বাকি · এখন ফরজ নামাজের ওয়াক্ত নেই'}</div>
 <div class="cds">${P.map((p,i)=>`<span class="cdc ${i==kk?'on':(cw>=0?i<cw:(ni<0||i<ni))?'past':''}" style="${pcs(i)}">${p}</span>`).join('')}</div>${spHTML}<div class="m" style="margin-top:12px">ঢাকার সময় অনুযায়ী (আনুমানিক)</div></section>`;
 const rozaCard=(h.m!=9&&!fi[1]&&fi[0].startsWith('নফল রোজার দিন')&&!S.fast[K]&&!S.fn[K])?`<section class="card"><h2>রোজা</h2><span class="pill">${fi[0]}</span><div class="row"><span>সেহরির শেষ সময়</span><b>${T(c.fajr)}</b></div><div class="row"><span>ইফতার</span><b>${T(c.maghrib)}</b></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button data-a="fk">✓ রেখেছি</button><button class="g" data-a="fx">রাখিনি</button><button class="g lk" data-a="rz">রোজা ট্র্যাকার<span class="ar">→</span></button></div></section>`:'';
+const wxCard=wxCardHTML();
 const g=cur<12?'সুপ্রভাত':cur<16?'শুভ অপরাহ্ন':cur<19?'শুভ সন্ধ্যা':'শুভ রাত্রি';
 $.innerHTML=`<header><div><h1>${g}, আসসালামু আলাইকুম</h1><div class="sub">${DAYS[now.getDay()]}, ${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())} · ${bn(h.d)} ${HM[h.m]} ${bn(h.y)} হি.</div></div></header>
 <div class="grid">
-${S.tp?`<section class="card wide"><h2>রঙের সেট · ${TH[S.theme][0]}</h2><div class="sw">${TH.map((t,i)=>`<b title="${t[0]}" data-a="th" data-i="${i}" class="${i==S.theme?'on':''}" style="background:linear-gradient(135deg,${t[1]} 50%,#E0B84F 50%)"></b>`).join('')}</div></section>`:''}${ram?ramCard:''}${cdCard}
+${S.tp?`<section class="card wide"><h2>রঙের সেট · ${TH[S.theme][0]}</h2><div class="sw">${TH.map((t,i)=>`<b title="${t[0]}" data-a="th" data-i="${i}" class="${i==S.theme?'on':''}" style="background:linear-gradient(135deg,${t[1]} 50%,#E0B84F 50%)"></b>`).join('')}</div></section>`:''}${ram?ramCard:''}${cdCard}${wxCard}
 <section class="card"><h2>আজকের নামাজ <span class="pill">${bn(pc)}/৫</span></h2>${P.map((p,i)=>`<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="pr" data-i="${i}" style="${pcs(i)}" ${pd[i]?'checked':''}><span style="color:${PC[i][0]};font-weight:600">${p}</span></label><span class="m">${T(tm[i])}</span></div>`).join('')}<div class="bar"><i style="width:${pc*20}%"></i></div></section>
 ${actN.length?`<section class="card"><h2>নফল নামাজ <span class="pill">এখন চলছে</span></h2>${actN.map(([w,r])=>{const i=nafl.findIndex(n=>n[0]==w[0]);return `<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="pr" data-i="n${i}" ${pd['n'+i]?'checked':''}>${w[0]}</label><span class="m">${nafl[i][1]} · ${dur(r.left)} বাকি</span></div>`}).join('')}</section>`:''}
 ${rozaCard}
@@ -209,6 +210,25 @@ ${tt.length?tt.map(t=>`<div class="row"><label style="display:flex;gap:10px;alig
 <div style="margin-top:10px"><button class="g lk" data-a="tk">কাজ যোগ করুন<span class="ar">→</span></button></div>
 </section>
 </div>`}
+/* আবহাওয়া — Open-Meteo (বিনা চাবিতে), ঢাকা; ৩০ মিনিট ক্যাশ */
+const WXURL='https://api.open-meteo.com/v1/forecast?latitude=23.8103&longitude=90.4125&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FDhaka&forecast_days=5';
+const WSD=['রবি','সোম','মঙ্গল','বুধ','বৃহ','শুক্র','শনি'];
+const wxi=(c,day=1)=>c==0?[day?'☀️':'🌙','পরিষ্কার আকাশ']:c<3?[day?'⛅':'☁️','আংশিক মেঘলা']:c==3?['☁️','মেঘলা']:c<50?['🌫️','কুয়াশা']:c<60?['🌦️','গুঁড়ি বৃষ্টি']:(c==65||c==82)?['🌧️','ভারী বৃষ্টি']:c<70?['🌧️','বৃষ্টি']:c<80?['❄️','তুষার']:c<90?(c>=85?['❄️','তুষার']:['🌧️','বৃষ্টি']):['⛈️','বজ্রসহ বৃষ্টি'];
+function loadWX(force){
+ try{const c=JSON.parse(localStorage.getItem('dw')||'null');if(c&&c.d){window.WX=c.d}if(!force&&c&&Date.now()-c.t<18e5)return}catch(e){}
+ fetch(WXURL).then(r=>{if(!r.ok)throw 0;return r.json()}).then(d=>{if(!d||!d.current||!d.daily)throw 0;window.WX=d;window.WXE=0;try{localStorage.setItem('dw',JSON.stringify({t:Date.now(),d}))}catch(e){}render()}).catch(()=>{window.WXE=1;render()})}
+function wxCardHTML(){const wx=window.WX,r=n=>bn(Math.round(+n||0));
+ let b;
+ if(!wx)b=window.WXE?`<div class="m">আবহাওয়া আনা যায়নি। ইন্টারনেট সংযোগ দেখুন।</div><div style="margin-top:10px"><button class="g" data-a="wr">আবার চেষ্টা</button></div>`:'<div class="m">লোড হচ্ছে…</div>';
+ else{const w=wx.current,d=wx.daily,[ic,tx]=wxi(w.weather_code,w.is_day);
+  b=`<div style="display:flex;align-items:center;gap:14px"><div style="font-size:52px;line-height:1">${ic}</div><div><div class="big">${r(w.temperature_2m)}°</div><div class="m">${tx}</div></div></div>
+<div class="row"><span class="m">অনুভূত</span><b>${r(w.apparent_temperature)}°</b></div>
+<div class="row"><span class="m">সর্বোচ্চ / সর্বনিম্ন</span><b>${r(d.temperature_2m_max[0])}° / ${r(d.temperature_2m_min[0])}°</b></div>
+<div class="row"><span class="m">আর্দ্রতা</span><b>${r(w.relative_humidity_2m)}%</b></div>
+<div class="row"><span class="m">বাতাস</span><b>${r(w.wind_speed_10m)} কিমি/ঘ</b></div>
+<div class="row"><span class="m">বৃষ্টির সম্ভাবনা</span><b>${r(d.precipitation_probability_max[0])}%</b></div>
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:12px;text-align:center">${d.time.slice(0,5).map((t,i)=>`<div style="padding:8px 2px;border-radius:14px;background:var(--b)"><div class="m">${i?WSD[new Date(t+'T00:00').getDay()]:'আজ'}</div><div style="font-size:20px;margin:2px 0">${wxi(d.weather_code[i])[0]}</div><div style="font-size:12px;font-weight:600">${r(d.temperature_2m_max[i])}°</div><div class="m" style="font-size:11px">${r(d.temperature_2m_min[i])}°</div></div>`).join('')}</div>`}
+ return `<section class="card"><h2>আবহাওয়া <span class="pill">ঢাকা</span></h2>${b}</section>`}
 function navR(){}
 function render(){render1();navR()}
 document.addEventListener('click',e=>{const bt=e.target.closest('button,input,b');if(bt)e={target:bt};const a=e.target.dataset.a,i=e.target.dataset.i,K=key(new Date());if(!a)return;
@@ -227,6 +247,7 @@ if(a=='qz'){const[j,v]=i.split(',');S.qaza[+j]=Math.max(0,S.qaza[+j]+ +v)}
 if(a=='rf'||a=='rt'){const y=hij(new Date()).y,r=S.ram[y]=S.ram[y]||{f:{},t:{}},o=r[a=='rf'?'f':'t'];o[i]?delete o[i]:o[i]=1}
 if(a=='fk'){S.fast[K]=1;delete S.fn[K]}
 if(a=='fx'){S.fn[K]=1;delete S.fast[K]}
+if(a=='wr'){window.WXE=0;loadWX(true)}
 if(a=='th')S.theme=+i;
 if(a=='pr'){(S.pr[K]=S.pr[K]||{})[i]=e.target.checked}
 if(a=='task'){(S.done[K]=S.done[K]||{})[i]=e.target.checked}
@@ -248,5 +269,7 @@ const c=calc(n),tm=[c.fajr,c.noon+.02,c.asr,c.maghrib,c.isha];
 tm.forEach((x,i)=>{if(Math.floor(x)==n.getHours()&&Math.round((x%1)*60)==n.getMinutes())new Notification(P[i]+' নামাজের সময় হয়েছে')});
 if(hij(n).m==9||S.rm)[[c.fajr-.17,'সেহরি শেষ হতে ১০ মিনিট বাকি'],[c.maghrib,'ইফতারের সময় হয়েছে']].forEach(([x,m])=>{if(Math.floor(x)==n.getHours()&&Math.round((x%1)*60)==n.getMinutes())new Notification(m)});
 S.tasks.filter(t=>t.time==hm&&due(t,n)).forEach(t=>new Notification('কাজের সময়: '+t.title))},15000);
+setInterval(()=>loadWX(),6e5);
+loadWX();
 render();
 </script></body></html>
