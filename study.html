@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<script src="lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>পড়াশোনা · Hayat</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+
+/* প্যালেট: সোনালি মূল রঙ (#B8892B → #E2C275, ডার্কে #E0B84F → #F2D88A) · ব্রোঞ্জ #8A6420 · এসপ্রেসো #2B2118 · ক্রিম #FBF7EE · উষ্ণ কালো #0C0A07 */
+:root{--a:#B8892B;--a2:#E2C275;--g:#8A6420;--p:#7A5614;--on:#1F1608;--bb:var(--t);--bt:var(--a2);--bd:var(--a);--bg:#FBF7EE;--c:rgba(255,252,244,.8);--t:#2B2118;--m:#7A6A55;--b:rgba(120,90,30,.15);--cb:rgba(184,137,43,.42);--sh:rgba(184,137,43,.38);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-d="1"]{--bg:#0C0A07;--c:rgba(32,25,14,.72);--t:#F6EDD8;--m:#B3A68B;--b:rgba(224,184,79,.2);--cb:rgba(224,184,79,.34);--a:#E0B84F;--a2:#F2D88A;--g:#A47A20;--p:#F2D88A;--on:#1A1304;--bb:var(--a);--bt:var(--on);--bd:var(--a2);--sh:rgba(224,184,79,.22)}
+/* থিম: গোল্ড + এমারেল্ড */
+:root[data-t="1"]:not([data-d="1"]){--g:#0D4C3C;--p:#0D4C3C;--t:#10241D;--m:#5E6F66;--bg:#F8F6EC}
+:root[data-t="1"][data-d="1"]{--bg:#07100D;--c:rgba(14,59,46,.45);--g:#1F8A68}
+/* থিম: গোল্ড + মিডনাইট নেভি */
+:root[data-t="2"]:not([data-d="1"]){--g:#16213E;--p:#16213E;--t:#0F172A;--m:#5F6878;--bg:#F7F6F1}
+:root[data-t="2"][data-d="1"]{--bg:#0A0F1E;--c:rgba(22,33,62,.6);--g:#2A3B6B}
+/* থিম: গোল্ড + বারগান্ডি */
+:root[data-t="3"]:not([data-d="1"]){--g:#5B1A2B;--p:#5B1A2B;--t:#2A0F16;--m:#76616A;--bg:#FAF5EF}
+:root[data-t="3"][data-d="1"]{--bg:#0E0709;--c:rgba(91,26,43,.42);--g:#8A2D45}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,"Noto Serif Bengali",serif;color:var(--t);background:var(--bg);min-height:100vh;transition:background .4s}
+body::before{content:"";position:fixed;inset:-20% -10% auto;height:70vh;background:radial-gradient(60% 60% at 30% 30%,color-mix(in srgb,var(--g) 24%,transparent),transparent),radial-gradient(50% 50% at 80% 20%,color-mix(in srgb,var(--a) 16%,transparent),transparent);z-index:-1;animation:fl 14s ease-in-out infinite alternate}
+@keyframes fl{to{transform:translate(3%,6%) scale(1.08)}}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.bn,button,input,select,h1,h2,h3,label{font-family:"Noto Serif Bengali",Inter,serif}
+main{max-width:1080px;margin:auto;padding:20px 16px 60px}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+h1{font-size:clamp(24px,5vw,34px);margin:0;font-weight:700}
+.sub{color:var(--m);font-size:14px;margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.card{background:var(--c);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--cb);border-radius:20px;padding:18px;box-shadow:0 12px 32px -14px var(--sh);animation:up .6s both;transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden}
+.card::after{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,var(--a),var(--g))}
+.card:hover{transform:translateY(-3px);box-shadow:0 16px 40px -12px var(--sh)}
+.wide{grid-column:1/-1}
+h2{font-size:17px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+h2::before{content:"";width:6px;height:18px;border-radius:3px;background:linear-gradient(var(--g),var(--a))}
+.big{font-size:clamp(34px,8vw,52px);font-weight:700;letter-spacing:-1px;background:linear-gradient(90deg,var(--a),var(--g));-webkit-background-clip:text;background-clip:text;color:transparent;font-family:"Noto Serif Bengali"}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px dashed var(--b)}
+.row:last-child{border:0}
+.m{color:var(--m);font-size:13px}
+button{border:1px solid var(--bd);border-radius:10px;padding:10px 22px;background:var(--bb);color:var(--bt);font-weight:600;letter-spacing:.3px;cursor:pointer;font-size:14px;box-shadow:0 1px 2px rgba(0,0,0,.12);transition:background .2s,color .2s,border-color .2s,box-shadow .2s}
+button:hover{background:color-mix(in srgb,var(--bb) 86%,var(--bt));box-shadow:0 4px 14px -6px var(--sh)}
+button:active{transform:translateY(1px)}
+button:focus-visible{outline:2px solid var(--g);outline-offset:2px}
+button.g{background:linear-gradient(180deg,color-mix(in srgb,var(--a) 11%,transparent),color-mix(in srgb,var(--a) 3%,transparent));color:var(--t);border:1px solid color-mix(in srgb,var(--a) 55%,transparent);font-weight:500;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 1px 2px rgba(0,0,0,.05)}
+button.g:hover{background:linear-gradient(180deg,color-mix(in srgb,var(--a) 22%,transparent),color-mix(in srgb,var(--a) 8%,transparent));border-color:var(--a);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 8px 18px -10px var(--sh)}
+:root[data-d="1"] button.g{box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+button.lk{display:inline-flex;align-items:center;gap:10px;padding:8px 8px 8px 18px;border-radius:99px;font-size:13px;letter-spacing:.2px}
+button.lk .ar{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on);font-size:12px;line-height:1;box-shadow:0 2px 6px -2px var(--sh);transition:transform .25s}
+button.lk:hover .ar{transform:translateX(3px)}
+button.g.lk{background:linear-gradient(135deg,var(--g),color-mix(in srgb,var(--g) 62%,#000));color:#FFF6DC;border:1px solid color-mix(in srgb,var(--a2) 75%,transparent);font-weight:600;text-shadow:0 1px 1px rgba(0,0,0,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 8px 18px -10px var(--sh)}
+button.g.lk:hover{background:linear-gradient(135deg,color-mix(in srgb,var(--g) 85%,#fff),var(--g));border-color:var(--a2);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 12px 22px -10px var(--sh)}
+:root[data-d="1"] button.g.lk{background:linear-gradient(135deg,var(--a),var(--a2));color:#1A1304;border-color:var(--a2);text-shadow:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 8px 18px -10px var(--sh)}
+:root[data-d="1"] button.g.lk:hover{background:linear-gradient(135deg,var(--a2),#FFF0C2)}
+:root[data-d="1"] button.lk .ar{background:#1A1304;color:var(--a2)}
+.row button:not(.x){padding:6px 14px}
+input,select{border:1px solid var(--b);background:var(--c);color:var(--t);border-radius:12px;padding:9px 12px;font-size:14px;min-width:0}
+input:focus,select:focus{outline:2px solid var(--g)}
+.chk{appearance:none;width:24px;height:24px;border-radius:8px;border:2px solid var(--cb);cursor:pointer;display:grid;place-items:center;transition:.2s;padding:0;flex:none}
+.chk:checked{background:linear-gradient(135deg,var(--pc,var(--a)),var(--pc2,var(--a2)));border-color:transparent}
+.chk[style]{border-color:color-mix(in srgb,var(--pc) 55%,transparent)}
+.chk:checked::after{content:"✓";color:var(--on);font-size:14px}
+.chk:disabled{opacity:.4;cursor:not-allowed}
+.pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;background:color-mix(in srgb,var(--a) 20%,transparent);color:var(--p);font-weight:600}
+.bad{background:rgba(220,60,60,.14);color:#d33}
+.bar{height:8px;border-radius:9px;background:var(--b);overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--a),var(--g));transition:width .6s}
+.sw{display:flex;gap:10px;flex-wrap:wrap}
+.sw b{width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .2s}
+.sw b:hover{transform:scale(1.2)}.sw b.on{border-color:var(--t)}
+form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}form input{flex:1 1 110px}
+.st{display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:center}
+.st div{padding:10px;border-radius:14px;background:var(--b)}
+.x{background:none;border:0;box-shadow:none;color:var(--m);padding:4px 8px}
+.x:hover{background:none;box-shadow:none;color:#d33}
+.dots{display:grid;grid-template-columns:repeat(auto-fill,minmax(32px,1fr));gap:6px;margin-top:10px}
+.dots b{display:grid;place-items:center;height:32px;border-radius:9px;background:var(--b);font-size:12px;font-weight:500;cursor:pointer;transition:.2s}
+.dots b:hover{transform:scale(1.1)}
+.dots b.on{background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on)}
+
+.cd{text-align:center}
+.cd h2{justify-content:center}
+.cdw{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:18px 22px;margin:6px 0 4px}
+.ring{position:relative;width:138px;height:138px;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg);overflow:visible}
+.ring .tr{fill:none;stroke:var(--b);stroke-width:7}
+.ring .pg{fill:none;stroke:url(#rg);stroke-width:7;stroke-linecap:round;filter:drop-shadow(0 0 6px var(--sh));transition:stroke-dashoffset 1s linear}
+.ring .dc{fill:none;stroke:var(--pc);stroke-width:1;stroke-dasharray:1 6;opacity:.45;animation:spin 60s linear infinite;transform-origin:70px 70px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.rc b{font-size:22px;font-weight:700;font-family:"Noto Serif Bengali";background:linear-gradient(90deg,var(--pc),var(--pc2));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.2}
+.rc span{font-size:12px;color:var(--m)}
+.tiles{display:flex;align-items:center;gap:6px}
+.tl{min-width:62px;padding:10px 6px 8px;border-radius:16px;background:linear-gradient(160deg,color-mix(in srgb,var(--pc) 20%,transparent),color-mix(in srgb,var(--pc2) 8%,transparent));border:1px solid color-mix(in srgb,var(--pc) 45%,transparent);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 8px 18px -12px var(--pc)}
+.tl b{display:block;font-size:30px;font-weight:700;line-height:1.15;font-family:"Noto Serif Bengali";background:linear-gradient(180deg,var(--pc2),var(--pc));-webkit-background-clip:text;background-clip:text;color:transparent}
+.tl small{font-size:11px;color:var(--m)}
+.cl{font-size:24px;color:var(--pc);opacity:.7;margin-top:-14px}
+.cds{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.cdc{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;font-size:12px;color:var(--m);border:1px solid color-mix(in srgb,var(--pc) 40%,transparent);transition:.3s}
+.cdc::before{content:"";width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,var(--pc2),var(--pc))}
+.cdc.past{opacity:.5;text-decoration:line-through;text-decoration-color:var(--b)}
+.cdc.on{background:linear-gradient(135deg,var(--pc),var(--pc2));color:#fff;border-color:transparent;font-weight:600;box-shadow:0 6px 14px -6px var(--pc)}
+.cdc.on::before{background:#fff}
+.cd{border-color:color-mix(in srgb,var(--pc) 50%,transparent);box-shadow:0 12px 32px -14px var(--pc)}
+.cd::after{background:linear-gradient(90deg,var(--pc),var(--pc2))}
+.cd h2{color:var(--t)}
+
+.warn{margin:12px 0 0;padding:10px 14px;border-radius:14px;background:rgba(220,60,60,.12);border:1px solid rgba(220,60,60,.4);color:#d33;font-size:13px;font-weight:600;line-height:1.6}
+.warn b{font-size:18px;letter-spacing:.5px;margin:0 4px}
+.okb{margin:10px 0 0;padding:9px 14px;border-radius:14px;background:rgba(31,157,107,.13);border:1px solid rgba(31,157,107,.4);color:#1f9d6b;font-size:13px;font-weight:600}
+:root[data-d="1"] .warn{color:#ff8a8a}:root[data-d="1"] .okb{color:#4fd7a0}
+.sp{margin-top:16px;text-align:left}
+.spt{font-size:12px;font-weight:600;color:var(--m);letter-spacing:.4px;margin:12px 0 4px;padding-bottom:4px;border-bottom:1px solid var(--b)}
+.sr{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:6px 8px;border-radius:10px;font-size:13px;color:var(--m)}
+.sr span:first-child{display:flex;align-items:center;gap:8px;color:var(--t)}
+.sr span:first-child::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--b);flex:none}
+.sr.on{font-weight:600}
+.sr.on.f{background:rgba(220,60,60,.12);color:#d33}.sr.on.f span:first-child::before{background:#d33;box-shadow:0 0 0 4px rgba(220,60,60,.2)}
+.sr.on.n{background:rgba(31,157,107,.13);color:#1f9d6b}.sr.on.n span:first-child::before{background:#1f9d6b;box-shadow:0 0 0 4px rgba(31,157,107,.2)}
+:root[data-d="1"] .sr.on.f{color:#ff8a8a}:root[data-d="1"] .sr.on.n{color:#4fd7a0}
+.ram{border-color:var(--g)}
+
+.rdy .card{animation:none}
+.wx{background:linear-gradient(135deg,color-mix(in srgb,var(--wt) 22%,var(--c)),var(--c) 70%);border-color:color-mix(in srgb,var(--wt) 50%,transparent);box-shadow:0 12px 32px -16px var(--wt)}
+.wx::after{background:linear-gradient(90deg,var(--wt),var(--a2))}
+.wx .ic{font-size:44px;line-height:1;filter:drop-shadow(0 6px 10px color-mix(in srgb,var(--wt) 55%,transparent))}
+.wx .chp{padding:3px 10px;border-radius:99px;background:color-mix(in srgb,var(--wt) 14%,transparent);border:1px solid color-mix(in srgb,var(--wt) 28%,transparent);font-size:12px;font-weight:600;white-space:nowrap}
+.wx .fc{padding:5px 0;border-radius:12px;background:color-mix(in srgb,var(--wt) 10%,transparent);border:1px solid color-mix(in srgb,var(--wt) 20%,transparent);line-height:1.25}
+
+/* ── Premium polish ── */
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--a) 55%,transparent) transparent}
+::selection{background:var(--a2);color:#1F1608}
+html::before{content:"";position:fixed;right:-15%;bottom:-25%;width:65vw;height:65vh;background:radial-gradient(50% 50% at 50% 50%,color-mix(in srgb,var(--a) 15%,transparent),transparent);z-index:-1;pointer-events:none}
+h1{background:linear-gradient(100deg,var(--t) 35%,var(--a) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:-.3px;line-height:1.25}
+.sub{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:5px 14px;border-radius:99px;border:1px solid var(--cb);background:linear-gradient(135deg,color-mix(in srgb,var(--a) 12%,transparent),color-mix(in srgb,var(--a2) 5%,transparent));color:var(--m);font-size:13px;font-weight:500}
+.card:not(.cd):not(.wx):not(.ram){border-color:color-mix(in srgb,var(--a) 38%,transparent);box-shadow:0 20px 42px -26px var(--sh),0 2px 6px -3px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.55)}
+.card:not(.cd):not(.wx):not(.ram):hover{box-shadow:0 26px 50px -24px var(--sh),0 2px 6px -3px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.6)}
+:root[data-d="1"] .card:not(.cd):not(.wx):not(.ram){box-shadow:0 20px 42px -26px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.07)}
+.card::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(125deg,rgba(255,255,255,.34),transparent 38%);opacity:.55}
+:root[data-d="1"] .card::before{opacity:.07}
+.card::after{height:2px;opacity:.9}
+h2{font-size:16px;font-weight:700;letter-spacing:.2px}
+h2::before{width:4px;height:16px;background:linear-gradient(var(--a2),var(--a));box-shadow:0 0 10px -1px var(--sh)}
+.row{border-bottom:1px solid var(--b);border-image:linear-gradient(90deg,color-mix(in srgb,var(--a) 38%,transparent),transparent) 1}
+.row:last-child{border:0;border-image:none}
+.pill{border:1px solid color-mix(in srgb,var(--a) 42%,transparent);background:linear-gradient(135deg,color-mix(in srgb,var(--a) 22%,transparent),color-mix(in srgb,var(--a2) 10%,transparent))}
+.bad{border-color:rgba(220,60,60,.4)}
+.bar{height:6px}
+.bar i{box-shadow:0 0 12px -1px var(--sh);border-radius:9px}
+.chk:checked{box-shadow:0 4px 12px -4px var(--pc,var(--sh))}
+.big{filter:drop-shadow(0 3px 10px color-mix(in srgb,var(--a) 28%,transparent))}
+.grid>.card:nth-child(1){animation-delay:0s}.grid>.card:nth-child(2){animation-delay:.06s}.grid>.card:nth-child(3){animation-delay:.12s}.grid>.card:nth-child(4){animation-delay:.18s}.grid>.card:nth-child(5){animation-delay:.24s}.grid>.card:nth-child(6){animation-delay:.3s}.grid>.card:nth-child(7){animation-delay:.36s}
+
+/* ── পড়াশোনা পেজ ── */
+button.opt{padding:6px 14px;border-radius:99px;border:1px solid var(--cb);background:transparent;color:var(--t);font-size:13px;font-weight:600;box-shadow:none;letter-spacing:0}
+button.opt:hover{background:color-mix(in srgb,var(--a) 14%,transparent);box-shadow:none}
+button.opt.on{background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on);border-color:transparent;box-shadow:0 6px 14px -8px var(--sh)}
+.chs{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.chs select{min-width:190px;max-width:100%;text-align:center;font-weight:600}
+.bt{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+button.go{background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on);border:1px solid var(--a2);font-size:15px;font-weight:700;padding:12px 30px;min-width:150px;border-radius:99px;box-shadow:0 12px 24px -12px var(--sh),inset 0 1px 0 rgba(255,255,255,.55)}
+button.go:hover{background:linear-gradient(135deg,var(--a2),#FFF0C2);box-shadow:0 14px 26px -12px var(--sh),inset 0 1px 0 rgba(255,255,255,.6)}
+.bt button.g{border-radius:99px;padding:12px 20px}
+form select{flex:1 1 110px}
+.wk{display:flex;gap:8px;height:150px;margin-top:6px}
+.wc{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px}
+.wv{font-size:11px;color:var(--m);height:14px;font-weight:600}
+.wbw{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center;border-radius:10px;background:color-mix(in srgb,var(--a) 7%,transparent)}
+.wb{display:block;width:62%;max-width:38px;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,var(--a2),var(--a));opacity:.72;transition:height .6s}
+.wb.td{opacity:1;box-shadow:0 8px 18px -8px var(--sh)}
+.wb.ok{background:linear-gradient(180deg,#4fd7a0,#1f9d6b);opacity:1}
+.wd{font-size:12px;color:var(--m);font-weight:500}.wd.on{color:var(--t);font-weight:700}
+.lg{width:10px;height:10px;border-radius:3px;background:linear-gradient(180deg,#4fd7a0,#1f9d6b);display:inline-block}
+.stk{display:flex;height:8px;border-radius:9px;overflow:hidden;gap:2px}.stk i{display:block;min-width:4px}
+.dt{width:10px;height:10px;border-radius:50%;flex:none}
+.srow{cursor:pointer;border-radius:12px;padding:9px 8px;transition:background .2s}
+.srow:hover{background:color-mix(in srgb,var(--a) 8%,transparent)}
+.srow.on{background:color-mix(in srgb,var(--a) 14%,transparent);box-shadow:inset 3px 0 0 var(--a)}
+.okb.wide{text-align:center}
+
+</style></head>
+<body><script src="header.js"></script>
+<main id="app"></main>
+<script>
+const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const MON=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
+const WSD=['রবি','সোম','মঙ্গল','বুধ','বৃহ','শুক্র','শনি'];
+const TH=[['শ্যাম্পেইন গোল্ড','#8A6420'],['গোল্ড + এমারেল্ড','#0D4C3C'],['গোল্ড + নেভি','#16213E'],['গোল্ড + বারগান্ডি','#5B1A2B']];
+const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+// অন্য পেজের সাথে একই স্টোরেজ কী ('dl'); পড়াশোনার তথ্য S.st-এ জমা হয়
+let S={theme:0,dark:0,tasks:[],done:{},pr:{},fin:[],url:'',notif:0,qaza:[0,0,0,0,0,0],fast:{},ram:{},rm:0};
+try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
+if(!TH[S.theme])S.theme=0;
+const D=S.st=Object.assign({subj:[],log:{},ses:{},goal:120,exams:[],pre:[25,5],mode:'f',sel:0,run:null},S.st||{});
+if(!Array.isArray(D.subj))D.subj=[];if(!Array.isArray(D.exams))D.exams=[];if(!Array.isArray(D.pre)||D.pre.length!=2)D.pre=[25,5];
+if(!D.log||typeof D.log!='object')D.log={};if(!D.ses||typeof D.ses!='object')D.ses={};
+const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
+const $=document.getElementById('app'),root=document.documentElement;
+const COL=['#4F73F0','#DB9A12','#E8782B','#D8456B','#6A4FD0','#1F9D6B','#0EA5B7','#8A6420'];
+const PRE=[[25,5],[50,10],[90,15]];
+const CIR=2*Math.PI*56;
+const dayAt=i=>{const t=new Date();return new Date(t.getFullYear(),t.getMonth(),t.getDate()-i)};
+const tot=k=>Object.values(D.log[k]||{}).reduce((a,b)=>a+b,0);
+const fm=m=>{m=Math.round(m);const h=Math.floor(m/60),r=m%60;return h?bn(h)+' ঘণ্টা'+(r?' '+bn(r)+' মিনিট':''):bn(r)+' মিনিট'};
+const nm=id=>{const x=D.subj.find(s=>s.id==id);return x?x.name:'সাধারণ'};
+const cl=id=>{const x=D.subj.find(s=>s.id==id);return x?x.c:'#B8892B'};
+const addMin=(id,m)=>{if(!(m>0))return;const k=key(new Date()),L=D.log[k]=D.log[k]||{};L[id]=(L[id]||0)+m};
+const tmTot=()=>D.run?D.run.tot:(D.mode=='f'?D.pre[0]:D.pre[1])*60000;
+const tmRem=()=>{const r=D.run;return r?(r.end?Math.max(0,r.end-Date.now()):r.left):tmTot()};
+const mmss=ms=>{const q=Math.ceil(ms/1000);return String(Math.floor(q/60)).padStart(2,'0')+':'+String(q%60).padStart(2,'0')};
+window.MSG='';
+function ping(msg){
+ try{if(S.notif&&window.Notification&&Notification.permission=='granted')new Notification(msg)}catch(e){}
+ try{const A=window.AudioContext||window.webkitAudioContext,c=new A(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=880;g.gain.setValueAtTime(.0001,c.currentTime);g.gain.exponentialRampToValueAtTime(.25,c.currentTime+.05);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.9);o.start();o.stop(c.currentTime+1)}catch(e){}
+ window.MSG=msg;setTimeout(()=>{window.MSG='';render()},9000)}
+function done(){const r=D.run;if(!r)return;
+ if(r.m=='f'){addMin(r.s,Math.round(r.tot/60000));const k=key(new Date());D.ses[k]=(D.ses[k]||0)+1;D.mode='b'}else D.mode='f';
+ D.run=null;save();
+ ping(r.m=='f'?'ফোকাস সেশন সম্পন্ন! এবার একটু বিরতি নিন।':'বিরতি শেষ! আবার ফোকাসে ফিরুন।');render()}
+
+function render(){
+ root.dataset.t=S.theme;root.dataset.d=S.dark;
+ const now=new Date(),K=key(now),r=D.run,m=r?r.m:D.mode,isB=m=='b',tt=tmTot(),rem=tmRem(),run=!!(r&&r.end),paused=!!(r&&!r.end);
+ const pc=isB?['#1F9D6B','#7AE0B8']:['var(--a)','var(--a2)'];
+ /* সপ্তাহ */
+ const wk=Array.from({length:7},(_,i)=>{const d=dayAt(6-i);return{d,k:key(d),m:tot(key(d))}});
+ const wsum=wk.reduce((a,x)=>a+x.m,0),wmax=Math.max(D.goal,...wk.map(x=>x.m),1),avg=wsum/7;
+ const tdm=tot(K),pct=Math.min(100,Math.round(tdm/D.goal*100)),ses=D.ses[K]||0;
+ let st=0,i0=tdm>0?0:1;while(tot(key(dayAt(i0)))>0&&st<3650){st++;i0++}
+ const ids=[0,...D.subj.map(s=>s.id)];
+ const wt=id=>wk.reduce((a,x)=>a+(((D.log[x.k]||{})[id])||0),0);
+ const opts=sel=>`<option value="0" ${sel==0?'selected':''}>সাধারণ</option>`+D.subj.map(s=>`<option value="${s.id}" ${sel==s.id?'selected':''}>${esc(s.name)}</option>`).join('');
+ const selId=D.subj.some(s=>s.id==D.sel)?D.sel:0;
+
+ const timer=`<section class="card cd" style="--pc:${pc[0]};--pc2:${pc[1]}"><h2>ফোকাস টাইমার</h2>
+<div class="cdw"><div class="ring"><svg viewBox="0 0 140 140"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--pc2)"/><stop offset="1" style="stop-color:var(--pc)"/></linearGradient></defs><circle class="dc" cx="70" cy="70" r="65"/><circle class="tr" cx="70" cy="70" r="56"/><circle class="pg" id="cdr" cx="70" cy="70" r="56" stroke-dasharray="${CIR}" stroke-dashoffset="${CIR*(1-Math.min(1,rem/tt))}"/></svg><div class="rc"><b id="tm" style="font-size:30px">${bn(mmss(rem))}</b><span>${isB?'বিরতি':'ফোকাস'}</span></div></div></div>
+${r?'':`<div class="chs"><button class="opt ${!isB?'on':''}" data-a="md" data-i="f">ফোকাস</button><button class="opt ${isB?'on':''}" data-a="md" data-i="b">বিরতি</button></div><div class="chs">${PRE.map((p,i)=>`<button class="opt ${D.pre[0]==p[0]&&D.pre[1]==p[1]?'on':''}" data-a="pr" data-i="${i}">${bn(p[0])}/${bn(p[1])} মিনিট</button>`).join('')}</div>`}
+<div class="chs"><select data-a="sub" aria-label="কোন বিষয়">${opts(r?r.s:selId)}</select></div>
+<div class="bt">${run?`<button class="go" data-a="pa">⏸ থামান</button>`:`<button class="go" data-a="go">▶ ${paused?'চালিয়ে যান':'শুরু করুন'}</button>`}${r?`<button class="g" data-a="fin">সেশন শেষ</button><button class="g" data-a="rs">↺ রিসেট</button>`:''}</div></section>`;
+
+ const today=`<section class="card"><h2>আজকের পড়া ${pct>=100?'<span class="pill">✓ লক্ষ্য পূরণ</span>':''}</h2>
+<div class="big" style="font-size:30px">${fm(tdm)}</div>
+<div class="bar"><i style="width:${pct}%"></i></div>
+<div class="row" style="margin-top:6px"><span class="m">লক্ষ্য · ${fm(D.goal)}</span><span style="display:flex;gap:6px"><button class="g opt" data-a="gl" data-i="-15">−</button><button class="g opt" data-a="gl" data-i="15">+</button></span></div>
+<div class="st" style="grid-template-columns:repeat(3,1fr);margin-top:8px"><div><b style="font-size:19px">🔥 ${bn(st)}</b><div class="m">দিনের ধারা</div></div><div><b style="font-size:19px">${bn(ses)}</b><div class="m">সেশন</div></div><div><b style="font-size:14px;line-height:1.9;display:block">${fm(wsum)}</b><div class="m">এ সপ্তাহ</div></div></div>
+<form data-f="man"><select name="s" aria-label="কোন বিষয়">${opts(selId)}</select><input name="m" type="number" min="1" max="600" placeholder="মিনিট" required><button>ম্যানুয়াল যোগ</button></form></section>`;
+
+ const week=`<section class="card wide"><h2>সাপ্তাহিক পড়া <span class="pill">${fm(wsum)}</span></h2>
+<div class="wk">${wk.map((x,i)=>`<div class="wc" title="${fm(x.m)}"><div class="wv">${x.m?bn(x.m):''}</div><div class="wbw"><i class="wb ${x.m>=D.goal?'ok':''} ${i==6?'td':''}" style="height:${x.m?Math.max(4,x.m/wmax*100):0}%"></i></div><div class="wd ${i==6?'on':''}">${i==6?'আজ':WSD[x.d.getDay()]}</div></div>`).join('')}</div>
+<div class="m" style="margin-top:10px;display:flex;gap:16px;flex-wrap:wrap"><span>প্রতিদিন (মিনিট)</span><span>গড় ${fm(avg)}</span><span style="display:inline-flex;align-items:center;gap:6px"><i class="lg"></i>লক্ষ্য পূরণ</span></div></section>`;
+
+ const wsAll=ids.map(id=>wt(id)),wsTot=wsAll.reduce((a,b)=>a+b,0);
+ const subs=`<section class="card"><h2>বিষয়সমূহ</h2>
+${wsTot?`<div class="stk">${ids.map((id,j)=>wsAll[j]?`<i style="flex:${wsAll[j]};background:${cl(id)}" title="${esc(nm(id))} · ${fm(wsAll[j])}"></i>`:'').join('')}</div>`:''}
+<div style="margin-top:8px">${ids.map(id=>`<div class="row srow ${selId==id?'on':''}" data-a="ss" data-i="${id}"><span style="display:flex;align-items:center;gap:10px;min-width:0"><i class="dt" style="background:${cl(id)}"></i><b style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(nm(id))}</b></span><span class="m" style="display:flex;align-items:center;gap:6px;flex:none">আজ ${fm((D.log[K]||{})[id]||0)}${id?`<button class="x" data-a="sd" data-i="${id}" aria-label="মুছুন">✕</button>`:''}</span></div>`).join('')}</div>
+${D.subj.length?'':'<div class="m" style="margin-top:6px">কোনো বিষয় নেই। নতুন বিষয় যোগ করুন।</div>'}
+<form data-f="sj"><input name="n" maxlength="30" placeholder="বিষয়ের নাম" required><button>যোগ করুন</button></form></section>`;
+
+ const ex=[...D.exams].sort((a,b)=>a.d<b.d?-1:1);
+ const exams=`<section class="card"><h2>পরীক্ষা</h2>
+${ex.length?ex.map(e=>{const dt=new Date(e.d+'T00:00'),n=Math.round((dt-new Date(K+'T00:00'))/864e5),lb=n<0?'শেষ হয়েছে':n==0?'আজ':n==1?'আগামীকাল':bn(n)+' দিন বাকি';
+ return `<div class="row" style="${n<0?'opacity:.55':''}"><div style="min-width:0"><b style="overflow-wrap:anywhere">${esc(e.n)}</b><div class="m">${bn(dt.getDate())} ${MON[dt.getMonth()]} ${bn(dt.getFullYear())}</div></div><span style="display:flex;align-items:center;gap:6px;flex:none"><span class="pill ${n>=0&&n<=7?'bad':''}">${lb}</span><button class="x" data-a="ed" data-i="${e.id}" aria-label="মুছুন">✕</button></span></div>`}).join(''):'<div class="m">কোনো পরীক্ষা নেই</div>'}
+<form data-f="ex"><input name="n" maxlength="40" placeholder="পরীক্ষার নাম" required><input name="d" type="date" required><button>যোগ করুন</button></form></section>`;
+
+ document.title=L('পড়াশোনা')+' · Hayat';
+ $.innerHTML=`<header><div><h1>পড়াশোনা</h1><div class="sub">ফোকাস করুন, ধারাবাহিকতা ধরে রাখুন</div></div></header>
+<div class="grid">${window.MSG?`<div class="okb wide">${window.MSG}</div>`:''}${timer}${today}${week}${subs}${exams}</div>`}
+
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;const a=t.dataset.a,i=t.dataset.i;
+ if(a=='sub')return;
+ if(a=='go'){const r=D.run;if(r){if(!r.end)r.end=Date.now()+r.left}else{const x=tmTot();D.run={m:D.mode,tot:x,end:Date.now()+x,left:x,s:D.sel}}}
+ if(a=='pa'&&D.run&&D.run.end){D.run.left=Math.max(0,D.run.end-Date.now());D.run.end=0}
+ if(a=='fin'&&D.run){const r=D.run,el=r.tot-(r.end?Math.max(0,r.end-Date.now()):r.left);if(r.m=='f'){const mm=Math.floor(el/60000);if(mm>0){addMin(r.s,mm);const k=key(new Date());D.ses[k]=(D.ses[k]||0)+1}}D.run=null}
+ if(a=='rs')D.run=null;
+ if(a=='md'&&!D.run)D.mode=i=='b'?'b':'f';
+ if(a=='pr'&&!D.run&&PRE[+i])D.pre=PRE[+i].slice();
+ if(a=='gl')D.goal=Math.max(15,Math.min(720,D.goal+ +i));
+ if(a=='ss'){D.sel=+i;if(D.run&&D.run.m=='f')D.run.s=+i}
+ if(a=='sd'){if(!confirm('বিষয়টি মুছে ফেলবেন?'))return;const id=+i;D.subj=D.subj.filter(s=>s.id!=id);for(const k in D.log){const L=D.log[k];if(L[id]){L[0]=(L[0]||0)+L[id];delete L[id]}}if(D.sel==id)D.sel=0;if(D.run&&D.run.s==id)D.run.s=0}
+ if(a=='ed')D.exams=D.exams.filter(x=>x.id!=i);
+ save();render()});
+document.addEventListener('change',e=>{const t=e.target;if(t.dataset&&t.dataset.a=='sub'){D.sel=+t.value;if(D.run&&D.run.m=='f')D.run.s=+t.value;save();render()}});
+$.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target),k=e.target.dataset.f;
+ if(k=='man'){addMin(+f.get('s')||0,Math.round(+f.get('m')||0))}
+ if(k=='sj'){const n=String(f.get('n')||'').trim();if(n)D.subj.push({id:Date.now(),name:n,c:COL[D.subj.length%COL.length]})}
+ if(k=='ex'){const n=String(f.get('n')||'').trim(),d=f.get('d');if(n&&d)D.exams.push({id:Date.now(),n,d})}
+ save();render()});
+let LK=key(new Date());
+setInterval(()=>{
+ if(key(new Date())!==LK){LK=key(new Date());render();return}
+ const r=D.run;if(!r||!r.end)return;const rem=r.end-Date.now();
+ if(rem<=0){done();return}
+ const e=id=>document.getElementById(id);
+ if(e('tm'))e('tm').textContent=bn(mmss(rem));
+ const c=e('cdr');if(c)c.setAttribute('stroke-dashoffset',CIR*(1-Math.min(1,rem/r.tot)));
+ document.title=mmss(rem)+' · Hayat'},1000);
+render();
+</script></body></html>
