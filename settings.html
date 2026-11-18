@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="bn"><head><meta charset="utf-8">
+<script src="lang.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>সেটিং · Hayat</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
@@ -142,12 +143,13 @@ const TYL=t=>t.type=='once'?'একবার':t.type=='every'?bn(t.n)+' দি�
 function render(){root.dataset.t=S.theme;root.dataset.d=S.dark;
 const QN=[...P,'বিতর'],qt=S.qaza.reduce((a,b)=>a+b,0);
 const look=`<section class="card"><h2>চেহারা</h2>${tg('dark','রাতের মোড','অন্ধকার থিমে চোখের আরাম',S.dark)}<div style="padding:9px 0 2px"><b>রঙের সেট</b><div class="m" style="margin:2px 0 10px">${TH[S.theme][0]}</div><div class="sw">${TH.map((t,i)=>`<b title="${t[0]}" data-a="th" data-i="${i}" class="${i==S.theme?'on':''}" style="background:linear-gradient(135deg,${t[1]} 50%,#E0B84F 50%)"></b>`).join('')}</div></div></section>`;
+const lang=`<section class="card"><h2>ভাষা</h2><div class="acts"><button class="${(S.lang||'bn')=='bn'?'':'g'}" data-a="lg" data-i="bn">বাংলা</button><button class="${S.lang=='en'?'':'g'}" data-a="lg" data-i="en">English</button></div></section>`;
 const mode=`<section class="card"><h2>মোড ও নোটিফিকেশন</h2>${tg('rm','রমজান মোড','সেহরি-ইফতার কাউন্টডাউন ও তারাবিহ ট্র্যাকার; রমজান মাসে নিজে থেকেই চালু হয়',S.rm)}${tg('notif','নোটিফিকেশন','নামাজ, সেহরি-ইফতার ও কাজের সময়ে জানাবে',S.notif)}<div class="m" style="margin-top:6px">নোটিফিকেশন পেতে হোম পেজ ব্রাউজারে খোলা থাকতে হবে।</div></section>`;
 const qaza=`<section class="card"><h2>কাযা নামাজ <span class="pill ${qt?'bad':''}">মোট ${bn(qt)}</span></h2>${QN.map((p,j)=>`<div class="row"><span>${p}</span><span style="display:flex;gap:8px;align-items:center"><button class="g" data-a="qz" data-i="${j},-1">−</button><b style="min-width:34px;text-align:center">${bn(S.qaza[j])}</b><button data-a="qz" data-i="${j},1">+</button></span></div>`).join('')}<form data-f="qz"><input name="n" type="number" min="1" placeholder="প্রতি ওয়াক্তে কত" required><button>সবগুলোতে যোগ</button></form><div class="m" style="margin-top:8px">আদায় করলে − চাপুন, বাকি থাকলে +।</div></section>`;
 const tasks=`<section class="card"><h2>কাজের তালিকা <span class="pill">${bn(S.tasks.length)}টি</span></h2>${S.tasks.length?S.tasks.map(t=>`<div class="row"><span>${esc(t.title)}</span><span class="m">${t.time?bn(t.time)+' · ':''}${TYL(t)} <button class="x" data-a="del" data-i="${t.id}" aria-label="মুছুন">✕</button></span></div>`).join(''):'<div class="m">এখনো কোনো কাজ নেই।</div>'}</section>`;
 const sheet=`<section class="card"><h2>গুগল শিট সিঙ্ক</h2><div class="m">Apps Script ওয়েব অ্যাপের লিংক দিন (পরের ধাপে সংযোগ হবে)।</div><form data-f="url"><input name="u" value="${esc(S.url)}" placeholder="https://script.google.com/…"><button>সংরক্ষণ</button></form></section>`;
 const data=`<section class="card"><h2>ডেটা ব্যবস্থাপনা</h2><div class="m">সব তথ্য শুধু এই ব্রাউজারে জমা থাকে। ব্যাকআপ নিয়ে রাখুন।</div><div class="acts"><button data-a="exp">⬇ ব্যাকআপ নামান</button><button class="g" data-a="imp">⬆ ব্যাকআপ আনুন</button><button class="dg" data-a="rst">🗑 সব মুছুন</button></div><input type="file" id="imp" accept=".json,application/json" hidden></section>`;
-$.innerHTML=`<header><div><h1>⚙ সেটিং</h1><div class="sub">সব কিছু এক জায়গা থেকে নিয়ন্ত্রণ করুন</div></div></header><div class="grid">${look}${mode}${qaza}${sheet}<div class="wide">${tasks}</div><div class="wide">${data}</div></div>`}
+$.innerHTML=`<header><div><h1>⚙ সেটিং</h1><div class="sub">সব কিছু এক জায়গা থেকে নিয়ন্ত্রণ করুন</div></div></header><div class="grid">${look}${lang}${mode}${qaza}${sheet}<div class="wide">${tasks}</div><div class="wide">${data}</div></div>`}
 function exportData(){const b=new Blob([JSON.stringify(S,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),l=document.createElement('a');l.href=u;l.download='dinlipi-backup-'+key(new Date())+'.json';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;const a=t.dataset.a,i=t.dataset.i;
 if(a=='hm'){location.href='index.html';return}
@@ -159,6 +161,7 @@ if(a=='st'){scrollTo({top:0,behavior:'smooth'});return}
 if(a=='exp'){exportData();return}
 if(a=='imp'){const f=document.getElementById('imp');if(f)f.click();return}
 if(a=='rst'){if(confirm('সব তথ্য (নামাজ, কাজ, হিসাব, কাযা, সেটিং) চিরতরে মুছে যাবে। নিশ্চিত?')){try{localStorage.removeItem('dl')}catch(_){}location.reload()}return}
+if(a=='lg'){S.lang=i=='en'?'en':'bn';save();location.reload();return}
 if(a=='dark')S.dark=t.checked?1:0;
 if(a=='rm')S.rm=t.checked?1:0;
 if(a=='th')S.theme=+i;
