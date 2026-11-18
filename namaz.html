@@ -163,6 +163,84 @@ button.opt.on{background:linear-gradient(135deg,var(--a),var(--a2));color:var(--
 .wb.ok{background:linear-gradient(180deg,#4fd7a0,#1f9d6b);opacity:1}
 .wd{font-size:12px;color:var(--m);font-weight:500}.wd.on{color:var(--t);font-weight:700}
 .lg{width:10px;height:10px;border-radius:3px;background:linear-gradient(180deg,#4fd7a0,#1f9d6b);display:inline-block}
+/* ── ক্লিক করলে বিস্তারিত (শিট) ── */
+.sr[data-sh]{cursor:pointer;transition:background .25s}
+.sr[data-sh]:hover{background:color-mix(in srgb,var(--a) 9%,transparent)}
+.sr[data-sh]:focus-visible{outline:2px solid var(--g);outline-offset:1px}
+.sr[data-sh]:focus-visible{outline:2px solid var(--g);outline-offset:1px}
+#sh{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:flex-end;justify-content:center;visibility:hidden;pointer-events:none;transition:visibility 0s .45s}
+#sh.on{visibility:visible;pointer-events:auto;transition:visibility 0s}
+html.shl,body.shl{overflow:hidden}
+.shb{position:absolute;inset:0;background:rgba(12,10,7,.55);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);opacity:0;transition:opacity .45s}
+#sh.on .shb{opacity:1}
+.shp{position:relative;width:min(660px,100%);max-height:88vh;max-height:88dvh;overflow:hidden;display:flex;flex-direction:column;border-radius:28px 28px 0 0;background:linear-gradient(180deg,color-mix(in srgb,var(--a) 12%,var(--bg)),var(--bg) 170px);border:1px solid var(--cb);border-bottom:0;box-shadow:0 -30px 80px -24px var(--sh);padding:10px 0 0;transform:translateY(105%);transition:transform .55s cubic-bezier(.22,1,.36,1)}
+#sh.on .shp{transform:none}
+@media (min-width:700px){#sh{align-items:center}.shg{display:none}.shp{padding-top:14px}.shp{border-radius:28px;border-bottom:1px solid var(--cb);transform:translateY(26px) scale(.96);opacity:0;transition:transform .55s cubic-bezier(.22,1,.36,1),opacity .35s}#sh.on .shp{transform:none;opacity:1}}
+.shg{flex:none;width:44px;height:4px;border-radius:4px;background:var(--cb);margin:2px auto 12px}
+.shs{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:4px 20px calc(24px + env(safe-area-inset-bottom,0px))}
+.shd{width:100%;margin-top:6px}
+.shb{touch-action:none}
+.shx,.shx:hover{background:var(--b);color:var(--t);border:0;box-shadow:none}
+.shx{position:absolute;top:14px;right:14px;width:34px;height:34px;padding:0;border-radius:50%;display:grid;place-items:center;font-size:14px;z-index:2}
+.shx:hover{background:color-mix(in srgb,var(--a) 22%,transparent)}
+.shh{display:flex;align-items:center;gap:12px;margin:4px 40px 18px 0}
+.shh h3{margin:0;font-size:18px;line-height:1.45}
+.aci{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;font-size:22px;flex:none;background:linear-gradient(135deg,color-mix(in srgb,var(--a) 26%,transparent),color-mix(in srgb,var(--a2) 8%,transparent));border:1px solid color-mix(in srgb,var(--a) 42%,transparent)}
+@keyframes shin{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+#sh.on .shh{animation:shin .6s cubic-bezier(.22,1,.36,1) .12s both}
+#sh.on .sha>*{animation:shin .65s cubic-bezier(.22,1,.36,1) both}
+#sh.on .sha>:nth-child(1){animation-delay:.2s}#sh.on .sha>:nth-child(2){animation-delay:.28s}#sh.on .sha>:nth-child(3){animation-delay:.36s}#sh.on .sha>:nth-child(4){animation-delay:.44s}
+.sha p{margin:0 0 12px;line-height:1.85;font-size:14.5px}
+.fx{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px;margin-bottom:12px}
+.fc{padding:10px 12px;border-radius:12px;background:var(--b);font-size:13.5px;line-height:1.65}
+.fc i{display:block;font-style:normal;font-size:12px;font-weight:700;color:var(--p);margin-bottom:2px}
+.qt{position:relative;margin:4px 0 12px;padding:16px 16px 12px 18px;border-radius:14px;background:linear-gradient(135deg,color-mix(in srgb,var(--a) 13%,transparent),color-mix(in srgb,var(--a2) 4%,transparent));border:1px solid color-mix(in srgb,var(--a) 32%,transparent);border-left:3px solid var(--a)}
+.qt::before{content:"“";position:absolute;right:12px;top:-4px;font-size:56px;line-height:1;color:var(--a);opacity:.3;font-family:Georgia,serif}
+.sha .qt p{margin:0 0 8px;font-size:14.5px;line-height:1.9}
+.qt cite{display:inline-block;font-style:normal;font-size:12px;font-weight:700;color:var(--p);padding:2px 10px;border-radius:99px;background:color-mix(in srgb,var(--a) 20%,transparent)}
+.nt{padding:12px 14px;border-radius:14px;border:1px dashed color-mix(in srgb,var(--a) 50%,transparent);margin-bottom:12px}
+.nt b{font-size:13px;color:var(--p)}.sha .nt p{margin:4px 0 0;font-size:14px}
+.fbl{display:grid;gap:8px;margin-bottom:12px}
+.fb{display:flex;flex-direction:column;gap:2px;padding:10px 14px;border-radius:12px;background:rgba(220,60,60,.07);border:1px solid rgba(220,60,60,.25);transition:background .4s,box-shadow .4s}
+.fb b{font-size:14px}.fb span{font-size:13.5px;color:var(--m);line-height:1.7}
+.fb.hl{background:rgba(220,60,60,.16);border-color:rgba(220,60,60,.6);box-shadow:0 0 0 4px rgba(220,60,60,.12)}
+.rkw{margin-bottom:14px}
+.rk{display:flex;gap:8px;flex-wrap:wrap}
+.rkc em{display:block;font-style:normal;font-size:10.5px;color:var(--m);margin-top:1px;line-height:1.35}
+.rkc.m{border-color:var(--a);background:color-mix(in srgb,var(--a) 13%,transparent)}
+.rkc.g{border-style:dashed;border-color:color-mix(in srgb,var(--a) 70%,transparent)}
+.rkl{margin-top:12px;display:grid;gap:4px;font-size:12.5px;color:var(--m);line-height:1.7}
+.rkl b{color:var(--p)}
+.rkc{min-width:72px;max-width:112px;padding:9px 10px 7px;border-radius:14px;text-align:center;border:1px solid var(--cb);background:var(--b)}
+.rkc b{display:block;font-size:22px;line-height:1.25;font-family:"Noto Serif Bengali",serif}
+.rkc small{font-size:12px;color:var(--m)}
+.rkc.f{background:linear-gradient(135deg,var(--a),var(--a2));border-color:transparent;box-shadow:0 8px 18px -10px var(--sh)}
+.rkc.f b,.rkc.f small{color:var(--on)}
+.rkc.w{border-color:#1f9d6b;background:rgba(31,157,107,.12)}
+/* ── সেক্টরভিত্তিক হালকা রঙ ── */
+.t-f{--k:#D9A441;--k2:#F0CF86}.t-n{--k:#3FA37D;--k2:#9AD9BC}.t-x{--k:#D9606B;--k2:#F1A5AB}.t-t{--k:#4F9BD6;--k2:#A5CDEE}.t-q{--k:#8E7BD6;--k2:#C5B9EE}.t-w{--k:#2FA7A0;--k2:#98D8D3}
+.card[class*="t-"]{border-color:color-mix(in srgb,var(--k) 42%,transparent);background:linear-gradient(160deg,color-mix(in srgb,var(--k) 13%,var(--c)),var(--c) 58%);box-shadow:0 20px 42px -28px var(--k),0 2px 6px -3px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.5)}
+.card[class*="t-"]::after{background:linear-gradient(90deg,var(--k),var(--k2))}
+.card[class*="t-"] h2::before{background:linear-gradient(var(--k2),var(--k));box-shadow:0 0 10px -1px var(--k)}
+.card[class*="t-"] .pill:not(.bad){background:color-mix(in srgb,var(--k) 22%,transparent);border-color:color-mix(in srgb,var(--k) 48%,transparent);color:var(--t)}
+.card[class*="t-"] .chk{--pc:var(--k);--pc2:var(--k2)}
+.card[class*="t-"] .sr[data-sh]:hover{background:color-mix(in srgb,var(--k) 14%,transparent)}
+.card[class*="t-"] button.opt:hover{background:color-mix(in srgb,var(--k) 18%,transparent)}
+.t-t button.opt.on{background:linear-gradient(135deg,var(--k),var(--k2));color:#10241D}
+.t-t .mrw .p{filter:drop-shadow(0 0 5px var(--k))}
+.t-w .wb:not(.ok){background:linear-gradient(180deg,var(--k2),var(--k))}
+.t-w .wbw{background:color-mix(in srgb,var(--k) 10%,transparent)}
+.t-x .spt,.t-n .spt{border-bottom-color:color-mix(in srgb,var(--k) 35%,transparent)}
+/* পপআপের রঙ */
+.shp{border-color:color-mix(in srgb,var(--k,var(--a)) 42%,transparent);background:linear-gradient(180deg,color-mix(in srgb,var(--k,var(--a)) 16%,var(--bg)),var(--bg) 170px)}
+.aci{background:linear-gradient(135deg,color-mix(in srgb,var(--k,var(--a)) 30%,transparent),color-mix(in srgb,var(--k2,var(--a2)) 10%,transparent));border-color:color-mix(in srgb,var(--k,var(--a)) 50%,transparent)}
+.sha .qt{border-left-color:var(--k,var(--a));border-color:color-mix(in srgb,var(--k,var(--a)) 34%,transparent);background:linear-gradient(135deg,color-mix(in srgb,var(--k,var(--a)) 14%,transparent),transparent)}
+.qt::before{color:var(--k,var(--a))}.qt cite{background:color-mix(in srgb,var(--k,var(--a)) 24%,transparent)}
+.nt{border-color:color-mix(in srgb,var(--k,var(--a)) 55%,transparent)}
+.rkc.m{border-color:var(--k,var(--a));background:color-mix(in srgb,var(--k,var(--a)) 16%,transparent)}
+.rkc.g{border-color:color-mix(in srgb,var(--k,var(--a)) 75%,transparent)}
+.rkc.f{background:linear-gradient(135deg,var(--k,var(--a)),var(--k2,var(--a2)))}
+.shx:hover{background:color-mix(in srgb,var(--k,var(--a)) 25%,transparent)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style></head><body><script src="header.js"></script><main id="app"></main>
 <script>
@@ -182,6 +260,33 @@ const MON=['জানুয়ারি','ফেব্রুয়ারি','�
 const WSD=['রবি','সোম','মঙ্গল','বুধ','বৃহ','শুক্র','শনি'];
 const WFD=['রবিবার','সোমবার','মঙ্গলবার','বুধবার','বৃহস্পতিবার','শুক্রবার','শনিবার'];
 const RG=2*Math.PI*34;
+const LG={m:['সুন্নতে মুয়াক্কাদা','রাসূল (সা.) নিয়মিত পড়তেন; বিনা কারণে ছাড়া উচিত নয়।'],g:['সুন্নতে গাইরে মুয়াক্কাদা','পড়লে সওয়াব, না পড়লে গুনাহ নেই।'],w:['ওয়াজিব','ফরজের কাছাকাছি গুরুত্বপূর্ণ; ছাড়া যায় না।'],s:['নফল','ইচ্ছামূলক; যত বেশি পড়বেন তত সওয়াব।']};
+let LVNOW=[0,0,0,0,0],FLV=[0,0,0];
+const blk=b=>b[0]=='r'?`<div class="rkw"><div class="rk">${b[1].map(([l,n,t,u])=>`<span class="rkc ${t}"><b>${bn(n)}</b><small>${l}</small>${u?`<em>${u}</em>`:''}</span>`).join('')}</div><div class="rkl">${['m','g','w','s'].filter(k=>b[1].some(x=>x[2]==k)).map(k=>`<span><b>${LG[k][0]}</b> — ${LG[k][1]}</span>`).join('')}</div></div>`:b[0]=='p'?`<p>${b[1]}</p>`:b[0]=='x'?`<div class="fx">${b[1].map(([k,v])=>`<span class="fc"><i>${k}</i>${v}</span>`).join('')}</div>`:b[0]=='q'?`<blockquote class="qt"><p>${b[1]}</p><cite>${b[2]}</cite></blockquote>`:b[0]=='n'?`<div class="nt"><b>${b[1]}</b><p>${b[2]}</p></div>`:`<div class="fbl">${b[1].map(([t,d,i])=>`<div class="fb"><b>${t}${FLV[i]?' <span class="pill bad">এখন</span>':''}</b><span>${d}</span></div>`).join('')}</div>`;
+const LRN=[
+{ic:'✨',t:'নফল নামাজের ফজিলত ও গুরুত্ব',s:'নৈকট্য অর্জন ও ফরজের ঘাটতি পূরণ',b:[
+['p','নফল নামাজ আল্লাহ তাআলার নৈকট্য অর্জনের অন্যতম সেরা মাধ্যম। ফরজ ও ওয়াজিব ইবাদতের পাশাপাশি নফল ইবাদত বান্দার আমলনামাকে ভারী করে এবং কিয়ামতের দিন ফরজের ঘাটতি পূরণ করে।'],
+['q','রাসূলে কারীম (সা.) ইরশাদ করেছেন, বান্দা নফল ইবাদতের মাধ্যমে আল্লাহর এত বেশি নিকটবর্তী হতে থাকে যে, একপর্যায়ে আল্লাহ তাকে এমনভাবে ভালোবাসতে শুরু করেন যে, সে যার দ্বারা দেখে, তা দিয়েই সে দেখে; যার দ্বারা শুনে, তা দিয়েই সে শুনে।','সহিহ বুখারি'],
+['n','কবরের আলো ও শান্তি','নিয়মিত নফল নামাজ (বিশেষ করে তাহাজ্জুদ ও চাশত) পড়ার মাধ্যমে কবরের অন্ধকার দূর হয় এবং পরকালের চিরস্থায়ী জীবনের জন্য প্রস্তুতি সহজ হয়।']]},
+{ic:'🌙',t:'তাহাজ্জুদ নামাজ',s:'২–৮ রাকাত · রাতের শেষ তৃতীয়াংশ',b:[
+['x',[['সময়','এশার পর থেকে সুবহে সাদিকের আগ পর্যন্ত (রাতের শেষ তৃতীয়াংশে পড়া উত্তম)'],['রাকাত','কমপক্ষে ২, সর্বমোট ৮ রাকাত পর্যন্ত পড়া উত্তম']]],
+['n','মাসায়েল','এশার ফরজ ও সুন্নতের পর ঘুমিয়ে উঠে এই নামাজ আদায় করতে হয়। কেউ ঘুম থেকে উঠতে না পারলে ঘুমানোর আগেও পড়ে নিতে পারে।']]},
+{ic:'☀️',t:'চাশতের নামাজ (দোহা)',s:'২–১২ রাকাত · সূর্য ওঠার পর থেকে দুপুরের আগ পর্যন্ত',b:[
+['x',[['সময়','সূর্য পুরোপুরি ওঠার পর (সূর্যোদয়ের প্রায় ২০–২৫ মিনিট পর) থেকে দ্বিপ্রহরের ঠিক আগ মুহূর্ত পর্যন্ত'],['রাকাত','ন্যূনতম ২, সর্বোচ্চ ১২ (সাধারণত ৪ বা ৮ রাকাত পড়া মুস্তাহাব)']]],
+['q','হযরত আবু হুরায়রা (রা.) বলেন, আমার বন্ধু (রাসূল সা.) আমাকে তিনটি ওসিয়ত করেছেন… তার মধ্যে অন্যতম হলো প্রতিদিন চাশতের দুই রাকাত নামাজ আদায় করা।','সহিহ বুখারি ও মুসলিম']]},
+{ic:'🤍',t:'সালাতুত তওবা (তওবার নামাজ)',s:'২ রাকাত · গুনাহের পর অনুশোচনায়',b:[
+['n','মাসায়েল','কোনো গুনাহ হয়ে গেলে লজ্জা ও অনুশোচনায় পবিত্রতা অর্জন করে দুই রাকাত নফল নামাজ পড়ে আল্লাহর দরবারে আন্তরিকভাবে ক্ষমা প্রার্থনা করা।'],
+['q','রাসূলুল্লাহ (সা.) বলেছেন, কোনো বান্দা গুনাহ করার পর সুন্দরভাবে অজু করে দুই রাকাত নামাজ পড়ে আল্লাহর কাছে ক্ষমা চাইলে আল্লাহ তাকে অবশ্যই ক্ষমা করেন।','তিরমিজি ও আবু দাউদ']]},
+{ic:'⛔',t:'নামাজের নিষিদ্ধ সময়সমূহ',s:'দিনে ৩টি সময়ে সব নামাজ নিষিদ্ধ',b:[
+['p','দিনে মোট তিনটি সময়ে যেকোনো ধরনের নামাজ (ফরজ, ওয়াজিব, কাজা কিংবা নফল) পড়া নিষিদ্ধ।'],
+['f',[['সূর্যোদয়ের সময়','সূর্য উদিত হতে শুরু করার পর থেকে কিছুটা ওপরে ওঠা পর্যন্ত (প্রায় ১৫–২০ মিনিট)।',0],['দুপুরের মধ্যবর্তী সময় (জাওয়াল)','সূর্য ঠিক মাথার ওপর চলে আসে এবং ছায়া একদম নিচে অবস্থান করে; যোহরের ওয়াক্ত শুরুর আগের কয়েক মিনিট।',1],['সূর্যাস্তের সময়','সূর্য হলুদ বর্ণ ধারণ করার পর থেকে সম্পূর্ণ অস্ত যাওয়া পর্যন্ত। আসরের পর থেকে সূর্যাস্ত পর্যন্ত নফল নামাজও নিষেধ।',2]]],
+['q','রাসূলুল্লাহ (সা.) আমাদের তিনটি সময়ে নামাজ পড়তে এবং মৃতদের দাফন করতে নিষেধ করতেন: ১. যখন সূর্য উদিত হতে থাকে, যতক্ষণ না তা উঁচুতে ওঠে; ২. যখন ঠিক দুপুরে সূর্য আকাশের মধ্যভাগে থাকে, যতক্ষণ না তা ঢলে পড়ে; এবং ৩. যখন সূর্য অস্ত যাওয়ার উপক্রম হয়, যতক্ষণ না তা ডুবে যায়। (হযরত উকবা ইবনু আমির আল-জুহানি রা.)','সহিহ মুসলিম: ৮৩১, তিরমিজি: ১০৩০']]},
+{ic:'🌅',t:'ফজরের নামাজ',s:'২ রাকাত ফরজ · সুবহে সাদিক থেকে সূর্যোদয়ের আগ',b:[['r',[['আগের সুন্নত',2,'m','মুয়াক্কাদা'],['ফরজ',2,'f','']]],['x',[['সময়','সুবহে সাদিক থেকে সূর্যোদয়ের আগ পর্যন্ত']]],['n','মাসায়েল','সূর্যোদয় শুরু হয়ে গেলে নিষিদ্ধ সময় শুরু হয়, তাই এর আগেই ফজর আদায় করে নিন।']]},
+{ic:'🌤️',t:'যোহরের নামাজ',s:'৪ রাকাত ফরজ · জাওয়ালের পর থেকে',b:[['r',[['আগের সুন্নত',4,'m','মুয়াক্কাদা'],['ফরজ',4,'f',''],['পরের সুন্নত',2,'m','মুয়াক্কাদা'],['নফল',2,'s','']]],['x',[['সময়','সূর্য ঢলে পড়ার (জাওয়ালের) পর থেকে আসরের ওয়াক্ত শুরুর আগ পর্যন্ত']]],['n','মাসায়েল','শুক্রবারে যোহরের বদলে জুমার নামাজ পড়া হয়।']]},
+{ic:'🌇',t:'আসরের নামাজ',s:'৪ রাকাত ফরজ · সূর্যাস্তের আগ পর্যন্ত',b:[['r',[['আগের সুন্নত',4,'g','গাইরে মুয়াক্কাদা'],['ফরজ',4,'f','']]],['x',[['সময়','আসরের ওয়াক্ত শুরু থেকে সূর্যাস্তের আগ পর্যন্ত']]],['n','মাসায়েল','সূর্য হলুদ হয়ে যাওয়ার পর আসর পড়া মাকরূহ, তাই সময় থাকতে পড়ে নিন।']]},
+{ic:'🌆',t:'মাগরিবের নামাজ',s:'৩ রাকাত ফরজ · সূর্যাস্তের পরপর',b:[['r',[['ফরজ',3,'f',''],['পরের সুন্নত',2,'m','মুয়াক্কাদা'],['নফল',2,'s','']]],['x',[['সময়','সূর্যাস্ত থেকে এশার ওয়াক্ত শুরুর আগ পর্যন্ত']]],['n','মাসায়েল','মাগরিবের ওয়াক্ত তুলনামূলক কম, তাই দেরি না করে আদায় করা ভালো।']]},
+{ic:'🌃',t:'এশার নামাজ',s:'৪ রাকাত ফরজ · রাতের নামাজ',b:[['r',[['আগের সুন্নত',4,'g','গাইরে মুয়াক্কাদা'],['ফরজ',4,'f',''],['পরের সুন্নত',2,'m','মুয়াক্কাদা'],['নফল',2,'s',''],['বিতর',3,'w','ওয়াজিব'],['নফল',2,'s','']]],['x',[['সময়','এশার ওয়াক্ত শুরু থেকে সুবহে সাদিকের আগ পর্যন্ত']]],['n','মাসায়েল','বিতর নামাজ ওয়াজিব; এশার ফরজ ও সুন্নতের পরে এটি পড়তে হয়।']]}
+];
 const mr=(p,c,txt,lb)=>`<div class="mr"><div class="mrw"><svg viewBox="0 0 80 80"><circle class="t" cx="40" cy="40" r="34"/><circle class="p" cx="40" cy="40" r="34" style="stroke:${c}" stroke-dasharray="${RG}" stroke-dashoffset="${RG*(1-Math.min(1,p))}"/></svg><b>${txt}</b></div><span>${lb}</span></div>`;
 const cdf=ms=>{const q=Math.max(0,Math.ceil(ms/1000)),p=n=>String(n).padStart(2,'0');return bn(p(Math.floor(q/3600))+':'+p(Math.floor(q%3600/60))+':'+p(q%60))};
 const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
@@ -198,7 +303,7 @@ root.dataset.t=S.theme||0;root.dataset.d=S.dark||0;
 const W=[['সূর্যোদয়ের সময়',c.sunrise,c.sunrise+.25,'f'],['দ্বিপ্রহর (যাওয়াল)',c.noon-.1,c.noon+.02,'f'],['সূর্যাস্তের সময়',c.maghrib-.25,c.maghrib,'f'],['তাহাজ্জুদ',(c.maghrib+night*2/3)%24,c.fajr,'n'],['ইশরাক',c.sunrise+.25,c.sunrise+1,'n'],['চাশত',c.sunrise+1,c.noon-.15,'n'],['আওয়াবিন',c.maghrib+.2,c.isha,'n']];
 const wst=w=>{let a=w[1],b=w[2];if(b<a)b+=24;for(const o of [0,24,-24]){const x=cur+o;if(x>=a&&x<b)return{on:1,left:b-x}}return{on:0,a,in:a>cur?a-cur:a+24-cur}};
 const WS=W.map(w=>[w,wst(w)]);
-const row=([w,r],chk)=>`<div class="sr ${r.on?'on '+w[3]:''}"><span>${chk!=null?`<input type="checkbox" class="chk" data-i="n${chk}" ${pd['n'+chk]?'checked':''}>`:''}${w[0]}</span><span>${T(w[1])} – ${T(w[2])} · ${r.on?'চলছে · '+dur(r.left)+' বাকি':'শুরু '+dur(r.in)+' পর'}</span></div>`;
+const row=([w,r],chk)=>`<div class="sr ${r.on?'on '+w[3]:''}" data-sh="${w[3]=='f'?4:w[0]=='তাহাজ্জুদ'?1:w[0]=='চাশত'?2:0}" data-hl="${['সূর্যোদয়ের সময়','দ্বিপ্রহর (যাওয়াল)','সূর্যাস্তের সময়'].indexOf(w[0])}" role="button" tabindex="0"><span>${chk!=null?`<input type="checkbox" class="chk" data-i="n${chk}" ${pd['n'+chk]?'checked':''}>`:''}${w[0]}</span><span>${T(w[1])} – ${T(w[2])} · ${r.on?'চলছে · '+dur(r.left)+' বাকি':'শুরু '+dur(r.in)+' পর'}</span></div>`;
 const nf=WS.filter(([w])=>w[3]=='n');
 const FW=[['ফজর',c.fajr,c.sunrise,'n'],['যোহর',c.noon+.05,c.asr,'n'],['আসর',c.asr,c.maghrib-.25,'n'],['মাগরিব',c.maghrib,c.isha,'n'],['এশা',c.isha,c.fajr+24,'n']];
 const fs=FW.map(w=>{const r=wst(w);return{w,r,past:!r.on&&(((w[1]%24)+24)%24)<=cur}});
@@ -210,16 +315,19 @@ const wk=Array.from({length:7},(_,i)=>{const d=dd(6-i);return{d,n:fc(key(d))}}),
 let nxt=null;const bt=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
 FW.forEach(w=>{let t=bt+Math.round((((w[1]%24)+24)%24)*60)*6e4;if(t<=now.getTime())t+=864e5;if(!nxt||t<nxt.t)nxt={n:w[0],t}});
 const curW=fs.find(x=>x.r.on);
+LVNOW=[0,WS[3][1].on,WS[5][1].on,0,WS[0][1].on||WS[1][1].on||WS[2][1].on].concat(fs.map(x=>x.r.on));FLV=[WS[0][1].on,WS[1][1].on,WS[2][1].on];
+const xr=(i,t,d)=>`<div class="sr" data-sh="${i}" role="button" tabindex="0"><span>${t}</span><span>${d}</span></div>`;
+const extra=`<div class="spt">আরও জানুন</div>${xr(0,'নফল নামাজের ফজিলত','ফজিলত ও গুরুত্ব')}${xr(3,'সালাতুত তওবা','২ রাকাত · গুনাহের পর')}`;
 let hj='';try{hj=new Intl.DateTimeFormat('bn-BD-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'}).format(now)}catch(e){}
-const frow=(x,i)=>{const{w,r,past}=x,dn=!!pd['f'+i];return `<div class="sr ${r.on?'on n':''}"><span><input type="checkbox" class="chk" data-i="f${i}" ${dn?'checked':''} aria-label="${w[0]}">${w[0]}</span><span>${T(w[1])} – ${T(w[2])} · ${dn?'আদায় হয়েছে ✓':r.on?'চলছে · '+dur(r.left)+' বাকি':past?'ওয়াক্ত শেষ':'শুরু '+dur(r.in)+' পর'}</span></div>`};
+const frow=(x,i)=>{const{w,r,past}=x,dn=!!pd['f'+i];return `<div class="sr ${r.on?'on n':''}" data-sh="${5+i}" role="button" tabindex="0"><span><input type="checkbox" class="chk" data-i="f${i}" ${dn?'checked':''} aria-label="${w[0]}">${w[0]}</span><span>${T(w[1])} – ${T(w[2])} · ${dn?'আদায় হয়েছে ✓':r.on?'চলছে · '+dur(r.left)+' বাকি':past?'ওয়াক্ত শেষ':'শুরু '+dur(r.in)+' পর'}</span></div>`};
 const hero=`<section class="card hero wide"><div><div class="m">${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())}${hj?' · '+hj+' (আনুমানিক)':''}</div><div class="hd">${WFD[now.getDay()]}</div><div class="hn"><span class="m">পরবর্তী ওয়াক্ত · ${nxt.n}</span><b id="nx" data-t="${nxt.t}">${cdf(nxt.t-now.getTime())}</b></div><div class="hcs">${curW?`<span class="pill">এখন চলছে: ${curW.w[0]}</span>`:''}${stk?`<span class="pill">🔥 ${bn(stk)} দিন সব ওয়াক্ত</span>`:''}</div></div><div class="hrs">${mr(fd/5,'var(--a)',bn(fd)+'/'+bn(5),'ফরজ')}${mr(nd/nf.length,'#1f9d6b',bn(nd)+'/'+bn(nf.length),'নফল')}</div></section>`;
-const fard=`<section class="card"><h2>ফরজ নামাজ <span class="pill">${bn(fd)}/${bn(5)}</span></h2>${fs.map(frow).join('')}<div class="m" style="margin-top:10px">আদায় করলে টিক দিন</div></section>`;
-const ts=S.ts,tasbih=`<section class="card"><h2>তাসবিহ <span class="pill">আজ ${bn(ts.tot[K]||0)}</span></h2><div class="tsw"><button class="tsb" data-a="ts" aria-label="গণনা">${mr(ts.c/ts.t,'var(--a)',bn(ts.c),'/ '+bn(ts.t))}</button></div><div class="chs">${[33,99,100].map(n=>`<button class="opt ${ts.t==n?'on':''}" data-a="tt" data-i="${n}">${bn(n)}</button>`).join('')}<button class="g opt" data-a="tr">↺ রিসেট</button></div></section>`;
-const qaza=`<section class="card"><h2>কাযা হিসাব <span class="pill">মোট ${bn(S.qaza.reduce((a,b)=>a+b,0))}</span></h2>${['ফজর','যোহর','আসর','মাগরিব','এশা','বিতর'].map((n,i)=>`<div class="row"><b>${n}</b><span style="display:flex;align-items:center;gap:10px"><button class="g opt" data-a="q" data-i="${i}" data-v="-1" aria-label="কমান">−</button><b style="min-width:34px;text-align:center">${bn(S.qaza[i])}</b><button class="g opt" data-a="q" data-i="${i}" data-v="1" aria-label="বাড়ান">+</button></span></div>`).join('')}<div class="m" style="margin-top:8px">+ বাকি বাড়ায়, − আদায় হিসেবে কমায়</div></section>`;
-const week=`<section class="card wide"><h2>এ সপ্তাহের ফরজ <span class="pill">${bn(wsum)}/${bn(35)}</span></h2><div class="wk">${wk.map((x,i)=>`<div class="wc" title="${bn(x.n)}/${bn(5)}"><div class="wv">${x.n?bn(x.n):''}</div><div class="wbw"><i class="wb ${x.n==5?'ok':''} ${i==6?'td':''}" style="height:${x.n/5*100}%"></i></div><div class="wd ${i==6?'on':''}">${i==6?'আজ':WSD[x.d.getDay()]}</div></div>`).join('')}</div><div class="m" style="margin-top:10px;display:flex;gap:6px;align-items:center"><i class="lg"></i>সব ওয়াক্ত আদায়</div></section>`;
+const fard=`<section class="card t-f"><h2>ফরজ নামাজ <span class="pill">${bn(fd)}/${bn(5)}</span></h2>${fs.map(frow).join('')}<div class="m" style="margin-top:10px">আদায় করলে টিক দিন · বিস্তারিতের জন্য নামে ট্যাপ করুন</div></section>`;
+const ts=S.ts,tasbih=`<section class="card t-t"><h2>তাসবিহ <span class="pill">আজ ${bn(ts.tot[K]||0)}</span></h2><div class="tsw"><button class="tsb" data-a="ts" aria-label="গণনা">${mr(ts.c/ts.t,'var(--k)',bn(ts.c),'/ '+bn(ts.t))}</button></div><div class="chs">${[33,99,100].map(n=>`<button class="opt ${ts.t==n?'on':''}" data-a="tt" data-i="${n}">${bn(n)}</button>`).join('')}<button class="g opt" data-a="tr">↺ রিসেট</button></div></section>`;
+const qaza=`<section class="card t-q"><h2>কাযা হিসাব <span class="pill">মোট ${bn(S.qaza.reduce((a,b)=>a+b,0))}</span></h2>${['ফজর','যোহর','আসর','মাগরিব','এশা','বিতর'].map((n,i)=>`<div class="row"><b>${n}</b><span style="display:flex;align-items:center;gap:10px"><button class="g opt" data-a="q" data-i="${i}" data-v="-1" aria-label="কমান">−</button><b style="min-width:34px;text-align:center">${bn(S.qaza[i])}</b><button class="g opt" data-a="q" data-i="${i}" data-v="1" aria-label="বাড়ান">+</button></span></div>`).join('')}<div class="m" style="margin-top:8px">+ বাকি বাড়ায়, − আদায় হিসেবে কমায়</div></section>`;
+const week=`<section class="card wide t-w"><h2>এ সপ্তাহের ফরজ <span class="pill">${bn(wsum)}/${bn(35)}</span></h2><div class="wk">${wk.map((x,i)=>`<div class="wc" title="${bn(x.n)}/${bn(5)}"><div class="wv">${x.n?bn(x.n):''}</div><div class="wbw"><i class="wb ${x.n==5?'ok':''} ${i==6?'td':''}" style="height:${x.n/5*100}%"></i></div><div class="wd ${i==6?'on':''}">${i==6?'আজ':WSD[x.d.getDay()]}</div></div>`).join('')}</div><div class="m" style="margin-top:10px;display:flex;gap:6px;align-items:center"><i class="lg"></i>সব ওয়াক্ত আদায়</div></section>`;
 $.innerHTML=`<header><div><h1>🕌 নামাজ</h1><div class="sub">ফরজ, নফল ও নিষিদ্ধ সময়ের হিসাব</div></div></header>
-<div class="grid">${hero}${fard}<section class="card"><h2>নফল নামাজের সময় <span class="pill">${bn(nd)}/${bn(nf.length)}</span></h2>${nf.map((x,i)=>row(x,i)).join('')}</section>
-<section class="card"><h2>নিষিদ্ধ সময়</h2>${WS.filter(([w])=>w[3]=='f').map(x=>row(x)).join('')}<div class="m" style="margin-top:10px">ঢাকার সময় অনুযায়ী (আনুমানিক)</div></section>${tasbih}${qaza}${week}</div>`}
+<div class="grid">${hero}${fard}<section class="card t-n"><h2>নফল নামাজের সময় <span class="pill">${bn(nd)}/${bn(nf.length)}</span></h2>${nf.map((x,i)=>row(x,i)).join('')}${extra}</section>
+<section class="card t-x"><h2>নিষিদ্ধ সময়</h2>${WS.filter(([w])=>w[3]=='f').map(x=>row(x)).join('')}<div class="m" style="margin-top:10px">ঢাকার সময় অনুযায়ী (আনুমানিক)</div></section>${tasbih}${qaza}${week}</div>`}
 $.addEventListener('change',e=>{const i=e.target.dataset.i;if(!i)return;const K=key(new Date());(S.pr[K]=S.pr[K]||{})[i]=e.target.checked;save();render()});
 let lastR='';render();setInterval(()=>{const n=new Date(),m=n.getHours()*60+n.getMinutes();if(m!==lastR&&!typing()){lastR=m;render()}},5000);
 document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;const a=t.dataset.a,i=+t.dataset.i,K=key(new Date()),ts=S.ts;
@@ -229,4 +337,19 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t
  if(a=='q')S.qaza[i]=Math.max(0,S.qaza[i]+ +t.dataset.v);
  save();render()});
 setInterval(()=>{const el=document.getElementById('nx');if(!el)return;const ms=+el.dataset.t-Date.now();if(ms<=0){lastR='';render();return}el.textContent=cdf(ms)},1000);
+
+const sh=document.createElement('div');sh.id='sh';sh.innerHTML='<div class="shb"></div><div class="shp" role="dialog" aria-modal="true" aria-labelledby="sht"><div class="shg"></div><button class="shx" aria-label="বন্ধ করুন">✕</button><div class="shs"><div class="shc"></div></div></div>';document.body.appendChild(sh);
+function openSh(i,hl){const x=LRN[i];if(!x)return;sh.querySelector('.shc').innerHTML=`<div class="shh"><span class="aci">${x.ic}</span><div style="flex:1;min-width:0"><h3 id="sht">${x.t}</h3><div class="m">${x.s}</div></div>${LVNOW[i]?`<span class="pill ${i==4?'bad':''}">এখন চলছে</span>`:''}</div><div class="sha">${x.b.map(blk).join('')}</div><button class="g shd">বন্ধ করুন</button>`;
+ const kc=i==4?['#D9606B','#F1A5AB']:i>=5?['#D9A441','#F0CF86']:['#3FA37D','#9AD9BC'];sh.style.setProperty('--k',kc[0]);sh.style.setProperty('--k2',kc[1]);
+ sh.classList.add('on');document.body.classList.add('shl');root.classList.add('shl');sh.querySelector('.shs').scrollTop=0;
+ if(hl>=0){const f=sh.querySelectorAll('.fb')[hl];if(f)f.classList.add('hl')}
+ sh.querySelector('.shx').focus({preventScroll:true})}
+const sp=sh.querySelector('.shp'),ss=sh.querySelector('.shs');let ty=0,dy=0,dr=false;
+sp.addEventListener('touchstart',e=>{ty=e.touches[0].clientY;dy=0;dr=false},{passive:true});
+sp.addEventListener('touchmove',e=>{const d=e.touches[0].clientY-ty;if(innerWidth<700&&ss.scrollTop<=0&&d>0){dr=true;dy=d;sp.style.transition='none';sp.style.transform='translateY('+d+'px)'}},{passive:true});
+sp.addEventListener('touchend',()=>{if(!dr)return;dr=false;sp.style.transition='';sp.style.transform='';if(dy>110)closeSh()});
+function closeSh(){sh.classList.remove('on');document.body.classList.remove('shl');root.classList.remove('shl')}
+document.addEventListener('click',e=>{if(e.target.closest('.shx,.shd')||e.target.classList.contains('shb')){closeSh();return}
+ const r=e.target.closest('[data-sh]');if(!r||e.target.closest('input'))return;openSh(+r.dataset.sh,r.dataset.hl==null?-1:+r.dataset.hl)});
+document.addEventListener('keydown',e=>{if(e.key=='Escape')closeSh();else if((e.key=='Enter'||e.key==' ')&&e.target.matches&&e.target.matches('[data-sh]')){e.preventDefault();openSh(+e.target.dataset.sh,e.target.dataset.hl==null?-1:+e.target.dataset.hl)}});
 </script></body></html>
