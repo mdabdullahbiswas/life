@@ -143,7 +143,9 @@ if(h.d>=13&&h.d<=15)r.push('আইয়ামে বীজ');if(h.m==10&&h.d>1&
 if(d.getDay()==1)r.push('সোমবার');if(d.getDay()==4)r.push('বৃহস্পতিবার');
 return r.length?['নফল রোজার দিন: '+r.join(', '),0]:['আজ নফল রোজার বিশেষ দিন নয়',0]}
 function due(t,d){const s=new Date(t.start+'T00:00'),k=Math.round((new Date(key(d)+'T00:00')-s)/864e5);if(k<0)return 0;
-return t.type=='daily'||(t.type=='every'&&k%t.n==0)||(t.type=='monthly'&&s.getDate()==d.getDate())||(t.type=='yearly'&&s.getDate()==d.getDate()&&s.getMonth()==d.getMonth())}
+const dim=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();
+return t.type=='once'?k==0:t.type=='daily'||(t.type=='every'&&k%t.n==0)||(t.type=='weekly'&&k%7==0)||(t.type=='monthly'&&Math.min(s.getDate(),dim)==d.getDate())||(t.type=='yearly'&&s.getDate()==d.getDate()&&s.getMonth()==d.getMonth())}
+const TYL=t=>t.type=='once'?'একবার':t.type=='every'?bn(t.n)+' দিন পর পর':({daily:'প্রতিদিন',weekly:'প্রতি সপ্তাহে',monthly:'প্রতি মাসে',yearly:'প্রতি বছর'})[t.type]||'';
 const $=document.getElementById('app'),root=document.documentElement;
 /* বারবার লোডিং বন্ধ: কনটেন্ট বদলালেই কেবল DOM আপডেট, অ্যানিমেশন শুধু প্রথমবার */
 const _d=Object.getOwnPropertyDescriptor(Element.prototype,'innerHTML');
@@ -192,9 +194,9 @@ ${actN.length?`<section class="card"><h2>নফল নামাজ <span class="
 <section class="card"><h2>রোজা</h2><span class="pill ${fi[1]?'bad':''}">${fi[0]}</span><div class="row"><span>সেহরির শেষ সময়</span><b>${T(c.fajr)}</b></div><div class="row"><span>ইফতার</span><b>${T(c.maghrib)}</b></div><div style="margin-top:6px"><button class="g" data-a="rz">নফল রোজা ট্র্যাকার →</button></div></section>
 <section class="card"><h2>এ মাসের ব্যালেন্স</h2><div class="row"><span class="m">অবশিষ্ট</span><b style="font-size:22px;${inc-exp<0?'color:#d33':''}">৳ ${bn(inc-exp)}</b></div><div style="margin-top:6px"><button class="g" data-a="hs">হিসাব পেজ →</button></div></section>
 <section class="card wide"><h2>আজকের কাজ <span class="pill">${bn(td)}/${bn(tt.length)}</span></h2>
-${tt.length?tt.map(t=>`<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="task" data-i="${t.id}" ${(S.done[K]||{})[t.id]?'checked':''}>${t.title}</label><span class="m">${t.time?bn(t.time)+' · ':''}${{daily:'প্রতিদিন',every:bn(t.n)+' দিন পর পর',monthly:'প্রতি মাসে',yearly:'প্রতি বছর'}[t.type]} <button class="x" data-a="del" data-i="${t.id}">✕</button></span></div>`).join(''):'<div class="m">আজ কোনো কাজ নেই। নিচে নতুন কাজ যোগ করুন।</div>'}
+${tt.length?tt.map(t=>`<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="task" data-i="${t.id}" ${(S.done[K]||{})[t.id]?'checked':''}>${t.title}</label><span class="m">${t.time?bn(t.time)+' · ':''}${TYL(t)} <button class="x" data-a="del" data-i="${t.id}">✕</button></span></div>`).join(''):'<div class="m">আজ কোনো কাজ নেই। নিচে নতুন কাজ যোগ করুন।</div>'}
 <div style="margin-top:10px"><button class="g" data-a="tk">কাজ পেজ →</button></div>
-<form data-f="task"><input name="title" placeholder="কাজের নাম" required style="flex:2 1 160px"><select name="type"><option value="daily">প্রতিদিন</option><option value="every">নির্দিষ্ট দিন পর পর</option><option value="monthly">প্রতি মাসে</option><option value="yearly">প্রতি বছর</option></select><input name="n" type="number" min="1" value="3" title="কত দিন পর পর" style="flex:0 1 80px"><input name="time" type="time"><button>যোগ করুন</button></form></section>
+<form data-f="task"><input name="title" placeholder="কাজের নাম" required style="flex:2 1 160px"><input name="date" type="date" value="${key(new Date())}" title="কোন দিনের কাজ" style="flex:1 1 140px"><select name="type" title="পুনরাবৃত্তি" onchange="this.form.n.style.display=this.value=='every'?'':'none'"><option value="once">শুধু এই দিন (পুনরাবৃত্তি নেই)</option><option value="daily">প্রতিদিন</option><option value="weekly">প্রতি সপ্তাহে</option><option value="every">নির্দিষ্ট দিন পর পর</option><option value="monthly">প্রতি মাসে</option><option value="yearly">প্রতি বছর</option></select><input name="n" type="number" min="1" value="3" title="কত দিন পর পর" style="display:none;flex:0 1 80px"><input name="time" type="time"><button>যোগ করুন</button></form></section>
 </div>`}
 function navR(){}
 function render(){render1();navR()}
@@ -219,7 +221,7 @@ if(a=='del')S.tasks=S.tasks.filter(t=>t.id!=i);
 if(a=='notif'){if(!S.notif&&window.Notification){Notification.requestPermission().then(p=>{S.notif=p=='granted'?1:0;save();render()});return}S.notif=0}
 save();render()});
 $.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target),k=e.target.dataset.f;
-if(k=='task')S.tasks.push({id:Date.now(),title:f.get('title'),type:f.get('type'),n:+f.get('n')||1,time:f.get('time'),start:key(new Date())});
+if(k=='task')S.tasks.push({id:Date.now(),title:f.get('title'),type:f.get('type'),n:+f.get('n')||1,time:f.get('time'),start:f.get('date')||key(new Date())});
 if(k=='fin')S.fin.push({t:f.get('t'),a:+f.get('a'),n:f.get('n'),d:key(new Date())});
 if(k=='qz'){const n=+f.get('n')||0;S.qaza=S.qaza.map(x=>x+n)}
 save();render()});
