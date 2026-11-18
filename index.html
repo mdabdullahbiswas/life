@@ -43,8 +43,12 @@ button{border:1px solid var(--bd);border-radius:10px;padding:10px 22px;backgroun
 button:hover{background:color-mix(in srgb,var(--bb) 86%,var(--bt));box-shadow:0 4px 14px -6px var(--sh)}
 button:active{transform:translateY(1px)}
 button:focus-visible{outline:2px solid var(--g);outline-offset:2px}
-button.g{background:transparent;color:var(--t);border:1px solid var(--cb);font-weight:500;box-shadow:none}
-button.g:hover{background:color-mix(in srgb,var(--a) 12%,transparent);border-color:var(--a)}
+button.g{background:linear-gradient(180deg,color-mix(in srgb,var(--a) 11%,transparent),color-mix(in srgb,var(--a) 3%,transparent));color:var(--t);border:1px solid color-mix(in srgb,var(--a) 55%,transparent);font-weight:500;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 1px 2px rgba(0,0,0,.05)}
+button.g:hover{background:linear-gradient(180deg,color-mix(in srgb,var(--a) 22%,transparent),color-mix(in srgb,var(--a) 8%,transparent));border-color:var(--a);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 8px 18px -10px var(--sh)}
+:root[data-d="1"] button.g{box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+button.lk{display:inline-flex;align-items:center;gap:10px;padding:8px 8px 8px 18px;border-radius:99px;font-size:13px;letter-spacing:.2px}
+button.lk .ar{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on);font-size:12px;line-height:1;box-shadow:0 2px 6px -2px var(--sh);transition:transform .25s}
+button.lk:hover .ar{transform:translateX(3px)}
 .row button:not(.x){padding:6px 14px}
 input,select{border:1px solid var(--b);background:var(--c);color:var(--t);border-radius:12px;padding:9px 12px;font-size:14px;min-width:0}
 input:focus,select:focus{outline:2px solid var(--g)}
@@ -192,11 +196,11 @@ $.innerHTML=`<header><div><h1>${g}, আসসালামু আলাইকু�
 ${S.tp?`<section class="card wide"><h2>রঙের সেট · ${TH[S.theme][0]}</h2><div class="sw">${TH.map((t,i)=>`<b title="${t[0]}" data-a="th" data-i="${i}" class="${i==S.theme?'on':''}" style="background:linear-gradient(135deg,${t[1]} 50%,#E0B84F 50%)"></b>`).join('')}</div></section>`:''}${ram?ramCard:''}${cdCard}
 <section class="card"><h2>আজকের নামাজ <span class="pill">${bn(pc)}/৫</span></h2>${P.map((p,i)=>`<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="pr" data-i="${i}" style="${pcs(i)}" ${pd[i]?'checked':''}><span style="color:${PC[i][0]};font-weight:600">${p}</span></label><span class="m">${T(tm[i])}</span></div>`).join('')}<div class="bar"><i style="width:${pc*20}%"></i></div></section>
 ${actN.length?`<section class="card"><h2>নফল নামাজ <span class="pill">এখন চলছে</span></h2>${actN.map(([w,r])=>{const i=nafl.findIndex(n=>n[0]==w[0]);return `<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="pr" data-i="n${i}" ${pd['n'+i]?'checked':''}>${w[0]}</label><span class="m">${nafl[i][1]} · ${dur(r.left)} বাকি</span></div>`}).join('')}</section>`:''}
-<section class="card"><h2>রোজা</h2><span class="pill ${fi[1]?'bad':''}">${fi[0]}</span><div class="row"><span>সেহরির শেষ সময়</span><b>${T(c.fajr)}</b></div><div class="row"><span>ইফতার</span><b>${T(c.maghrib)}</b></div><div style="margin-top:6px"><button class="g" data-a="rz">নফল রোজা ট্র্যাকার →</button></div></section>
-<section class="card"><h2>ব্যালেন্স</h2><div class="row"><span class="m">মোট অবশিষ্ট</span><b style="font-size:22px;${inc-exp<0?'color:#d33':''}">৳ ${bn(inc-exp)}</b></div><div style="margin-top:6px"><button class="g" data-a="hs">হিসাব পেজ →</button></div></section>
+<section class="card"><h2>রোজা</h2><span class="pill ${fi[1]?'bad':''}">${fi[0]}</span><div class="row"><span>সেহরির শেষ সময়</span><b>${T(c.fajr)}</b></div><div class="row"><span>ইফতার</span><b>${T(c.maghrib)}</b></div><div style="margin-top:6px"><button class="g lk" data-a="rz">রোজা ট্র্যাকার<span class="ar">→</span></button></div></section>
+<section class="card"><h2>ব্যালেন্স</h2><div class="row"><span class="m">মোট অবশিষ্ট</span><b style="font-size:22px;${inc-exp<0?'color:#d33':''}">৳ ${bn(inc-exp)}</b></div><div style="margin-top:6px"><button class="g lk" data-a="hs">হিসাব<span class="ar">→</span></button></div></section>
 <section class="card wide"><h2>আজকের কাজ <span class="pill">${bn(td)}/${bn(tt.length)}</span></h2>
-${tt.length?tt.map(t=>`<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="task" data-i="${t.id}" ${(S.done[K]||{})[t.id]?'checked':''}>${t.title}</label><span class="m">${t.time?bn(t.time)+' · ':''}${TYL(t)} <button class="x" data-a="del" data-i="${t.id}">✕</button></span></div>`).join(''):'<div class="m">আজ কোনো কাজ নেই। নতুন কাজ যোগ করতে নিচের বাটনে চাপুন।</div>'}
-<div style="margin-top:10px"><button class="g" data-a="tk">নতুন কাজ যোগ করুন →</button></div>
+${tt.length?tt.map(t=>`<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="task" data-i="${t.id}" ${(S.done[K]||{})[t.id]?'checked':''}>${t.title}</label><span class="m">${t.time?bn(t.time)+' · ':''}${TYL(t)} <button class="x" data-a="del" data-i="${t.id}">✕</button></span></div>`).join(''):'<div class="m">আজ কোনো কাজ নেই।</div>'}
+<div style="margin-top:10px"><button class="g lk" data-a="tk">কাজ যোগ করুন<span class="ar">→</span></button></div>
 </section>
 </div>`}
 function navR(){}
