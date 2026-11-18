@@ -110,10 +110,17 @@ form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}form input{flex:1 1 110
 .sr.on.n{background:rgba(31,157,107,.13);color:#1f9d6b}.sr.on.n span:first-child::before{background:#1f9d6b;box-shadow:0 0 0 4px rgba(31,157,107,.2)}
 :root[data-d="1"] .sr.on.f{color:#ff8a8a}:root[data-d="1"] .sr.on.n{color:#4fd7a0}
 .ram{border-color:var(--g)}
+.rdy .card{animation:none}
 </style></head><body><main id="app"></main>
 <script>
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
 const $=document.getElementById('app'),root=document.documentElement;
+/* বারবার লোডিং বন্ধ: কনটেন্ট বদলালেই কেবল DOM আপডেট, অ্যানিমেশন শুধু প্রথমবার */
+const _d=Object.getOwnPropertyDescriptor(Element.prototype,'innerHTML');
+function guard(el){let last=null;Object.defineProperty(el,'innerHTML',{configurable:true,get(){return _d.get.call(this)},set(v){if(v===last)return;last=v;const y=scrollY;_d.set.call(this,v);if(scrollY!==y)scrollTo(0,y)}})}
+setTimeout(()=>document.body.classList.add('rdy'),900);
+const typing=()=>{const a=document.activeElement;return !!a&&/^(INPUT|SELECT|TEXTAREA)$/.test(a.tagName)&&a.type!=='checkbox'};
+guard($);
 let S={theme:0,dark:0,pr:{}};
 try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
 const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
@@ -137,5 +144,5 @@ $.innerHTML=`<header><div><h1>🕌 নামাজ</h1><div class="sub">নফ�
 <div class="grid"><section class="card"><h2>নফল নামাজের সময়</h2>${nf.map((x,i)=>row(x,i)).join('')}</section>
 <section class="card"><h2>নিষিদ্ধ সময়</h2>${WS.filter(([w])=>w[3]=='f').map(x=>row(x)).join('')}<div class="m" style="margin-top:10px">ঢাকার সময় অনুযায়ী (আনুমানিক)</div></section></div>`}
 $.addEventListener('change',e=>{const i=e.target.dataset.i;if(!i)return;const K=key(new Date());(S.pr[K]=S.pr[K]||{})[i]=e.target.checked;save()});
-render();setInterval(render,30000);
+let lastR='';render();setInterval(()=>{const n=new Date(),m=n.getHours()*60+n.getMinutes();if(m!==lastR&&!typing()){lastR=m;render()}},5000);
 </script></body></html>
