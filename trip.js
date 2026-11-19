@@ -4,7 +4,7 @@
 (function(){
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
 function show(t,o){
-o.icon='icons/icon-192.png';o.badge='icons/badge-96.png';o.tag=o.tag||t;o.data={url:'bags.html'};
+o.icon='icon-192.png';o.badge='badge-96.png';o.tag=o.tag||t;o.data={url:'bags.html'};
 const fb=()=>{try{new Notification(t,o)}catch(e){}};
 if(navigator.serviceWorker&&navigator.serviceWorker.getRegistration)navigator.serviceWorker.getRegistration().then(r=>r?r.showNotification(t,o):fb()).catch(fb);else fb()}
 function chk(){try{
