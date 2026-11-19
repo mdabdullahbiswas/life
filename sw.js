@@ -1,8 +1,8 @@
 /* Hayat — Service Worker
    অফলাইন সাপোর্ট: পেজ/স্ক্রিপ্ট আগে ক্যাশ থেকে দেখায়, পেছনে নতুন সংস্করণ এনে রাখে।
    কোড বদলালে নিচের VER সংখ্যা বাড়িয়ে দিন — পুরনো ক্যাশ নিজে মুছে যাবে। */
-const VER='hayat-v1';
-const PRE=['./','index.html','tasks.html','bags.html','lang.js','trip.js','header.js','pwa.js','manifest.json','offline.html',
+const VER='hayat-v2';
+const PRE=['./','index.html','tasks.html','namaz.html','roza.html','study.html','hisab.html','bags.html','settings.html','lang.js','trip.js','header.js','pwa.js','manifest.json','offline.html',
   'icons/icon-192.png','icons/icon-512.png','icons/apple-touch-icon.png'];
 
 self.addEventListener('install',e=>{

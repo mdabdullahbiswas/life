@@ -292,10 +292,10 @@ setInterval(()=>{const n=new Date(),hm=String(n.getHours()).padStart(2,'0')+':'+
 if(hm!==lastR&&!typing()){lastR=hm;render()}
 if(!S.notif||hm==last||!window.Notification||Notification.permission!='granted')return;last=hm;
 const c=calc(n),tm=[c.fajr,c.noon+.02,c.asr,c.maghrib,c.isha];
-tm.forEach((x,i)=>{if(Math.floor(x)==n.getHours()&&Math.round((x%1)*60)==n.getMinutes())new Notification(P[i]+' নামাজের সময় হয়েছে')});
-if(hij(n).m==9||S.rm)[[c.fajr-.17,'সেহরি শেষ হতে ১০ মিনিট বাকি'],[c.maghrib,'ইফতারের সময় হয়েছে']].forEach(([x,m])=>{if(Math.floor(x)==n.getHours()&&Math.round((x%1)*60)==n.getMinutes())new Notification(m)});
-S.tasks.filter(t=>t.time==hm&&due(t,n)).forEach(t=>new Notification('কাজের সময়: '+t.title))},15000);
+tm.forEach((x,i)=>{if(Math.floor(x)==n.getHours()&&Math.round((x%1)*60)==n.getMinutes())hayatNotify(P[i]+' নামাজের সময় হয়েছে')});
+if(hij(n).m==9||S.rm)[[c.fajr-.17,'সেহরি শেষ হতে ১০ মিনিট বাকি'],[c.maghrib,'ইফতারের সময় হয়েছে']].forEach(([x,m])=>{if(Math.floor(x)==n.getHours()&&Math.round((x%1)*60)==n.getMinutes())hayatNotify(m)});
+S.tasks.filter(t=>t.time==hm&&due(t,n)).forEach(t=>hayatNotify('কাজের সময়: '+t.title))},15000);
 setInterval(()=>loadWX(),6e5);
 loadWX();
 render();
-</script></body></html>
+</script><script src="trip.js"></script><script src="pwa.js"></script></body></html>

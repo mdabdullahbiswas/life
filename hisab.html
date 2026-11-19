@@ -128,4 +128,4 @@ $.innerHTML=`<header><div><h1>💰 হিসাব</h1><div class="sub">${MON[no
 $.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);if(e.target.dataset.f=='fin'){S.fin.push({t:f.get('t'),a:+f.get('a'),n:f.get('n'),d:key(new Date())});save();render()}});
 $.addEventListener('click',e=>{const d=e.target.dataset.del;if(d==null)return;S.fin.splice(+d,1);save();render()});
 render();
-</script></body></html>
+</script><script src="pwa.js"></script></body></html>

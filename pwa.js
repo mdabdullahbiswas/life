@@ -5,6 +5,15 @@ const H=document.head;
 function add(t,a){const e=document.createElement(t);for(const k in a)e.setAttribute(k,a[k]);H.appendChild(e)}
 const L=window.L||(s=>s);
 
+/* সব পেজের নোটিফিকেশন এক জায়গা দিয়ে: Android-এ new Notification() কাজ করে না, তাই service worker ব্যবহার করে। */
+window.hayatNotify=function(t,o){
+  if(!window.Notification||Notification.permission!=='granted')return;
+  o=typeof o==='string'?{body:o}:(o||{});
+  o.icon=o.icon||'icons/icon-192.png';o.badge=o.badge||'icons/badge-96.png';o.tag=o.tag||t;o.data=o.data||{url:'index.html'};
+  const fb=()=>{try{new Notification(t,o)}catch(e){}};
+  if(navigator.serviceWorker&&navigator.serviceWorker.getRegistration)navigator.serviceWorker.getRegistration().then(r=>r?r.showNotification(t,o):fb()).catch(fb);else fb();
+};
+
 if(!document.querySelector('link[rel="manifest"]'))add('link',{rel:'manifest',href:'manifest.json'});
 if(!document.querySelector('meta[name="theme-color"]'))add('meta',{name:'theme-color',content:'#B8892B'});
 add('meta',{name:'mobile-web-app-capable',content:'yes'});
