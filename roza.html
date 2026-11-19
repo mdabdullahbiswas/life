@@ -2,18 +2,15 @@
 <html lang="bn"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>রোজা · Hayat</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Bengali:wght@400;600;700&family=Noto+Naskh+Arabic:wght@500&display=swap" rel="stylesheet">
 <style>
 /* প্যালেট: সোনালি মূল রঙ (#B8892B → #E2C275, ডার্কে #E0B84F → #F2D88A) · ব্রোঞ্জ #8A6420 · এসপ্রেসো #2B2118 · ক্রিম #FBF7EE · উষ্ণ কালো #0C0A07 */
-:root{--a:#B8892B;--a2:#E2C275;--g:#8A6420;--p:#7A5614;--on:#1F1608;--bb:var(--t);--bt:var(--a2);--bd:var(--a);--bg:#FBF7EE;--c:rgba(255,252,244,.8);--t:#2B2118;--m:#7A6A55;--b:rgba(120,90,30,.15);--cb:rgba(184,137,43,.42);--sh:rgba(184,137,43,.38);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--a:#B8892B;--a2:#E2C275;--g:#8A6420;--p:#7A5614;--on:#1F1608;--bb:var(--t);--bt:var(--a2);--bd:var(--a);--pc:var(--a);--pc2:var(--a2);--bg:#FBF7EE;--c:rgba(255,252,244,.8);--t:#2B2118;--m:#7A6A55;--b:rgba(120,90,30,.15);--cb:rgba(184,137,43,.42);--sh:rgba(184,137,43,.38);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 :root[data-d="1"]{--bg:#0C0A07;--c:rgba(32,25,14,.72);--t:#F6EDD8;--m:#B3A68B;--b:rgba(224,184,79,.2);--cb:rgba(224,184,79,.34);--a:#E0B84F;--a2:#F2D88A;--g:#A47A20;--p:#F2D88A;--on:#1A1304;--bb:var(--a);--bt:var(--on);--bd:var(--a2);--sh:rgba(224,184,79,.22)}
-/* থিম: গোল্ড + এমারেল্ড */
 :root[data-t="1"]:not([data-d="1"]){--g:#0D4C3C;--p:#0D4C3C;--t:#10241D;--m:#5E6F66;--bg:#F8F6EC}
 :root[data-t="1"][data-d="1"]{--bg:#07100D;--c:rgba(14,59,46,.45);--g:#1F8A68}
-/* থিম: গোল্ড + মিডনাইট নেভি */
 :root[data-t="2"]:not([data-d="1"]){--g:#16213E;--p:#16213E;--t:#0F172A;--m:#5F6878;--bg:#F7F6F1}
 :root[data-t="2"][data-d="1"]{--bg:#0A0F1E;--c:rgba(22,33,62,.6);--g:#2A3B6B}
-/* থিম: গোল্ড + বারগান্ডি */
 :root[data-t="3"]:not([data-d="1"]){--g:#5B1A2B;--p:#5B1A2B;--t:#2A0F16;--m:#76616A;--bg:#FAF5EF}
 :root[data-t="3"][data-d="1"]{--bg:#0E0709;--c:rgba(91,26,43,.42);--g:#8A2D45}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -22,9 +19,10 @@ body{margin:0;font-family:Inter,"Noto Serif Bengali",serif;color:var(--t);backgr
 body::before{content:"";position:fixed;inset:-20% -10% auto;height:70vh;background:radial-gradient(60% 60% at 30% 30%,color-mix(in srgb,var(--g) 24%,transparent),transparent),radial-gradient(50% 50% at 80% 20%,color-mix(in srgb,var(--a) 16%,transparent),transparent);z-index:-1;animation:fl 14s ease-in-out infinite alternate}
 @keyframes fl{to{transform:translate(3%,6%) scale(1.08)}}
 @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.bn,button,input,select,h1,h2,h3,label{font-family:"Noto Serif Bengali",Inter,serif}
+@keyframes spin{to{transform:rotate(360deg)}}
+.bn,button,input,select,h1,h2,h3,label,summary{font-family:"Noto Serif Bengali",Inter,serif}
 main{max-width:1080px;margin:auto;padding:20px 16px 60px}
-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+header{margin-bottom:18px}
 h1{font-size:clamp(24px,5vw,34px);margin:0;font-weight:700}
 .sub{color:var(--m);font-size:14px;margin-top:4px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
@@ -34,105 +32,205 @@ h1{font-size:clamp(24px,5vw,34px);margin:0;font-weight:700}
 .wide{grid-column:1/-1}
 h2{font-size:17px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
 h2::before{content:"";width:6px;height:18px;border-radius:3px;background:linear-gradient(var(--g),var(--a))}
-.big{font-size:clamp(34px,8vw,52px);font-weight:700;letter-spacing:-1px;background:linear-gradient(90deg,var(--a),var(--g));-webkit-background-clip:text;background-clip:text;color:transparent;font-family:"Noto Serif Bengali"}
+.big{font-size:clamp(34px,8vw,52px);font-weight:700;letter-spacing:-1px;line-height:1.2;background:linear-gradient(90deg,var(--a),var(--g));-webkit-background-clip:text;background-clip:text;color:transparent;font-family:"Noto Serif Bengali"}
 .row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px dashed var(--b)}
 .row:last-child{border:0}
-.m{color:var(--m);font-size:13px}
+.m{color:var(--m);font-size:13px;line-height:1.6}
 button{border:1px solid var(--bd);border-radius:10px;padding:10px 22px;background:var(--bb);color:var(--bt);font-weight:600;letter-spacing:.3px;cursor:pointer;font-size:14px;box-shadow:0 1px 2px rgba(0,0,0,.12);transition:background .2s,color .2s,border-color .2s,box-shadow .2s}
 button:hover{background:color-mix(in srgb,var(--bb) 86%,var(--bt));box-shadow:0 4px 14px -6px var(--sh)}
 button:active{transform:translateY(1px)}
 button:focus-visible{outline:2px solid var(--g);outline-offset:2px}
+button:disabled{opacity:.45;cursor:not-allowed}
 button.g{background:transparent;color:var(--t);border:1px solid var(--cb);font-weight:500;box-shadow:none}
 button.g:hover{background:color-mix(in srgb,var(--a) 12%,transparent);border-color:var(--a)}
-.row button:not(.x){padding:6px 14px}
-input,select{border:1px solid var(--b);background:var(--c);color:var(--t);border-radius:12px;padding:9px 12px;font-size:14px;min-width:0}
-input:focus,select:focus{outline:2px solid var(--g)}
-.chk{appearance:none;width:24px;height:24px;border-radius:8px;border:2px solid var(--cb);cursor:pointer;display:grid;place-items:center;transition:.2s;padding:0;flex:none}
-.chk:checked{background:linear-gradient(135deg,var(--pc,var(--a)),var(--pc2,var(--a2)));border-color:transparent}
-.chk[style]{border-color:color-mix(in srgb,var(--pc) 55%,transparent)}
-.chk:checked::after{content:"✓";color:var(--on);font-size:14px}
-.chk:disabled{opacity:.4;cursor:not-allowed}
-.pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;background:color-mix(in srgb,var(--a) 20%,transparent);color:var(--p);font-weight:600}
-.bad{background:rgba(220,60,60,.14);color:#d33}
+.row button{padding:6px 14px}
+.pill{display:inline-block;padding:3px 12px;border-radius:99px;font-size:12px;background:color-mix(in srgb,var(--a) 20%,transparent);color:var(--p);font-weight:600}
+.pill.f{background:rgba(31,157,107,.15);color:#1f9d6b}.pill.x{background:rgba(220,60,60,.14);color:#d33}
+:root[data-d="1"] .pill.f{color:#4fd7a0}:root[data-d="1"] .pill.x{color:#ff8a8a}
 .bar{height:8px;border-radius:9px;background:var(--b);overflow:hidden;margin-top:10px}
 .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--a),var(--g));transition:width .6s}
-.sw{display:flex;gap:10px;flex-wrap:wrap}
-.sw b{width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .2s}
-.sw b:hover{transform:scale(1.2)}.sw b.on{border-color:var(--t)}
-form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}form input{flex:1 1 110px}
-.st{display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:center}
-.st div{padding:10px;border-radius:14px;background:var(--b)}
-.x{background:none;border:0;box-shadow:none;color:var(--m);padding:4px 8px}
-.x:hover{background:none;box-shadow:none;color:#d33}
-.dots{display:grid;grid-template-columns:repeat(auto-fill,minmax(32px,1fr));gap:6px;margin-top:10px}
-.dots b{display:grid;place-items:center;height:32px;border-radius:9px;background:var(--b);font-size:12px;font-weight:500;cursor:pointer;transition:.2s}
-.dots b:hover{transform:scale(1.1)}
-.dots b.on{background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on)}
 
-.cd{text-align:center}
-.cd h2{justify-content:center}
-.cdw{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:18px 22px;margin:6px 0 4px}
-.ring{position:relative;width:138px;height:138px;flex:none}
+.hero{display:flex;flex-wrap:wrap;gap:20px 30px;align-items:center;justify-content:space-between;border-color:color-mix(in srgb,var(--pc) 55%,transparent)}
+.hero>div:first-child{flex:1 1 280px;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.hero .big{margin:2px 0}
+.hz{font-size:13px;line-height:1.7;padding:10px 14px;border-radius:14px;background:color-mix(in srgb,var(--a) 11%,transparent);border:1px solid var(--b);color:var(--m)}
+.cdw{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:10px;margin:0 auto}
+.ring{position:relative;width:170px;height:170px}
 .ring svg{width:100%;height:100%;transform:rotate(-90deg);overflow:visible}
-.ring .tr{fill:none;stroke:var(--b);stroke-width:7}
-.ring .pg{fill:none;stroke:url(#rg);stroke-width:7;stroke-linecap:round;filter:drop-shadow(0 0 6px var(--sh));transition:stroke-dashoffset 1s linear}
-.ring .dc{fill:none;stroke:var(--pc);stroke-width:1;stroke-dasharray:1 6;opacity:.45;animation:spin 60s linear infinite;transform-origin:70px 70px}
-@keyframes spin{to{transform:rotate(360deg)}}
+.ring .tr{fill:none;stroke:var(--b);stroke-width:8}
+.ring .pg{fill:none;stroke:url(#rg);stroke-width:8;stroke-linecap:round;stroke-dasharray:377;stroke-dashoffset:377;filter:drop-shadow(0 0 6px var(--sh));transition:stroke-dashoffset 1s linear}
+.ring .dc{fill:none;stroke:var(--pc);stroke-width:1;stroke-dasharray:1 6;opacity:.45;animation:spin 60s linear infinite;transform-origin:85px 85px}
 .rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
-.rc b{font-size:22px;font-weight:700;font-family:"Noto Serif Bengali";background:linear-gradient(90deg,var(--pc),var(--pc2));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.2}
+.rc b{font-size:24px;font-weight:700;font-family:"Noto Serif Bengali";background:linear-gradient(90deg,var(--pc),var(--pc2));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.3}
 .rc span{font-size:12px;color:var(--m)}
-.tiles{display:flex;align-items:center;gap:6px}
-.tl{min-width:62px;padding:10px 6px 8px;border-radius:16px;background:linear-gradient(160deg,color-mix(in srgb,var(--pc) 20%,transparent),color-mix(in srgb,var(--pc2) 8%,transparent));border:1px solid color-mix(in srgb,var(--pc) 45%,transparent);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 8px 18px -12px var(--pc)}
-.tl b{display:block;font-size:30px;font-weight:700;line-height:1.15;font-family:"Noto Serif Bengali";background:linear-gradient(180deg,var(--pc2),var(--pc));-webkit-background-clip:text;background-clip:text;color:transparent}
-.tl small{font-size:11px;color:var(--m)}
-.cl{font-size:24px;color:var(--pc);opacity:.7;margin-top:-14px}
-.cds{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:14px}
-.cdc{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;font-size:12px;color:var(--m);border:1px solid color-mix(in srgb,var(--pc) 40%,transparent);transition:.3s}
-.cdc::before{content:"";width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,var(--pc2),var(--pc))}
-.cdc.past{opacity:.5;text-decoration:line-through;text-decoration-color:var(--b)}
-.cdc.on{background:linear-gradient(135deg,var(--pc),var(--pc2));color:#fff;border-color:transparent;font-weight:600;box-shadow:0 6px 14px -6px var(--pc)}
-.cdc.on::before{background:#fff}
-.cd{border-color:color-mix(in srgb,var(--pc) 50%,transparent);box-shadow:0 12px 32px -14px var(--pc)}
-.cd::after{background:linear-gradient(90deg,var(--pc),var(--pc2))}
-.cd h2{color:var(--t)}
+.tm{font-size:12px;color:var(--m);text-align:center}
 
-.warn{margin:12px 0 0;padding:10px 14px;border-radius:14px;background:rgba(220,60,60,.12);border:1px solid rgba(220,60,60,.4);color:#d33;font-size:13px;font-weight:600;line-height:1.6}
-.warn b{font-size:18px;letter-spacing:.5px;margin:0 4px}
-.okb{margin:10px 0 0;padding:9px 14px;border-radius:14px;background:rgba(31,157,107,.13);border:1px solid rgba(31,157,107,.4);color:#1f9d6b;font-size:13px;font-weight:600}
-:root[data-d="1"] .warn{color:#ff8a8a}:root[data-d="1"] .okb{color:#4fd7a0}
-.sp{margin-top:16px;text-align:left}
-.spt{font-size:12px;font-weight:600;color:var(--m);letter-spacing:.4px;margin:12px 0 4px;padding-bottom:4px;border-bottom:1px solid var(--b)}
-.sr{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:6px 8px;border-radius:10px;font-size:13px;color:var(--m)}
-.sr span:first-child{display:flex;align-items:center;gap:8px;color:var(--t)}
-.sr span:first-child::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--b);flex:none}
-.sr.on{font-weight:600}
-.sr.on.f{background:rgba(220,60,60,.12);color:#d33}.sr.on.f span:first-child::before{background:#d33;box-shadow:0 0 0 4px rgba(220,60,60,.2)}
-.sr.on.n{background:rgba(31,157,107,.13);color:#1f9d6b}.sr.on.n span:first-child::before{background:#1f9d6b;box-shadow:0 0 0 4px rgba(31,157,107,.2)}
-:root[data-d="1"] .sr.on.f{color:#ff8a8a}:root[data-d="1"] .sr.on.n{color:#4fd7a0}
-.ram{border-color:var(--g)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:12px}
+.cal i{font-style:normal;text-align:center;font-size:12px;color:var(--m);padding-bottom:2px}
+.cal b{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;height:48px;border-radius:12px;background:var(--b);font-size:14px;font-weight:600;cursor:pointer;transition:.2s;user-select:none}
+.cal b small{font-size:9px;font-weight:400;color:var(--m);line-height:1}
+.cal b:hover{transform:scale(1.06)}
+.cal b.e{background:none;cursor:default;pointer-events:none}
+.cal b.sp::after{content:"";position:absolute;top:5px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--a)}
+.cal b.on{background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on)}
+.cal b.on small,.cal b.rm small{color:inherit;opacity:.75}
+.cal b.rm{background:linear-gradient(135deg,#1f9d6b,#4fd7a0);color:#fff}
+.cal b.ban{opacity:.4;cursor:not-allowed;text-decoration:line-through}
+.cal b.fu{opacity:.45;cursor:default}
+.cal b.td{outline:2px solid var(--g);outline-offset:2px}
+.leg{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px;font-size:12px;color:var(--m)}
+.leg span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:var(--a)}
+.leg .r::before{background:#1f9d6b}.leg .n::before{background:var(--b);border:1px solid var(--m)}
+.mh{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.mh h2{margin:0}
+.mh button{padding:6px 14px}
+
+.st{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center}
+.st div{padding:12px 6px;border-radius:14px;background:var(--b)}
+.st b{display:block;font-size:24px;font-family:"Noto Serif Bengali";background:linear-gradient(90deg,var(--a),var(--g));-webkit-background-clip:text;background-clip:text;color:transparent}
+.st span{font-size:11px;color:var(--m)}
+.ev{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--b);font-size:14px}
+.ev:last-child{border:0}
+.ev small{display:block;color:var(--m);font-size:12px}
+.ev .pill{flex:none}
+details{border:1px solid var(--b);border-radius:14px;padding:12px 14px;margin-bottom:10px;background:color-mix(in srgb,var(--a) 6%,transparent)}
+summary{cursor:pointer;font-weight:600;font-size:15px}
+.ar{font-family:"Noto Naskh Arabic",serif;font-size:22px;line-height:2.1;text-align:center;direction:rtl;color:var(--p);margin:8px 0 2px}
+.qz{display:flex;align-items:center;justify-content:center;gap:22px}
+.qz .big{min-width:70px;text-align:center}
+.qz button{width:44px;height:44px;padding:0;font-size:22px;border-radius:50%}
+.act{display:flex;gap:8px;flex-wrap:wrap}
 </style></head><body><script src="header.js"></script><main id="app"></main>
 <script>
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
-const $=document.getElementById('app'),root=document.documentElement;
-let S={theme:0,dark:0,fast:{}};
+const $=document.getElementById('app'),root=document.documentElement,D=864e5;
+let S={theme:0,dark:0,fast:{},rf:{},rq:0,ho:0};
 try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
-const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
+S.fast=S.fast||{};S.rf=S.rf||{};
+/* অন্য পেজের ডেটা না মুছে শুধু এই পেজের কী-গুলো সেভ করে */
+const save=()=>{try{let o={};try{o=JSON.parse(localStorage.getItem('dl')||'{}')}catch(e){}
+Object.assign(o,{fast:S.fast,rf:S.rf,rq:S.rq,ho:S.ho});if(S.loc)o.loc=S.loc;localStorage.setItem('dl',JSON.stringify(o))}catch(e){}};
 const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-function hij(d){const f=new Intl.DateTimeFormat('en-u-ca-islamic-umalqura',{day:'numeric',month:'numeric',year:'numeric'}).formatToParts(d),g=t=>+f.find(x=>x.type===t).value;return{d:g('day'),m:g('month'),y:g('year')}}
-function fastInfo(d,h){if(h.m==9)return['ফরজ রোজা (রমজান)',0];
-if((h.m==10&&h.d==1)||(h.m==12&&h.d>=10&&h.d<=13))return['রোজা নিষিদ্ধ (ঈদ/তাশরীকের দিন)',1];
-const r=[];if(h.m==12&&h.d==9)r.push('আরাফার দিন');if(h.m==1&&(h.d==9||h.d==10))r.push('আশুরা');
-if(h.d>=13&&h.d<=15)r.push('আইয়ামে বীজ');if(h.m==10&&h.d>1&&h.d<=8)r.push('শাওয়ালের ছয় রোজা');
-if(d.getDay()==1)r.push('সোমবার');if(d.getDay()==4)r.push('বৃহস্পতিবার');
-return r.length?['নফল রোজার দিন: '+r.join(', '),0]:['আজ নফল রোজার বিশেষ দিন নয়',0]}
-function render(){const now=new Date(),K=key(now),h=hij(now),fi=fastInfo(now,h);root.dataset.t=S.theme||0;root.dataset.d=S.dark||0;
-const kd=n=>K.slice(0,8)+String(n).padStart(2,'0'),dim=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
-const fy=Object.keys(S.fast).filter(k=>k.startsWith(K.slice(0,4))).length,fm=Object.keys(S.fast).filter(k=>k.startsWith(K.slice(0,7))).length,canF=!fi[1]&&h.m!=9;
-$.innerHTML=`<header><div><h1>🌙 রোজা</h1><div class="sub">নফল রোজা ট্র্যাকার</div></div></header>
-<div class="grid"><section class="card"><h2>নফল রোজা ট্র্যাকার <span class="pill">${bn(fm)} এ মাসে</span></h2><div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="ft" ${S.fast[K]?'checked':''} ${canF?'':'disabled'}>আজ নফল রোজা রেখেছি</label><span class="m">${bn(fy)} টি এ বছর</span></div><div class="dots">${Array.from({length:dim},(_,i)=>`<b data-a="fd" data-i="${i+1}" class="${S.fast[kd(i+1)]?'on':''}">${bn(i+1)}</b>`).join('')}</div><div class="m" style="margin-top:8px">${fi[0]}</div></section></div>`}
-$.addEventListener('click',e=>{const a=e.target.dataset.a,i=e.target.dataset.i,K=key(new Date());if(!a)return;
-if(a=='ft')S.fast[K]?delete S.fast[K]:S.fast[K]=1;
-if(a=='fd'){const k=K.slice(0,8)+String(i).padStart(2,'0');S.fast[k]?delete S.fast[k]:S.fast[k]=1}
+const MN=["মুহাররম","সফর","রবিউল আউয়াল","রবিউস সানি","জমাদিউল আউয়াল","জমাদিউস সানি","রজব","শা'বান","রমজান","শাওয়াল","জিলকদ","জিলহজ"];
+const HF=new Intl.DateTimeFormat('en-u-ca-islamic-umalqura',{day:'numeric',month:'numeric',year:'numeric'});
+function hij(d){const x=new Date(d);x.setDate(x.getDate()+(S.ho||0));const f=HF.formatToParts(x),g=t=>+f.find(p=>p.type===t).value;return{d:g('day'),m:g('month'),y:g('year')}}
+function fi(d){const h=hij(d),w=d.getDay(),o={h};
+if(h.m==9){o.l='ফরজ রোজা (রমজান)';o.f=1;return o}
+if((h.m==10&&h.d==1)||(h.m==12&&h.d>=10&&h.d<=13)){o.l='রোজা নিষিদ্ধ (ঈদ/তাশরীকের দিন)';o.x=1;return o}
+const r=[],z=[];
+if(h.m==12&&h.d==9){r.push('আরাফার দিন');z.push('আগের ও পরের এক বছরের গুনাহের কাফফারা (সহিহ মুসলিম)')}
+if(h.m==1&&(h.d==9||h.d==10)){r.push('আশুরা');z.push('গত এক বছরের গুনাহের কাফফারা (সহিহ মুসলিম)')}
+if(h.d>=13&&h.d<=15){r.push('আইয়ামে বীজ');z.push('প্রতি মাসের তিন রোজা সারা বছর রোজা রাখার সমান সওয়াব (বুখারি–মুসলিম)')}
+if(h.m==10&&h.d>1&&h.d<=8){r.push('শাওয়ালের ছয় রোজা');z.push('রমজানের পর ছয় রোজা পুরো বছরের রোজার সমান (সহিহ মুসলিম)')}
+o.sp=r.length;o.wk=w==1||w==4;
+if(o.wk){r.push(w==1?'সোমবার':'বৃহস্পতিবার');if(!o.sp)z.push('সোম–বৃহস্পতিবার আমল আল্লাহর কাছে পেশ করা হয় (তিরমিযি)')}
+o.l=r.length?'নফল রোজার দিন: '+r.join(', '):'আজ নফল রোজার বিশেষ দিন নয়';o.z=z[0]||'';return o}
+function upcoming(){const o=[],t=new Date();t.setHours(0,0,0,0);let rd=null,ab=0;
+for(let i=1;i<=400&&(o.length<6||rd===null);i++){const d=new Date(t);d.setDate(t.getDate()+i);const h=hij(d);let n='';
+if(h.m==9&&h.d==1){n='রমজান শুরু';if(rd===null)rd=i}
+else if(h.m==1&&h.d==9)n='আশুরা (৯–১০ মুহাররম)';
+else if(h.m==12&&h.d==9)n='আরাফার দিন';
+else if(h.m==10&&h.d==2)n='শাওয়ালের ছয় রোজা শুরু';
+else if(h.m!=9&&h.m!=12&&h.d==13&&!ab){n='আইয়ামে বীজ (১৩–১৫)';ab=1}
+if(n&&o.length<6)o.push({d,i,n})}
+return{o,rd}}
+function stats(){const K=key(new Date()),ks=[...new Set([...Object.keys(S.fast),...Object.keys(S.rf)])].sort(),
+t=k=>Math.round(Date.UTC(+k.slice(0,4),+k.slice(5,7)-1,+k.slice(8,10))/D);
+let best=0,run=0,p=null;ks.forEach(k=>{const v=t(k);run=p!==null&&v-p===1?run+1:1;p=v;if(run>best)best=run});
+const has=new Set(ks.map(t)),tk=t(K);let c=0,v=has.has(tk)?tk:tk-1;while(has.has(v)){c++;v--}
+const nk=Object.keys(S.fast);
+return{best,cur:c,tot:nk.length,rf:Object.keys(S.rf).length,mo:nk.filter(k=>k.startsWith(K.slice(0,7))).length,yr:nk.filter(k=>k.startsWith(K.slice(0,4))).length}}
+
+/* সেহরি-ইফতারের সময় (Aladhan, ঢাকা ডিফল্ট; অবস্থান আপডেট করা যায়) */
+let T=null,vm=0;
+async function times(){const K=key(new Date());let c=null;try{c=JSON.parse(localStorage.getItem('rz_t')||'null')}catch(e){}
+if(c&&c.k===K)return c;
+try{const l=S.loc&&S.loc.lat?S.loc:{lat:23.8103,lng:90.4125},[y,m,d]=K.split('-');
+const r=await fetch('https://api.aladhan.com/v1/timings/'+d+'-'+m+'-'+y+'?latitude='+l.lat+'&longitude='+l.lng+'&method=1'),j=await r.json(),t=j.data.timings;
+const o={k:K,f:t.Fajr.slice(0,5),m:t.Maghrib.slice(0,5)};localStorage.setItem('rz_t',JSON.stringify(o));return o}catch(e){return c}}
+const h12=s=>{const h=+s.slice(0,2);return bn(((h%12)||12)+':'+s.slice(3,5))};
+function tick(){const e=document.getElementById('cdv');if(!e)return;const L=document.getElementById('cdl'),tm=document.getElementById('tm');
+if(!T){e.textContent='--:--';L.textContent='সময় লোড হয়নি';tm.innerHTML='<button class="g" data-a="rt" style="padding:5px 12px">আবার চেষ্টা করুন</button>';return}
+const n=new Date(),at=s=>{const x=new Date(n);x.setHours(+s.slice(0,2),+s.slice(3,5),0,0);return x},f=at(T.f),m=at(T.m);
+let tg=null,lb,p=0;
+if(n<f){tg=f;lb='সেহরি শেষ হতে'}else if(n<m){tg=m;lb='ইফতারে বাকি';p=(n-f)/(m-f)}else{lb='ইফতারের সময় 🌙';p=1}
+const s=tg?Math.max(0,Math.round((tg-n)/1000)):0,pd=v=>bn(String(v).padStart(2,'0'));
+e.textContent=pd(s/3600|0)+':'+pd(s/60%60|0)+':'+pd(s%60);L.textContent=lb;
+document.getElementById('pg').style.strokeDashoffset=377*(1-p);
+tm.textContent='সেহরি শেষ '+h12(T.f)+' · ইফতার '+h12(T.m)+' (আনুমানিক)'}
+
+function render(){const now=new Date();now.setHours(12,0,0,0);const K=key(now),f=fi(now),h=f.h,st=f.f?'rf':'fast',on=!!S[st][K],s=stats(),u=upcoming();
+root.dataset.t=S.theme||0;root.dataset.d=S.dark||0;
+const vd=new Date(now.getFullYear(),now.getMonth()+vm,1),vy=vd.getFullYear(),mo=vd.getMonth(),dim=new Date(vy,mo+1,0).getDate(),lead=vd.getDay();
+let cal='';for(let i=0;i<lead;i++)cal+='<b class="e"></b>';
+for(let i=1;i<=dim;i++){const d=new Date(vy,mo,i,12),k=key(d),c=fi(d),cs=c.f?'rf':'fast',fu=d>now&&k!==K;
+cal+=`<b data-a="tg" data-k="${k}" data-s="${cs}" class="${S[cs][k]?(c.f?'rm':'on'):''} ${c.sp?'sp':''} ${c.x?'ban':''} ${fu?'fu':''} ${k==K?'td':''}">${bn(i)}<small>${bn(c.h.d)}</small></b>`}
+const dn=h.m==9?h.d:0;
+$.innerHTML=`<header><h1>🌙 রোজা</h1><div class="sub">রোজার সঙ্গী · নফল ট্র্যাকার, সময় ও দোয়া</div></header>
+<div class="grid">
+<section class="card hero wide"><div>
+<div class="m">${now.toLocaleDateString('bn-BD',{weekday:'long',day:'numeric',month:'long'})}</div>
+<div class="big">${bn(h.d)} ${MN[h.m-1]}</div><div class="m">${bn(h.y)} হিজরি</div>
+<span class="pill ${f.f?'f':f.x?'x':''}">${f.l}</span>
+${f.z?`<div class="hz">✨ ${f.z}</div>`:''}
+<button data-a="ft" class="${on?'':'g'}" ${f.x?'disabled':''}>${on?'✓ আজ রোজা রেখেছি':(f.f?'আজ রমজানের রোজা রেখেছি':'আজ নফল রোজা রেখেছি')}</button></div>
+<div class="cdw"><div class="ring"><svg viewBox="0 0 170 170"><defs><linearGradient id="rg"><stop offset="0" style="stop-color:var(--pc)"/><stop offset="1" style="stop-color:var(--pc2)"/></linearGradient></defs>
+<circle class="tr" cx="85" cy="85" r="60"/><circle class="dc" cx="85" cy="85" r="74"/><circle class="pg" id="pg" cx="85" cy="85" r="60"/></svg>
+<div class="rc"><b id="cdv">--:--</b><span id="cdl"></span></div></div><div class="tm" id="tm"></div></div></section>
+
+<section class="card wide"><div class="mh"><button class="g" data-a="pm">‹</button><h2>${vd.toLocaleDateString('bn-BD',{month:'long',year:'numeric'})}</h2><button class="g" data-a="nm">›</button></div>
+<div class="cal">${['র','সো','ম','বু','বৃ','শু','শ'].map(x=>`<i>${x}</i>`).join('')}${cal}</div>
+<div class="leg"><span>নফল রোজা / বিশেষ দিন</span><span class="r">রমজানের রোজা</span><span class="n">নিষিদ্ধ দিনে রোজা রাখা যায় না</span></div>
+<div class="m" style="margin-top:6px">ঘরের নিচের ছোট সংখ্যা হিজরি তারিখ। ভবিষ্যতের তারিখ চিহ্নিত করা যায় না।</div></section>
+
+<section class="card"><h2>আমার পরিসংখ্যান</h2><div class="st">
+<div><b>${bn(s.mo)}</b><span>এ মাসে (নফল)</span></div><div><b>${bn(s.yr)}</b><span>এ বছরে (নফল)</span></div><div><b>${bn(s.tot)}</b><span>মোট নফল</span></div>
+<div><b>${bn(s.cur)}</b><span>বর্তমান টানা</span></div><div><b>${bn(s.best)}</b><span>সর্বোচ্চ টানা</span></div><div><b>${bn(s.rf)}</b><span>রমজানের রোজা</span></div></div>
+<div class="act" style="margin-top:14px"><button data-a="sh">📤 শেয়ার কার্ড</button></div></section>
+
+<section class="card"><h2>${dn?'রমজান চলছে':'সামনের রোজার দিন'}</h2>
+${dn?`<div class="row"><span>রমজানের ${bn(dn)} তম দিন</span><span class="pill">${bn(s.rf)}/${bn(dn)} রাখা হয়েছে</span></div><div class="bar"><i style="width:${Math.min(100,dn/30*100)}%"></i></div>`:
+(u.rd?`<div class="row"><span>রমজান আসতে বাকি</span><span class="pill">${bn(u.rd)} দিন</span></div>`:'')}
+${u.o.filter(x=>x.n!='রমজান শুরু').map(x=>`<div class="ev"><div>${x.n}<small>${x.d.toLocaleDateString('bn-BD',{weekday:'short',day:'numeric',month:'short'})}</small></div><span class="pill">${bn(x.i)} দিন পর</span></div>`).join('')}</section>
+
+<section class="card"><h2>রমজানের কাযা রোজা</h2><div class="qz"><button class="g" data-a="qd">−</button><div class="big">${bn(S.rq||0)}</div><button data-a="qu">+</button></div>
+<div class="m" style="text-align:center;margin-top:8px">এখনো বাকি আছে এমন কাযা রোজার সংখ্যা। একটি রাখলে − চাপুন।</div></section>
+
+<section class="card"><h2>দোয়া ও নিয়ত</h2>
+<details><summary>ইফতারের দোয়া</summary><div class="ar">ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ</div>
+<div class="m">অর্থ: পিপাসা মিটেছে, শিরা-উপশিরা সিক্ত হয়েছে এবং ইনশাআল্লাহ প্রতিদান নির্ধারিত হয়েছে। (আবু দাউদ)</div>
+<div class="ar">اللَّهُمَّ لَكَ صُمْتُ وَعَلَى رِزْقِكَ أَفْطَرْتُ</div>
+<div class="m">অর্থ: হে আল্লাহ, আপনার জন্যই রোজা রেখেছি এবং আপনার দেওয়া রিজিক দিয়েই ইফতার করছি। (প্রচলিত দোয়া)</div></details>
+<details><summary>সেহরির নিয়ত</summary><div class="ar">نَوَيْتُ أَنْ أَصُومَ غَدًا لِلَّهِ تَعَالَى</div>
+<div class="m">অর্থ: আমি আগামীকাল আল্লাহর জন্য রোজা রাখার নিয়ত করলাম। নিয়ত মূলত মনের সংকল্প, মুখে বলা জরুরি নয়।</div></details></section>
+
+<section class="card"><h2>সমন্বয়</h2>
+<div class="row"><div>হিজরি তারিখ<div class="m">চাঁদ দেখা অনুযায়ী মিলিয়ে নিন (${S.ho>0?'+':''}${bn(S.ho||0)} দিন)</div></div><div class="act"><button class="g" data-a="hd">−</button><button class="g" data-a="hu">+</button></div></div>
+<div class="row"><div>সেহরি-ইফতারের অবস্থান<div class="m">${S.loc&&S.loc.lat?'আপনার অবস্থান ব্যবহার হচ্ছে':'এখন ঢাকার সময় দেখাচ্ছে'}</div></div><button class="g" data-a="loc">📍 আপডেট</button></div></section>
+</div>`;tick()}
+
+async function share(){await (document.fonts&&document.fonts.ready);const s=stats(),h=hij(new Date()),c=document.createElement('canvas');c.width=1080;c.height=1350;
+const x=c.getContext('2d'),g=x.createLinearGradient(0,0,1080,1350);g.addColorStop(0,'#0C0A07');g.addColorStop(1,'#2B2118');x.fillStyle=g;x.fillRect(0,0,1080,1350);
+x.strokeStyle='#E0B84F';x.lineWidth=3;x.strokeRect(44,44,992,1262);x.textAlign='center';
+const F='"Noto Serif Bengali",serif',W=(t,y,z,col)=>{x.font='700 '+z+'px '+F;x.fillStyle=col;x.fillText(t,540,y)};
+W('🌙 আমার রোজা',210,76,'#F2D88A');W(bn(h.d)+' '+MN[h.m-1]+' '+bn(h.y)+' হিজরি',290,38,'#B3A68B');
+W(bn(s.mo),620,260,'#E0B84F');W('এ মাসে নফল রোজা',700,44,'#F6EDD8');
+[[s.yr,'এ বছরে'],[s.cur,'বর্তমান টানা'],[s.best,'সর্বোচ্চ টানা']].forEach((a,i)=>{const cx=240+i*300;x.font='700 90px '+F;x.fillStyle='#F2D88A';x.fillText(bn(a[0]),cx,940);x.font='400 32px '+F;x.fillStyle='#B3A68B';x.fillText(a[1],cx,1000)});
+W('Hayat',1230,40,'#B8892B');
+c.toBlob(async b=>{const fl=new File([b],'roza.png',{type:'image/png'});
+if(navigator.canShare&&navigator.canShare({files:[fl]})){try{await navigator.share({files:[fl],title:'আমার রোজা'})}catch(e){}return}
+const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='roza.png';a.click()})}
+
+$.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!el||el.disabled)return;const a=el.dataset.a,now=new Date(),K=key(now);
+if(a=='ft'){const f=fi(now);if(f.x)return;const st=f.f?'rf':'fast';S[st][K]?delete S[st][K]:S[st][K]=1}
+else if(a=='tg'){const k=el.dataset.k,c=el.dataset.s;if(el.classList.contains('ban')||el.classList.contains('fu'))return;S[c][k]?delete S[c][k]:S[c][k]=1}
+else if(a=='pm')vm--;else if(a=='nm')vm++;
+else if(a=='qu')S.rq=(S.rq||0)+1;else if(a=='qd')S.rq=Math.max(0,(S.rq||0)-1);
+else if(a=='hd')S.ho=Math.max(-2,(S.ho||0)-1);else if(a=='hu')S.ho=Math.min(2,(S.ho||0)+1);
+else if(a=='sh'){share();return}
+else if(a=='rt'){times().then(t=>{T=t;tick()});return}
+else if(a=='loc'){if(!navigator.geolocation){alert('এই ব্রাউজারে অবস্থান সমর্থিত নয়');return}
+navigator.geolocation.getCurrentPosition(p=>{S.loc={lat:+p.coords.latitude.toFixed(3),lng:+p.coords.longitude.toFixed(3)};try{localStorage.removeItem('rz_t')}catch(_){}save();times().then(t=>{T=t;render()})},()=>alert('অবস্থানের অনুমতি পাওয়া যায়নি'));return}
 save();render()});
-render();
+render();times().then(t=>{T=t;tick()});setInterval(tick,1000);
 </script><script src="pwa.js"></script></body></html>
