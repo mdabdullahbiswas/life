@@ -113,7 +113,7 @@ const data=`<section class="card wide"><h2>ডেটা ব্যবস্থা
 $.innerHTML=`<h1>⚙ সেটিং</h1><div class="grid">${hero}${look}${lang}${mode}${app}${qaza}${sheet}${tasks}${data}</div>`}
 function exportData(){S.lastBak=Date.now();save();const b=new Blob([JSON.stringify(S,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),l=document.createElement('a');l.href=u;l.download='hayat-backup-'+key(new Date())+'.json';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);render();toast('ব্যাকআপ নামানো হয়েছে ✓')}
 async function refreshApp(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()));const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.reload()}
-async function testNotif(){const o={body:'নোটিফিকেশন ঠিকমতো কাজ করছে ✓',icon:'icons/icon-192.png',data:{url:'index.html'}};try{const r=navigator.serviceWorker&&await navigator.serviceWorker.getRegistration();r?await r.showNotification('Hayat',o):new Notification('Hayat',o)}catch(e){toast('পাঠানো যায়নি')}}
+async function testNotif(){const o={body:'নোটিফিকেশন ঠিকমতো কাজ করছে ✓',icon:'icon-192.png',data:{url:'index.html'}};try{const r=navigator.serviceWorker&&await navigator.serviceWorker.getRegistration();r?await r.showNotification('Hayat',o):new Notification('Hayat',o)}catch(e){toast('পাঠানো যায়নি')}}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;const a=t.dataset.a,i=t.dataset.i;
 if(a=='exp'){exportData();return}
 if(a=='imp'){const f=document.getElementById('imp');if(f)f.click();return}
