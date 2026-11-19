@@ -93,7 +93,11 @@ const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
 let S={theme:0,dark:0};try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
 const root=document.documentElement;root.dataset.t=S.theme||0;root.dataset.d=S.dark||0;
 // অন্য পেজের ডেটা না মুছে শুধু bags সেভ
-const save=()=>{try{const o=JSON.parse(localStorage.getItem('dl')||'{}');o.bags=S.bags;localStorage.setItem('dl',JSON.stringify(o))}catch(e){}};
+const save=()=>{try{const o=JSON.parse(localStorage.getItem('dl')||'{}');o.bags=S.bags;
+// যাত্রার তারিখ থাকলে কাজের তালিকায় একটি কাজ রাখা; তারিখ বদলালে/মুছলে/ব্যাগ মুছলে কাজও ঠিক হয়
+let T=Array.isArray(o.tasks)?o.tasks:[];T=T.filter(t=>!t.bag||S.bags.some(b=>b.id===t.bag&&b.dt===t.start));
+S.bags.forEach((b,i)=>{if(b.dt&&!T.some(t=>t.bag===b.id))T.push({id:Date.now()+i,title:b.ic+' '+b.n+' — যাত্রা',type:'once',n:1,time:'',start:b.dt,bag:b.id})});
+o.tasks=T;localStorage.setItem('dl',JSON.stringify(o))}catch(e){}};
 // আইটেম: নাম|সংখ্যা|ফ্ল্যাগ (s=জরুরি, d=দিন অনুযায়ী বাড়বে)
 const mk=(s,t='')=>s.split(',').map(x=>{const[n,q,f='']=x.split('|');return{n,q:+q||1,k:0,s:/s/.test(f)?1:0,d:/d/.test(f)?1:0,t}});
 const PRE=[
@@ -111,18 +115,46 @@ const $=document.getElementById('app'),bag=()=>S.bags.find(b=>b.id===cur);
 const pr=b=>{const t=b.it.length,k=b.it.filter(x=>x.k).length;return[k,t,t?Math.round(k/t*100):0]};
 const ring=(p,c,z)=>`<svg class="rg ${an?'an':''}" width="${z}" height="${z}" viewBox="0 0 44 44" style="--bc:${c};--o:${113.1*(1-p/100)}"><circle cx="22" cy="22" r="18" class="t"/><circle cx="22" cy="22" r="18" class="v" transform="rotate(-90 22 22)"/><text x="22" y="26" text-anchor="middle">${bn(p)}%</text></svg>`;
 function list(){const T=S.bags.reduce((a,b)=>a+b.it.length,0),K=S.bags.reduce((a,b)=>a+pr(b)[0],0);
-return `<header><div><h1>ব্যাগ প্যাকিং</h1><div class="sub">${bn(K)}/${bn(T)} জিনিস প্যাক হয়েছে</div></div></header><div class="grid">${S.bags.map((b,i)=>{const[k,t,p]=pr(b);return `<section class="card bg" role="button" tabindex="0" style="--bc:${b.c};animation-delay:${i*.06}s" data-a="o" data-i="${b.id}"><div class="ic">${b.ic}</div><div><h3>${b.n}</h3><div class="m">${bn(k)}/${bn(t)} প্যাক${p==100?' ✓':''}</div></div>${ring(p,b.c,64)}</section>`}).join('')}<section class="card bg add" role="button" tabindex="0" data-a="nw" style="animation-delay:${S.bags.length*.06}s"><div class="ic">＋</div><div><h3>নতুন ব্যাগ</h3><div class="m">নিজের মতো তালিকা বানান</div></div></section></div>`}
+return `<header><div><h1>ব্যাগ প্যাকিং</h1><div class="sub">${bn(K)}/${bn(T)} জিনিস প্যাক হয়েছে</div></div></header><div class="grid">${S.bags.map((b,i)=>{const[k,t,p]=pr(b);return `<section class="card bg" role="button" tabindex="0" style="--bc:${b.c};animation-delay:${i*.06}s" data-a="o" data-i="${b.id}"><div class="ic">${b.ic}</div><div><h3>${b.n}</h3><div class="m">${bn(k)}/${bn(t)} প্যাক${p==100?' ✓':''}${b.dt?' · '+cd(b,1):''}</div></div>${ring(p,b.c,64)}</section>`}).join('')}<section class="card bg add" role="button" tabindex="0" data-a="nw" style="animation-delay:${S.bags.length*.06}s"><div class="ic">＋</div><div><h3>নতুন ব্যাগ</h3><div class="m">নিজের মতো তালিকা বানান</div></div></section></div>`}
+const dd=b=>Math.round((new Date(b.dt+'T00:00')-new Date(new Date().toDateString()))/864e5);
+const cd=(b,s)=>{if(!b.dt)return '';const d=dd(b);if(d<0)return 'যাত্রার দিন পেরিয়ে গেছে';const w=d===0?'আজই যাত্রা':d===1?'আগামীকাল যাত্রা':'আর '+bn(d)+' দিন বাকি';return s?w:w+', '+bn(pr(b)[2])+'% প্যাক হয়েছে'};
+const tc=b=>`<section class="card" style="--bc:${b.c}"><h2>যাত্রার তারিখ</h2><div class="opt"><input type="date" data-a="dt" value="${b.dt||''}">${b.dt?'<button class="g pl" data-a="dc">তারিখ মুছুন</button>':''}</div>${b.dt?`<div style="font-size:18px;font-weight:700;margin-top:12px">${cd(b)}</div>`:'<div class="m" style="margin-top:10px">তারিখ দিলে কাউন্টডাউন দেখাবে ও কাজের তালিকায় যোগ হবে।</div>'}</section>`;
+/* গন্তব্যের আবহাওয়া — Open-Meteo (বিনা চাবিতে); ৩০ মিনিট ক্যাশ */
+const WXB={};
+function wxLoad(b){WXB[b.id]={l:1,t:Date.now()};
+fetch('https://api.open-meteo.com/v1/forecast?latitude='+b.la+'&longitude='+b.lo+'&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=16')
+.then(r=>{if(!r.ok)throw 0;return r.json()}).then(d=>{if(!d||!d.daily)throw 0;WXB[b.id]={d:d.daily,t:Date.now()}}).catch(()=>{WXB[b.id]={e:1,t:Date.now()}}).then(()=>{if(cur===b.id)render()})}
+function wc(b){const w=WXB[b.id],M='margin-top:10px',
+inp=`<div class="opt"><input type="text" name="pl" placeholder="জেলা/উপজেলা বা শহরের নাম" style="flex:1;min-width:150px"><button class="g pl" data-a="pl">খুঁজুন</button>${b.la?'<button class="g pl" data-a="pc">মুছুন</button>':''}</div>`;
+let body='';
+if(!b.la)body=`<div class="m" style="${M}">গন্তব্যের নাম দিলে সেখানকার আবহাওয়া দেখে দরকারি জিনিসের পরামর্শ দেওয়া হবে।</div>`;
+else if(!w||w.l)body=`<div class="m" style="${M}">লোড হচ্ছে…</div>`;
+else if(w.e)body=`<div class="m" style="${M}">আবহাওয়া আনা যায়নি। ইন্টারনেট সংযোগ দেখুন।</div><div class="act"><button class="g pl" data-a="wr">আবার চেষ্টা</button></div>`;
+else{const D=w.d,t=b.dt?dd(b):-1;
+if(t>15)body=`<div class="m" style="${M}">তারিখটি ১৬ দিনের পূর্বাভাসের বাইরে — কাছাকাছি এলে পরামর্শ আসবে।</div>`;
+else{const idx=t>=0?t:1,n=t>=0?(b.dy||1):1,R=a=>(D[a]||[]).slice(idx,idx+n).filter(v=>v!=null),
+p=Math.max(0,...R('precipitation_probability_max')),mx=Math.max(-99,...R('temperature_2m_max')),mn=Math.min(99,...R('temperature_2m_min')),
+lab=t>=0?'যাত্রার সময়':'কাল',have=new Set(b.it.map(x=>x.n)),S2=[];
+if(p>=50)S2.push([`${lab} বৃষ্টির সম্ভাবনা ${bn(Math.round(p))}%, ${p>=70?'ছাতা ও রেইনকোট':'ছাতা'} যোগ করুন।`,p>=70?['ছাতা','রেইনকোট']:['ছাতা']]);
+if(mx>=35)S2.push([`${lab} সর্বোচ্চ ${bn(Math.round(mx))}° — গরম থাকবে, পানির বোতল ও টুপি যোগ করুন।`,['পানির বোতল','টুপি']]);
+if(mn<=15)S2.push([`${lab} সর্বনিম্ন ${bn(Math.round(mn))}° — ঠান্ডা থাকবে, চাদর/সোয়েটার ও মাফলার যোগ করুন।`,['চাদর/সোয়েটার','মাফলার']]);
+const need=S2.map(([m,it])=>[m,it.filter(x=>!have.has(x))]).filter(x=>x[1].length);
+body=`<div style="${M};font-weight:600">📍 ${b.pl}</div><div class="m" style="margin-top:4px">${lab}: ↑${bn(Math.round(mx))}° ↓${bn(Math.round(mn))}° · 🌧️ ${bn(Math.round(p))}%</div>`+
+(need.length?need.map(([m,it])=>`<div class="it" style="--bc:${b.c}"><span class="nm">${m}</span><button class="g pl" data-a="wa" data-i="${it.join('|')}">যোগ করুন</button></div>`).join(''):`<div class="m" style="${M}">${S2.length?'দরকারি জিনিস যোগ করা আছে ✓':'আবহাওয়া স্বাভাবিক — বাড়তি কিছু লাগবে না।'}</div>`)}}
+return `<section class="card" style="--bc:${b.c}"><h2>গন্তব্যের আবহাওয়া</h2>${inp}${body}</section>`}
+function rc(b){const r=b.it.filter(x=>x.t==='rt');if(!r.length)return '';const mi=r.filter(x=>!x.k),bk=r.length-mi.length;
+return `<section class="card" style="--bc:${mi.length?'#D33':b.c}"><h2>গ্রাম থেকে ফেরার মিলন</h2><div class="m">নিয়ে গিয়েছিলেন ${bn(r.length)}টি · ফিরেছে ${bn(bk)}টি · ফেরেনি ${bn(mi.length)}টি</div>${mi.length?`<div class="m" style="margin:10px 0 6px">এখনো ফেরেনি:</div><div class="opt">${mi.map(x=>`<span class="sr">${x.n}${x.q>1?' ×'+bn(x.q):''}</span>`).join('')}</div>`:'<div class="big" style="margin-top:10px;font-weight:700">সব জিনিস ফিরেছে ✨</div>'}</section>`}
 function det(){const b=bag(),[k,t,p]=pr(b),V=b.it.map((x,i)=>[x,i]).filter(([x])=>flt==0||(flt==1?!x.k:x.k)),
 msg=p==0?'প্যাকিং শুরু করুন':p<50?'ভালো এগোচ্ছে':p<100?'প্রায় হয়ে এসেছে':'সব প্রস্তুত — নিশ্চিন্তে বের হোন ✨',
 sec=(a,c,l)=>`<span class="pl g ${c}">${l}</span>`;
 return `<header><button class="g" data-a="bk">‹ সব ব্যাগ</button><div><h1>${b.n}</h1></div></header>
 <section class="card hero" style="--bc:${b.c}">${ring(p,b.c,112)}<div class="tx"><div class="big">${msg}</div><div class="m">${bn(k)}টি প্যাক · ${bn(t-k)}টি বাকি · জরুরি বাকি ${bn(b.it.filter(x=>x.s&&!x.k).length)}টি</div><div class="bar"><i style="width:${p}%"></i></div>
-<div class="act"><button class="g" data-a="sh">শেয়ার</button><button class="g" data-a="rs">সব খুলুন</button><button class="g" data-a="dl">মুছুন</button></div></div></section>
-<section class="card" style="--bc:${b.c}"><h2>স্মার্ট অপশন</h2><div class="opt">${b.dy?`<span class="step"><button class="g ib" data-a="dy" data-i="-1">−</button><b>${bn(b.dy)} দিন</b><button class="g ib" data-a="dy" data-i="1">+</button></span>`:''}${Object.keys(OPT).map(o=>`<button class="g pl ${b.o[o]?'on':''}" style="--bc:${b.c}" data-a="op" data-i="${o}">${OPT[o][0]}</button>`).join('')}</div><div class="m" style="margin-top:10px">দিন বদলালে জামা-মোজার সংখ্যা নিজে ঠিক হবে; অপশন চাপলে দরকারি জিনিস যোগ হবে।</div></section>
+<div class="act">${b.id==='g'?'<button class="g" data-a="rt">ফেরার ব্যাগ বানান</button>':''}<button class="g" data-a="sh">শেয়ার</button><button class="g" data-a="rs">সব খুলুন</button><button class="g" data-a="dl">মুছুন</button></div></div></section>
+${rc(b)}${tc(b)}${wc(b)}<section class="card" style="--bc:${b.c}"><h2>স্মার্ট অপশন</h2><div class="opt">${b.dy?`<span class="step"><button class="g ib" data-a="dy" data-i="-1">−</button><b>${bn(b.dy)} দিন</b><button class="g ib" data-a="dy" data-i="1">+</button></span>`:''}${Object.keys(OPT).map(o=>`<button class="g pl ${b.o[o]?'on':''}" style="--bc:${b.c}" data-a="op" data-i="${o}">${OPT[o][0]}</button>`).join('')}</div><div class="m" style="margin-top:10px">দিন বদলালে জামা-মোজার সংখ্যা নিজে ঠিক হবে; অপশন চাপলে দরকারি জিনিস যোগ হবে।</div></section>
 <section class="card" style="--bc:${b.c}"><h2>তালিকা</h2><div class="opt">${['সব','বাকি','প্যাক'].map((l,i)=>`<button class="g pl ${flt==i?'on':''}" style="--bc:${b.c}" data-a="fl" data-i="${i}">${l}</button>`).join('')}</div>
 <div style="margin-top:8px;--bc:${b.c}">${V.length?V.map(([x,i])=>`<div class="it ${x.k?'dn':''} ${i==pop?'pop':''}"><button class="ck" data-a="tg" data-i="${i}" aria-label="প্যাক"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button><span class="nm">${x.n}</span>${x.s?'<span class="sr">জরুরি</span>':''}<span class="qt"><button class="g ib" data-a="q" data-i="${i},-1">−</button><b>${bn(x.q)}</b><button class="g ib" data-a="q" data-i="${i},1">+</button></span><button class="g ib x ${x.s?'on':''}" data-a="st" data-i="${i}" aria-label="জরুরি">★</button><button class="g ib x" data-a="rm" data-i="${i}" aria-label="মুছুন">×</button></div>`).join(''):'<div class="em m">এখানে কিছু নেই</div>'}</div>
 <form data-f="add" style="--bc:${b.c}"><input name="n" placeholder="নতুন জিনিসের নাম" required><input name="q" type="number" min="1" value="1"><button style="background:${b.c};border-color:${b.c};color:#fff">যোগ করুন</button></form></section>`}
-function render(){$.className=an?'an':'';$.innerHTML=cur?det():list();an=0;pop=-1}
+function render(){if(cur){const b=bag(),w=b&&WXB[b.id];if(b&&b.la&&(!w||(!w.l&&Date.now()-w.t>18e5)))wxLoad(b)}$.className=an?'an':'';$.innerHTML=cur?det():list();an=0;pop=-1}
 function conf(){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;const c=document.createElement('canvas');c.className='cf';c.width=innerWidth;c.height=innerHeight;document.body.append(c);const x=c.getContext('2d'),cl=['#E2C275','#B8892B','#F2D88A','#FFF3C4'],P=Array.from({length:90},()=>({x:innerWidth/2,y:innerHeight*.35,vx:(Math.random()-.5)*14,vy:-Math.random()*13-3,r:Math.random()*5+2,c:cl[Math.random()*4|0],a:1}));let f=0;(function s(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.a-=.008;x.globalAlpha=Math.max(p.a,0);x.fillStyle=p.c;x.fillRect(p.x,p.y,p.r,p.r*1.6)});++f<130?requestAnimationFrame(s):c.remove()})()}
 const A={
 o:i=>{cur=i;flt=0;an=1;scrollTo(0,0)},bk:()=>{cur=null;an=1;scrollTo(0,0)},
@@ -135,10 +167,20 @@ fl:i=>{flt=+i},
 dy:i=>{const b=bag();b.dy=Math.min(30,Math.max(1,b.dy+ +i));b.it.forEach(x=>{if(x.d)x.q=b.dy})},
 op:o=>{const b=bag();b.o[o]=!b.o[o];if(b.o[o])b.it.push(...mk(OPT[o][1],o));else b.it=b.it.filter(x=>x.t!==o)},
 rs:()=>{bag().it.forEach(x=>x.k=0)},
+dc:()=>{bag().dt=''},
+wa:i=>{const b=bag();i.split('|').forEach(n=>{if(!b.it.some(x=>x.n===n))b.it.push({n,q:1,k:0,s:0,d:0,t:'wx'})})},
+pc:()=>{const b=bag();b.pl='';b.la=null;b.lo=null;delete WXB[b.id]},
+wr:()=>{delete WXB[bag().id]},
+pl:()=>{const q=($.querySelector('input[name=pl]').value||'').trim();if(!q)return false;
+fetch('https://geocoding-api.open-meteo.com/v1/search?count=1&language=bn&name='+encodeURIComponent(q)).then(r=>r.json()).then(d=>{const r=d&&d.results&&d.results[0];if(!r){alert('জায়গাটি খুঁজে পাওয়া যায়নি');return}const b=bag();if(!b)return;b.pl=r.name+(r.admin1?', '+r.admin1:'');b.la=r.latitude;b.lo=r.longitude;delete WXB[b.id];save();render()}).catch(()=>alert('আবহাওয়া আনা যায়নি। ইন্টারনেট সংযোগ দেখুন।'));return false},
+rt:()=>{const g=S.bags.find(b=>b.id==='g');if(!g)return false;let d=S.bags.find(b=>b.id==='d');if(!d){d={id:'d',ic:'🏙️',n:'ঢাকা ফেরার ব্যাগ',c:'#A87A1E',dy:0,o:{},it:[]};S.bags.push(d)}
+const src=g.it.some(x=>x.k)?g.it.filter(x=>x.k):g.it,nm=new Set(src.map(x=>x.n)),old=new Map(d.it.filter(x=>x.t==='rt').map(x=>[x.n,x.k]));
+d.it=[...src.map(x=>({n:x.n,q:x.q,k:old.get(x.n)||0,s:x.s,d:0,t:'rt'})),...d.it.filter(x=>x.t!=='rt'&&!nm.has(x.n))];cur='d';flt=0;an=1;scrollTo(0,0)},
 dl:()=>{if(!confirm('এই ব্যাগটি মুছে ফেলবেন?'))return false;S.bags=S.bags.filter(b=>b.id!==cur);cur=null;an=1},
 sh:()=>{const b=bag(),t=b.ic+' '+b.n+'\n'+b.it.map(x=>(x.k?'☑ ':'☐ ')+x.n+(x.q>1?' ×'+bn(x.q):'')).join('\n');if(navigator.share)navigator.share({text:t}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(t).then(()=>alert('তালিকা কপি হয়েছে'));return false}};
 $.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!el||!A[el.dataset.a])return;if(A[el.dataset.a](el.dataset.i)===false)return;save();render()});
-$.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('.bg')){e.preventDefault();e.target.click()}});
+$.addEventListener('change',e=>{if(e.target.dataset.a!=='dt')return;bag().dt=e.target.value||'';save();render()});
+$.addEventListener('keydown',e=>{if(e.target.name==='pl'&&e.key==='Enter'){e.preventDefault();A.pl();return}if((e.key==='Enter'||e.key===' ')&&e.target.matches('.bg')){e.preventDefault();e.target.click()}});
 $.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target),n=(f.get('n')||'').trim();if(!n)return;bag().it.push({n,q:Math.max(1,+f.get('q')||1),k:0,s:0,d:0,t:''});save();render();$.querySelector('input[name=n]').focus()});
 render();
-</script></body></html>
+</script><script src="trip.js"></script></body></html>
