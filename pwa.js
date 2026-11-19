@@ -9,7 +9,7 @@ const L=window.L||(s=>s);
 window.hayatNotify=function(t,o){
   if(!window.Notification||Notification.permission!=='granted')return;
   o=typeof o==='string'?{body:o}:(o||{});
-  o.icon=o.icon||'icons/icon-192.png';o.badge=o.badge||'icons/badge-96.png';o.tag=o.tag||t;o.data=o.data||{url:'index.html'};
+  o.icon=o.icon||'icon-512.png';o.tag=o.tag||t;o.data=o.data||{url:'index.html'};
   const fb=()=>{try{new Notification(t,o)}catch(e){}};
   if(navigator.serviceWorker&&navigator.serviceWorker.getRegistration)navigator.serviceWorker.getRegistration().then(r=>r?r.showNotification(t,o):fb()).catch(fb);else fb();
 };
@@ -20,12 +20,15 @@ add('meta',{name:'mobile-web-app-capable',content:'yes'});
 add('meta',{name:'apple-mobile-web-app-capable',content:'yes'});
 add('meta',{name:'apple-mobile-web-app-title',content:'Hayat'});
 add('meta',{name:'apple-mobile-web-app-status-bar-style',content:'black-translucent'});
-add('link',{rel:'apple-touch-icon',href:'icons/apple-touch-icon.png'});
-add('link',{rel:'icon',type:'image/png',href:'icons/icon-192.png'});
+add('link',{rel:'apple-touch-icon',href:'icon-512.png'});
+add('link',{rel:'icon',type:'image/png',href:'icon-512.png'});
 
 if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1')){
   addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 }
+
+/* দৈনিক সামারি ও রাতের রিমাইন্ডার */
+add('script',{src:'digest.js',defer:''});
 
 /* ইনস্টল বাটন (Android/Chrome/Edge)। iOS-এ Safari → শেয়ার → "Add to Home Screen" */
 const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
