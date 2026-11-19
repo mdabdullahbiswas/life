@@ -5,133 +5,76 @@
 <title>সেটিং · Hayat</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-/* প্যালেট: সোনালি মূল রঙ (#B8892B → #E2C275, ডার্কে #E0B84F → #F2D88A) · ব্রোঞ্জ #8A6420 · এসপ্রেসো #2B2118 · ক্রিম #FBF7EE · উষ্ণ কালো #0C0A07 */
-:root{--a:#B8892B;--a2:#E2C275;--g:#8A6420;--p:#7A5614;--on:#1F1608;--bb:var(--t);--bt:var(--a2);--bd:var(--a);--bg:#FBF7EE;--c:rgba(255,252,244,.8);--t:#2B2118;--m:#7A6A55;--b:rgba(120,90,30,.15);--cb:rgba(184,137,43,.42);--sh:rgba(184,137,43,.38);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-:root[data-d="1"]{--bg:#0C0A07;--c:rgba(32,25,14,.72);--t:#F6EDD8;--m:#B3A68B;--b:rgba(224,184,79,.2);--cb:rgba(224,184,79,.34);--a:#E0B84F;--a2:#F2D88A;--g:#A47A20;--p:#F2D88A;--on:#1A1304;--bb:var(--a);--bt:var(--on);--bd:var(--a2);--sh:rgba(224,184,79,.22)}
-/* থিম: গোল্ড + এমারেল্ড */
+:root{--a:#B8892B;--a2:#E2C275;--g:#8A6420;--p:#7A5614;--on:#1F1608;--bg:#FBF7EE;--c:rgba(255,252,244,.82);--t:#2B2118;--m:#7A6A55;--b:rgba(120,90,30,.15);--cb:rgba(184,137,43,.4);--sh:rgba(184,137,43,.38);--ok:#1f9d6b;--er:#d33;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-d="1"]{--bg:#0C0A07;--c:rgba(32,25,14,.74);--t:#F6EDD8;--m:#B3A68B;--b:rgba(224,184,79,.2);--cb:rgba(224,184,79,.34);--a:#E0B84F;--a2:#F2D88A;--g:#A47A20;--p:#F2D88A;--sh:rgba(224,184,79,.22);--ok:#4fd7a0;--er:#ff8a8a}
 :root[data-t="1"]:not([data-d="1"]){--g:#0D4C3C;--p:#0D4C3C;--t:#10241D;--m:#5E6F66;--bg:#F8F6EC}
 :root[data-t="1"][data-d="1"]{--bg:#07100D;--c:rgba(14,59,46,.45);--g:#1F8A68}
-/* থিম: গোল্ড + মিডনাইট নেভি */
 :root[data-t="2"]:not([data-d="1"]){--g:#16213E;--p:#16213E;--t:#0F172A;--m:#5F6878;--bg:#F7F6F1}
 :root[data-t="2"][data-d="1"]{--bg:#0A0F1E;--c:rgba(22,33,62,.6);--g:#2A3B6B}
-/* থিম: গোল্ড + বারগান্ডি */
 :root[data-t="3"]:not([data-d="1"]){--g:#5B1A2B;--p:#5B1A2B;--t:#2A0F16;--m:#76616A;--bg:#FAF5EF}
 :root[data-t="3"][data-d="1"]{--bg:#0E0709;--c:rgba(91,26,43,.42);--g:#8A2D45}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,"Noto Serif Bengali",serif;color:var(--t);background:var(--bg);min-height:100vh;transition:background .4s}
-body::before{content:"";position:fixed;inset:-20% -10% auto;height:70vh;background:radial-gradient(60% 60% at 30% 30%,color-mix(in srgb,var(--g) 24%,transparent),transparent),radial-gradient(50% 50% at 80% 20%,color-mix(in srgb,var(--a) 16%,transparent),transparent);z-index:-1;animation:fl 14s ease-in-out infinite alternate}
-@keyframes fl{to{transform:translate(3%,6%) scale(1.08)}}
-@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.bn,button,input,select,h1,h2,h3,label{font-family:"Noto Serif Bengali",Inter,serif}
-main{max-width:1080px;margin:auto;padding:20px 16px 60px}
-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:18px}
-h1{font-size:clamp(24px,5vw,34px);margin:0;font-weight:700}
-.sub{color:var(--m);font-size:14px;margin-top:4px}
+body{margin:0;font-family:Inter,"Noto Serif Bengali",serif;color:var(--t);background:var(--bg);min-height:100vh;transition:background .4s;line-height:1.55}
+body::before{content:"";position:fixed;inset:-20% -10% auto;height:70vh;background:radial-gradient(60% 60% at 30% 30%,color-mix(in srgb,var(--g) 24%,transparent),transparent),radial-gradient(50% 50% at 80% 20%,color-mix(in srgb,var(--a) 16%,transparent),transparent);z-index:-1}
+button,input,select,h1,h2{font-family:"Noto Serif Bengali",Inter,serif}
+main{max-width:1080px;margin:auto;padding:18px 16px 70px}
+h1{font-size:clamp(24px,5vw,32px);margin:0 0 14px;font-weight:700}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
-.card{background:var(--c);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--cb);border-radius:20px;padding:18px;box-shadow:0 12px 32px -14px var(--sh);animation:up .6s both;transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden}
-.card::after{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,var(--a),var(--g))}
-.card:hover{transform:translateY(-3px);box-shadow:0 16px 40px -12px var(--sh)}
 .wide{grid-column:1/-1}
-h2{font-size:17px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
-h2::before{content:"";width:6px;height:18px;border-radius:3px;background:linear-gradient(var(--g),var(--a))}
-.big{font-size:clamp(34px,8vw,52px);font-weight:700;letter-spacing:-1px;background:linear-gradient(90deg,var(--a),var(--g));-webkit-background-clip:text;background-clip:text;color:transparent;font-family:"Noto Serif Bengali"}
-.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px dashed var(--b)}
-.row:last-child{border:0}
+.card{background:var(--c);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--cb);border-radius:20px;padding:18px;box-shadow:0 12px 32px -16px var(--sh);position:relative;overflow:hidden}
+h2{font-size:16px;margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.hero{padding:24px 22px;background:linear-gradient(135deg,color-mix(in srgb,var(--a) 26%,var(--c)),var(--c) 55%,color-mix(in srgb,var(--g) 22%,var(--c)));border-color:var(--a);animation:rise .7s both}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.hero::before{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;border:1px solid var(--cb);box-shadow:0 0 0 24px color-mix(in srgb,var(--a) 7%,transparent),0 0 0 52px color-mix(in srgb,var(--a) 4%,transparent)}
+.hl{color:var(--m);font-size:14px}
+.big{font-size:clamp(28px,7vw,42px);font-weight:700;line-height:1.3;background:linear-gradient(90deg,var(--a),var(--a2) 50%,var(--g));-webkit-background-clip:text;background-clip:text;color:transparent;margin:2px 0 12px}
+.chips{display:flex;gap:10px;flex-wrap:wrap;position:relative}
+.chip{padding:8px 14px;border-radius:14px;background:var(--b);font-size:13px;color:var(--m);min-width:76px}
+.chip b{display:block;font-size:17px;color:var(--t)}
 .m{color:var(--m);font-size:13px}
-button{border:1px solid var(--bd);border-radius:10px;padding:10px 22px;background:var(--bb);color:var(--bt);font-weight:600;letter-spacing:.3px;cursor:pointer;font-size:14px;box-shadow:0 1px 2px rgba(0,0,0,.12);transition:background .2s,color .2s,border-color .2s,box-shadow .2s}
-button:hover{background:color-mix(in srgb,var(--bb) 86%,var(--bt));box-shadow:0 4px 14px -6px var(--sh)}
-button:active{transform:translateY(1px)}
-button:focus-visible{outline:2px solid var(--g);outline-offset:2px}
-button.g{background:linear-gradient(180deg,color-mix(in srgb,var(--a) 11%,transparent),color-mix(in srgb,var(--a) 3%,transparent));color:var(--t);border:1px solid color-mix(in srgb,var(--a) 55%,transparent);font-weight:500;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 1px 2px rgba(0,0,0,.05)}
-button.g:hover{background:linear-gradient(180deg,color-mix(in srgb,var(--a) 22%,transparent),color-mix(in srgb,var(--a) 8%,transparent));border-color:var(--a);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 8px 18px -10px var(--sh)}
-:root[data-d="1"] button.g{box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
-button.lk{display:inline-flex;align-items:center;gap:10px;padding:8px 8px 8px 18px;border-radius:99px;font-size:13px;letter-spacing:.2px}
-button.lk .ar{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on);font-size:12px;line-height:1;box-shadow:0 2px 6px -2px var(--sh);transition:transform .25s}
-button.lk:hover .ar{transform:translateX(3px)}
-button.g.lk{background:linear-gradient(135deg,var(--g),color-mix(in srgb,var(--g) 62%,#000));color:#FFF6DC;border:1px solid color-mix(in srgb,var(--a2) 75%,transparent);font-weight:600;text-shadow:0 1px 1px rgba(0,0,0,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 8px 18px -10px var(--sh)}
-button.g.lk:hover{background:linear-gradient(135deg,color-mix(in srgb,var(--g) 85%,#fff),var(--g));border-color:var(--a2);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 12px 22px -10px var(--sh)}
-:root[data-d="1"] button.g.lk{background:linear-gradient(135deg,var(--a),var(--a2));color:#1A1304;border-color:var(--a2);text-shadow:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 8px 18px -10px var(--sh)}
-:root[data-d="1"] button.g.lk:hover{background:linear-gradient(135deg,var(--a2),#FFF0C2)}
-:root[data-d="1"] button.lk .ar{background:#1A1304;color:var(--a2)}
-.row button:not(.x){padding:6px 14px}
-input,select{border:1px solid var(--b);background:var(--c);color:var(--t);border-radius:12px;padding:9px 12px;font-size:14px;min-width:0}
-input:focus,select:focus{outline:2px solid var(--g)}
-.chk{appearance:none;width:24px;height:24px;border-radius:8px;border:2px solid var(--cb);cursor:pointer;display:grid;place-items:center;transition:.2s;padding:0;flex:none}
-.chk:checked{background:linear-gradient(135deg,var(--pc,var(--a)),var(--pc2,var(--a2)));border-color:transparent}
-.chk[style]{border-color:color-mix(in srgb,var(--pc) 55%,transparent)}
-.chk:checked::after{content:"✓";color:var(--on);font-size:14px}
-.chk:disabled{opacity:.4;cursor:not-allowed}
-.pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;background:color-mix(in srgb,var(--a) 20%,transparent);color:var(--p);font-weight:600}
-.bad{background:rgba(220,60,60,.14);color:#d33}
-.bar{height:8px;border-radius:9px;background:var(--b);overflow:hidden;margin-top:10px}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--a),var(--g));transition:width .6s}
-.sw{display:flex;gap:10px;flex-wrap:wrap}
-.sw b{width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .2s}
-.sw b:hover{transform:scale(1.2)}.sw b.on{border-color:var(--t)}
-form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}form input{flex:1 1 110px}
-.st{display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:center}
-.st div{padding:10px;border-radius:14px;background:var(--b)}
-.x{background:none;border:0;box-shadow:none;color:var(--m);padding:4px 8px}
-.x:hover{background:none;box-shadow:none;color:#d33}
-.dots{display:grid;grid-template-columns:repeat(auto-fill,minmax(32px,1fr));gap:6px;margin-top:10px}
-.dots b{display:grid;place-items:center;height:32px;border-radius:9px;background:var(--b);font-size:12px;font-weight:500;cursor:pointer;transition:.2s}
-.dots b:hover{transform:scale(1.1)}
-.dots b.on{background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on)}
-
-.cd{text-align:center}
-.cd h2{justify-content:center}
-.cdw{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:18px 22px;margin:6px 0 4px}
-.ring{position:relative;width:138px;height:138px;flex:none}
-.ring svg{width:100%;height:100%;transform:rotate(-90deg);overflow:visible}
-.ring .tr{fill:none;stroke:var(--b);stroke-width:7}
-.ring .pg{fill:none;stroke:url(#rg);stroke-width:7;stroke-linecap:round;filter:drop-shadow(0 0 6px var(--sh));transition:stroke-dashoffset 1s linear}
-.ring .dc{fill:none;stroke:var(--pc);stroke-width:1;stroke-dasharray:1 6;opacity:.45;animation:spin 60s linear infinite;transform-origin:70px 70px}
-@keyframes spin{to{transform:rotate(360deg)}}
-.rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
-.rc b{font-size:22px;font-weight:700;font-family:"Noto Serif Bengali";background:linear-gradient(90deg,var(--pc),var(--pc2));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.2}
-.rc span{font-size:12px;color:var(--m)}
-.tiles{display:flex;align-items:center;gap:6px}
-.tl{min-width:62px;padding:10px 6px 8px;border-radius:16px;background:linear-gradient(160deg,color-mix(in srgb,var(--pc) 20%,transparent),color-mix(in srgb,var(--pc2) 8%,transparent));border:1px solid color-mix(in srgb,var(--pc) 45%,transparent);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 8px 18px -12px var(--pc)}
-.tl b{display:block;font-size:30px;font-weight:700;line-height:1.15;font-family:"Noto Serif Bengali";background:linear-gradient(180deg,var(--pc2),var(--pc));-webkit-background-clip:text;background-clip:text;color:transparent}
-.tl small{font-size:11px;color:var(--m)}
-.cl{font-size:24px;color:var(--pc);opacity:.7;margin-top:-14px}
-.cds{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:14px}
-.cdc{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;font-size:12px;color:var(--m);border:1px solid color-mix(in srgb,var(--pc) 40%,transparent);transition:.3s}
-.cdc::before{content:"";width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,var(--pc2),var(--pc))}
-.cdc.past{opacity:.5;text-decoration:line-through;text-decoration-color:var(--b)}
-.cdc.on{background:linear-gradient(135deg,var(--pc),var(--pc2));color:#fff;border-color:transparent;font-weight:600;box-shadow:0 6px 14px -6px var(--pc)}
-.cdc.on::before{background:#fff}
-.cd{border-color:color-mix(in srgb,var(--pc) 50%,transparent);box-shadow:0 12px 32px -14px var(--pc)}
-.cd::after{background:linear-gradient(90deg,var(--pc),var(--pc2))}
-.cd h2{color:var(--t)}
-
-.warn{margin:12px 0 0;padding:10px 14px;border-radius:14px;background:rgba(220,60,60,.12);border:1px solid rgba(220,60,60,.4);color:#d33;font-size:13px;font-weight:600;line-height:1.6}
-.warn b{font-size:18px;letter-spacing:.5px;margin:0 4px}
-.okb{margin:10px 0 0;padding:9px 14px;border-radius:14px;background:rgba(31,157,107,.13);border:1px solid rgba(31,157,107,.4);color:#1f9d6b;font-size:13px;font-weight:600}
-:root[data-d="1"] .warn{color:#ff8a8a}:root[data-d="1"] .okb{color:#4fd7a0}
-.sp{margin-top:16px;text-align:left}
-.spt{font-size:12px;font-weight:600;color:var(--m);letter-spacing:.4px;margin:12px 0 4px;padding-bottom:4px;border-bottom:1px solid var(--b)}
-.sr{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:6px 8px;border-radius:10px;font-size:13px;color:var(--m)}
-.sr span:first-child{display:flex;align-items:center;gap:8px;color:var(--t)}
-.sr span:first-child::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--b);flex:none}
-.sr.on{font-weight:600}
-.sr.on.f{background:rgba(220,60,60,.12);color:#d33}.sr.on.f span:first-child::before{background:#d33;box-shadow:0 0 0 4px rgba(220,60,60,.2)}
-.sr.on.n{background:rgba(31,157,107,.13);color:#1f9d6b}.sr.on.n span:first-child::before{background:#1f9d6b;box-shadow:0 0 0 4px rgba(31,157,107,.2)}
-:root[data-d="1"] .sr.on.f{color:#ff8a8a}:root[data-d="1"] .sr.on.n{color:#4fd7a0}
-.ram{border-color:var(--g)}
-
-/* সেটিং পেজ */
-.tgl{appearance:none;-webkit-appearance:none;width:46px;height:26px;border-radius:99px;border:1px solid var(--cb);background:var(--b);position:relative;cursor:pointer;transition:.25s;flex:none;padding:0;margin:0}
-.tgl::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:var(--t);transition:.25s}
-.tgl:checked{background:linear-gradient(135deg,var(--a),var(--a2));border-color:transparent}
-.tgl:checked::after{left:22px;background:var(--on)}
-.tgl:focus-visible{outline:2px solid var(--g);outline-offset:2px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px dashed var(--b)}
+.row:last-child{border:0}
 .row>div>b{font-weight:600}
-.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
-button.dg{background:transparent;color:#d33;border:1px solid rgba(220,60,60,.5);box-shadow:none}
-button.dg:hover{background:rgba(220,60,60,.12);border-color:#d33}
-:root[data-d="1"] button.dg{color:#ff8a8a}
+button{border:1px solid var(--a2);border-radius:10px;padding:10px 20px;background:var(--t);color:var(--a2);font-weight:600;cursor:pointer;font-size:14px;transition:.2s}
+button:hover{box-shadow:0 4px 14px -6px var(--sh);background:color-mix(in srgb,var(--t) 88%,var(--a2))}
+button:active{transform:translateY(1px)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--g);outline-offset:2px}
+button.g{background:transparent;color:var(--t);border-color:var(--cb);font-weight:500;padding:8px 14px;font-size:13px}
+button.g:hover{border-color:var(--a);background:color-mix(in srgb,var(--a) 12%,transparent)}
+button.dg{background:transparent;color:var(--er);border-color:rgba(220,60,60,.5);box-shadow:none}
+button.dg:hover{background:rgba(220,60,60,.12);border-color:var(--er)}
+.x{background:none;border:0;color:var(--m);padding:4px 8px;box-shadow:none}
+.x:hover{background:none;color:var(--er);box-shadow:none}
+input{border:1px solid var(--b);background:var(--c);color:var(--t);border-radius:12px;padding:10px 12px;font-size:14px;min-width:0;width:100%}
+form{display:flex;gap:8px;margin-top:12px}
+.tgl{appearance:none;-webkit-appearance:none;width:48px;height:28px;border-radius:99px;border:1px solid var(--cb);background:var(--b);position:relative;cursor:pointer;transition:.25s;flex:none;padding:0;margin:0}
+.tgl::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--t);transition:.25s}
+.tgl:checked{background:linear-gradient(135deg,var(--a),var(--a2));border-color:transparent}
+.tgl:checked::after{left:23px;background:var(--on)}
+.tgl:focus-visible{outline:2px solid var(--g);outline-offset:2px}
+.thm{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+button.tc{display:flex;align-items:center;gap:10px;padding:10px;background:transparent;color:var(--t);border:1px solid var(--b);border-radius:14px;font-weight:500;font-size:13px;text-align:left}
+button.tc i{width:30px;height:30px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 2px rgba(255,255,255,.3)}
+button.tc.on{border-color:var(--a);background:color-mix(in srgb,var(--a) 14%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 22%,transparent)}
+.seg{display:flex;gap:6px}
+.seg button{flex:1;background:transparent;color:var(--m);border-color:var(--b)}
+.seg button.on{background:var(--t);color:var(--a2);border-color:var(--a2)}
+.pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;background:color-mix(in srgb,var(--a) 20%,transparent);color:var(--p);font-weight:600}
+.pill.bad{background:rgba(220,60,60,.14);color:var(--er)}
+.warn{padding:9px 13px;border-radius:12px;background:rgba(220,60,60,.12);border:1px solid rgba(220,60,60,.4);color:var(--er);font-size:13px;font-weight:600;margin-top:4px}
+.okb{padding:9px 13px;border-radius:12px;background:rgba(31,157,107,.13);border:1px solid rgba(31,157,107,.4);color:var(--ok);font-size:13px;font-weight:600;margin-top:4px}
+.qg{display:grid;grid-template-columns:repeat(auto-fit,minmax(88px,1fr));gap:8px}
+.qc{padding:10px 6px;border-radius:14px;background:var(--b);text-align:center}
+.qc b{display:block;font-size:22px;line-height:1.3}
+.qc div{display:flex;gap:4px;justify-content:center;margin-top:6px}
+.qc button{padding:2px 10px;font-size:15px;border-radius:8px}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.tk{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px dashed var(--b)}
+.tk:last-child{border:0}
+.tk span:first-child{flex:1;min-width:0;overflow-wrap:anywhere}
+.ts{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--t);color:var(--a2);padding:11px 20px;border-radius:99px;font-size:14px;font-weight:600;box-shadow:0 12px 30px -10px rgba(0,0,0,.5);z-index:99;animation:rise .3s both}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head>
 <body><script src="header.js"></script>
 <main id="app"></main>
@@ -141,52 +84,59 @@ const P=['ফজর','যোহর','আসর','মাগরিব','এশা'
 const TH=[['শ্যাম্পেইন গোল্ড','#8A6420'],['গোল্ড + এমারেল্ড','#0D4C3C'],['গোল্ড + নেভি','#16213E'],['গোল্ড + বারগান্ডি','#5B1A2B']];
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-// index.html-এর সাথে একই স্টোরেজ কী ('dl') — ডেটা শেয়ার হবে
+// সব পেজের সাথে একই স্টোরেজ কী ('dl')
 let S={theme:0,dark:0,tasks:[],done:{},pr:{},fin:[],url:'',notif:0,qaza:[0,0,0,0,0,0],fast:{},ram:{},rm:0};
 try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
 if(!TH[S.theme])S.theme=0;
 const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
 const $=document.getElementById('app'),root=document.documentElement;
+let DP=null;
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();DP=e;render()});
+function toast(m){const e=document.createElement('div');e.className='ts';e.textContent=m;document.body.appendChild(e);setTimeout(()=>e.remove(),2400)}
 const tg=(a,t,d,on)=>`<div class="row"><div><b>${t}</b><div class="m">${d}</div></div><input type="checkbox" class="tgl" data-a="${a}" aria-label="${t}" ${on?'checked':''}></div>`;
 const TYL=t=>t.type=='once'?'একবার':t.type=='every'?bn(t.n)+' দিন পর পর':({daily:'প্রতিদিন',weekly:'প্রতি সপ্তাহে',monthly:'প্রতি মাসে',yearly:'প্রতি বছর'})[t.type]||'';
 function render(){root.dataset.t=S.theme;root.dataset.d=S.dark;
 const QN=[...P,'বিতর'],qt=S.qaza.reduce((a,b)=>a+b,0);
-const look=`<section class="card"><h2>চেহারা</h2>${tg('dark','রাতের মোড','অন্ধকার থিমে চোখের আরাম',S.dark)}<div style="padding:9px 0 2px"><b>রঙের সেট</b><div class="m" style="margin:2px 0 10px">${TH[S.theme][0]}</div><div class="sw">${TH.map((t,i)=>`<b title="${t[0]}" data-a="th" data-i="${i}" class="${i==S.theme?'on':''}" style="background:linear-gradient(135deg,${t[1]} 50%,#E0B84F 50%)"></b>`).join('')}</div></div></section>`;
-const lang=`<section class="card"><h2>ভাষা</h2><div class="acts"><button class="${(S.lang||'bn')=='bn'?'':'g'}" data-a="lg" data-i="bn">বাংলা</button><button class="${S.lang=='en'?'':'g'}" data-a="lg" data-i="en">English</button></div></section>`;
-const mode=`<section class="card"><h2>মোড ও নোটিফিকেশন</h2>${tg('rm','রমজান মোড','সেহরি-ইফতার কাউন্টডাউন ও তারাবিহ ট্র্যাকার; রমজান মাসে নিজে থেকেই চালু হয়',S.rm)}${tg('notif','নোটিফিকেশন','নামাজ, সেহরি-ইফতার ও কাজের সময়ে জানাবে',S.notif)}<div class="m" style="margin-top:6px">নোটিফিকেশন পেতে হোম পেজ ব্রাউজারে খোলা থাকতে হবে।</div></section>`;
-const qaza=`<section class="card"><h2>কাযা নামাজ <span class="pill ${qt?'bad':''}">মোট ${bn(qt)}</span></h2>${QN.map((p,j)=>`<div class="row"><span>${p}</span><span style="display:flex;gap:8px;align-items:center"><button class="g" data-a="qz" data-i="${j},-1">−</button><b style="min-width:34px;text-align:center">${bn(S.qaza[j])}</b><button data-a="qz" data-i="${j},1">+</button></span></div>`).join('')}<form data-f="qz"><input name="n" type="number" min="1" placeholder="প্রতি ওয়াক্তে কত" required><button>সবগুলোতে যোগ</button></form><div class="m" style="margin-top:8px">আদায় করলে − চাপুন, বাকি থাকলে +।</div></section>`;
-const tasks=`<section class="card"><h2>কাজের তালিকা <span class="pill">${bn(S.tasks.length)}টি</span></h2>${S.tasks.length?S.tasks.map(t=>`<div class="row"><span>${esc(t.title)}</span><span class="m">${t.time?bn(t.time)+' · ':''}${TYL(t)} <button class="x" data-a="del" data-i="${t.id}" aria-label="মুছুন">✕</button></span></div>`).join(''):'<div class="m">এখনো কোনো কাজ নেই।</div>'}</section>`;
-const sheet=`<section class="card"><h2>গুগল শিট সিঙ্ক</h2><div class="m">Apps Script ওয়েব অ্যাপের লিংক দিন (পরের ধাপে সংযোগ হবে)।</div><form data-f="url"><input name="u" value="${esc(S.url)}" placeholder="https://script.google.com/…"><button>সংরক্ষণ</button></form></section>`;
-const data=`<section class="card"><h2>ডেটা ব্যবস্থাপনা</h2><div class="m">সব তথ্য শুধু এই ব্রাউজারে জমা থাকে। ব্যাকআপ নিয়ে রাখুন।</div><div class="acts"><button data-a="exp">⬇ ব্যাকআপ নামান</button><button class="g" data-a="imp">⬆ ব্যাকআপ আনুন</button><button class="dg" data-a="rst">🗑 সব মুছুন</button></div><input type="file" id="imp" accept=".json,application/json" hidden></section>`;
-$.innerHTML=`<header><div><h1>⚙ সেটিং</h1><div class="sub">সব কিছু এক জায়গা থেকে নিয়ন্ত্রণ করুন</div></div></header><div class="grid">${look}${lang}${mode}${qaza}${sheet}<div class="wide">${tasks}</div><div class="wide">${data}</div></div>`}
-function exportData(){const b=new Blob([JSON.stringify(S,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),l=document.createElement('a');l.href=u;l.download='dinlipi-backup-'+key(new Date())+'.json';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+let sz=0;try{sz=new Blob([localStorage.getItem('dl')||'']).size/1024}catch(e){}
+const days=S.lastBak?Math.floor((Date.now()-S.lastBak)/864e5):-1;
+const bs=days<0?['ব্যাকআপ নেই','warn','⚠️ এখনো ব্যাকআপ নেওয়া হয়নি। ব্রাউজারের ডেটা মুছলে সব হারাবে।']:days>7?['ব্যাকআপ পুরোনো','warn','⚠️ শেষ ব্যাকআপ '+bn(days)+' দিন আগের। নতুন একটি নিন।']:['ব্যাকআপ নিরাপদ','okb','✅ শেষ ব্যাকআপ '+(days?bn(days)+' দিন আগে':'আজ')+'।'];
+const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+const hero=`<section class="card hero wide"><div class="hl">আপনার তথ্য</div><div class="big">${bs[0]}</div><div class="chips"><div class="chip">কাজ<b>${bn(S.tasks.length)}</b></div><div class="chip">হিসাব<b>${bn(S.fin.length)}</b></div><div class="chip">কাযা<b>${bn(qt)}</b></div><div class="chip">আকার<b>${bn(sz.toFixed(1))} KB</b></div></div><div class="${bs[1]}" style="margin-top:14px;position:relative">${bs[2]}</div></section>`;
+const look=`<section class="card"><h2>চেহারা</h2>${tg('dark','রাতের মোড','অন্ধকার থিমে চোখের আরাম',S.dark)}<div class="thm">${TH.map((t,i)=>`<button class="tc ${i==S.theme?'on':''}" data-a="th" data-i="${i}"><i style="background:linear-gradient(135deg,${t[1]} 50%,#E0B84F 50%)"></i>${t[0]}</button>`).join('')}</div></section>`;
+const lang=`<section class="card"><h2>ভাষা</h2><div class="seg"><button class="${(S.lang||'bn')=='bn'?'on':''}" data-a="lg" data-i="bn">বাংলা</button><button class="${S.lang=='en'?'on':''}" data-a="lg" data-i="en">English</button></div></section>`;
+const mode=`<section class="card"><h2>মোড ও নোটিফিকেশন</h2>${tg('rm','রমজান মোড','সেহরি-ইফতার কাউন্টডাউন ও তারাবিহ ট্র্যাকার; রমজান মাসে নিজে থেকেই চালু হয়',S.rm)}${tg('notif','নোটিফিকেশন','নামাজ, সেহরি-ইফতার ও কাজের সময়ে জানাবে',S.notif)}<div class="m" style="margin-top:6px">নোটিফিকেশন পেতে হোম পেজ ব্রাউজারে খোলা থাকতে হবে।</div>${S.notif?'<div class="acts"><button class="g" data-a="tn">🔔 পরীক্ষা করুন</button></div>':''}</section>`;
+const app=`<section class="card"><h2>অ্যাপ</h2>${standalone?'<div class="okb">✅ অ্যাপ হিসেবে ইনস্টল করা আছে</div>':DP?'<div class="m">হোম স্ক্রিন থেকে এক ট্যাপে খুলুন, অফলাইনেও চলবে।</div><div class="acts"><button data-a="inst">📲 অ্যাপ ইনস্টল করুন</button></div>':'<div class="m">iPhone-এ Safari-র শেয়ার বাটন থেকে "হোম স্ক্রিনে যোগ করুন" চাপুন। Android-এ Chrome-এর মেনু থেকে "ইনস্টল" করুন।</div>'}<div class="acts"><button class="g" data-a="ref">🔄 আপডেট ও ক্যাশ পরিষ্কার</button></div><div class="m" style="margin-top:8px">নতুন সংস্করণ না এলে এটি চাপুন। আপনার তথ্য মুছবে না।</div></section>`;
+const qaza=`<section class="card"><h2>কাযা নামাজ <span class="pill ${qt?'bad':''}">মোট ${bn(qt)}</span></h2><div class="qg">${QN.map((p,j)=>`<div class="qc"><span class="m">${p}</span><b>${bn(S.qaza[j])}</b><div><button class="g" data-a="qz" data-i="${j},-1" aria-label="${p} কমান">−</button><button data-a="qz" data-i="${j},1" aria-label="${p} বাড়ান">+</button></div></div>`).join('')}</div><form data-f="qz"><input name="n" type="number" min="1" placeholder="প্রতি ওয়াক্তে কত" required><button>সবগুলোতে যোগ</button></form><div class="m" style="margin-top:8px">আদায় করলে − চাপুন, বাকি থাকলে +।</div></section>`;
+const sheet=`<section class="card"><h2>গুগল শিট সিঙ্ক ${S.url?'<span class="pill">সেট আছে</span>':''}</h2><div class="m">Apps Script ওয়েব অ্যাপের লিংক দিন (পরের ধাপে সংযোগ হবে)।</div><form data-f="url"><input name="u" value="${esc(S.url)}" placeholder="https://script.google.com/…"><button>সংরক্ষণ</button></form></section>`;
+const tasks=`<section class="card wide"><h2>কাজের তালিকা <span class="pill">${bn(S.tasks.length)}টি</span></h2>${S.tasks.length?S.tasks.map(t=>`<div class="tk"><span>${esc(t.title)}</span><span class="m">${t.time?bn(t.time)+' · ':''}${TYL(t)}</span><button class="x" data-a="del" data-i="${t.id}" aria-label="মুছুন">✕</button></div>`).join(''):'<div class="m">এখনো কোনো কাজ নেই। কাজ পেজ থেকে যোগ করুন।</div>'}</section>`;
+const data=`<section class="card wide"><h2>ডেটা ব্যবস্থাপনা</h2><div class="m">সব তথ্য শুধু এই ব্রাউজারে জমা থাকে। নিয়মিত ব্যাকআপ নিয়ে রাখুন।</div><div class="acts"><button data-a="exp">⬇ ব্যাকআপ নামান</button><button class="g" data-a="imp">⬆ ব্যাকআপ আনুন</button><button class="dg" data-a="rst">🗑 সব মুছুন</button></div><input type="file" id="imp" accept=".json,application/json" hidden></section>`;
+$.innerHTML=`<h1>⚙ সেটিং</h1><div class="grid">${hero}${look}${lang}${mode}${app}${qaza}${sheet}${tasks}${data}</div>`}
+function exportData(){S.lastBak=Date.now();save();const b=new Blob([JSON.stringify(S,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),l=document.createElement('a');l.href=u;l.download='hayat-backup-'+key(new Date())+'.json';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);render();toast('ব্যাকআপ নামানো হয়েছে ✓')}
+async function refreshApp(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()));const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.reload()}
+async function testNotif(){const o={body:'নোটিফিকেশন ঠিকমতো কাজ করছে ✓',icon:'icons/icon-192.png',data:{url:'index.html'}};try{const r=navigator.serviceWorker&&await navigator.serviceWorker.getRegistration();r?await r.showNotification('Hayat',o):new Notification('Hayat',o)}catch(e){toast('পাঠানো যায়নি')}}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;const a=t.dataset.a,i=t.dataset.i;
-if(a=='hm'){location.href='index.html';return}
-if(a=='tk'){location.href='tasks.html';return}
-if(a=='nz'){location.href='namaz.html';return}
-if(a=='rz'){location.href='roza.html';return}
-if(a=='hs'){location.href='hisab.html';return}
-if(a=='st'){scrollTo({top:0,behavior:'smooth'});return}
 if(a=='exp'){exportData();return}
 if(a=='imp'){const f=document.getElementById('imp');if(f)f.click();return}
 if(a=='rst'){if(confirm('সব তথ্য (নামাজ, কাজ, হিসাব, কাযা, সেটিং) চিরতরে মুছে যাবে। নিশ্চিত?')){try{localStorage.removeItem('dl')}catch(_){}location.reload()}return}
+if(a=='ref'){if(confirm('ক্যাশ মুছে অ্যাপ নতুন করে লোড হবে। তথ্য মুছবে না। চালিয়ে যাবেন?'))refreshApp();return}
+if(a=='tn'){testNotif();return}
+if(a=='inst'){if(DP){DP.prompt();DP.userChoice.then(()=>{DP=null;render()})}return}
 if(a=='lg'){S.lang=i=='en'?'en':'bn';save();location.reload();return}
 if(a=='dark')S.dark=t.checked?1:0;
 if(a=='rm')S.rm=t.checked?1:0;
 if(a=='th')S.theme=+i;
 if(a=='qz'){const[j,v]=i.split(',');S.qaza[+j]=Math.max(0,S.qaza[+j]+ +v)}
-if(a=='del')S.tasks=S.tasks.filter(x=>x.id!=i);
-if(a=='notif'){if(t.checked){if(!window.Notification){alert('এই ব্রাউজারে নোটিফিকেশন সমর্থিত নয়');render();return}
-Notification.requestPermission().then(p=>{S.notif=p=='granted'?1:0;save();render()});return}S.notif=0}
+if(a=='del'){S.tasks=S.tasks.filter(x=>x.id!=i);toast('কাজটি মুছে ফেলা হয়েছে')}
+if(a=='notif'){if(t.checked){if(!window.Notification){toast('এই ব্রাউজারে নোটিফিকেশন সমর্থিত নয়');render();return}
+Notification.requestPermission().then(p=>{S.notif=p=='granted'?1:0;save();render();if(p!='granted')toast('অনুমতি দেওয়া হয়নি')});return}S.notif=0}
 save();render()});
 document.addEventListener('change',e=>{if(e.target.id!='imp')return;const f=e.target.files[0];if(!f)return;const r=new FileReader();
 r.onload=()=>{try{const o=JSON.parse(r.result);if(!o||typeof o!='object'||Array.isArray(o))throw 0;Object.assign(S,o);
 if(!Array.isArray(S.qaza)||S.qaza.length!=6)S.qaza=[0,0,0,0,0,0];if(!Array.isArray(S.tasks))S.tasks=[];if(!Array.isArray(S.fin))S.fin=[];if(!TH[S.theme])S.theme=0;
-save();render();alert('ব্যাকআপ আনা হয়েছে ✓')}catch(_){alert('ফাইলটি সঠিক ব্যাকআপ নয়')}};r.readAsText(f)});
+save();render();toast('ব্যাকআপ আনা হয়েছে ✓')}catch(_){toast('ফাইলটি সঠিক ব্যাকআপ নয়')}};r.readAsText(f)});
 $.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target),k=e.target.dataset.f;
-if(k=='url')S.url=f.get('u');
-if(k=='qz'){const n=+f.get('n')||0;S.qaza=S.qaza.map(x=>x+n)}
-if(k=='task')S.tasks.push({id:Date.now(),title:f.get('title'),type:f.get('type'),n:+f.get('n')||1,time:f.get('time'),start:f.get('date')||key(new Date())});
+if(k=='url'){S.url=f.get('u').trim();toast('সংরক্ষিত ✓')}
+if(k=='qz'){const n=+f.get('n')||0;S.qaza=S.qaza.map(x=>x+n);toast('কাযা যোগ হয়েছে')}
 save();render()});
 render();
 </script><script src="pwa.js"></script></body></html>
