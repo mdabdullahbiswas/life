@@ -38,7 +38,7 @@ function build(kind,o,now){
 function send(m){
   const t=T(m.t),opts={body:T(m.b),tag:'hayat-digest-'+m.k,data:{url:m.url}};
   if(window.hayatNotify){window.hayatNotify(t,opts);return}
-  opts.icon='icons/icon-192.png';
+  opts.icon='icon-512.png';
   const fb=()=>{try{new Notification(t,opts)}catch(e){}};
   if(navigator.serviceWorker&&navigator.serviceWorker.getRegistration)navigator.serviceWorker.getRegistration().then(r=>r?r.showNotification(t,opts):fb()).catch(fb);else fb();
 }
