@@ -3,10 +3,10 @@
    চাপলে লেখা বসে যায় — হিসাবে সাথে ক্যাটাগরি, আয়/ব্যয় ও টাকাও বসে যায়।
    নতুন পেজে চালু করতে শুধু <script src="suggest.js"></script> যোগ করুন।
    কোনো ঘরে বন্ধ রাখতে সেই input-এ data-nosg অ্যাট্রিবিউট দিন।
-   সাজেশন ডেটা এই ডিভাইসের localStorage-এর 'dl_sg' কী-তে থাকে। */
+   সাজেশন ডেটা localStorage-এর 'dl_sg' কী-তে থাকে; গুগল শিট সিঙ্ক চালু থাকলে sync.js এটি 'sg' নামে শিটের সাথে মেলায়। */
 (function(){
 if(window.__sg)return;window.__sg=1;
-const KEY='dl_sg',MAXN=300,MAXS=5;
+const KEY='dl_sg',MAXN=100,MAXS=5;
 const page=(location.pathname.split('/').pop()||'index.html').replace(/\.html$/,'')||'index';
 const load=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){return{}}};
 const flush=d=>{try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}};
