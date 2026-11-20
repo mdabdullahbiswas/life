@@ -407,6 +407,79 @@ button.opt svg{width:13px;height:13px;flex:none;stroke:currentColor;fill:none;st
 .qz .qs input[type=date]:focus{outline:2px solid var(--g);outline-offset:1px}
 :root[data-d="1"] .qz .qs input[type=date]{color-scheme:dark}
 @media(max-width:380px){.qz .qs{flex-wrap:wrap}.qz .qs input[type=date]{max-width:100%;width:100%}}
+
+/* ══ আল্টিমেট প্রিমিয়াম ফিনিশ ══ */
+body{background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23B8892B' stroke-opacity='.085' stroke-width='1'%3E%3Cpath d='M36 6l8 14 14-8-8 14 14 8-14 8 8 14-14-8-8 14-8-14-14 8 8-14-14-8 14-8-8-14 14 8z'/%3E%3Ccircle cx='36' cy='36' r='5'/%3E%3C/g%3E%3C/svg%3E")}
+header{padding-bottom:16px;margin-bottom:22px;border-bottom:1px solid transparent;border-image:linear-gradient(90deg,var(--a),color-mix(in srgb,var(--a) 25%,transparent) 55%,transparent) 1}
+h1{font-family:"Noto Serif Bengali",serif;letter-spacing:0;text-shadow:0 1px 0 rgba(255,255,255,.35)}
+:root[data-d="1"] h1{text-shadow:0 0 22px color-mix(in srgb,var(--a) 35%,transparent)}
+.sub{box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 6px 14px -10px var(--sh)}
+
+/* কার্ড: স্তরযুক্ত গভীরতা, স্প্রিং হোভার */
+.card{border-radius:24px;padding:20px;border-color:color-mix(in srgb,var(--a) 34%,transparent);box-shadow:0 0 0 1px rgba(255,255,255,.35) inset,0 1px 0 rgba(255,255,255,.7) inset,0 2px 4px -2px rgba(60,40,10,.10),0 26px 48px -30px var(--sh);transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s cubic-bezier(.2,.8,.2,1),border-color .3s}
+:root[data-d="1"] .card{box-shadow:0 0 0 1px rgba(255,255,255,.04) inset,0 1px 0 rgba(255,255,255,.09) inset,0 28px 50px -28px rgba(0,0,0,.8)}
+@media(hover:hover){.card:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--a) 62%,transparent);box-shadow:0 0 0 1px rgba(255,255,255,.4) inset,0 1px 0 rgba(255,255,255,.8) inset,0 34px 56px -30px var(--sh)}}
+.card::after{height:2px;background:linear-gradient(90deg,transparent,var(--a2) 18%,var(--a) 50%,var(--a2) 82%,transparent);opacity:1}
+.hero::after{height:3px}
+
+/* শিরোনাম: অলংকৃত ডায়মন্ড */
+h2{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;margin:0 0 12px}
+h2::before{width:9px;height:9px;border-radius:2px;transform:rotate(45deg);background:linear-gradient(135deg,var(--a2),var(--a));box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 18%,transparent),0 0 12px -1px var(--sh);flex:none}
+
+/* সারি: গ্রেডিয়েন্ট হেয়ারলাইন */
+.row{border-bottom:0;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--a) 32%,transparent) 20%,color-mix(in srgb,var(--a) 32%,transparent) 80%,transparent) bottom/100% 1px no-repeat}
+.row:last-child{background:none}
+.sr{border-bottom:0;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--a) 28%,transparent) 20%,color-mix(in srgb,var(--a) 28%,transparent) 80%,transparent) bottom/100% 1px no-repeat}
+.sr:last-of-type{background:none}
+.sr.on{background-color:color-mix(in srgb,var(--a) 9%,transparent);border-radius:12px}
+
+/* পিল, বাটন, ইনপুট */
+.pill{padding:3px 12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.4);font-variant-numeric:tabular-nums}
+button{position:relative;overflow:hidden;transition:transform .2s cubic-bezier(.2,.8,.2,1),background .25s,color .25s,border-color .25s,box-shadow .25s}
+button:active{transform:scale(.96)}
+.tsb{overflow:visible}.tsb:active{transform:none}
+button:not(.x):not(.tsb):not(.opt)::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 32%,rgba(255,255,255,.38) 50%,transparent 68%);transform:translateX(-130%);transition:transform .8s}
+button:not(.x):not(.tsb):not(.opt):hover::before{transform:translateX(130%)}
+button.opt{transition:transform .2s cubic-bezier(.2,.8,.2,1),background .25s,border-color .25s,box-shadow .25s}
+@media(hover:hover){button.opt:hover{transform:translateY(-1px)}}
+input,select{transition:border-color .2s,box-shadow .2s,background .2s}
+input:focus,select:focus{outline:none;border-color:var(--a);box-shadow:0 0 0 4px color-mix(in srgb,var(--a) 22%,transparent)}
+.qz .qs input[type=date]:focus{outline:none}
+.chk{border-radius:9px}
+
+/* প্রবেশের ক্রমিক অ্যানিমেশন */
+.grid>.card:nth-child(6){animation-delay:.30s}.grid>.card:nth-child(7){animation-delay:.36s}.grid>.card:nth-child(8){animation-delay:.42s}.grid>.card:nth-child(9){animation-delay:.48s}.grid>.card:nth-child(n+10){animation-delay:.54s}
+
+/* স্ক্রলবার */
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{border-radius:9px;background:linear-gradient(var(--a2),var(--a));border:2px solid transparent;background-clip:padding-box}
+::-webkit-scrollbar-track{background:transparent}
+@media(max-width:480px){.card{padding:16px;border-radius:22px}main{padding:16px 12px 60px}}
+
+/* ══ সময়ের সাথে বদলানো আকাশ ══ */
+@property --sk1{syntax:'<color>';inherits:true;initial-value:rgba(0,0,0,0)}
+@property --sk2{syntax:'<color>';inherits:true;initial-value:rgba(0,0,0,0)}
+@property --sk3{syntax:'<color>';inherits:true;initial-value:rgba(0,0,0,0)}
+:root{--sk1:rgba(255,214,120,.45);--sk2:rgba(130,200,240,.32);--sk3:rgba(255,236,170,.4);--st:#D9B24C;transition:--sk1 3s ease,--sk2 3s ease,--sk3 3s ease}
+:root[data-d="1"]{--st:#fff}
+:root[data-sky="dawn"]{--sk1:rgba(255,170,150,.42);--sk2:rgba(150,170,235,.35);--sk3:rgba(255,214,150,.4)}
+:root[data-sky="morning"]{--sk1:rgba(255,214,120,.45);--sk2:rgba(130,200,240,.32);--sk3:rgba(255,236,170,.4)}
+:root[data-sky="noon"]{--sk1:rgba(255,200,70,.5);--sk2:rgba(110,190,245,.3);--sk3:rgba(255,244,190,.45)}
+:root[data-sky="after"]{--sk1:rgba(240,170,70,.48);--sk2:rgba(250,200,130,.35);--sk3:rgba(255,220,160,.4)}
+:root[data-sky="sunset"]{--sk1:rgba(255,120,70,.5);--sk2:rgba(190,90,170,.38);--sk3:rgba(255,170,110,.4)}
+:root[data-sky="dusk"]{--sk1:rgba(130,90,200,.42);--sk2:rgba(70,90,190,.38);--sk3:rgba(230,140,150,.3)}
+:root[data-sky="night"]{--sk1:rgba(60,80,190,.42);--sk2:rgba(30,40,110,.5);--sk3:rgba(120,100,200,.25)}
+body::before{background:radial-gradient(60% 60% at 30% 30%,color-mix(in srgb,var(--sk1) 85%,transparent),transparent),radial-gradient(50% 50% at 80% 20%,color-mix(in srgb,var(--sk2) 85%,transparent),transparent)}
+.card.hero{background:radial-gradient(90% 150% at 92% -10%,var(--sk1),transparent 62%),radial-gradient(70% 120% at 100% 110%,var(--sk2),transparent 65%),radial-gradient(60% 100% at 0% 120%,var(--sk3),transparent 70%),linear-gradient(125deg,color-mix(in srgb,var(--pk,var(--g)) 14%,var(--c)),var(--c) 62%)}
+.hero>div{position:relative;z-index:1}
+.hero .orb{position:absolute;left:calc(var(--ox,70)*1%);top:calc(var(--oy,40)*1%);width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle at 35% 35%,#FFF6C8,#FFD25A 55%,#F2A93B);box-shadow:0 0 38px 10px rgba(255,200,80,.45),0 0 90px 30px rgba(255,190,70,.22);animation:orbf 9s ease-in-out infinite alternate}
+:root[data-sky="dawn"] .hero .orb:not(.mn),:root[data-sky="sunset"] .hero .orb:not(.mn){background:radial-gradient(circle at 35% 35%,#FFE3B8,#FF9455 60%,#E5573A);box-shadow:0 0 40px 12px rgba(255,125,75,.5),0 0 96px 32px rgba(255,110,80,.24)}
+.hero .orb.mn{width:42px;height:42px;margin:-21px 0 0 -21px;background:transparent;box-shadow:inset -14px -5px 0 0 #EBDDAE,0 0 28px 2px rgba(235,221,174,.35)}
+.hero .stars{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity 2.5s;background-image:radial-gradient(1.6px 1.6px at 58% 18%,var(--st),transparent),radial-gradient(1.2px 1.2px at 66% 62%,var(--st),transparent),radial-gradient(1.8px 1.8px at 74% 30%,var(--st),transparent),radial-gradient(1.2px 1.2px at 82% 74%,var(--st),transparent),radial-gradient(1.6px 1.6px at 90% 22%,var(--st),transparent),radial-gradient(1.2px 1.2px at 94% 58%,var(--st),transparent),radial-gradient(1.4px 1.4px at 52% 80%,var(--st),transparent),radial-gradient(1px 1px at 70% 86%,var(--st),transparent);animation:twk 4.5s ease-in-out infinite alternate}
+:root[data-sky="night"] .hero .stars,:root[data-sky="dusk"] .hero .stars,:root[data-sky="dawn"] .hero .stars{opacity:.85}
+@keyframes orbf{from{transform:translateY(-3px) scale(1)}to{transform:translateY(4px) scale(1.05)}}
+@keyframes twk{from{opacity:.45}to{opacity:.95}}
+@media(max-width:480px){.hero .orb{width:40px;height:40px;margin:-20px 0 0 -20px;opacity:.7}.hero .orb.mn{width:32px;height:32px;margin:-16px 0 0 -16px}}
 </style></head><body><script src="header.js"></script><main id="app"></main>
 <script>
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
@@ -475,8 +548,13 @@ const asr=Math.atan(1/(2+Math.tan(Math.abs(lat-dec))))/r;
 return{fajr:noon-ha(-18),sunrise:noon-ha(-.833),noon,asr:noon+ha(asr),maghrib:noon+ha(-.833),isha:noon+ha(-18)}}
 const T=h=>{h=((h%24)+24)%24;let m=Math.round(h*60),H=Math.floor(m/60)%24,M=m%60,p=H<12?'ভোর':H<15?'দুপুর':H<17?'বিকাল':H<19?'সন্ধ্যা':'রাত';if(H<4)p='রাত';else if(H<6)p='ভোর';else if(H<12)p='সকাল';return p+' '+bn((H%12||12)+':'+String(M).padStart(2,'0'))};
 const dur=h=>{const m=Math.max(1,Math.round(h*60)),H=Math.floor(m/60),M=m%60;return (H?bn(H)+' ঘণ্টা ':'')+(M||!H?bn(M)+' মিনিট':'')};
+function skyOf(c,cur){const f=c.fajr,sr=c.sunrise,n=c.noon,mg=c.maghrib,is=c.isha;let nm;
+if(cur>=f-.3&&cur<sr+.3)nm='dawn';else if(cur>=sr+.3&&cur<n-1.5)nm='morning';else if(cur>=n-1.5&&cur<n+1.5)nm='noon';else if(cur>=n+1.5&&cur<mg-1)nm='after';else if(cur>=mg-1&&cur<mg+.5)nm='sunset';else if(cur>=mg+.5&&cur<is)nm='dusk';else nm='night';
+const day=cur>=sr-.2&&cur<mg+.2;let p;
+if(day)p=(cur-sr)/(mg-sr);else{const c2=cur<sr?cur+24:cur;p=(c2-mg)/(sr+24-mg)}
+p=Math.min(1,Math.max(0,p));return{n:nm,m:!day,x:54+p*34,y:66-Math.sin(Math.PI*p)*46}}
 function render(){const now=new Date(),K=key(now),c=calc(now),cur=now.getHours()+now.getMinutes()/60,night=c.fajr+24-c.maghrib,pd=S.pr[K]||{};
-root.dataset.t=S.theme||0;root.dataset.d=S.dark||0;
+root.dataset.t=S.theme||0;root.dataset.d=S.dark||0;const sky=skyOf(c,cur);root.dataset.sky=sky.n;
 const W=[['সূর্যোদয়ের সময়',c.sunrise,c.sunrise+.25,'f'],['দ্বিপ্রহর (যাওয়াল)',c.noon-.1,c.noon+.02,'f'],['সূর্যাস্তের সময়',c.maghrib-.25,c.maghrib,'f'],['তাহাজ্জুদ',(c.maghrib+night*2/3)%24,c.fajr,'n'],['ইশরাক',c.sunrise+.25,c.sunrise+1,'n'],['চাশত',c.sunrise+1,c.noon-.15,'n'],['আওয়াবিন',c.maghrib+.2,c.isha,'n']];
 const wst=w=>{let a=w[1],b=w[2];if(b<a)b+=24;for(const o of [0,24,-24]){const x=cur+o;if(x>=a&&x<b)return{on:1,left:b-x,end:b-o}}return{on:0,a,in:a>cur?a-cur:a+24-cur}};
 const WS=W.map(w=>[w,wst(w)]);
@@ -502,7 +580,7 @@ const jx=curW?ci:ni;let jh=effJ(jx,now),jt=jh==null?null:bt+Math.round(jh*60)*6e
 const nj=jt!=null&&jt>now.getTime()?`<div class="m" style="margin-top:6px">${FW[jx][0]} জামাত · ${T(jh)} · <b id="nj" data-cd="${jt}" style="font-family:inherit">${cdf(jt-now.getTime())}</b> বাকি</div>`:'';
 const endTs=curW?bt+Math.round(curW.r.end*36e5):0;
 const hnb=curW?`<div class="hn"><span class="m">এখন চলছে · ${curW.w[0]} · ওয়াক্ত শেষ হতে বাকি</span><b id="nx" data-cd="${endTs}">${cdf(endTs-now.getTime())}</b></div>${nj}`:`<div class="hn"><span class="m">পরবর্তী ওয়াক্ত · ${nxt.n}</span><b id="nx" data-cd="${nxt.t}">${cdf(nxt.t-now.getTime())}</b></div>${nj}`;
-const hero=`<section class="card hero wide" style="${pk(ni)}"><div><div class="m">${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())}${hj?' · '+hj+' (আনুমানিক)':''}</div><div class="hd">${WFD[now.getDay()]}</div>${hnb}<div class="hcs">${curW?`<span class="pill pr" style="${pk(ci)}">এখন চলছে: ${curW.w[0]}</span>`:''}${stk?`<span class="pill">🔥 ${bn(stk)} দিন সব ওয়াক্ত</span>`:''}</div></div></section>`;
+const hero=`<section class="card hero wide" style="${pk(ni)}"><i class="stars" aria-hidden="true"></i><i class="orb${sky.m?' mn':''}" style="--ox:${sky.x.toFixed(1)};--oy:${sky.y.toFixed(1)}" aria-hidden="true"></i><div><div class="m">${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())}${hj?' · '+hj+' (আনুমানিক)':''}</div><div class="hd">${WFD[now.getDay()]}</div>${hnb}<div class="hcs">${curW?`<span class="pill pr" style="${pk(ci)}">এখন চলছে: ${curW.w[0]}</span>`:''}${stk?`<span class="pill">🔥 ${bn(stk)} দিন সব ওয়াক্ত</span>`:''}</div></div></section>`;
 const pTot=5+nf.length,pDone=fd+nd,pPct=Math.round(pDone/pTot*100);
 const prem=`<section class="card wide prem"><h2>আজকের অগ্রগতি <span class="pill">${bn(pPct)}%</span></h2><div class="pm"><div class="pmr">${mr(fd/5,'var(--a)',bn(fd)+'/'+bn(5),'ফরজ')}${mr(nd/nf.length,'#1f9d6b',bn(nd)+'/'+bn(nf.length),'নফল')}</div><div class="pms"><div class="pmt"><span>মোট আমল</span><b>${bn(pDone)}<small>/${bn(pTot)}</small></b></div><div class="pmb"><i style="width:${pPct}%"></i></div><div class="pmc">${FW.map((w,i)=>`<span class="pc ${pd['f'+i]?'on':''}" style="${pk(i)}">${w[0]}</span>`).join('')}</div>${stk?`<div class="pmk">🔥 ${bn(stk)} দিন টানা সব ওয়াক্ত</div>`:''}</div></div></section>`;
 const fard=`<section class="card t-f"><h2>ফরজ নামাজ <span class="pill">${bn(fd)}/${bn(5)}</span></h2>${fs.map(frow).join('')}<div class="m" style="margin-top:10px">আদায় হলে টিক দিন · বিস্তারিত জানতে নামে ট্যাপ করুন</div></section>`;
