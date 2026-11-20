@@ -124,7 +124,7 @@ if(a=='imp'){const f=document.getElementById('imp');if(f)f.click();return}
 if(a=='rst'){if(confirm('সব তথ্য (নামাজ, কাজ, হিসাব, কাযা, সেটিং) এই ডিভাইস থেকে মুছে যাবে।'+(window.hayatSync&&hayatSync.status().on?' সিঙ্ক চালু থাকলে শিটের তথ্য থেকে যাবে এবং আবার নেমে আসবে।':' ')+' নিশ্চিত?')){try{localStorage.removeItem('dl')}catch(_){}location.reload()}return}
 if(a=='ref'){if(confirm('ক্যাশ মুছে অ্যাপ নতুন করে লোড হবে। তথ্য মুছবে না। চালিয়ে যাবেন?'))refreshApp();return}
 if(a=='tn'){testNotif();return}
-if(a=='sy'){toast('সিঙ্ক হচ্ছে…');hayatSync.sync(1).then(r=>{toast(r.ok?'সিঙ্ক হয়েছে ✓':'সিঙ্ক হয়নি: '+r.err);render()});return}
+if(a=='sy'){if(!window.hayatSync){toast('sync.js লোড হয়নি — ফাইলটি আপলোড করেছেন?');return}toast('সিঙ্ক হচ্ছে…');hayatSync.sync(1).then(r=>{toast(r.ok?'সিঙ্ক হয়েছে ✓':'সিঙ্ক হয়নি: '+r.err);render()});return}
 if(a=='syx'){if(confirm('এই ডিভাইসে সিঙ্ক বন্ধ হবে। শিটের তথ্য ও এই ডিভাইসের তথ্য থেকে যাবে।'))hayatSync.clear();render();return}
 if(a=='inst'){if(DP){DP.prompt();DP.userChoice.then(()=>{DP=null;render()})}return}
 if(a=='lg'){S.lang=i=='en'?'en':'bn';save();location.reload();return}
@@ -141,7 +141,7 @@ r.onload=()=>{try{const o=JSON.parse(r.result);if(!o||typeof o!='object'||Array.
 if(!Array.isArray(S.qaza)||S.qaza.length!=6)S.qaza=[0,0,0,0,0,0];if(!Array.isArray(S.tasks))S.tasks=[];if(!Array.isArray(S.fin))S.fin=[];if(!TH[S.theme])S.theme=0;
 save();render();toast('ব্যাকআপ আনা হয়েছে ✓')}catch(_){toast('ফাইলটি সঠিক ব্যাকআপ নয়')}};r.readAsText(f)});
 $.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target),k=e.target.dataset.f;
-if(k=='sync'){const r=hayatSync.setup(f.get('u'),f.get('t'));if(!r.ok){toast(r.err);return}toast('সংযোগ হচ্ছে…');render();hayatSync.sync(1).then(r=>{toast(r.ok?'সংযোগ সফল ✓':'সংযোগ হয়নি: '+r.err);render()});return}
+if(k=='sync'){if(!window.hayatSync){toast('sync.js লোড হয়নি — ফাইলটি আপলোড করেছেন? তারপর "আপডেট ও ক্যাশ পরিষ্কার" চাপুন');return}const r=hayatSync.setup(f.get('u'),f.get('t'));if(!r.ok){toast(r.err);return}toast('সংযোগ হচ্ছে…');render();hayatSync.sync(1).then(r=>{toast(r.ok?'সংযোগ সফল ✓':'সংযোগ হয়নি: '+r.err);render()});return}
 if(k=='qz'){const n=+f.get('n')||0;S.qaza=S.qaza.map(x=>x+n);toast('কাযা যোগ হয়েছে')}
 save();render()});
 addEventListener('hsync',()=>{const a=document.activeElement;if(a&&a.tagName=='INPUT')return;render()});
