@@ -183,4 +183,4 @@ $.addEventListener('change',e=>{if(e.target.dataset.a!=='dt')return;bag().dt=e.t
 $.addEventListener('keydown',e=>{if(e.target.name==='pl'&&e.key==='Enter'){e.preventDefault();A.pl();return}if((e.key==='Enter'||e.key===' ')&&e.target.matches('.bg')){e.preventDefault();e.target.click()}});
 $.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target),n=(f.get('n')||'').trim();if(!n)return;bag().it.push({n,q:Math.max(1,+f.get('q')||1),k:0,s:0,d:0,t:''});save();render();$.querySelector('input[name=n]').focus()});
 render();
-</script><script src="trip.js"></script><script src="pwa.js"></script></body></html>
+</script><script src="trip.js"></script><script src="suggest.js"></script><script src="pwa.js"></script></body></html>

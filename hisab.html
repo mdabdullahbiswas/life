@@ -186,4 +186,4 @@ else if(a=='goal'){S.goal={n:document.getElementById('gn').value.trim(),a:+docum
 else if(a=='csv'){dl('hisab.csv','text/csv','\ufeffতারিখ,ধরন,ক্যাটাগরি,টাকা,বিবরণ\n'+S.fin.map(f=>[f.d,f.t=='in'?'আয়':'ব্যয়',C[ck(f)][1],f.a,'"'+(f.n||'').replace(/"/g,'""')+'"'].join(',')).join('\n'));return}
 save();render()});
 render();
-</script><script src="pwa.js"></script></body></html>
+</script><script src="suggest.js"></script><script src="pwa.js"></script></body></html>

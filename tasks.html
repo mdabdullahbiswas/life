@@ -150,4 +150,4 @@ $.addEventListener('change',e=>{if(e.target.dataset.a!='task')return;const K=key
 $.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);
 S.tasks.push({id:Date.now(),title:f.get('title'),type:f.get('type'),n:+f.get('n')||1,time:f.get('time'),start:f.get('date')||key(new Date())});save();render()});
 render();
-</script><script src="trip.js"></script><script src="pwa.js"></script></body></html>
+</script><script src="trip.js"></script><script src="suggest.js"></script><script src="pwa.js"></script></body></html>
