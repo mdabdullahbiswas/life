@@ -43,8 +43,17 @@ button{border:1px solid var(--bd);border-radius:10px;padding:10px 22px;backgroun
 button:hover{background:color-mix(in srgb,var(--bb) 86%,var(--bt));box-shadow:0 4px 14px -6px var(--sh)}
 button:active{transform:translateY(1px)}
 button:focus-visible{outline:2px solid var(--g);outline-offset:2px}
-button.g{background:transparent;color:var(--t);border:1px solid var(--cb);font-weight:500;box-shadow:none}
-button.g:hover{background:color-mix(in srgb,var(--a) 12%,transparent);border-color:var(--a)}
+button.g{background:linear-gradient(180deg,color-mix(in srgb,var(--a) 11%,transparent),color-mix(in srgb,var(--a) 3%,transparent));color:var(--t);border:1px solid color-mix(in srgb,var(--a) 55%,transparent);font-weight:500;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 1px 2px rgba(0,0,0,.05)}
+button.g:hover{background:linear-gradient(180deg,color-mix(in srgb,var(--a) 22%,transparent),color-mix(in srgb,var(--a) 8%,transparent));border-color:var(--a);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 8px 18px -10px var(--sh)}
+:root[data-d="1"] button.g{box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+button.lk{display:inline-flex;align-items:center;gap:10px;padding:8px 8px 8px 18px;border-radius:99px;font-size:13px;letter-spacing:.2px}
+button.lk .ar{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on);font-size:12px;line-height:1;box-shadow:0 2px 6px -2px var(--sh);transition:transform .25s}
+button.lk:hover .ar{transform:translateX(3px)}
+button.g.lk,button.g.shd{background:linear-gradient(135deg,var(--g),color-mix(in srgb,var(--g) 62%,#000));color:#FFF6DC;border:1px solid color-mix(in srgb,var(--a2) 75%,transparent);font-weight:600;text-shadow:0 1px 1px rgba(0,0,0,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 8px 18px -10px var(--sh)}
+button.g.lk:hover,button.g.shd:hover{background:linear-gradient(135deg,color-mix(in srgb,var(--g) 85%,#fff),var(--g));border-color:var(--a2);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 12px 22px -10px var(--sh)}
+:root[data-d="1"] button.g.lk,:root[data-d="1"] button.g.shd{background:linear-gradient(135deg,var(--a),var(--a2));color:#1A1304;border-color:var(--a2);text-shadow:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 8px 18px -10px var(--sh)}
+:root[data-d="1"] button.g.lk:hover,:root[data-d="1"] button.g.shd:hover{background:linear-gradient(135deg,var(--a2),#FFF0C2)}
+:root[data-d="1"] button.lk .ar{background:#1A1304;color:var(--a2)}
 .row button:not(.x){padding:6px 14px}
 input,select{border:1px solid var(--b);background:var(--c);color:var(--t);border-radius:12px;padding:9px 12px;font-size:14px;min-width:0}
 input:focus,select:focus{outline:2px solid var(--g)}
@@ -241,10 +250,68 @@ html.shl,body.shl{overflow:hidden}
 .rkc.g{border-color:color-mix(in srgb,var(--k,var(--a)) 75%,transparent)}
 .rkc.f{background:linear-gradient(135deg,var(--k,var(--a)),var(--k2,var(--a2)))}
 .shx:hover{background:color-mix(in srgb,var(--k,var(--a)) 25%,transparent)}
+/* ── হোমের মতো প্রিমিয়াম ফিনিশ ── */
+.sub{gap:8px;color:var(--m)}
+.card:hover{box-shadow:0 26px 50px -24px var(--sh),0 2px 6px -3px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.6)}
+:root[data-d="1"] .card:hover{box-shadow:0 26px 50px -24px rgba(0,0,0,.75),inset 0 1px 0 rgba(255,255,255,.09)}
+.row{border-bottom:1px solid var(--b);border-image:linear-gradient(90deg,color-mix(in srgb,var(--a) 38%,transparent),transparent) 1}
+.row:last-child{border:0;border-image:none}
+.bad{border:1px solid rgba(220,60,60,.4)}
+.bar i{box-shadow:0 0 12px -1px var(--sh);border-radius:9px}
+.sr{border-image:linear-gradient(90deg,color-mix(in srgb,var(--a) 34%,transparent),transparent) 1}
+.sr:last-of-type{border-image:none}
+input:focus,select:focus{outline:2px solid var(--g);box-shadow:0 0 0 4px color-mix(in srgb,var(--a) 18%,transparent)}
+.chk:checked{color:var(--on)}
+/* ছোট গোল/পিল বাটন — গোল্ড গ্রেডিয়েন্ট */
+button.opt,button.g.opt{padding:6px 14px;border-radius:99px;background:linear-gradient(180deg,color-mix(in srgb,var(--a) 11%,transparent),color-mix(in srgb,var(--a) 3%,transparent));border:1px solid color-mix(in srgb,var(--a) 55%,transparent);color:var(--t);font-weight:600;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 1px 2px rgba(0,0,0,.05)}
+button.opt:hover,button.g.opt:hover{background:linear-gradient(180deg,color-mix(in srgb,var(--a) 24%,transparent),color-mix(in srgb,var(--a) 9%,transparent));border-color:var(--a);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 8px 16px -10px var(--sh)}
+button.opt.on,button.g.opt.on{background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on);border-color:var(--a2);text-shadow:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 8px 18px -8px var(--sh)}
+:root[data-d="1"] button.opt,:root[data-d="1"] button.g.opt{box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+:root[data-d="1"] button.opt.on{box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 8px 18px -8px var(--sh)}
+.row button.g.opt{width:34px;height:34px;padding:0;display:inline-grid;place-items:center;font-size:17px;line-height:1;border-radius:50%}
+/* হিরো */
+.hero{border-color:color-mix(in srgb,var(--a) 55%,transparent);box-shadow:0 28px 56px -30px var(--sh),0 2px 6px -3px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.55)}
+.hero::after{height:3px;background:linear-gradient(90deg,var(--a2),var(--a),var(--g))}
+.hero .hd{background:linear-gradient(100deg,var(--t) 40%,var(--a));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hn b{filter:drop-shadow(0 3px 10px color-mix(in srgb,var(--a) 30%,transparent))}
+.hero .pill{padding:4px 12px}
+.mrw .p{filter:drop-shadow(0 0 7px var(--sh))}
+.mrw b{font-weight:700}
+/* তাসবিহ বাটন — গোল্ড মেডালিয়ন */
+.tsb .mrw::before{content:"";position:absolute;inset:22px;border-radius:50%;background:radial-gradient(circle at 30% 24%,color-mix(in srgb,var(--k2) 42%,transparent),color-mix(in srgb,var(--k) 9%,transparent) 70%);border:1px solid color-mix(in srgb,var(--k) 45%,transparent);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 14px 26px -16px var(--k)}
+.tsb .mrw svg{position:relative;z-index:1}
+.tsb .mrw b{z-index:2}
+.tsb .mrw b{background:linear-gradient(180deg,var(--k2),var(--k));-webkit-background-clip:text;background-clip:text;color:transparent}
+.tsb:hover .mrw::before{box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 18px 30px -14px var(--k)}
+/* সাপ্তাহিক বার */
+.wbw{border:1px solid color-mix(in srgb,var(--a) 14%,transparent)}
+.wb{box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+.wb.ok{box-shadow:0 8px 18px -8px #1f9d6b,inset 0 1px 0 rgba(255,255,255,.4)}
+/* বিস্তারিত শিট */
+.shx{border:1px solid var(--cb)}
+.shd{margin-top:10px;padding:12px 22px;border-radius:99px}
+.fc{border:1px solid color-mix(in srgb,var(--k,var(--a)) 18%,transparent);background:linear-gradient(160deg,color-mix(in srgb,var(--k,var(--a)) 9%,transparent),var(--b))}
+.aci{box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 10px 20px -12px var(--k,var(--a))}
+/* ── প্রতিটি ওয়াক্তের আলাদা রং ── */
+.sr.pr{border-radius:12px;transition:background .25s,box-shadow .25s}
+.sr.pr span:first-child::before{width:9px;height:9px;background:linear-gradient(135deg,var(--pk2),var(--pk));box-shadow:0 0 0 3px color-mix(in srgb,var(--pk) 16%,transparent)}
+.sr.pr:hover,.card[class*="t-"] .sr.pr[data-sh]:hover{background:linear-gradient(90deg,color-mix(in srgb,var(--pk) 14%,transparent),transparent)}
+.sr.pr.on{background:linear-gradient(90deg,color-mix(in srgb,var(--pk) 22%,transparent),color-mix(in srgb,var(--pk2) 6%,transparent));color:color-mix(in srgb,var(--pk) 72%,var(--t));font-weight:600;box-shadow:inset 3px 0 0 var(--pk),0 8px 18px -14px var(--pk)}
+.sr.pr.on span:first-child::before{box-shadow:0 0 0 4px color-mix(in srgb,var(--pk) 28%,transparent),0 0 12px var(--pk)}
+:root[data-d="1"] .sr.pr.on{color:var(--pk2)}
+.card[class*="t-"] .sr.pr .chk{--pc:var(--pk);--pc2:var(--pk2);border-color:color-mix(in srgb,var(--pk) 60%,transparent)}
+.card[class*="t-"] .sr.pr .chk:checked{border-color:transparent;box-shadow:0 4px 12px -4px var(--pk)}
+.chk:checked::after{color:#fff}
+.pill.pr{background:linear-gradient(135deg,color-mix(in srgb,var(--pk) 26%,transparent),color-mix(in srgb,var(--pk2) 12%,transparent));border-color:color-mix(in srgb,var(--pk) 55%,transparent);color:var(--t)}
+.hero{border-color:color-mix(in srgb,var(--pk,var(--a)) 55%,transparent);background:linear-gradient(125deg,color-mix(in srgb,var(--pk,var(--g)) 20%,var(--c)),var(--c) 62%);box-shadow:0 28px 56px -30px var(--pk,var(--sh)),inset 0 1px 0 rgba(255,255,255,.55)}
+.hero::after{background:linear-gradient(90deg,var(--pk2,var(--a2)),var(--pk,var(--a)))}
+.hn b{background:linear-gradient(90deg,var(--pk,var(--a)),var(--pk2,var(--g)));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 10px color-mix(in srgb,var(--pk,var(--a)) 32%,transparent))}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style></head><body><script src="header.js"></script><main id="app"></main>
 <script>
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
+/* ওয়াক্ত অনুযায়ী রং: ফজর নীল ভোর · যোহর সোনালি · আসর কমলা · মাগরিব গোলাপি-লাল · এশা বেগুনি */
+const PC=[['#4F73F0','#9DB4FF'],['#DB9A12','#F6D071'],['#E8782B','#F7B27A'],['#D8456B','#F59AB2'],['#6A4FD0','#B0A0F4']],pk=i=>`--pk:${PC[i][0]};--pk2:${PC[i][1]}`;
 const $=document.getElementById('app'),root=document.documentElement;
 /* বারবার লোডিং বন্ধ: কনটেন্ট বদলালেই কেবল DOM আপডেট, অ্যানিমেশন শুধু প্রথমবার */
 const _d=Object.getOwnPropertyDescriptor(Element.prototype,'innerHTML');
@@ -319,8 +386,9 @@ LVNOW=[0,WS[3][1].on,WS[5][1].on,0,WS[0][1].on||WS[1][1].on||WS[2][1].on].concat
 const xr=(i,t,d)=>`<div class="sr" data-sh="${i}" role="button" tabindex="0"><span>${t}</span><span>${d}</span></div>`;
 const extra=`<div class="spt">আরও জানুন</div>${xr(0,'নফল নামাজের ফজিলত','ফজিলত ও গুরুত্ব')}${xr(3,'সালাতুত তওবা','২ রাকাত · গুনাহের পর')}`;
 let hj='';try{hj=new Intl.DateTimeFormat('bn-BD-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'}).format(now)}catch(e){}
-const frow=(x,i)=>{const{w,r,past}=x,dn=!!pd['f'+i];return `<div class="sr ${r.on?'on n':''}" data-sh="${5+i}" role="button" tabindex="0"><span><input type="checkbox" class="chk" data-i="f${i}" ${dn?'checked':''} aria-label="${w[0]}">${w[0]}</span><span>${T(w[1])} – ${T(w[2])} · ${dn?'আদায় হয়েছে ✓':r.on?'চলছে · '+dur(r.left)+' বাকি':past?'ওয়াক্ত শেষ':'শুরু '+dur(r.in)+' পর'}</span></div>`};
-const hero=`<section class="card hero wide"><div><div class="m">${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())}${hj?' · '+hj+' (আনুমানিক)':''}</div><div class="hd">${WFD[now.getDay()]}</div><div class="hn"><span class="m">পরবর্তী ওয়াক্ত · ${nxt.n}</span><b id="nx" data-t="${nxt.t}">${cdf(nxt.t-now.getTime())}</b></div><div class="hcs">${curW?`<span class="pill">এখন চলছে: ${curW.w[0]}</span>`:''}${stk?`<span class="pill">🔥 ${bn(stk)} দিন সব ওয়াক্ত</span>`:''}</div></div><div class="hrs">${mr(fd/5,'var(--a)',bn(fd)+'/'+bn(5),'ফরজ')}${mr(nd/nf.length,'#1f9d6b',bn(nd)+'/'+bn(nf.length),'নফল')}</div></section>`;
+const frow=(x,i)=>{const{w,r,past}=x,dn=!!pd['f'+i];return `<div class="sr pr ${r.on?'on':''}" style="${pk(i)}" data-sh="${5+i}" role="button" tabindex="0"><span><input type="checkbox" class="chk" data-i="f${i}" ${dn?'checked':''} aria-label="${w[0]}">${w[0]}</span><span>${T(w[1])} – ${T(w[2])} · ${dn?'আদায় হয়েছে ✓':r.on?'চলছে · '+dur(r.left)+' বাকি':past?'ওয়াক্ত শেষ':'শুরু '+dur(r.in)+' পর'}</span></div>`};
+const ni=FW.findIndex(w=>w[0]==nxt.n),ci=curW?FW.findIndex(w=>w[0]==curW.w[0]):ni;
+const hero=`<section class="card hero wide" style="${pk(ni)}"><div><div class="m">${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())}${hj?' · '+hj+' (আনুমানিক)':''}</div><div class="hd">${WFD[now.getDay()]}</div><div class="hn"><span class="m">পরবর্তী ওয়াক্ত · ${nxt.n}</span><b id="nx" data-t="${nxt.t}">${cdf(nxt.t-now.getTime())}</b></div><div class="hcs">${curW?`<span class="pill pr" style="${pk(ci)}">এখন চলছে: ${curW.w[0]}</span>`:''}${stk?`<span class="pill">🔥 ${bn(stk)} দিন সব ওয়াক্ত</span>`:''}</div></div><div class="hrs">${mr(fd/5,'var(--pk)',bn(fd)+'/'+bn(5),'ফরজ')}${mr(nd/nf.length,'#1f9d6b',bn(nd)+'/'+bn(nf.length),'নফল')}</div></section>`;
 const fard=`<section class="card t-f"><h2>ফরজ নামাজ <span class="pill">${bn(fd)}/${bn(5)}</span></h2>${fs.map(frow).join('')}<div class="m" style="margin-top:10px">আদায় করলে টিক দিন · বিস্তারিতের জন্য নামে ট্যাপ করুন</div></section>`;
 const ts=S.ts,tasbih=`<section class="card t-t"><h2>তাসবিহ <span class="pill">আজ ${bn(ts.tot[K]||0)}</span></h2><div class="tsw"><button class="tsb" data-a="ts" aria-label="গণনা">${mr(ts.c/ts.t,'var(--k)',bn(ts.c),'/ '+bn(ts.t))}</button></div><div class="chs">${[33,99,100].map(n=>`<button class="opt ${ts.t==n?'on':''}" data-a="tt" data-i="${n}">${bn(n)}</button>`).join('')}<button class="g opt" data-a="tr">↺ রিসেট</button></div></section>`;
 const qaza=`<section class="card t-q"><h2>কাযা হিসাব <span class="pill">মোট ${bn(S.qaza.reduce((a,b)=>a+b,0))}</span></h2>${['ফজর','যোহর','আসর','মাগরিব','এশা','বিতর'].map((n,i)=>`<div class="row"><b>${n}</b><span style="display:flex;align-items:center;gap:10px"><button class="g opt" data-a="q" data-i="${i}" data-v="-1" aria-label="কমান">−</button><b style="min-width:34px;text-align:center">${bn(S.qaza[i])}</b><button class="g opt" data-a="q" data-i="${i}" data-v="1" aria-label="বাড়ান">+</button></span></div>`).join('')}<div class="m" style="margin-top:8px">+ বাকি বাড়ায়, − আদায় হিসেবে কমায়</div></section>`;
@@ -340,7 +408,7 @@ setInterval(()=>{const el=document.getElementById('nx');if(!el)return;const ms=+
 
 const sh=document.createElement('div');sh.id='sh';sh.innerHTML='<div class="shb"></div><div class="shp" role="dialog" aria-modal="true" aria-labelledby="sht"><div class="shg"></div><button class="shx" aria-label="বন্ধ করুন">✕</button><div class="shs"><div class="shc"></div></div></div>';document.body.appendChild(sh);
 function openSh(i,hl){const x=LRN[i];if(!x)return;sh.querySelector('.shc').innerHTML=`<div class="shh"><span class="aci">${x.ic}</span><div style="flex:1;min-width:0"><h3 id="sht">${x.t}</h3><div class="m">${x.s}</div></div>${LVNOW[i]?`<span class="pill ${i==4?'bad':''}">এখন চলছে</span>`:''}</div><div class="sha">${x.b.map(blk).join('')}</div><button class="g shd">বন্ধ করুন</button>`;
- const kc=i==4?['#D9606B','#F1A5AB']:i>=5?['#D9A441','#F0CF86']:['#3FA37D','#9AD9BC'];sh.style.setProperty('--k',kc[0]);sh.style.setProperty('--k2',kc[1]);
+ const kc=i==4?['#D9606B','#F1A5AB']:i>=5?PC[i-5]:['#3FA37D','#9AD9BC'];sh.style.setProperty('--k',kc[0]);sh.style.setProperty('--k2',kc[1]);
  sh.classList.add('on');document.body.classList.add('shl');root.classList.add('shl');sh.querySelector('.shs').scrollTop=0;
  if(hl>=0){const f=sh.querySelectorAll('.fb')[hl];if(f)f.classList.add('hl')}
  sh.querySelector('.shx').focus({preventScroll:true})}
