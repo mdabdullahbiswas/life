@@ -30,6 +30,9 @@ if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostnam
 /* দৈনিক সামারি ও রাতের রিমাইন্ডার */
 add('script',{src:'digest.js',defer:''});
 
+/* গুগল শিট সিঙ্ক (সেটিং থেকে URL ও টোকেন দিলে চালু হয়) */
+add('script',{src:'sync.js',defer:''});
+
 /* ইনস্টল বাটন (Android/Chrome/Edge)। iOS-এ Safari → শেয়ার → "Add to Home Screen" */
 const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
 let dp=null;
