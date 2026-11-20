@@ -254,7 +254,7 @@ const typing=()=>{const a=document.activeElement;return !!a&&/^(INPUT|SELECT|TEX
 guard($);
 let S={theme:0,dark:0,pr:{},qaza:[0,0,0,0,0,0],ts:{c:0,t:33,tot:{}}};
 try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
-if(!S.pr||typeof S.pr!='object')S.pr={};if(!Array.isArray(S.qaza)||S.qaza.length<6)S.qaza=[0,0,0,0,0,0];if(!S.ts||typeof S.ts!='object')S.ts={c:0,t:33,tot:{}};if(!S.ts.tot)S.ts.tot={};
+if(!S.pr||typeof S.pr!='object')S.pr={};(function(){for(const d in S.pr){const o=S.pr[d];if(!o||typeof o!='object')continue;for(let i=0;i<5;i++)if(i in o){if(o[i])o['f'+i]=true;delete o[i]}}})();if(!Array.isArray(S.qaza)||S.qaza.length<6)S.qaza=[0,0,0,0,0,0];if(!S.ts||typeof S.ts!='object')S.ts={c:0,t:33,tot:{}};if(!S.ts.tot)S.ts.tot={};
 const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
 const MON=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
 const WSD=['রবি','সোম','মঙ্গল','বুধ','বৃহ','শুক্র','শনি'];
