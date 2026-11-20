@@ -307,6 +307,19 @@ button.opt.on,button.g.opt.on{background:linear-gradient(135deg,var(--a),var(--a
 .hero::after{background:linear-gradient(90deg,var(--pk2,var(--a2)),var(--pk,var(--a)))}
 .hn b{background:linear-gradient(90deg,var(--pk,var(--a)),var(--pk2,var(--g)));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 10px color-mix(in srgb,var(--pk,var(--a)) 32%,transparent))}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* স্থানীয় সময় ও রিমাইন্ডার */
+#lt{position:fixed;left:12px;right:12px;top:calc(env(safe-area-inset-top,0px) + 10px);z-index:9999;max-width:480px;margin:auto;background:var(--g);color:#FFF6DC;border:1px solid var(--a2);border-radius:14px;padding:12px 16px;box-shadow:0 12px 30px -10px rgba(0,0,0,.5);display:none;font-size:15px;line-height:1.5;cursor:pointer}
+#lt.on{display:block;animation:up .4s both}
+.lcr{padding:12px 0;border-bottom:1px dashed var(--b)}.lcr:last-of-type{border-bottom:0}
+.lch{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.lcg{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.lcg label,.jf{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--m)}
+.lcg input[type=time],.lcg input[type=number],.jf input{width:100%;padding:8px 10px;border-radius:10px;border:1px solid var(--cb);background:var(--c);color:var(--t);font-size:15px}
+.lcg em{font-style:normal;font-size:11px}
+.jf{margin-top:8px;max-width:260px}
+.lcs{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.lcs input[type=number]{width:76px;padding:8px 10px;border-radius:10px;border:1px solid var(--cb);background:var(--c);color:var(--t);font-size:15px}
 </style></head><body><script src="header.js"></script><main id="app"></main>
 <script>
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
@@ -323,6 +336,15 @@ let S={theme:0,dark:0,pr:{},qaza:[0,0,0,0,0,0],ts:{c:0,t:33,tot:{}}};
 try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
 if(!S.pr||typeof S.pr!='object')S.pr={};(function(){for(const d in S.pr){const o=S.pr[d];if(!o||typeof o!='object')continue;for(let i=0;i<5;i++)if(i in o){if(o[i])o['f'+i]=true;delete o[i]}}})();if(!Array.isArray(S.qaza)||S.qaza.length<6)S.qaza=[0,0,0,0,0,0];if(!S.ts||typeof S.ts!='object')S.ts={c:0,t:33,tot:{}};if(!S.ts.tot)S.ts.tot={};
 const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
+/* স্থানীয় ওয়াক্ত/জামাত/রিমাইন্ডার সেটিংস */
+const LD={on:0,open:0,st:['','','','',''],jm:['','','','',''],jum:'',rm:[10,10,10,10,10],dm:10,lf:{}};
+S.loc=Object.assign({},LD,S.loc&&typeof S.loc=='object'?S.loc:{});
+['st','jm','rm'].forEach(k=>{if(!Array.isArray(S.loc[k])||S.loc[k].length<5)S.loc[k]=LD[k].slice()});
+if(!S.loc.lf||typeof S.loc.lf!='object')S.loc.lf={};
+if(typeof S.loc.jum!='string')S.loc.jum='';
+const hm=v=>{const m=/^(\d{1,2}):(\d{2})$/.exec(v||'');return m&&+m[1]<24&&+m[2]<60?+m[1]+m[2]/60:null};
+const effS=c=>[c.fajr,c.noon+.05,c.asr,c.maghrib,c.isha].map((v,i)=>{const o=hm(S.loc.st[i]);return o==null?v:o});
+const effJ=(i,now)=>{if(i==1&&now.getDay()==5&&hm(S.loc.jum)!=null)return hm(S.loc.jum);return hm(S.loc.jm[i])};
 const MON=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
 const WSD=['রবি','সোম','মঙ্গল','বুধ','বৃহ','শুক্র','শনি'];
 const WFD=['রবিবার','সোমবার','মঙ্গলবার','বুধবার','বৃহস্পতিবার','শুক্রবার','শনিবার'];
@@ -369,11 +391,11 @@ const dur=h=>{const m=Math.max(1,Math.round(h*60)),H=Math.floor(m/60),M=m%60;ret
 function render(){const now=new Date(),K=key(now),c=calc(now),cur=now.getHours()+now.getMinutes()/60,night=c.fajr+24-c.maghrib,pd=S.pr[K]||{};
 root.dataset.t=S.theme||0;root.dataset.d=S.dark||0;
 const W=[['সূর্যোদয়ের সময়',c.sunrise,c.sunrise+.25,'f'],['দ্বিপ্রহর (যাওয়াল)',c.noon-.1,c.noon+.02,'f'],['সূর্যাস্তের সময়',c.maghrib-.25,c.maghrib,'f'],['তাহাজ্জুদ',(c.maghrib+night*2/3)%24,c.fajr,'n'],['ইশরাক',c.sunrise+.25,c.sunrise+1,'n'],['চাশত',c.sunrise+1,c.noon-.15,'n'],['আওয়াবিন',c.maghrib+.2,c.isha,'n']];
-const wst=w=>{let a=w[1],b=w[2];if(b<a)b+=24;for(const o of [0,24,-24]){const x=cur+o;if(x>=a&&x<b)return{on:1,left:b-x}}return{on:0,a,in:a>cur?a-cur:a+24-cur}};
+const wst=w=>{let a=w[1],b=w[2];if(b<a)b+=24;for(const o of [0,24,-24]){const x=cur+o;if(x>=a&&x<b)return{on:1,left:b-x,end:b-o}}return{on:0,a,in:a>cur?a-cur:a+24-cur}};
 const WS=W.map(w=>[w,wst(w)]);
 const row=([w,r],chk)=>`<div class="sr ${r.on?'on '+w[3]:''}" data-sh="${w[3]=='f'?4:w[0]=='তাহাজ্জুদ'?1:w[0]=='চাশত'?2:0}" data-hl="${['সূর্যোদয়ের সময়','দ্বিপ্রহর (যাওয়াল)','সূর্যাস্তের সময়'].indexOf(w[0])}" role="button" tabindex="0"><span>${chk!=null?`<input type="checkbox" class="chk" data-i="n${chk}" ${pd['n'+chk]?'checked':''}>`:''}${w[0]}</span><span>${T(w[1])} – ${T(w[2])} · ${r.on?'চলছে · '+dur(r.left)+' বাকি':'শুরু '+dur(r.in)+' পর'}</span></div>`;
 const nf=WS.filter(([w])=>w[3]=='n');
-const FW=[['ফজর',c.fajr,c.sunrise,'n'],[now.getDay()==5?'জুম্মা':'যোহর',c.noon+.05,c.asr,'n'],['আসর',c.asr,c.maghrib-.25,'n'],['মাগরিব',c.maghrib,c.isha,'n'],['এশা',c.isha,c.fajr+24,'n']];
+const E=effS(c),FW=[['ফজর',E[0],c.sunrise,'n'],[now.getDay()==5?'জুম্মা':'যোহর',E[1],E[2],'n'],['আসর',E[2],c.maghrib-.25,'n'],['মাগরিব',E[3],E[4],'n'],['এশা',E[4],E[0]+24,'n']],jj=i=>{const j=effJ(i,now);return j!=null?' · জামাত '+T(j):''};
 const fs=FW.map(w=>{const r=wst(w);return{w,r,past:!r.on&&(((w[1]%24)+24)%24)<=cur}});
 const fd=FW.filter((_,i)=>pd['f'+i]).length,nd=nf.filter((_,i)=>pd['n'+i]).length;
 const fc=k=>{const o=S.pr[k]||{};return [0,1,2,3,4].filter(i=>o['f'+i]).length};
@@ -387,9 +409,13 @@ LVNOW=[0,WS[3][1].on,WS[5][1].on,0,WS[0][1].on||WS[1][1].on||WS[2][1].on].concat
 const xr=(i,t,d)=>`<div class="sr" data-sh="${i}" role="button" tabindex="0"><span>${t}</span><span>${d}</span></div>`;
 const extra=`<div class="spt">আরও জানুন</div>${xr(0,'নফল নামাজের ফজিলত','ফজিলত ও গুরুত্ব')}${xr(3,'সালাতুত তওবা','২ রাকাত · গুনাহের পর')}`;
 let hj='';try{hj=new Intl.DateTimeFormat('bn-BD-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'}).format(now)}catch(e){}
-const frow=(x,i)=>{const{w,r,past}=x,dn=!!pd['f'+i];return `<div class="sr pr ${r.on?'on':''}" style="${pk(i)}" data-sh="${i==1&&now.getDay()==5?10:5+i}" role="button" tabindex="0"><span><input type="checkbox" class="chk" data-i="f${i}" ${dn?'checked':''} aria-label="${w[0]}">${w[0]}</span><span>${T(w[1])} – ${T(w[2])} · ${dn?(pd['q'+i]?'কাযা আদায় ✓':'আদায় হয়েছে ✓'):r.on?'চলছে · '+dur(r.left)+' বাকি':past?'ওয়াক্ত শেষ':'শুরু '+dur(r.in)+' পর'}</span></div>`};
+const frow=(x,i)=>{const{w,r,past}=x,dn=!!pd['f'+i];return `<div class="sr pr ${r.on?'on':''}" style="${pk(i)}" data-sh="${i==1&&now.getDay()==5?10:5+i}" role="button" tabindex="0"><span><input type="checkbox" class="chk" data-i="f${i}" ${dn?'checked':''} aria-label="${w[0]}">${w[0]}</span><span>${T(w[1])} – ${T(w[2])}${jj(i)} · ${dn?(pd['q'+i]?'কাযা আদায় ✓':'আদায় হয়েছে ✓'):r.on?'চলছে · '+dur(r.left)+' বাকি':past?'ওয়াক্ত শেষ':'শুরু '+dur(r.in)+' পর'}</span></div>`};
 const ni=FW.findIndex(w=>w[0]==nxt.n),ci=curW?FW.findIndex(w=>w[0]==curW.w[0]):ni;
-const hero=`<section class="card hero wide" style="${pk(ni)}"><div><div class="m">${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())}${hj?' · '+hj+' (আনুমানিক)':''}</div><div class="hd">${WFD[now.getDay()]}</div><div class="hn"><span class="m">পরবর্তী ওয়াক্ত · ${nxt.n}</span><b id="nx" data-t="${nxt.t}">${cdf(nxt.t-now.getTime())}</b></div><div class="hcs">${curW?`<span class="pill pr" style="${pk(ci)}">এখন চলছে: ${curW.w[0]}</span>`:''}${stk?`<span class="pill">🔥 ${bn(stk)} দিন সব ওয়াক্ত</span>`:''}</div></div><div class="hrs">${mr(fd/5,'var(--pk)',bn(fd)+'/'+bn(5),'ফরজ')}${mr(nd/nf.length,'#1f9d6b',bn(nd)+'/'+bn(nf.length),'নফল')}</div></section>`;
+const jx=curW?ci:ni;let jh=effJ(jx,now),jt=jh==null?null:bt+Math.round(jh*60)*6e4;if(jt!=null&&jt<=now.getTime()&&!curW)jt+=864e5;
+const nj=jt!=null&&jt>now.getTime()?`<div class="m" style="margin-top:6px">${FW[jx][0]} জামাত · ${T(jh)} · <b id="nj" data-cd="${jt}" style="font-family:inherit">${cdf(jt-now.getTime())}</b> বাকি</div>`:'';
+const endTs=curW?bt+Math.round(curW.r.end*36e5):0;
+const hnb=curW?`<div class="hn"><span class="m">এখন চলছে · ${curW.w[0]} · ওয়াক্ত শেষ হতে বাকি</span><b id="nx" data-cd="${endTs}">${cdf(endTs-now.getTime())}</b></div>${nj}<div class="m" style="margin-top:6px">পরবর্তী ওয়াক্ত · ${nxt.n} · শুরু হতে <b id="nx2" data-cd="${nxt.t}" style="font-family:inherit">${cdf(nxt.t-now.getTime())}</b></div>`:`<div class="hn"><span class="m">পরবর্তী ওয়াক্ত · ${nxt.n}</span><b id="nx" data-cd="${nxt.t}">${cdf(nxt.t-now.getTime())}</b></div>${nj}`;
+const hero=`<section class="card hero wide" style="${pk(ni)}"><div><div class="m">${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())}${hj?' · '+hj+' (আনুমানিক)':''}</div><div class="hd">${WFD[now.getDay()]}</div>${hnb}<div class="hcs">${curW?`<span class="pill pr" style="${pk(ci)}">এখন চলছে: ${curW.w[0]}</span>`:''}${stk?`<span class="pill">🔥 ${bn(stk)} দিন সব ওয়াক্ত</span>`:''}</div></div><div class="hrs">${mr(fd/5,'var(--pk)',bn(fd)+'/'+bn(5),'ফরজ')}${mr(nd/nf.length,'#1f9d6b',bn(nd)+'/'+bn(nf.length),'নফল')}</div></section>`;
 const fard=`<section class="card t-f"><h2>ফরজ নামাজ <span class="pill">${bn(fd)}/${bn(5)}</span></h2>${fs.map(frow).join('')}<div class="m" style="margin-top:10px">আদায় করলে টিক দিন · বিস্তারিতের জন্য নামে ট্যাপ করুন</div></section>`;
 const ts=S.ts,tasbih=`<section class="card t-t"><h2>তাসবিহ <span class="pill">আজ ${bn(ts.tot[K]||0)}</span></h2><div class="tsw"><button class="tsb" data-a="ts" aria-label="গণনা">${mr(ts.c/ts.t,'var(--k)',bn(ts.c),'/ '+bn(ts.t))}</button></div><div class="chs">${[33,99,100].map(n=>`<button class="opt ${ts.t==n?'on':''}" data-a="tt" data-i="${n}">${bn(n)}</button>`).join('')}<button class="g opt" data-a="tr">↺ রিসেট</button></div></section>`;
 if(!/^\d{4}-\d{2}-\d{2}$/.test(S.qs||'')||S.qs>K){S.qs=K;save()}
@@ -402,18 +428,64 @@ const aqt=aqd.reduce((a,x)=>a+x.its.length,0);
 const dlb=x=>x.n==0?'আজ':x.n==1?'গতকাল':bn(x.d.getDate())+' '+MON[x.d.getMonth()]+(x.d.getFullYear()!=now.getFullYear()?' '+bn(x.d.getFullYear()):'');
 const autoQ=`<section class="card t-q"><h2>বাকি ওয়াক্ত (কাযা) <span class="pill ${aqt?'bad':''}">${bn(aqt)}</span></h2>${aqt?aqd.map(x=>`<div class="row"><b>${dlb(x)}</b><span style="display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end">${x.its.map(i=>`<button class="g opt" data-a="qd" data-k="${x.k}" data-i="${i}" aria-label="${i==1&&x.d.getDay()==5?'জুম্মা':QW[i]} কাযা আদায় হয়েছে">${i==1&&x.d.getDay()==5?'জুম্মা':QW[i]}</button>`).join('')}</span></div>`).join(''):'<div class="m">কোনো কাযা নেই — মাশাআল্লাহ ✓</div>'}<div class="m" style="margin-top:8px">ওয়াক্ত শেষ হয়েছে অথচ টিক দেওয়া হয়নি, সেগুলো এখানে দেখাবে · কাযা আদায় করলে ওয়াক্তের নামে ট্যাপ করুন — আদায় হিসেবে গণ্য ও রেকর্ড হবে, তালিকা থেকে সরে যাবে</div><div class="row" style="margin-top:6px"><span class="m">কাযা আদায় হয়েছে (মোট)</span><b>${bn(qdone)}</b></div><div class="row" style="margin-top:6px"><span class="m">গণনা শুরু</span><input type="date" id="qs" value="${S.qs}" max="${K}" aria-label="কাযা গণনা শুরুর তারিখ"></div></section>`;
 const week=`<section class="card wide t-w"><h2>এ সপ্তাহের ফরজ <span class="pill">${bn(wsum)}/${bn(35)}</span></h2><div class="wk">${wk.map((x,i)=>`<div class="wc" title="${bn(x.n)}/${bn(5)}"><div class="wv">${x.n?bn(x.n):''}</div><div class="wbw"><i class="wb ${x.n==5?'ok':''} ${i==6?'td':''}" style="height:${x.n/5*100}%"></i></div><div class="wd ${i==6?'on':''}">${i==6?'আজ':WSD[x.d.getDay()]}</div></div>`).join('')}</div><div class="m" style="margin-top:10px;display:flex;gap:6px;align-items:center"><i class="lg"></i>সব ওয়াক্ত আদায়</div></section>`;
+const L=S.loc,np=window.Notification?Notification.permission:'x',D0=[c.fajr,c.noon+.05,c.asr,c.maghrib,c.isha];
+const lrow=i=>`<div class="lcr"><div class="lch"><b>${FW[i][0]}</b><button class="g opt" data-a="lr" data-i="${i}">↺ মুছুন</button></div><div class="lcg"><label><span>ওয়াক্ত শুরু</span><input type="time" data-lc="st" data-n="${i}" value="${L.st[i]}"><em>অটো: ${T(D0[i])}</em></label><label><span>জামাত / একামত</span><input type="time" data-lc="jm" data-n="${i}" value="${L.jm[i]}"><em>${L.jm[i]?'':'খালি = নেই'}</em></label><label><span>কত মিনিট আগে</span><input type="number" inputmode="numeric" min="0" max="180" data-lc="rm" data-n="${i}" value="${L.rm[i]}"><em>০ = রিমাইন্ডার বন্ধ</em></label></div>${i==1?`<label class="jf"><span>জুম্মার জামাত (শুক্রবার)</span><input type="time" data-lc="jum" value="${L.jum}"></label>`:''}</div>`;
+const jsum=[0,1,2,3,4].filter(i=>effJ(i,now)!=null).map(i=>`${FW[i][0]} ${T(effJ(i,now))}`).join(' · ');
+const loc=`<section class="card wide t-l"><h2>স্থানীয় সময় ও রিমাইন্ডার <span class="pill ${L.on?'':'bad'}">${L.on?'চালু':'বন্ধ'}</span></h2><div class="row"><label style="display:flex;align-items:center;gap:8px"><input type="checkbox" class="chk" data-lc="on" ${L.on?'checked':''}>নামাজের রিমাইন্ডার চালু করুন</label><button class="g opt" data-a="lo">${L.open?'▲ লুকান':'▼ সেটিংস'}</button></div>${L.open?`<div class="row"><span class="m">নোটিফিকেশন অনুমতি: ${np=='granted'?'দেওয়া আছে ✓':np=='denied'?'বন্ধ (ব্রাউজার সেটিংসে চালু করুন)':np=='x'?'এই ব্রাউজারে নেই':'এখনও দেওয়া হয়নি'}</span><span class="lcs">${np=='default'?'<button class="g opt" data-a="ln">অনুমতি দিন</button>':''}<button class="g opt" data-a="lt">টেস্ট</button></span></div>${[0,1,2,3,4].map(lrow).join('')}<div class="row"><span class="m">সব ওয়াক্তে একই মিনিট</span><span class="lcs"><input type="number" inputmode="numeric" min="0" max="180" data-lc="dm" value="${L.dm}"><button class="g opt" data-a="la">সবগুলোতে বসান</button></span></div><div class="m" style="margin-top:8px">স্থানীয় মসজিদের সময় দিলে ওয়াক্ত শুরুর সময় (ও তার হিসাব) সেই অনুযায়ী বদলাবে; খালি রাখলে অটো সময় থাকবে। জামাত সময় দিলে রিমাইন্ডার জামাতের আগে আসবে, না দিলে ওয়াক্ত শুরুর আগে। নামাজে টিক দিলে সেই ওয়াক্তের রিমাইন্ডার আসবে না। অ্যাপ খোলা থাকলে ঠিক সময়ে রিমাইন্ডার আসবে। অ্যাপ বন্ধ থাকলে Android Chrome-এ ইনস্টল করা অ্যাপে ব্যাকগ্রাউন্ডে চেক করার চেষ্টা হয় — তখন সময় কিছুটা আগে-পিছে হতে পারে।</div>`:`<div class="m">${jsum?'জামাত: '+jsum:'নিজের এলাকার ওয়াক্ত ও জামাতের সময় যোগ করতে "সেটিংস" খুলুন'}</div>`}</section>`;
 $.innerHTML=`<header><div><h1>🕌 নামাজ</h1><div class="sub">ফরজ, নফল ও নিষিদ্ধ সময়ের হিসাব</div></div></header>
 <div class="grid">${hero}${fard}<section class="card t-n"><h2>নফল নামাজের সময় <span class="pill">${bn(nd)}/${bn(nf.length)}</span></h2>${nf.map((x,i)=>row(x,i)).join('')}${extra}</section>
-<section class="card t-x"><h2>নিষিদ্ধ সময়</h2>${WS.filter(([w])=>w[3]=='f').map(x=>row(x)).join('')}<div class="m" style="margin-top:10px">ঢাকার সময় অনুযায়ী (আনুমানিক)</div></section>${tasbih}${autoQ}${week}</div>`}
+<section class="card t-x"><h2>নিষিদ্ধ সময়</h2>${WS.filter(([w])=>w[3]=='f').map(x=>row(x)).join('')}<div class="m" style="margin-top:10px">ঢাকার সময় অনুযায়ী (আনুমানিক)</div></section>${tasbih}${autoQ}${loc}${week}</div>`}
+$.addEventListener('change',e=>{const t=e.target,k=t.dataset.lc;if(!k)return;const L=S.loc,i=+t.dataset.n,mn=v=>Math.max(0,Math.min(180,parseInt(v)||0));
+ if(k=='on'){L.on=t.checked?1:0;if(L.on&&window.Notification&&Notification.permission=='default')try{Notification.requestPermission().then(()=>render())}catch(x){}}
+ else if(k=='st'||k=='jm')L[k][i]=t.value;
+ else if(k=='jum')L.jum=t.value;
+ else if(k=='rm')L.rm[i]=mn(t.value);
+ else if(k=='dm')L.dm=mn(t.value);
+ L.lf={};save();render();chk()});
 $.addEventListener('change',e=>{if(e.target.id=='qs'){const v=e.target.value;if(/^\d{4}-\d{2}-\d{2}$/.test(v)&&v<=key(new Date())){S.qs=v;save();render()}return}const i=e.target.dataset.i;if(!i)return;const K=key(new Date());(S.pr[K]=S.pr[K]||{})[i]=e.target.checked;save();render()});
 let lastR='';render();setInterval(()=>{const n=new Date(),m=n.getHours()*60+n.getMinutes();if(m!==lastR&&!typing()){lastR=m;render()}},5000);
 document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;const a=t.dataset.a,i=+t.dataset.i,K=key(new Date()),ts=S.ts;
  if(a=='ts'){if(ts.c>=ts.t)ts.c=0;ts.c++;ts.tot[K]=(ts.tot[K]||0)+1;try{navigator.vibrate&&navigator.vibrate(ts.c==ts.t?[40,40,40]:8)}catch(x){}}
  if(a=='tt'){ts.t=i;ts.c=0}
  if(a=='tr')ts.c=0;
+ if(a=='lo')S.loc.open=S.loc.open?0:1;
+ if(a=='ln'){try{Notification.requestPermission().then(()=>render())}catch(x){}}
+ if(a=='lt')fire('টেস্ট রিমাইন্ডার','রিমাইন্ডার এভাবেই দেখাবে');
+ if(a=='lr'){S.loc.st[i]='';S.loc.jm[i]='';if(i==1)S.loc.jum='';S.loc.lf={}}
+ if(a=='la'){S.loc.rm=[0,1,2,3,4].map(()=>S.loc.dm);S.loc.lf={}}
  if(a=='qd'){const k=t.dataset.k;const o=S.pr[k]=S.pr[k]||{};o['f'+i]=true;o['q'+i]=true}
  save();render()});
-setInterval(()=>{const el=document.getElementById('nx');if(!el)return;const ms=+el.dataset.t-Date.now();if(ms<=0){lastR='';render();return}el.textContent=cdf(ms)},1000);
+setInterval(()=>{const els=document.querySelectorAll('#app [data-cd]');for(const el of els){const ms=+el.dataset.cd-Date.now();if(ms<=0){lastR='';render();return}el.textContent=cdf(ms)}},1000);
+
+/* রিমাইন্ডার ইঞ্জিন */
+const lt=document.createElement('div');lt.id='lt';lt.addEventListener('click',()=>lt.classList.remove('on'));document.body.appendChild(lt);
+function fire(t,b,tag){lt.textContent='🔔 '+t+' · '+b;lt.classList.add('on');clearTimeout(fire.h);fire.h=setTimeout(()=>lt.classList.remove('on'),30000);
+ try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(x){}
+ try{if(window.Notification&&Notification.permission=='granted'){const o={body:b,icon:'icon-192.png',badge:'badge-96.png',tag:tag||'namaz-rem',renotify:true,data:{url:'namaz.html'}};
+  if(navigator.serviceWorker&&navigator.serviceWorker.getRegistration)navigator.serviceWorker.getRegistration().then(r=>{try{r?r.showNotification(t,o):new Notification(t,o)}catch(x){}}).catch(()=>{});else new Notification(t,o)}}catch(x){}}
+function chk(){const L=S.loc;if(!L.on)return;const now=new Date(),K=key(now),c=calc(now),E=effS(c),pd=S.pr[K]||{},n=now.getTime(),mid=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime(),nm=['ফজর',now.getDay()==5?'জুম্মা':'যোহর','আসর','মাগরিব','এশা'];
+ for(const k in L.lf)if(k.slice(0,10)!=K)delete L.lf[k];
+ for(let i=0;i<5;i++){const r=+L.rm[i];if(!(r>0)||pd['f'+i])continue;const j=effJ(i,now),tg=j!=null?j:E[i],tm=mid+Math.round(tg*60)*6e4,f=tm-r*6e4;
+  if(n>=f&&n<tm&&n<f+18e4&&!L.lf[K+i]){L.lf[K+i]=1;save();const m=Math.max(1,Math.round((tm-n)/6e4));fire(nm[i]+(j!=null?' · জামাত':' · ওয়াক্ত'),bn(m)+' মিনিট পরে ('+T(tg)+')','nr-'+K+'-'+i);markFired(K+'-'+i)}}}
+
+/* অ্যাপ বন্ধ থাকলেও: সময়সূচি IndexedDB-তে রাখা হয়, service worker (sw.js) সেখান থেকে নোটিফিকেশন দেখায় */
+const idb=()=>new Promise((res,rej)=>{const q=indexedDB.open('hayat-n',1);q.onupgradeneeded=()=>q.result.createObjectStore('kv');q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)});
+const idbSet=(k,v)=>idb().then(d=>new Promise((res,rej)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=()=>res();t.onerror=()=>rej(t.error)}));
+const idbGet=k=>idb().then(d=>new Promise(res=>{const r=d.transaction('kv').objectStore('kv').get(k);r.onsuccess=()=>res(r.result);r.onerror=()=>res(null)}));
+async function markFired(id){try{const f=(await idbGet('fired'))||{};f[id]=Date.now();await idbSet('fired',f)}catch(e){}}
+let lastSched='';
+async function syncSched(){try{if(!window.indexedDB)return;const L=S.loc,items=[],now=new Date(),n=now.getTime();
+ if(L.on)for(let dI=0;dI<3;dI++){const d=new Date(now.getFullYear(),now.getMonth(),now.getDate()+dI),K=key(d),c=calc(d),E=effS(c),pd=S.pr[K]||{},mid=d.getTime(),nm=['ফজর',d.getDay()==5?'জুম্মা':'যোহর','আসর','মাগরিব','এশা'];
+  for(let i=0;i<5;i++){const r=+L.rm[i];if(!(r>0)||pd['f'+i])continue;const j=effJ(i,d),tg=j!=null?j:E[i],tm=mid+Math.round(tg*60)*6e4;if(tm<=n)continue;items.push({id:K+'-'+i,f:tm-r*6e4,tm,t:nm[i]+(j!=null?' · জামাত':' · ওয়াক্ত'),tg:T(tg)})}}
+ const js=JSON.stringify(items);if(js===lastSched)return;lastSched=js;await idbSet('sched',items);
+ const reg=navigator.serviceWorker&&navigator.serviceWorker.getRegistration?await navigator.serviceWorker.getRegistration():null;if(!reg||!window.Notification||Notification.permission!='granted')return;
+ if(L.on&&reg.periodicSync)try{await reg.periodicSync.register('namaz-rem',{minInterval:15*60*1000})}catch(e){}
+ if(typeof TimestampTrigger!='undefined'){const ids=new Set(items.map(x=>'nr-'+x.id));
+  try{(await reg.getNotifications({includeTriggered:true})).forEach(x=>{if(x.tag&&x.tag.indexOf('nr-')==0&&!ids.has(x.tag))x.close()})}catch(e){}
+  for(const x of items)if(x.f>n)try{await reg.showNotification('🔔 '+x.t,{body:bn(Math.round((x.tm-x.f)/6e4))+' মিনিট পরে ('+x.tg+')',tag:'nr-'+x.id,icon:'icon-512.png',badge:'badge-96.png',data:{url:'namaz.html'},showTrigger:new TimestampTrigger(x.f)})}catch(e){}}
+ if(reg.active)reg.active.postMessage({type:'namaz-check'})}catch(e){}}
+syncSched();setInterval(syncSched,15000);
+setInterval(chk,15000);chk();document.addEventListener('visibilitychange',()=>{if(!document.hidden)chk()});
 
 const sh=document.createElement('div');sh.id='sh';sh.innerHTML='<div class="shb"></div><div class="shp" role="dialog" aria-modal="true" aria-labelledby="sht"><div class="shg"></div><button class="shx" aria-label="বন্ধ করুন">✕</button><div class="shs"><div class="shc"></div></div></div>';document.body.appendChild(sh);
 function openSh(i,hl){const x=LRN[i];if(!x)return;sh.querySelector('.shc').innerHTML=`<div class="shh"><span class="aci">${x.ic}</span><div style="flex:1;min-width:0"><h3 id="sht">${x.t}</h3><div class="m">${x.s}</div></div>${LVNOW[i==10?6:i]?`<span class="pill ${i==4?'bad':''}">এখন চলছে</span>`:''}</div><div class="sha">${x.b.map(blk).join('')}</div><button class="g shd">বন্ধ করুন</button>`;
