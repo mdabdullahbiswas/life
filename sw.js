@@ -1,8 +1,8 @@
 /* Hayat — Service Worker
    অফলাইন সাপোর্ট: পেজ/স্ক্রিপ্ট আগে ক্যাশ থেকে দেখায়, পেছনে নতুন সংস্করণ এনে রাখে।
    কোড বদলালে নিচের VER সংখ্যা বাড়িয়ে দিন — পুরনো ক্যাশ নিজে মুছে যাবে। */
-const VER='hayat-v5';
-const PRE=['./','index.html','tasks.html','namaz.html','roza.html','study.html','hisab.html','bags.html','settings.html','lang.js','trip.js','header.js','pwa.js','digest.js','manifest.json','offline.html',
+const VER='hayat-v6';
+const PRE=['./','index.html','tasks.html','namaz.html','roza.html','study.html','hisab.html','bags.html','settings.html','lang.js','trip.js','sync.js','header.js','pwa.js','digest.js','manifest.json','offline.html',
   'icon-192.png','icon-512.png','icon-maskable-512.png','badge-96.png'];
 
 self.addEventListener('install',e=>{
@@ -17,6 +17,7 @@ self.addEventListener('fetch',e=>{
   const r=e.request;
   if(r.method!=='GET')return;
   const u=new URL(r.url);
+  if(/(^|\.)(google\.com|googleusercontent\.com)$/.test(u.hostname)&&u.hostname!=='fonts.googleapis.com'&&u.hostname!=='fonts.gstatic.com')return;   // গুগল শিট সিঙ্ক সবসময় সরাসরি নেটওয়ার্কে, কখনো ক্যাশে নয়
   const font=u.hostname==='fonts.googleapis.com'||u.hostname==='fonts.gstatic.com';
   if(u.origin!==location.origin&&!font)return;           // আবহাওয়া/নামাজের API ইত্যাদি সরাসরি নেটওয়ার্কে যাবে
 
