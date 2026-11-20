@@ -197,7 +197,7 @@ function render1(){const now=new Date(),K=key(now),c=calc(now),h=hij(now),tm=[c.
 root.dataset.t=S.theme;root.dataset.d=S.dark;
 const cur=now.getHours()+now.getMinutes()/60+now.getSeconds()/3600;let ni=tm.findIndex(x=>x>cur),nxt=ni<0?0:ni,diff=(ni<0?tm[0]+24:tm[ni])-cur;
 const hh=Math.floor(diff),mm=Math.floor((diff-hh)*60);
-const pd=S.pr[K]||{},pc=P.filter((_,i)=>pd['f'+i]).length;
+P[1]=new Date().getDay()==5?'জুম্মা':'যোহর';const pd=S.pr[K]||{},pc=P.filter((_,i)=>pd['f'+i]).length;
 const fi=fastInfo(now,h),night=c.fajr+24-c.maghrib;
 const nafl=[['তাহাজ্জুদ',T(c.maghrib+night*2/3-24)+' – ফজরের আগ পর্যন্ত'],['ইশরাক',T(c.sunrise+.25)+' থেকে'],['চাশত',T(c.sunrise+1)+' – '+T(c.noon-.15)],['আওয়াবিন',T(c.maghrib+.2)+' থেকে এশা পর্যন্ত']];
 const forb=[['সূর্যোদয়',T(c.sunrise)+' – '+T(c.sunrise+.25)],['দ্বিপ্রহর (যাওয়াল)',T(c.noon-.1)+' – '+T(c.noon+.02)],['সূর্যাস্ত',T(c.maghrib-.25)+' – '+T(c.maghrib)]];
