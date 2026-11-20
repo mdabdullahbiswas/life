@@ -76,12 +76,53 @@ button.tc.on{border-color:var(--a);background:color-mix(in srgb,var(--a) 14%,tra
 .tk span:first-child{flex:1;min-width:0;overflow-wrap:anywhere}
 .ts{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--t);color:var(--a2);padding:11px 20px;border-radius:99px;font-size:14px;font-weight:600;box-shadow:0 12px 30px -10px rgba(0,0,0,.5);z-index:99;animation:rise .3s both}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.hr{align-items:center;gap:10px}.hb{display:flex;align-items:center;gap:8px;flex:none}button.sm{padding:4px 11px;min-width:36px;font-size:15px;border-radius:10px}button:disabled{opacity:.35;pointer-events:none;filter:grayscale(.4)}
+/* ===== প্রিমিয়াম বাটন ===== */
+button{position:relative;overflow:hidden;isolation:isolate;border:1px solid transparent;border-radius:14px;padding:11px 22px;letter-spacing:.2px;
+background:linear-gradient(#3A2D20,#1F1710) padding-box,linear-gradient(135deg,#F2D88A,#B8892B 55%,#E2C275) border-box;color:#F2D88A;
+box-shadow:0 10px 22px -12px rgba(31,22,8,.7),0 1px 0 rgba(255,255,255,.18) inset,0 -2px 6px rgba(0,0,0,.25) inset;
+transition:transform .18s ease,box-shadow .25s ease,filter .25s ease,background .25s}
+button::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(115deg,transparent 35%,rgba(255,236,170,.38) 50%,transparent 65%);transform:translateX(-120%);transition:transform .7s ease}
+button:hover{transform:translateY(-1px);box-shadow:0 14px 26px -12px rgba(184,137,43,.65),0 1px 0 rgba(255,255,255,.22) inset,0 -2px 6px rgba(0,0,0,.25) inset;filter:brightness(1.06)}
+button:hover::before{transform:translateX(120%)}
+button:active{transform:translateY(1px) scale(.985);box-shadow:0 4px 10px -6px rgba(31,22,8,.7),0 2px 6px rgba(0,0,0,.3) inset}
+:root[data-d="1"] button{background:linear-gradient(180deg,#F7E3A0,#D9AE45 60%,#B8892B) padding-box,linear-gradient(135deg,#FFF1C2,#B8892B) border-box;color:#1F1608;font-weight:700;
+box-shadow:0 10px 24px -12px rgba(224,184,79,.55),0 1px 0 rgba(255,255,255,.5) inset,0 -2px 5px rgba(120,80,10,.35) inset}
+button.g{padding:9px 16px;font-weight:600;color:var(--t);
+background:linear-gradient(var(--c),var(--c)) padding-box,linear-gradient(135deg,color-mix(in srgb,var(--a2) 80%,transparent),color-mix(in srgb,var(--a) 45%,transparent)) border-box;
+backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+box-shadow:0 6px 16px -12px var(--sh),0 1px 0 rgba(255,255,255,.5) inset}
+button.g:hover{background:linear-gradient(color-mix(in srgb,var(--a) 14%,var(--c)),color-mix(in srgb,var(--a) 14%,var(--c))) padding-box,linear-gradient(135deg,var(--a2),var(--a)) border-box;box-shadow:0 10px 22px -12px var(--sh),0 1px 0 rgba(255,255,255,.5) inset}
+:root[data-d="1"] button.g{background:linear-gradient(var(--c),var(--c)) padding-box,linear-gradient(135deg,rgba(242,216,138,.7),rgba(224,184,79,.25)) border-box;color:var(--t);font-weight:600;box-shadow:0 6px 16px -12px rgba(0,0,0,.8),0 1px 0 rgba(255,255,255,.08) inset}
+button.g::before{background:linear-gradient(115deg,transparent 35%,rgba(226,194,117,.3) 50%,transparent 65%)}
+button.dg{color:var(--er);background:linear-gradient(var(--c),var(--c)) padding-box,linear-gradient(135deg,rgba(220,60,60,.65),rgba(220,60,60,.25)) border-box;box-shadow:0 6px 16px -12px rgba(220,60,60,.6)}
+button.dg:hover{background:linear-gradient(rgba(220,60,60,.12),rgba(220,60,60,.12)) padding-box,linear-gradient(135deg,#e05252,#a82424) border-box;box-shadow:0 10px 22px -12px rgba(220,60,60,.7)}
+:root[data-d="1"] button.dg{color:var(--er);font-weight:600}
+.x{background:none!important;border:0!important;box-shadow:none!important;color:var(--m)!important;padding:4px 8px;filter:none}
+.x::before{display:none}.x:hover{color:var(--er)!important;transform:none;filter:none}
+button.tc{background:linear-gradient(var(--c),var(--c)) padding-box,linear-gradient(135deg,var(--b),var(--b)) border-box;color:var(--t);box-shadow:0 6px 14px -12px var(--sh);font-weight:500;padding:10px}
+:root[data-d="1"] button.tc{background:linear-gradient(var(--c),var(--c)) padding-box,linear-gradient(135deg,var(--b),var(--b)) border-box;color:var(--t);font-weight:500}
+button.tc.on,:root[data-d="1"] button.tc.on{background:linear-gradient(color-mix(in srgb,var(--a) 16%,var(--c)),color-mix(in srgb,var(--a) 16%,var(--c))) padding-box,linear-gradient(135deg,var(--a2),var(--a)) border-box;box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 22%,transparent),0 10px 20px -12px var(--sh)}
+button.tc::before{display:none}
+.seg{padding:4px;border-radius:16px;background:color-mix(in srgb,var(--a) 9%,transparent);border:1px solid var(--b)}
+.seg button{box-shadow:none;background:transparent!important;color:var(--m);border-color:transparent;font-weight:600;filter:none}
+.seg button::before{display:none}
+.seg button.on,:root[data-d="1"] .seg button.on{background:linear-gradient(#3A2D20,#1F1710) padding-box,linear-gradient(135deg,#F2D88A,#B8892B) border-box!important;color:#F2D88A;box-shadow:0 8px 16px -10px rgba(31,22,8,.7),0 1px 0 rgba(255,255,255,.18) inset}
+:root[data-d="1"] .seg button.on{background:linear-gradient(180deg,#F7E3A0,#D9AE45 60%,#B8892B) padding-box,linear-gradient(135deg,#FFF1C2,#B8892B) border-box!important;color:#1F1608}
+.qc button{border-radius:10px;padding:3px 12px;min-width:36px}
+
+:root[data-d="1"] button.dg{background:linear-gradient(var(--c),var(--c)) padding-box,linear-gradient(135deg,rgba(255,138,138,.7),rgba(255,138,138,.25)) border-box;color:var(--er);box-shadow:0 6px 16px -12px rgba(0,0,0,.8)}
+:root[data-d="1"] button.dg:hover{background:linear-gradient(rgba(255,138,138,.14),rgba(255,138,138,.14)) padding-box,linear-gradient(135deg,#ff9a9a,#d55) border-box}
+:root[data-d="1"] .seg button{background:transparent!important;color:var(--m);box-shadow:none;border-color:transparent}
+:root[data-d="1"] .seg button.on{color:#1F1608}
+:root[data-d="1"] .x{color:var(--m)!important}
+@media(prefers-reduced-motion:reduce){button,button::before{transition:none!important}}
 </style></head>
 <body><script src="header.js"></script>
 <main id="app"></main>
 <script>
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
-const P=['ফজর','যোহর','আসর','মাগরিব','এশা'];
 const TH=[['শ্যাম্পেইন গোল্ড','#8A6420'],['গোল্ড + এমারেল্ড','#0D4C3C'],['গোল্ড + নেভি','#16213E'],['গোল্ড + বারগান্ডি','#5B1A2B']];
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
@@ -95,27 +136,29 @@ let DP=null;
 addEventListener('beforeinstallprompt',e=>{e.preventDefault();DP=e;render()});
 function toast(m){const e=document.createElement('div');e.className='ts';e.textContent=m;document.body.appendChild(e);setTimeout(()=>e.remove(),2400)}
 const tg=(a,t,d,on)=>`<div class="row"><div><b>${t}</b><div class="m">${d}</div></div><input type="checkbox" class="tgl" data-a="${a}" aria-label="${t}" ${on?'checked':''}></div>`;
-const TYL=t=>t.type=='once'?'একবার':t.type=='every'?bn(t.n)+' দিন পর পর':({daily:'প্রতিদিন',weekly:'প্রতি সপ্তাহে',monthly:'প্রতি মাসে',yearly:'প্রতি বছর'})[t.type]||'';
+const HN={cd:['পরবর্তী নামাজের কাউন্টডাউন',''],wx:['আবহাওয়া',''],pr:['আজকের নামাজ','নফল নামাজসহ'],rz:['রোজা','শুধু নফল রোজার দিনে আসে'],bal:['ব্যালেন্স','হিসাবের সারাংশ'],tk:['আজকের কাজ','']};
+const HD=Object.keys(HN);
+const homeOrder=()=>{const o=Array.isArray(S.home&&S.home.order)?S.home.order.filter(k=>HN[k]):[];HD.forEach(k=>{if(!o.includes(k))o.push(k)});return o};
 function render(){root.dataset.t=S.theme;root.dataset.d=S.dark;
-const QN=[...P,'বিতর'],qt=S.qaza.reduce((a,b)=>a+b,0);
 let sz=0;try{sz=new Blob([localStorage.getItem('dl')||'']).size/1024}catch(e){}
 const days=S.lastBak?Math.floor((Date.now()-S.lastBak)/864e5):-1;
 const hsy=window.hayatSync?hayatSync.status():{on:0};const synced=hsy.on&&!hsy.err&&hsy.lastOk&&Date.now()-hsy.lastOk<864e5;
 const bs=synced?['শিটে সংরক্ষিত','okb','✅ তথ্য গুগল শিটে সিঙ্ক হচ্ছে। শেষ সিঙ্ক: '+(Date.now()-hsy.lastOk<6e4?'এইমাত্র':bn(Math.floor((Date.now()-hsy.lastOk)/6e4))+' মিনিট আগে')+'। এছাড়া ব্যাকআপ ফাইলও নিয়ে রাখতে পারেন।']:days<0?['ব্যাকআপ নেই','warn','⚠️ এখনো ব্যাকআপ নেওয়া হয়নি। ব্রাউজারের ডেটা মুছলে সব হারাবে।']:days>7?['ব্যাকআপ পুরোনো','warn','⚠️ শেষ ব্যাকআপ '+bn(days)+' দিন আগের। নতুন একটি নিন।']:['ব্যাকআপ নিরাপদ','okb','✅ শেষ ব্যাকআপ '+(days?bn(days)+' দিন আগে':'আজ')+'।'];
 const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
-const hero=`<section class="card hero wide"><div class="hl">আপনার তথ্য</div><div class="big">${bs[0]}</div><div class="chips"><div class="chip">কাজ<b>${bn(S.tasks.length)}</b></div><div class="chip">হিসাব<b>${bn(S.fin.length)}</b></div><div class="chip">কাযা<b>${bn(qt)}</b></div><div class="chip">আকার<b>${bn(sz.toFixed(1))} KB</b></div></div><div class="${bs[1]}" style="margin-top:14px;position:relative">${bs[2]}</div></section>`;
+const hero=`<section class="card hero wide"><div class="hl">আপনার তথ্য</div><div class="big">${bs[0]}</div><div class="chips"><div class="chip">আকার<b>${bn(sz.toFixed(1))} KB</b></div></div><div class="${bs[1]}" style="margin-top:14px;position:relative">${bs[2]}</div></section>`;
 const look=`<section class="card"><h2>চেহারা</h2>${tg('dark','রাতের মোড','অন্ধকার থিমে চোখের আরাম',S.dark)}<div class="thm">${TH.map((t,i)=>`<button class="tc ${i==S.theme?'on':''}" data-a="th" data-i="${i}"><i style="background:linear-gradient(135deg,${t[1]} 50%,#E0B84F 50%)"></i>${t[0]}</button>`).join('')}</div></section>`;
 const lang=`<section class="card"><h2>ভাষা</h2><div class="seg"><button class="${(S.lang||'bn')=='bn'?'on':''}" data-a="lg" data-i="bn">বাংলা</button><button class="${S.lang=='en'?'on':''}" data-a="lg" data-i="en">English</button></div></section>`;
 const mode=`<section class="card"><h2>মোড ও নোটিফিকেশন</h2>${tg('rm','রমজান মোড','সেহরি-ইফতার কাউন্টডাউন ও তারাবিহ ট্র্যাকার; রমজান মাসে নিজে থেকেই চালু হয়',S.rm)}${tg('notif','নোটিফিকেশন','নামাজ, সেহরি-ইফতার ও কাজের সময়ে জানাবে',S.notif)}<div class="m" style="margin-top:6px">নোটিফিকেশন পেতে হোম পেজ ব্রাউজারে খোলা থাকতে হবে।</div>${S.notif?'<div class="acts"><button class="g" data-a="tn">🔔 পরীক্ষা করুন</button></div>':''}</section>`;
 const app=`<section class="card"><h2>অ্যাপ</h2>${standalone?'<div class="okb">✅ অ্যাপ হিসেবে ইনস্টল করা আছে</div>':DP?'<div class="m">হোম স্ক্রিন থেকে এক ট্যাপে খুলুন, অফলাইনেও চলবে।</div><div class="acts"><button data-a="inst">📲 অ্যাপ ইনস্টল করুন</button></div>':'<div class="m">iPhone-এ Safari-র শেয়ার বাটন থেকে "হোম স্ক্রিনে যোগ করুন" চাপুন। Android-এ Chrome-এর মেনু থেকে "ইনস্টল" করুন।</div>'}<div class="acts"><button class="g" data-a="ref">🔄 আপডেট ও ক্যাশ পরিষ্কার</button></div><div class="m" style="margin-top:8px">নতুন সংস্করণ না এলে এটি চাপুন। আপনার তথ্য মুছবে না।</div></section>`;
-const qaza=`<section class="card"><h2>কাযা নামাজ <span class="pill ${qt?'bad':''}">মোট ${bn(qt)}</span></h2><div class="qg">${QN.map((p,j)=>`<div class="qc"><span class="m">${p}</span><b>${bn(S.qaza[j])}</b><div><button class="g" data-a="qz" data-i="${j},-1" aria-label="${p} কমান">−</button><button data-a="qz" data-i="${j},1" aria-label="${p} বাড়ান">+</button></div></div>`).join('')}</div><form data-f="qz"><input name="n" type="number" min="1" placeholder="প্রতি ওয়াক্তে কত" required><button>সবগুলোতে যোগ</button></form><div class="m" style="margin-top:8px">আদায় করলে − চাপুন, বাকি থাকলে +।</div></section>`;
+const HO=homeOrder();
+const HH=(S.home&&S.home.hide)||{};
+const home=`<section class="card wide"><h2>হোম পেজ</h2><div class="m">কোন কার্ড দেখাবে আর কোন ক্রমে, তা ঠিক করুন।</div>${HO.map((k,i)=>`<div class="row hr"><div><b>${HN[k][0]}</b>${HN[k][1]?`<div class="m">${HN[k][1]}</div>`:''}</div><div class="hb"><button class="g sm" data-a="hu" data-i="${k}" aria-label="উপরে" ${i?'':'disabled'}>↑</button><button class="g sm" data-a="hd" data-i="${k}" aria-label="নিচে" ${i<HO.length-1?'':'disabled'}>↓</button><input type="checkbox" class="tgl" data-a="hv" data-i="${k}" aria-label="${HN[k][0]} দেখান" ${HH[k]?'':'checked'}></div></div>`).join('')}<div class="acts"><button class="g" data-a="hr">↺ আগের মতো করুন</button></div></section>`;
 const sy=window.hayatSync?hayatSync.status():{on:0,url:'',token:'',pending:0};
 const ago=t=>{const m=Math.floor((Date.now()-t)/6e4);return m<1?'এইমাত্র':m<60?bn(m)+' মিনিট আগে':m<1440?bn(Math.floor(m/60))+' ঘণ্টা আগে':bn(Math.floor(m/1440))+' দিন আগে'};
 const syst=!sy.on?'':sy.err?`<div class="warn" style="margin-top:12px">⚠️ ${esc(sy.err)}</div>`:sy.lastOk?`<div class="okb" style="margin-top:12px">✅ শেষ সিঙ্ক: ${ago(sy.lastOk)}${sy.pending?' · '+bn(sy.pending)+'টি বদল পাঠানো বাকি':''}</div>`:'<div class="m" style="margin-top:12px">এখনো সিঙ্ক হয়নি</div>';
 const sheet=`<section class="card wide"><h2>গুগল শিট সিঙ্ক ${sy.on?'<span class="pill">চালু</span>':''}</h2><div class="m">ফোন ও কম্পিউটারের তথ্য গুগল শিটের মাধ্যমে মিলিয়ে রাখে। ইন্টারনেট না থাকলেও অ্যাপ চলবে, সংযোগ ফিরলে নিজে সিঙ্ক হবে। একই তথ্য দুই জায়গায় বদলালে সর্বশেষ বদলটি জেতে।</div><form data-f="sync" style="flex-wrap:wrap"><input name="u" style="flex:1 1 260px" value="${esc(sy.url)}" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off" required><input name="t" type="password" style="flex:1 1 160px" value="${esc(sy.token)}" placeholder="গোপন টোকেন" autocomplete="off" required><button>সংরক্ষণ ও সংযোগ</button></form>${syst}<div class="acts"><button class="g" data-a="sy">🔄 এখনই সিঙ্ক</button>${sy.on?'<button class="g" data-a="syx">সংযোগ বিচ্ছিন্ন করুন</button>':''}</div></section>`;
-const tasks=`<section class="card wide"><h2>কাজের তালিকা <span class="pill">${bn(S.tasks.length)}টি</span></h2>${S.tasks.length?S.tasks.map(t=>`<div class="tk"><span>${esc(t.title)}</span><span class="m">${t.time?bn(t.time)+' · ':''}${TYL(t)}</span><button class="x" data-a="del" data-i="${t.id}" aria-label="মুছুন">✕</button></div>`).join(''):'<div class="m">এখনো কোনো কাজ নেই। কাজ পেজ থেকে যোগ করুন।</div>'}</section>`;
 const data=`<section class="card wide"><h2>ডেটা ব্যবস্থাপনা</h2><div class="m">সব তথ্য শুধু এই ব্রাউজারে জমা থাকে। নিয়মিত ব্যাকআপ নিয়ে রাখুন।</div><div class="acts"><button data-a="exp">⬇ ব্যাকআপ নামান</button><button class="g" data-a="imp">⬆ ব্যাকআপ আনুন</button><button class="dg" data-a="rst">🗑 সব মুছুন</button></div><input type="file" id="imp" accept=".json,application/json" hidden></section>`;
-$.innerHTML=`<h1>⚙ সেটিং</h1><div class="grid">${hero}${look}${lang}${mode}${app}${qaza}${sheet}${tasks}${data}</div>`}
+$.innerHTML=`<h1>⚙ সেটিং</h1><div class="grid">${hero}${look}${home}${lang}${mode}${app}${sheet}${data}</div>`}
 function exportData(){S.lastBak=Date.now();save();const b=new Blob([JSON.stringify(S,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),l=document.createElement('a');l.href=u;l.download='hayat-backup-'+key(new Date())+'.json';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);render();toast('ব্যাকআপ নামানো হয়েছে ✓')}
 async function refreshApp(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()));const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.reload()}
 async function testNotif(){const o={body:'নোটিফিকেশন ঠিকমতো কাজ করছে ✓',icon:'icon-192.png',data:{url:'index.html'}};try{const r=navigator.serviceWorker&&await navigator.serviceWorker.getRegistration();r?await r.showNotification('Hayat',o):new Notification('Hayat',o)}catch(e){toast('পাঠানো যায়নি')}}
@@ -129,11 +172,12 @@ if(a=='sy'){if(!window.hayatSync){toast('sync.js লোড হয়নি — �
 if(a=='syx'){if(confirm('এই ডিভাইসে সিঙ্ক বন্ধ হবে। শিটের তথ্য ও এই ডিভাইসের তথ্য থেকে যাবে।'))hayatSync.clear();render();return}
 if(a=='inst'){if(DP){DP.prompt();DP.userChoice.then(()=>{DP=null;render()})}return}
 if(a=='lg'){S.lang=i=='en'?'en':'bn';save();location.reload();return}
+if(a=='hu'||a=='hd'){const o=homeOrder(),x=o.indexOf(i),y=a=='hu'?x-1:x+1;if(x<0||y<0||y>=o.length)return;[o[x],o[y]]=[o[y],o[x]];S.home=Object.assign(S.home||{},{order:o})}
+if(a=='hv'){S.home=S.home||{};S.home.hide=Object.assign({},S.home.hide);if(t.checked)delete S.home.hide[i];else S.home.hide[i]=1}
+if(a=='hr'){S.home={order:HD.slice(),hide:{}}}
 if(a=='dark')S.dark=t.checked?1:0;
 if(a=='rm')S.rm=t.checked?1:0;
 if(a=='th')S.theme=+i;
-if(a=='qz'){const[j,v]=i.split(',');S.qaza[+j]=Math.max(0,S.qaza[+j]+ +v)}
-if(a=='del'){S.tasks=S.tasks.filter(x=>x.id!=i);toast('কাজটি মুছে ফেলা হয়েছে')}
 if(a=='notif'){if(t.checked){if(!window.Notification){toast('এই ব্রাউজারে নোটিফিকেশন সমর্থিত নয়');render();return}
 Notification.requestPermission().then(p=>{S.notif=p=='granted'?1:0;save();render();if(p!='granted')toast('অনুমতি দেওয়া হয়নি')});return}S.notif=0}
 save();render()});
@@ -143,7 +187,6 @@ if(!Array.isArray(S.qaza)||S.qaza.length!=6)S.qaza=[0,0,0,0,0,0];if(!Array.isArr
 save();render();toast('ব্যাকআপ আনা হয়েছে ✓')}catch(_){toast('ফাইলটি সঠিক ব্যাকআপ নয়')}};r.readAsText(f)});
 $.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target),k=e.target.dataset.f;
 if(k=='sync'){if(!window.hayatSync){toast('sync.js লোড হয়নি — ফাইলটি আপলোড করেছেন? তারপর "আপডেট ও ক্যাশ পরিষ্কার" চাপুন');return}const r=hayatSync.setup(f.get('u'),f.get('t'));if(!r.ok){toast(r.err);return}toast('সংযোগ হচ্ছে…');render();hayatSync.sync(1).then(r=>{toast(r.ok?'সংযোগ সফল ✓':'সংযোগ হয়নি: '+r.err);render()});return}
-if(k=='qz'){const n=+f.get('n')||0;S.qaza=S.qaza.map(x=>x+n);toast('কাযা যোগ হয়েছে')}
 save();render()});
 addEventListener('hsync',()=>{const a=document.activeElement;if(a&&a.tagName=='INPUT')return;render()});
 render();
