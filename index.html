@@ -164,6 +164,7 @@ const TH=[['শ্যাম্পেইন গোল্ড','#8A6420'],['গো�
 let S={theme:0,dark:0,tasks:[],done:{},pr:{},fin:[],url:'',notif:0,qaza:[0,0,0,0,0,0],fast:{},ram:{},rm:0};
 try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
 if(!TH[S.theme])S.theme=0;S.tp=0;S.fn=S.fn||{};
+if(!S.pr||typeof S.pr!='object')S.pr={};(function(){for(const d in S.pr){const o=S.pr[d];if(!o||typeof o!='object')continue;for(let i=0;i<5;i++)if(i in o){if(o[i])o['f'+i]=true;delete o[i]}}})();   // আগের সংখ্যার কী (0–4) নামাজ পেজের f0–f4-এ এক করা
 const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
 const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 // ঢাকার নামাজের সময় (কারাচি ১৮°/১৮°, হানাফি আসর) — আনুমানিক
@@ -196,7 +197,7 @@ function render1(){const now=new Date(),K=key(now),c=calc(now),h=hij(now),tm=[c.
 root.dataset.t=S.theme;root.dataset.d=S.dark;
 const cur=now.getHours()+now.getMinutes()/60+now.getSeconds()/3600;let ni=tm.findIndex(x=>x>cur),nxt=ni<0?0:ni,diff=(ni<0?tm[0]+24:tm[ni])-cur;
 const hh=Math.floor(diff),mm=Math.floor((diff-hh)*60);
-const pd=S.pr[K]||{},pc=P.filter((_,i)=>pd[i]).length;
+const pd=S.pr[K]||{},pc=P.filter((_,i)=>pd['f'+i]).length;
 const fi=fastInfo(now,h),night=c.fajr+24-c.maghrib;
 const nafl=[['তাহাজ্জুদ',T(c.maghrib+night*2/3-24)+' – ফজরের আগ পর্যন্ত'],['ইশরাক',T(c.sunrise+.25)+' থেকে'],['চাশত',T(c.sunrise+1)+' – '+T(c.noon-.15)],['আওয়াবিন',T(c.maghrib+.2)+' থেকে এশা পর্যন্ত']];
 const forb=[['সূর্যোদয়',T(c.sunrise)+' – '+T(c.sunrise+.25)],['দ্বিপ্রহর (যাওয়াল)',T(c.noon-.1)+' – '+T(c.noon+.02)],['সূর্যাস্ত',T(c.maghrib-.25)+' – '+T(c.maghrib)]];
@@ -227,7 +228,7 @@ const cdCard=`<section class="card cd" style="${pcs(kk)}"><h2>${cw>=0?'এখন
 const rozaCard=(h.m!=9&&!fi[1]&&fi[0].startsWith('নফল রোজার দিন')&&!S.fast[K]&&!S.fn[K])?`<section class="card"><h2>রোজা</h2><span class="pill">${fi[0]}</span><div class="row"><span>সেহরির শেষ সময়</span><b>${T(c.fajr)}</b></div><div class="row"><span>ইফতার</span><b>${T(c.maghrib)}</b></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button data-a="fk">✓ রেখেছি</button><button class="g" data-a="fx">রাখিনি</button><button class="g lk" data-a="rz">রোজা ট্র্যাকার<span class="ar">→</span></button></div></section>`:'';
 const wxCard=wxCardHTML();
 const g=cur<12?'সুপ্রভাত':cur<16?'শুভ অপরাহ্ন':cur<19?'শুভ সন্ধ্যা':'শুভ রাত্রি';
-const HC={cd:`${cdCard}`,wx:`${wxCard}`,pr:`<section class="card"><h2>আজকের নামাজ <span class="pill">${bn(pc)}/৫</span></h2>${P.map((p,i)=>`<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="pr" data-i="${i}" style="${pcs(i)}" ${pd[i]?'checked':''}><span style="color:${PC[i][0]};font-weight:600">${p}</span></label><span class="m">${T(tm[i])}</span></div>`).join('')}<div class="bar"><i style="width:${pc*20}%"></i></div></section>
+const HC={cd:`${cdCard}`,wx:`${wxCard}`,pr:`<section class="card"><h2>আজকের নামাজ <span class="pill">${bn(pc)}/৫</span></h2>${P.map((p,i)=>`<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="pr" data-i="${i}" style="${pcs(i)}" ${pd['f'+i]?'checked':''}><span style="color:${PC[i][0]};font-weight:600">${p}</span></label><span class="m">${T(tm[i])}</span></div>`).join('')}<div class="bar"><i style="width:${pc*20}%"></i></div></section>
 ${actN.length?`<section class="card"><h2>নফল নামাজ <span class="pill">এখন চলছে</span></h2>${actN.map(([w,r])=>{const i=nafl.findIndex(n=>n[0]==w[0]);return `<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="pr" data-i="n${i}" ${pd['n'+i]?'checked':''}>${w[0]}</label><span class="m">${nafl[i][1]} · ${dur(r.left)} বাকি</span></div>`}).join('')}</section>`:''}`,rz:`${rozaCard}`,bal:`<section class="card"><h2>ব্যালেন্স</h2><div class="row"><span class="m">মোট অবশিষ্ট</span><b style="font-size:22px;${inc-exp<0?'color:#d33':''}">৳ ${bn(inc-exp)}</b></div><div style="margin-top:6px"><button class="g lk" data-a="hs">হিসাব<span class="ar">→</span></button></div></section>`,tk:`<section class="card wide"><h2>আজকের কাজ <span class="pill">${bn(td)}/${bn(tt.length)}</span></h2>
 ${tt.length?tt.map(t=>`<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="task" data-i="${t.id}" ${(S.done[K]||{})[t.id]?'checked':''}>${t.title}</label><span class="m">${t.time?bn(t.time)+' · ':''}${TYL(t)} <button class="x" data-a="del" data-i="${t.id}">✕</button></span></div>`).join(''):'<div class="m">আজ কোনো কাজ নেই।</div>'}
 <div style="margin-top:10px"><button class="g lk" data-a="tk">কাজ যোগ করুন<span class="ar">→</span></button></div>
@@ -274,7 +275,7 @@ if(a=='fk'){S.fast[K]=1;delete S.fn[K]}
 if(a=='fx'){S.fn[K]=1;delete S.fast[K]}
 if(a=='wr'){window.WXE=0;loadWX(true)}
 if(a=='th')S.theme=+i;
-if(a=='pr'){(S.pr[K]=S.pr[K]||{})[i]=e.target.checked}
+if(a=='pr'){(S.pr[K]=S.pr[K]||{})['f'+i]=e.target.checked}
 if(a=='task'){(S.done[K]=S.done[K]||{})[i]=e.target.checked}
 if(a=='del')S.tasks=S.tasks.filter(t=>t.id!=i);
 if(a=='notif'){if(!S.notif&&window.Notification){Notification.requestPermission().then(p=>{S.notif=p=='granted'?1:0;save();render()});return}S.notif=0}
