@@ -385,7 +385,9 @@ button.opt svg{width:13px;height:13px;flex:none;stroke:currentColor;fill:none;st
 .tsx .tem{margin-top:14px;padding:18px;text-align:center;border-radius:15px;border:1px dashed color-mix(in srgb,var(--k) 45%,transparent);color:var(--m);font-size:13px}
 
 /* ── প্রিমিয়াম ফিনিশ: কার্ড উচ্চতা ও কাযা কার্ড ── */
-.grid{align-items:start}
+/* মেসনরি লেআউট: কার্ড নিজের উচ্চতা নেয়, ফাঁকা জায়গা থাকে না */
+.grid{align-items:start;grid-auto-flow:row dense;grid-auto-rows:1px;row-gap:0;column-gap:14px}
+.grid>.card{margin-bottom:0}
 .card.fx .sr{padding:11px 12px;border-radius:12px;transition:background .25s}
 .card.fx .sr:hover{background:color-mix(in srgb,var(--a) 8%,transparent)}
 .card.fx .sr span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -604,4 +606,18 @@ function closeSh(){sh.classList.remove('on');document.body.classList.remove('shl
 document.addEventListener('click',e=>{if(e.target.closest('.shx,.shd')||e.target.classList.contains('shb')){closeSh();return}
  const r=e.target.closest('[data-sh]');if(!r||e.target.closest('input'))return;openSh(+r.dataset.sh,r.dataset.hl==null?-1:+r.dataset.hl)});
 document.addEventListener('keydown',e=>{if(e.key=='Escape')closeSh();else if((e.key=='Enter'||e.key==' ')&&e.target.matches&&e.target.matches('[data-sh]')){e.preventDefault();openSh(+e.target.dataset.sh,e.target.dataset.hl==null?-1:+e.target.dataset.hl)}});
-</script><script src="pwa.js"></script></body></html>
+</script><script src="pwa.js"></script><script>
+(function(){const GAP=14;let raf=0,ro=null,mo=null;
+function lay(){raf=0;const g=document.querySelector('#app .grid');if(!g)return;
+for(const c of g.children){if(!c.classList||!c.classList.contains('card'))continue;
+const h=c.offsetHeight;const n=Math.ceil(h)+GAP;const v='span '+n;if(c.style.gridRowEnd!==v)c.style.gridRowEnd=v}}
+function q(){if(!raf)raf=requestAnimationFrame(lay)}
+function bind(){const g=document.querySelector('#app .grid');if(!g)return;
+if(ro)ro.disconnect();if(window.ResizeObserver){ro=new ResizeObserver(q);for(const c of g.children)ro.observe(c)}q()}
+const app=document.getElementById('app');
+if(app){mo=new MutationObserver(bind);mo.observe(app,{childList:true});}
+addEventListener('resize',q);addEventListener('load',bind);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(bind);
+bind();})();
+</script>
+</body></html>
