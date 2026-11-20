@@ -360,6 +360,9 @@ button.opt svg{width:13px;height:13px;flex:none;stroke:currentColor;fill:none;st
 .pmk{font-size:13px;font-weight:600;color:var(--m)}
 :root[data-d="1"] .pc{color:var(--pk2)}:root[data-d="1"] .pc.on{color:#10100c;text-shadow:none}
 @media(max-width:480px){.prem .mrw{width:96px;height:96px}.pmr{gap:16px}}
+
+.tl .tfm{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.tl .tfm input{flex:1 1 120px;min-width:0;padding:9px 11px;border-radius:10px;border:1px solid var(--cb);background:var(--c);color:var(--t);font-size:15px;font-family:inherit}.tl .tfm #tn{flex:2 1 100%}
+.tl .tdh{font-weight:700;font-size:13px;margin:10px 0 2px}.tl .tle.ed{background:color-mix(in srgb,var(--k) 12%,transparent);border-radius:10px;padding-left:8px;padding-right:8px}
 </style></head><body><script src="header.js"></script><main id="app"></main>
 <script>
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
@@ -374,8 +377,8 @@ const typing=()=>{const a=document.activeElement;return !!a&&/^(INPUT|SELECT|TEX
 guard($);
 let S={theme:0,dark:0,pr:{},qaza:[0,0,0,0,0,0],ts:{c:0,t:33,tot:{}}};
 try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
-if(!S.pr||typeof S.pr!='object')S.pr={};(function(){for(const d in S.pr){const o=S.pr[d];if(!o||typeof o!='object')continue;for(let i=0;i<5;i++)if(i in o){if(o[i])o['f'+i]=true;delete o[i]}}})();if(!Array.isArray(S.qaza)||S.qaza.length<6)S.qaza=[0,0,0,0,0,0];if(!S.ts||typeof S.ts!='object')S.ts={c:0,t:33,tot:{}};if(!S.ts.tot)S.ts.tot={};
-const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
+if(!S.pr||typeof S.pr!='object')S.pr={};(function(){for(const d in S.pr){const o=S.pr[d];if(!o||typeof o!='object')continue;for(let i=0;i<5;i++)if(i in o){if(o[i])o['f'+i]=true;delete o[i]}}})();if(!Array.isArray(S.qaza)||S.qaza.length<6)S.qaza=[0,0,0,0,0,0];if(!S.ts||typeof S.ts!='object')S.ts={c:0,t:33,tot:{}};if(!S.ts.tot)S.ts.tot={};if(!Array.isArray(S.ts.log))S.ts.log=[];
+var TD={n:'',c:'',d:''};const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
 /* স্থানীয় ওয়াক্ত/জামাত/রিমাইন্ডার সেটিংস */
 const LD={on:0,open:0,st:['','','','',''],jm:['','','','',''],jum:'',rm:[10,10,10,10,10],dm:10,lf:{}};
 S.loc=Object.assign({},LD,S.loc&&typeof S.loc=='object'?S.loc:{});
@@ -433,7 +436,7 @@ root.dataset.t=S.theme||0;root.dataset.d=S.dark||0;
 const W=[['সূর্যোদয়ের সময়',c.sunrise,c.sunrise+.25,'f'],['দ্বিপ্রহর (যাওয়াল)',c.noon-.1,c.noon+.02,'f'],['সূর্যাস্তের সময়',c.maghrib-.25,c.maghrib,'f'],['তাহাজ্জুদ',(c.maghrib+night*2/3)%24,c.fajr,'n'],['ইশরাক',c.sunrise+.25,c.sunrise+1,'n'],['চাশত',c.sunrise+1,c.noon-.15,'n'],['আওয়াবিন',c.maghrib+.2,c.isha,'n']];
 const wst=w=>{let a=w[1],b=w[2];if(b<a)b+=24;for(const o of [0,24,-24]){const x=cur+o;if(x>=a&&x<b)return{on:1,left:b-x,end:b-o}}return{on:0,a,in:a>cur?a-cur:a+24-cur}};
 const WS=W.map(w=>[w,wst(w)]);
-const row=([w,r],chk)=>`<div class="sr ${r.on?'on '+w[3]:''}" data-sh="${w[3]=='f'?4:w[0]=='তাহাজ্জুদ'?1:w[0]=='চাশত'?2:0}" data-hl="${['সূর্যোদয়ের সময়','দ্বিপ্রহর (যাওয়াল)','সূর্যাস্তের সময়'].indexOf(w[0])}" role="button" tabindex="0"><span>${chk!=null?`<input type="checkbox" class="chk" data-i="n${chk}" ${pd['n'+chk]?'checked':''}>`:''}${w[0]}</span><span>${T(w[1])} – ${T(w[2])}${r.on?' · চলছে · '+dur(r.left)+' বাকি':''}</span></div>`;
+const row=([w,r],chk)=>`<div class="sr ${r.on?'on '+w[3]:''}" data-sh="${w[3]=='f'?4:w[0]=='তাহাজ্জুদ'?1:w[0]=='চাশত'?2:0}" data-hl="${['সূর্যোদয়ের সময়','দ্বিপ্রহর (যাওয়াল)','সূর্যাস্তের সময়'].indexOf(w[0])}" role="button" tabindex="0"><span>${chk!=null?`<input type="checkbox" class="chk" data-i="n${chk}" ${pd['n'+chk]?'checked':''}>`:''}${w[0]}</span><span>${T(w[1])} – ${T(w[2])}${r.on?' · চলছে':''}</span></div>`;
 const nf=WS.filter(([w])=>w[3]=='n');
 const E=effS(c),FW=[['ফজর',E[0],c.sunrise,'n'],[now.getDay()==5?'জুম্মা':'যোহর',E[1],E[2],'n'],['আসর',E[2],c.maghrib-.25,'n'],['মাগরিব',E[3],E[4],'n'],['এশা',E[4],E[0]+24,'n']],jj=i=>{const j=effJ(i,now);return j!=null?' · জামাত '+T(j):''};
 const fs=FW.map(w=>{const r=wst(w);return{w,r,past:!r.on&&(((w[1]%24)+24)%24)<=cur}});
@@ -449,7 +452,7 @@ LVNOW=[0,WS[3][1].on,WS[5][1].on,0,WS[0][1].on||WS[1][1].on||WS[2][1].on].concat
 const xr=(i,t,d)=>`<div class="sr" data-sh="${i}" role="button" tabindex="0"><span>${t}</span><span>${d}</span></div>`;
 const extra=`<div class="spt">আরও জানুন</div>${xr(0,'নফল নামাজের ফজিলত','ফজিলত ও গুরুত্ব')}${xr(3,'সালাতুত তওবা','২ রাকাত · গুনাহের পর')}`;
 let hj='';try{hj=new Intl.DateTimeFormat('bn-BD-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'}).format(now)}catch(e){}
-const frow=(x,i)=>{const{w,r,past}=x,dn=!!pd['f'+i];return `<div class="sr pr ${r.on?'on':''}" style="${pk(i)}" data-sh="${i==1&&now.getDay()==5?10:5+i}" role="button" tabindex="0"><span><input type="checkbox" class="chk" data-i="f${i}" ${dn?'checked':''} aria-label="${w[0]}">${w[0]}</span><span>${T(w[1])} – ${T(w[2])}${jj(i)} · ${dn?(pd['q'+i]?'কাযা আদায় ✓':'আদায় হয়েছে ✓'):r.on?'চলছে · '+dur(r.left)+' বাকি':past?'ওয়াক্ত শেষ':'শুরু '+dur(r.in)+' পর'}</span></div>`};
+const frow=(x,i)=>{const{w,r,past}=x,dn=!!pd['f'+i];return `<div class="sr pr ${r.on?'on':''}" style="${pk(i)}" data-sh="${i==1&&now.getDay()==5?10:5+i}" role="button" tabindex="0"><span><input type="checkbox" class="chk" data-i="f${i}" ${dn?'checked':''} aria-label="${w[0]}">${w[0]}</span><span>${[T(w[1])+' – '+T(w[2]),dn?(pd['q'+i]?'কাযা আদায় ✓':'আদায় হয়েছে ✓'):r.on?'চলছে':past?'ওয়াক্ত শেষ':'',jj(i).replace(/^ · /,'')].filter(Boolean).join(' · ')}</span></div>`};
 const ni=FW.findIndex(w=>w[0]==nxt.n),ci=curW?FW.findIndex(w=>w[0]==curW.w[0]):ni;
 const jx=curW?ci:ni;let jh=effJ(jx,now),jt=jh==null?null:bt+Math.round(jh*60)*6e4;if(jt!=null&&jt<=now.getTime()&&!curW)jt+=864e5;
 const nj=jt!=null&&jt>now.getTime()?`<div class="m" style="margin-top:6px">${FW[jx][0]} জামাত · ${T(jh)} · <b id="nj" data-cd="${jt}" style="font-family:inherit">${cdf(jt-now.getTime())}</b> বাকি</div>`:'';
@@ -459,7 +462,15 @@ const hero=`<section class="card hero wide" style="${pk(ni)}"><div><div class="m
 const pTot=5+nf.length,pDone=fd+nd,pPct=Math.round(pDone/pTot*100);
 const prem=`<section class="card wide prem"><h2>আজকের অগ্রগতি <span class="pill">${bn(pPct)}%</span></h2><div class="pm"><div class="pmr">${mr(fd/5,'var(--a)',bn(fd)+'/'+bn(5),'ফরজ')}${mr(nd/nf.length,'#1f9d6b',bn(nd)+'/'+bn(nf.length),'নফল')}</div><div class="pms"><div class="pmt"><span>মোট আমল</span><b>${bn(pDone)}<small>/${bn(pTot)}</small></b></div><div class="pmb"><i style="width:${pPct}%"></i></div><div class="pmc">${FW.map((w,i)=>`<span class="pc ${pd['f'+i]?'on':''}" style="${pk(i)}">${w[0]}</span>`).join('')}</div>${stk?`<div class="pmk">🔥 ${bn(stk)} দিন টানা সব ওয়াক্ত</div>`:''}</div></div></section>`;
 const fard=`<section class="card t-f"><h2>ফরজ নামাজ <span class="pill">${bn(fd)}/${bn(5)}</span></h2>${fs.map(frow).join('')}<div class="m" style="margin-top:10px">আদায় করলে টিক দিন · বিস্তারিতের জন্য নামে ট্যাপ করুন</div></section>`;
-const ts=S.ts,tasbih=`<section class="card t-t"><h2>তাসবিহ <span class="pill">আজ ${bn(ts.tot[K]||0)}</span></h2><div class="tsw"><button class="tsb" data-a="ts" aria-label="গণনা">${mr(ts.c/ts.t,'var(--k)',bn(ts.c),'/ '+bn(ts.t))}</button></div><div class="chs">${[33,99,100].map(n=>`<button class="opt ${ts.t==n?'on':''}" data-a="tt" data-i="${n}">${bn(n)}</button>`).join('')}<button class="g opt" data-a="tr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>রিসেট</button></div></section>`;
+const ts=S.ts,eh=x=>String(x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),
+ZL=['সুবহানাল্লাহ','আলহামদুলিল্লাহ','আল্লাহু আকবার','ইস্তিগফার','দরূদ শরীফ','লা ইলাহা ইল্লাল্লাহ'],
+tlog=ts.log.filter(x=>x.d>=key(new Date(now.getFullYear(),now.getMonth(),now.getDate()-6))).sort((x,y)=>y.d<x.d?-1:y.d>x.d?1:y.id-x.id),
+tdl=d=>{if(d==K)return 'আজ';const[yy,mm,dd2]=d.split('-').map(Number);return d==key(new Date(now.getFullYear(),now.getMonth(),now.getDate()-1))?'গতকাল':bn(dd2)+' '+MON[mm-1]},
+tEd=ts.ed?ts.log.find(x=>x.id==ts.ed):null,
+tN=tEd?tEd.n:(TD.n||''),tC=tEd?tEd.c:(TD.c||''),tD=tEd?tEd.d:(TD.d||K),
+tToday=ts.log.filter(x=>x.d==K).reduce((a,x)=>a+x.c,0),
+tgroups=[...new Set(tlog.map(x=>x.d))].map(d=>`<div class="tdh">${tdl(d)} <span class="m">· মোট ${bn(tlog.filter(x=>x.d==d).reduce((a,x)=>a+x.c,0))}</span></div>${tlog.filter(x=>x.d==d).map(x=>`<div class="row tle ${ts.ed==x.id?'ed':''}"><span><b>${eh(x.n)}</b> <span class="m">· ${bn(x.c)} বার</span></span><span class="lcs"><button class="g opt" data-a="te" data-i="${x.id}" aria-label="এডিট">এডিট</button><button class="g opt" data-a="td" data-i="${x.id}" aria-label="মুছুন">মুছুন</button></span></div>`).join('')}`).join(''),
+tasbih=`<section class="card t-t tl"><h2>তাসবিহ <span class="pill">আজ ${bn(tToday)}</span></h2><div class="m">কোনটা কতবার পড়েছেন, এখানে লিখে রাখুন</div><div class="chs" style="justify-content:flex-start">${ZL.map(n=>`<button class="opt ${tN==n?'on':''}" data-a="tz" data-n="${n}">${n}</button>`).join('')}</div><div class="tfm"><input type="text" id="tn" maxlength="60" placeholder="তাসবিহ / যিকিরের নাম" value="${eh(tN)}" aria-label="তাসবিহের নাম"><input type="number" id="tc" inputmode="numeric" min="1" max="1000000" placeholder="কতবার" value="${tC}" aria-label="কতবার"><input type="date" id="td" max="${K}" value="${tD}" aria-label="তারিখ"></div><div class="chs" style="justify-content:flex-start;margin-top:8px"><button class="opt on" data-a="ta">${tEd?'সংরক্ষণ করুন':'যোগ করুন'}</button>${tEd?'<button class="g opt" data-a="tx">বাতিল</button>':''}</div>${tgroups?`<div style="margin-top:10px">${tgroups}</div>`:'<div class="m" style="margin-top:10px">এখনও কোনো এন্ট্রি নেই</div>'}</section>`;
 if(!/^\d{4}-\d{2}-\d{2}$/.test(S.qs||'')||S.qs>K){S.qs=K;save()}
 const QW=['ফজর','যোহর','আসর','মাগরিব','এশা'],aqd=[];
 for(let n=0;n<400;n++){const d=dd(n),k=key(d);if(k<S.qs)break;const o=S.pr[k]||{},its=[];
@@ -487,9 +498,13 @@ $.addEventListener('change',e=>{const t=e.target,k=t.dataset.lc;if(!k)return;con
 $.addEventListener('change',e=>{if(e.target.id=='qs'){const v=e.target.value;if(/^\d{4}-\d{2}-\d{2}$/.test(v)&&v<=key(new Date())){S.qs=v;save();render()}return}const i=e.target.dataset.i;if(!i)return;const K=key(new Date());(S.pr[K]=S.pr[K]||{})[i]=e.target.checked;save();render()});
 let lastR='';render();setInterval(()=>{const n=new Date(),m=n.getHours()*60+n.getMinutes();if(m!==lastR&&!typing()){lastR=m;render()}},5000);
 document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;const a=t.dataset.a,i=+t.dataset.i,K=key(new Date()),ts=S.ts;
- if(a=='ts'){if(ts.c>=ts.t)ts.c=0;ts.c++;ts.tot[K]=(ts.tot[K]||0)+1;try{navigator.vibrate&&navigator.vibrate(ts.c==ts.t?[40,40,40]:8)}catch(x){}}
- if(a=='tt'){ts.t=i;ts.c=0}
- if(a=='tr')ts.c=0;
+ if(a[0]=='t'&&a.length==2&&'ta tz te td tx'.includes(a)){const gn=document.getElementById('tn'),gc=document.getElementById('tc'),gd=document.getElementById('td');if(gn)TD.n=gn.value;if(gc)TD.c=gc.value;if(gd&&gd.value)TD.d=gd.value;
+  if(a=='tz'){TD.n=t.dataset.n}
+  if(a=='ta'){const nm=(TD.n||'').trim(),c=Math.round(+TD.c),d=/^\d{4}-\d{2}-\d{2}$/.test(TD.d||'')&&TD.d<=K?TD.d:K;if(!nm||!(c>0)){const f=document.getElementById(nm?'tc':'tn');if(f){f.focus();f.style.borderColor='#D9606B'}return}
+   if(ts.ed){const x=ts.log.find(z=>z.id==ts.ed);if(x){x.n=nm;x.c=c;x.d=d}ts.ed=0}else ts.log.push({id:Date.now(),d,n:nm,c});TD={n:'',c:'',d:''}}
+  if(a=='te'){const x=ts.log.find(z=>z.id==i);if(x)ts.ed=x.id}
+  if(a=='tx'){ts.ed=0;TD={n:'',c:'',d:''}}
+  if(a=='td'){ts.log=ts.log.filter(z=>z.id!=i);if(ts.ed==i)ts.ed=0}}
  if(a=='lo')S.loc.open=S.loc.open?0:1;
  if(a=='ln'){try{Notification.requestPermission().then(()=>render())}catch(x){}}
  if(a=='lt')fire('টেস্ট রিমাইন্ডার','রিমাইন্ডার এভাবেই দেখাবে');
@@ -530,10 +545,12 @@ syncSched();setInterval(syncSched,15000);
 setInterval(chk,15000);chk();document.addEventListener('visibilitychange',()=>{if(!document.hidden)chk()});
 
 const sh=document.createElement('div');sh.id='sh';sh.innerHTML='<div class="shb"></div><div class="shp" role="dialog" aria-modal="true" aria-labelledby="sht"><div class="shg"></div><button class="shx" aria-label="বন্ধ করুন">✕</button><div class="shs"><div class="shc"></div></div></div>';document.body.appendChild(sh);
-function openSh(i,hl){const x=LRN[i];if(!x)return;sh.querySelector('.shc').innerHTML=`<div class="shh"><span class="aci">${x.ic}</span><div style="flex:1;min-width:0"><h3 id="sht">${x.t}</h3><div class="m">${x.s}</div></div>${LVNOW[i==10?6:i]?`<span class="pill ${i==4?'bad':''}">এখন চলছে</span>`:''}</div><div class="sha">${x.b.map(blk).join('')}</div><button class="g shd">বন্ধ করুন</button>`;
+function openSh(i,hl){let x=LRN[i];if(!x)return;
+if(i==4&&hl>=0){const it=x.b.find(k=>k[0]=='f')[1][hl];if(it){const HQ=['যখন সূর্য উদিত হতে থাকে, যতক্ষণ না তা উঁচুতে ওঠে','যখন ঠিক দুপুরে সূর্য আকাশের মধ্যভাগে থাকে, যতক্ষণ না তা ঢলে পড়ে','যখন সূর্য অস্ত যাওয়ার উপক্রম হয়, যতক্ষণ না তা ডুবে যায়'];x={...x,t:it[0],s:'নামাজের নিষিদ্ধ সময়',b:[['f',[it]],['q','রাসূলুল্লাহ (সা.) এই সময়ে নামাজ পড়তে ও মৃতদের দাফন করতে নিষেধ করতেন: '+HQ[hl]+'।','সহিহ মুসলিম: ৮৩১, তিরমিজি: ১০৩০'],['n','মনে রাখবেন','এই সময়ে ফরজ, ওয়াজিব, কাজা ও নফল — কোনো নামাজই পড়া যায় না।']]}}}
+sh.querySelector('.shc').innerHTML=`<div class="shh"><span class="aci">${x.ic}</span><div style="flex:1;min-width:0"><h3 id="sht">${x.t}</h3><div class="m">${x.s}</div></div>${LVNOW[i==10?6:i]?`<span class="pill ${i==4?'bad':''}">এখন চলছে</span>`:''}</div><div class="sha">${x.b.map(blk).join('')}</div><button class="g shd">বন্ধ করুন</button>`;
  const kc=i==4?['#D9606B','#F1A5AB']:i==10?PC[1]:i>=5?PC[i-5]:['#3FA37D','#9AD9BC'];sh.style.setProperty('--k',kc[0]);sh.style.setProperty('--k2',kc[1]);
  sh.classList.add('on');document.body.classList.add('shl');root.classList.add('shl');sh.querySelector('.shs').scrollTop=0;
- if(hl>=0){const f=sh.querySelectorAll('.fb')[hl];if(f)f.classList.add('hl')}
+ if(hl>=0){const f=sh.querySelectorAll('.fb')[i==4?0:hl];if(f)f.classList.add('hl')}
  sh.querySelector('.shx').focus({preventScroll:true})}
 const sp=sh.querySelector('.shp'),ss=sh.querySelector('.shs');let ty=0,dy=0,dr=false;
 sp.addEventListener('touchstart',e=>{ty=e.touches[0].clientY;dy=0;dr=false},{passive:true});
