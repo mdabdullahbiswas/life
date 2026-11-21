@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="bn"><head><meta charset="utf-8">
+<script src="lang.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>হিসাব · Hayat</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
@@ -115,12 +116,16 @@ button.g::before{background:linear-gradient(115deg,transparent 35%,rgba(226,194,
 @media(prefers-reduced-motion:reduce){button,button::before{transition:none!important}}
 </style></head><body><script src="header.js"></script><main id="app"></main>
 <script>
+if(!window.L)window.L=s=>s;
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
 const fm=n=>'৳ '+bn(Math.round(n).toLocaleString('en-IN'));
 const $=document.getElementById('app'),root=document.documentElement;
 let S={theme:0,dark:0,hide:0,bud:0,goal:{n:'',a:0},fin:[]};
 try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
-const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
+/* শুধু এই পেজের নিজের কী (OWN) লিখি; থিম, রাতের মোড, ভাষা ইত্যাদি সেটিং সর্বশেষ সংরক্ষিত অবস্থা থেকেই থাকে — নইলে পুরোনো মান ফিরে এসে সেটিং মুছে দিত */
+const OWN=['hide','bud','goal','fin'];
+const rd=()=>{let c={};try{c=JSON.parse(localStorage.getItem('dl')||'{}')}catch(e){}return c&&typeof c==='object'&&!Array.isArray(c)?c:{}};
+const save=()=>{try{const c=rd();OWN.forEach(k=>{c[k]=S[k]});localStorage.setItem('dl',JSON.stringify(c))}catch(e){}};
 const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const MON=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
 const C={food:['🍽️','খাবার','#E0A63A','out'],trans:['🚌','যাতায়াত','#4C8BD6','out'],bill:['💡','বিল','#9B6BD6','out'],shop:['🛍️','কেনাকাটা','#D6609B','out'],health:['💊','স্বাস্থ্য','#2FB38A','out'],fun:['🎬','বিনোদন','#E0743A','out'],edu:['📚','শিক্ষা','#3AA7C9','out'],o:['📦','অন্যান্য','#8C8576','out'],sal:['💼','বেতন','#1f9d6b','in'],biz:['📈','ব্যবসা','#2FB38A','in'],gift:['🎁','উপহার','#C9A23A','in'],oi:['💰','অন্য আয়','#6FB36F','in']};
@@ -185,5 +190,17 @@ else if(a=='bud'){S.bud=+document.getElementById('bud').value||0}
 else if(a=='goal'){S.goal={n:document.getElementById('gn').value.trim(),a:+document.getElementById('ga').value||0}}
 else if(a=='csv'){dl('hisab.csv','text/csv','\ufeff'+['তারিখ','ধরন','ক্যাটাগরি','টাকা','বিবরণ'].map(x=>L(x)).join(',')+'\n'+S.fin.map(f=>[f.d,L(f.t=='in'?'আয়':'ব্যয়'),L(C[ck(f)][1]),f.a,'"'+(f.n||'').replace(/"/g,'""')+'"'].join(',')).join('\n'));return}
 save();render()});
+/* সেটিং বা অন্য ট্যাব/সিঙ্ক থেকে কিছু বদলালে এই পেজেও সঙ্গে সঙ্গে প্রয়োগ হবে */
+function pull(){const c=rd();
+if((c.lang==='en'?'en':'bn')!==(window.LANG||'bn')){location.reload();return}
+const th=c.theme||0,dk=c.dark||0;
+if(th!=(S.theme||0)||dk!=(S.dark||0)){S.theme=th;S.dark=dk;root.dataset.t=th;root.dataset.d=dk}
+const nw=JSON.stringify([c.hide||0,c.bud||0,c.goal||{n:'',a:0},Array.isArray(c.fin)?c.fin:[]]),od=JSON.stringify([S.hide||0,S.bud||0,S.goal,S.fin]);
+if(nw!==od){const a=document.activeElement;if(a&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)&&$.contains(a))return;
+S.hide=c.hide||0;S.bud=c.bud||0;S.goal=c.goal||{n:'',a:0};S.fin=Array.isArray(c.fin)?c.fin:[];render()}}
+addEventListener('pageshow',e=>{if(e.persisted)pull()});
+addEventListener('storage',e=>{if(!e.key||e.key=='dl')pull()});
+addEventListener('hsync',pull);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)pull()});
 render();
 </script><script src="suggest.js"></script><script src="pwa.js"></script></body></html>
