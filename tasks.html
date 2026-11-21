@@ -191,12 +191,13 @@ const setDG=fn=>{const o=ld();fn(o);try{localStorage.setItem('dl',JSON.stringify
 const TL=s=>window.L?window.L(s):s;
 function dgSel(w,v){const H=+v.slice(0,2),M=+v.slice(3,5);
 return `<span class="dg tg"><select data-dg="${w}" data-p="h" title="ঘণ্টা">${opts(Array.from({length:12},(_,i)=>[i+1,bn(i+1)]),H%12||12)}</select><select data-dg="${w}" data-p="m" title="মিনিট">${opts(Array.from({length:60},(_,i)=>[i,bn(String(i).padStart(2,'0'))]),M)}</select><select data-dg="${w}" data-p="p" title="AM/PM">${opts([['AM','AM'],['PM','PM']],H>=12?'PM':'AM')}</select></span>`}
-function dgCard(){const c=DGV(),perm=window.Notification?Notification.permission:'unsupported',ok=perm==='granted'&&c.notif;
+function dgCard(){const pushOn=!!(window.hayatPush&&window.hayatPush.on()),c=DGV(),perm=window.Notification?Notification.permission:'unsupported',ok=perm==='granted'&&c.notif;
 return `<section class="card wide c7" id="dgc"><h2>🔔 কাজের সারাংশ নোটিফিকেশন <span class="pill">${c.on&&ok?'চালু':'বন্ধ'}</span></h2>
 <div class="m" style="margin-bottom:6px">${perm==='denied'?'ব্রাউজারে নোটিফিকেশন বন্ধ করা আছে — সাইট সেটিং থেকে "Allow" করুন':ok?'নোটিফিকেশন চালু আছে':'নোটিফিকেশন চালু নেই — নিচের বাটন চাপুন'}</div>
 <div class="dgr"><span class="dl"><b>প্রথম সময়</b><span class="m">আজ কী কী কাজ করতে হবে</span></span>${dgSel('am',c.am)}</div>
 <div class="dgr"><span class="dl"><b>দ্বিতীয় সময়</b><span class="m">আজ এখনো কী কী বাকি</span></span>${dgSel('pm',c.pm)}</div>
 <div class="dga">${ok?'':'<button type="button" data-a="dgperm">🔔 নোটিফিকেশন চালু করুন</button>'}<button type="button" class="g" data-a="dgon">${c.on?'চালু':'বন্ধ'}</button><button type="button" class="g" data-a="dgtest" data-k="am">প্রথমটি পরীক্ষা</button><button type="button" class="g" data-a="dgtest" data-k="pm">দ্বিতীয়টি পরীক্ষা</button></div>
+<div class="dgr" style="margin-top:8px;border-bottom:0"><span class="dl"><b>📲 অ্যাপ বন্ধ থাকলেও (পুশ)</b><span class="m">${pushOn?'পুশ চালু আছে':'পুশ চালু নেই'}</span></span><span class="dga" style="margin:0">${pushOn?'<button type="button" class="g" data-a="pushtest" data-k="am">পুশ পরীক্ষা</button><button type="button" class="g" data-a="pushoff">পুশ বন্ধ করুন</button>':'<button type="button" data-a="pushon">এই ডিভাইসে পুশ চালু করুন</button>'}</span></div>
 <div class="m" style="margin-top:10px;font-size:12px">ঠিক সময়ে পেতে অ্যাপটি Home Screen-এ ইনস্টল করে রাখুন। অ্যাপ/পেজ একেবারে বন্ধ থাকলে ব্রাউজার সময়মতো জাগাতে নাও পারে — তখন পরের বার খুললেই সামারি আসবে।</div></section>`}
 function dgChange(el){const w=el.dataset.dg,g=[...document.querySelectorAll('[data-dg="'+w+'"]')],v={};g.forEach(x=>v[x.dataset.p]=x.value);
 const h=(+v.h%12)+(v.p==='PM'?12:0),val=String(h).padStart(2,'0')+':'+String(+v.m||0).padStart(2,'0');
@@ -259,6 +260,9 @@ ${et?`<div class="ebn">✎ ${ex(et.title)}<button type="button" class="x" data-a
 ${dgCard()}
 </div>`;if(sy>0)window.scrollTo(0,sy);$.classList.add('rd')}
 $.addEventListener('click',e=>{const bt=e.target.closest('[data-a]');if(!bt||bt.type=='checkbox')return;const a=bt.dataset.a,i=bt.dataset.i;
+if(a=='pushon'){bt.disabled=true;bt.textContent='…';(window.hayatPush?window.hayatPush.enable():Promise.reject(new Error('push.js লোড হয়নি — পেজ রিফ্রেশ করুন'))).then(()=>{render();alert('✓ এই ডিভাইসে পুশ চালু হয়েছে। "পুশ পরীক্ষা" চেপে দেখে নিন।')}).catch(e=>{alert(String(e&&e.message||e));render()});return}
+if(a=='pushoff'){(window.hayatPush?window.hayatPush.disable():Promise.resolve()).then(render);return}
+if(a=='pushtest'){bt.disabled=true;window.hayatPush.test(bt.dataset.k).then(()=>{bt.disabled=false;alert('পরীক্ষার পুশ পাঠানো হয়েছে — কয়েক সেকেন্ডে নোটিফিকেশন আসবে।')}).catch(e=>{bt.disabled=false;alert(String(e&&e.message||e))});return}
 if(a=='dgon'){setDG(o=>{o.dg=Object.assign({},o.dg,{on:DGV().on?0:1})});render();return}
 if(a=='dgperm'){if(!window.Notification){alert(TL('এই ব্রাউজারে নোটিফিকেশন সমর্থিত নয়'));return}
 Notification.requestPermission().then(p=>{if(p==='granted')setDG(o=>{o.notif=true});else alert(TL('অনুমতি দেওয়া হয়নি'));render()});return}
