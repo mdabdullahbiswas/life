@@ -326,6 +326,7 @@ const D={
 'সঞ্চয় লক্ষ্য':'Savings goal','লক্ষ্য (যেমন: বাইক)':'Goal (e.g. bike)','সেভ':'Save','মোট সঞ্চিত':'Total saved',
 'ব্যয়ের ধরন':'Spending by category','এ মাসে কোনো ব্যয় নেই।':'No expenses this month.','৬ মাসের ধারা':'6-month trend',
 'কোনো হিসাব পাওয়া যায়নি। উপরের ফর্ম থেকে প্রথমটি যোগ করুন।':'No entries found. Add the first one from the form above.','এই হিসাবটি মুছবেন?':'Delete this entry?','ধরন':'Type','ক্যাটাগরি':'Category',
+'কাজ এডিট':'Edit task',
 /* রোজা পেজ */
 /* রোজা পেজ — অতিরিক্ত */
 '✓ আজ রোজা রেখেছি':'✓ I fasted today','রমজান শুরু':'Ramadan begins','রমজান চলছে':'Ramadan is ongoing','শাওয়ালের ছয় রোজা শুরু':'Six fasts of Shawwal begin','আইয়ামে বীজ (১৩–১৫)':'Ayyam al-Bid (13–15)','এ মাসে (নফল)':'This month (voluntary)','মোট নফল':'Total voluntary','এ মাসে নফল রোজা':'Voluntary fasts this month','হিজরি তারিখ সমন্বয়':'Hijri date adjustment',
