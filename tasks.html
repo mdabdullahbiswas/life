@@ -162,6 +162,15 @@ form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}form input{flex:1 1 110
 .card .x.ed:hover{background:color-mix(in srgb,var(--pc) 16%,transparent);color:var(--pt);border-color:color-mix(in srgb,var(--pc) 40%,transparent)}
 .sc .x{width:24px;height:24px;font-size:12px}
 @media (prefers-reduced-motion:reduce){.chk,.chk::after,.card button{animation:none!important;transition:none!important}}
+.tk .row{flex-wrap:wrap}.card button.nx{padding:6px 12px;font-size:12px;margin-left:6px}
+
+/* স্ক্রল মসৃণ রাখতে */
+#app.rd .card{animation:none}
+.card{backdrop-filter:none;-webkit-backdrop-filter:none}
+body::before{will-change:transform;pointer-events:none}
+.card:hover{transform:none}
+@media (hover:hover){.card:hover{transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){body::before{animation:none}}
 </style></head><body><script src="header.js"></script><main id="app"></main>
 <script>
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
@@ -200,16 +209,18 @@ const dn=L.filter(t=>(S.done[key(d)]||{})[t.id]).length;if(dn==L.length)n++;else
 /* উপকাজ: t.subs=[{id,t}] · তারিখ ধরে অবস্থা S.sd[তারিখ][কাজ id][উপকাজ id] · বাদ দেওয়া বাকি কাজ S.skip[তারিখ][কাজ id] · বাকি গোনা শুরু S.ovFrom */
 const chip=(txt,id)=>`<span class="sc"><input type="hidden" name="sub" value="${ex(txt)}"><input type="hidden" name="sid" value="${ex(id||'')}">${ex(txt)}<button type="button" class="x" data-a="subdel" aria-label="সরান" title="সরান">✕</button></span>`;
 function addSub(){const i=document.getElementById('subn'),l=document.getElementById('sbl');if(!i||!l)return;const v=i.value.trim();if(!v)return;l.insertAdjacentHTML('beforeend',chip(v,''));i.value='';i.focus()}
-const subs=(t,k)=>{const L=t.subs||[];if(!L.length)return '';const dd=((S.sd||{})[k]||{})[t.id]||{};return `<div class="sb">${L.map(s=>`<label style="${dd[s.id]?'color:var(--m);text-decoration:line-through':''}"><input type="checkbox" class="chk sm" data-a="sub" data-i="${t.id}" data-s="${s.id}" data-k="${k}" ${dd[s.id]?'checked':''}>${ex(s.t)}</label>`).join('')}</div>`};
+const subs=(t,k)=>{const L=t.subs||[];if(!L.length)return '';const dd=((S.sd||{})[k]||{})[t.id]||{};return `<div class="sb">${L.map(s=>`<label style="${dd[s.id]?'color:var(--m)':''}"><input type="checkbox" class="chk sm" data-a="sub" data-i="${t.id}" data-s="${s.id}" data-k="${k}" ${dd[s.id]?'checked':''}><span style="${dd[s.id]?'text-decoration:line-through':''}">${ex(s.t)}</span></label>`).join('')}</div>`};
+/* পুনরাবৃত্ত কাজের পরের নির্ধারিত দিন (আজ থেকে গুনে) */
+const nxl=t=>{const n=new Date();for(let i=0;i<=400;i++){const d=new Date(n);d.setDate(d.getDate()+i);if(due(t,d))return i==0?'আজ':i==1?'আগামীকাল':bn(d.getDate())+' '+MON[d.getMonth()]}return ''};
 const rowT=(t,k,late)=>{const dn_=(S.done[k]||{})[t.id],L=t.subs||[],dd=((S.sd||{})[k]||{})[t.id]||{},sc=L.filter(s=>dd[s.id]).length;
-return `<div class="tk"><div class="row"><label style="display:flex;gap:10px;align-items:center;${dn_?'color:var(--m);text-decoration:line-through':''}"><input type="checkbox" class="chk" data-a="task" data-i="${t.id}" data-k="${k}" ${dn_?'checked':''}>${ex(t.title)}</label><span class="m" style="display:flex;align-items:center;gap:2px;flex-wrap:wrap;justify-content:flex-end">${[t.time?tf(t.time):'',late&&t.type=='once'?'':lbl(t),L.length?'উপকাজ '+bn(sc)+'/'+bn(L.length):''].filter(Boolean).join(' · ')}${bp(t)}${late?(t.type=='once'?`<button class="x ed" data-a="resched" data-i="${t.id}" aria-label="আজকের কাজে নিন" title="আজকের কাজে নিন">↪</button>`:'')+`<button class="x" data-a="skip" data-i="${t.id}" data-k="${k}" aria-label="বাদ দিন" title="বাদ দিন">✕</button>`:`<button class="x ed" data-a="edit" data-i="${t.id}" aria-label="এডিট" title="এডিট">✎</button>`}</span></div>${subs(t,k)}</div>`};
+return `<div class="tk"><div class="row"><label style="display:flex;gap:10px;align-items:center;${dn_?'color:var(--m)':''}"><input type="checkbox" class="chk" data-a="task" data-i="${t.id}" data-k="${k}" ${dn_?'checked':''}><span style="${dn_?'text-decoration:line-through':''}">${ex(t.title)}</span></label><span class="m" style="display:flex;align-items:center;gap:2px;flex-wrap:wrap;justify-content:flex-end">${[t.time?tf(t.time):'',late&&t.type=='once'?'':lbl(t),L.length?'উপকাজ '+bn(sc)+'/'+bn(L.length):''].filter(Boolean).join(' · ')}${bp(t)}${late?(t.type=='once'?`<button class="x ed" data-a="resched" data-i="${t.id}" aria-label="আজকের কাজে নিন" title="আজকের কাজে নিন">↪</button><button class="x" data-a="skip" data-i="${t.id}" data-k="${k}" aria-label="বাদ দিন" title="বাদ দিন">✕</button>`:(()=>{const nx=nxl(t);return nx?`<button type="button" class="g nx" data-a="nextt" data-i="${t.id}" title="এই কাজের বাকি পড়া সব দিন বাদ দিয়ে পরের বারে যান">পরের বার: ${nx} ⏭</button>`:`<button class="x" data-a="skip" data-i="${t.id}" data-k="${k}" aria-label="বাদ দিন" title="বাদ দিন">✕</button>`})()):`<button class="x ed" data-a="edit" data-i="${t.id}" aria-label="এডিট" title="এডিট">✎</button>`}</span></div>${subs(t,k)}</div>`};
 /* যে দিন পার হয়ে গেছে অথচ কাজ শেষ হয়নি (একবারের কাজ শুরুর দিন থেকে; পুনরাবৃত্ত কাজ নতুন সংস্করণ চালুর দিন থেকে, সর্বোচ্চ ৩০ দিন) */
 function overdue(now){const T=key(now),out=[],dn=S.done||{},sk=S.skip||{};
 S.tasks.forEach(t=>{if(!t.start)return;const miss=k=>!(dn[k]||{})[t.id]&&!(sk[k]||{})[t.id];
 if(t.type=='once'){if(t.start<T&&miss(t.start))out.push({t,k:t.start});return}
 for(let i=1;i<=30;i++){const d=new Date(now);d.setDate(d.getDate()-i);const k=key(d);if(k<S.ovFrom||k<t.start)break;if(due(t,d)&&miss(k))out.push({t,k})}});
 return out.sort((a,b)=>a.k<b.k?-1:a.k>b.k?1:byTime(a.t,b.t))}
-function render(){const now=new Date(),K=key(now);if(!S.ovFrom){S.ovFrom=K;save()}const et=E!=null?S.tasks.find(t=>t.id==E):null;if(E!=null&&!et)E=null;const fv=et||{title:'',start:key(now),type:'once',n:3,time:'',subs:[]},sel=v=>fv.type==v?' selected':'';root.dataset.t=S.theme||0;root.dataset.d=S.dark||0;
+function render(){const sy=window.scrollY,now=new Date(),K=key(now);if(!S.ovFrom){S.ovFrom=K;save()}const et=E!=null?S.tasks.find(t=>t.id==E):null;if(E!=null&&!et)E=null;const fv=et||{title:'',start:key(now),type:'once',n:3,time:'',subs:[]},sel=v=>fv.type==v?' selected':'';root.dataset.t=S.theme||0;root.dataset.d=S.dark||0;
 const tt=S.tasks.filter(t=>due(t,now)).sort(byTime),dn=tt.filter(t=>(S.done[K]||{})[t.id]),pct=tt.length?Math.round(dn.length/tt.length*100):0;
 const week=Array.from({length:7},(_,i)=>{const d=new Date(now);d.setDate(d.getDate()+i);const L=S.tasks.filter(t=>due(t,d)).sort(byTime);return{d,L}});
 const od=overdue(now);let odH='',last='';od.forEach(({t,k})=>{if(k!=last){last=k;const d=new Date(k+'T00:00');odH+=`<div class="spt">${DAY[d.getDay()]} · ${bn(d.getDate())} ${MON[d.getMonth()]} ${bn(d.getFullYear())}</div>`}odH+=rowT(t,k,true)});
@@ -226,13 +237,14 @@ ${et?`<div class="ebn">✎ ${ex(et.title)}<button type="button" class="x" data-a
 <section class="card wide c4"><h2>সব কাজ <span class="pill">${bn(S.tasks.length)} টি</span></h2>${S.tasks.length?S.tasks.map(t=>`<div class="row"><span>${ex(t.title)}<span class="m"> · ${t.time?tf(t.time)+' · ':''}${t.type=='once'?dt(t):lbl(t)+' · শুরু '+dt(t)}${(t.subs||[]).length?' · উপকাজ '+bn(t.subs.length)+' টি':''}${bp(t)}</span></span><span style="display:flex;flex:none"><button class="x ed" data-a="edit" data-i="${t.id}" aria-label="এডিট" title="এডিট">✎</button><button class="x" data-a="del" data-i="${t.id}" aria-label="মুছুন">✕</button></span></div>`).join(''):'<div class="m">এখনো কোনো কাজ যোগ করা হয়নি।</div>'}</section>
 <section class="card c5"><h2>পরিসংখ্যান</h2><div class="st"><div><div class="m">আজ সম্পন্ন</div><b>${bn(pct)}%</b></div><div><div class="m">টানা পূর্ণ দিন</div><b>${bn(streak(now))}</b></div></div><div class="row"><span>মোট কাজ</span><b>${bn(S.tasks.length)} টি</b></div></section>
 <section class="card c6"><h2>আগামী ৭ দিন</h2>${week.map(({d,L},i)=>`<div class="spt">${i==0?'আজ':i==1?'আগামীকাল':DAY[d.getDay()]} · ${bn(d.getDate())} ${MON[d.getMonth()]}</div>${L.length?L.map(t=>`<div class="sr"><span>${ex(t.title)}</span><span>${t.time?tf(t.time):''}</span></div>`).join(''):'<div class="sr"><span>কোনো কাজ নেই</span><span></span></div>'}`).join('')}</section>
-</div>`}
+</div>`;if(sy>0)window.scrollTo(0,sy);$.classList.add('rd')}
 $.addEventListener('click',e=>{const bt=e.target.closest('[data-a]');if(!bt||bt.type=='checkbox')return;const a=bt.dataset.a,i=bt.dataset.i;
 if(a=='edit'){E=+i;render();const f=document.getElementById('tf');if(f){f.scrollIntoView({behavior:'smooth',block:'center'});const n=f.elements.title;if(n)n.focus()}return}
 if(a=='cancel'){E=null;render();return}
 if(a=='subadd'){addSub();return}
 if(a=='subdel'){const c=bt.closest('.sc');if(c)c.remove();return}
 if(a=='skip'){const k=bt.dataset.k;(S.skip[k]=S.skip[k]||{})[i]=true;save();render();return}
+if(a=='nextt'){overdue(new Date()).filter(x=>x.t.id==i).forEach(({k})=>{(S.skip[k]=S.skip[k]||{})[i]=true});save();render();return}
 if(a=='resched'){const t=S.tasks.find(x=>x.id==i);if(t){t.start=key(new Date());if(t.bag){const b=(S.bags||[]).find(x=>x.id===t.bag);if(b&&typeof b.dt==='string')b.dt=t.start}save();render()}return}
 if(a=='skipall'){if(confirm('সব বাকি কাজ বাদ দেবেন? (খাতা থেকে মুছে যাবে)')){overdue(new Date()).forEach(({t,k})=>{(S.skip[k]=S.skip[k]||{})[t.id]=true});save();render()}return}
 if(a=='del'&&confirm('কাজটি মুছে ফেলবেন?')){if(E==i)E=null;const dt0=S.tasks.find(t=>t.id==i);if(dt0&&dt0.bag){const bb=(S.bags||[]).find(x=>x.id===dt0.bag);if(bb)bb.dt=''}S.tasks=S.tasks.filter(t=>t.id!=i);save();render()}});
@@ -257,6 +269,6 @@ const v={title:(f.get('title')||'').trim(),type:f.get('type'),n:+f.get('n')||1,t
 const cur=E!=null?S.tasks.find(t=>t.id==E):null;
 if(cur){Object.assign(cur,v);if(cur.bag){const b=(S.bags||[]).find(x=>x.id===cur.bag);if(b&&typeof b.dt==='string')b.dt=v.start}E=null}
 else S.tasks.push(Object.assign({id:Date.now()},v));
-save();const was=cur;render();if(!was){const ti=document.querySelector('#tf [name=title]');if(ti)ti.focus()}});
+save();const was=cur;render();if(!was){const ti=document.querySelector('#tf [name=title]');if(ti)ti.focus({preventScroll:true})}});
 render();
 </script><script src="trip.js"></script><script src="suggest.js"></script><script src="pwa.js"></script></body></html>
