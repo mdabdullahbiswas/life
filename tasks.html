@@ -65,6 +65,8 @@ form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}form input{flex:1 1 110
 .st div{padding:10px;border-radius:14px;background:var(--b)}
 .x{background:none;border:0;box-shadow:none;color:var(--m);padding:4px 8px}
 .x:hover{background:none;box-shadow:none;color:#d33}
+.x.ed:hover{color:var(--g)}
+.ebn{display:flex;align-items:center;gap:8px;margin-top:12px;padding:8px 12px;border-radius:12px;background:color-mix(in srgb,var(--a) 14%,transparent);border:1px solid var(--cb);font-size:13px;font-weight:600}
 .dots{display:grid;grid-template-columns:repeat(auto-fill,minmax(32px,1fr));gap:6px;margin-top:10px}
 .dots b{display:grid;place-items:center;height:32px;border-radius:9px;background:var(--b);font-size:12px;font-weight:500;cursor:pointer;transition:.2s}
 .dots b:hover{transform:scale(1.1)}
@@ -117,7 +119,11 @@ const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
 const $=document.getElementById('app'),root=document.documentElement;
 let S={theme:0,dark:0,tasks:[],done:{}};
 try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
-const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
+/* শুধু এই পেজের নিজের কী (OWN) লিখি; থিম, ভাষা ইত্যাদি সেটিং সর্বশেষ সংরক্ষিত অবস্থা থেকেই থাকে */
+const OWN=['tasks','done','bags'];
+const save=()=>{try{let c={};try{c=JSON.parse(localStorage.getItem('dl')||'{}')}catch(e){}if(!c||typeof c!=='object'||Array.isArray(c))c={};OWN.forEach(k=>{if(S[k]!==undefined)c[k]=S[k]});localStorage.setItem('dl',JSON.stringify(c))}catch(e){}};
+const ex=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let E=null; /* এডিট করা কাজের id */
 const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const DAY=['রবিবার','সোমবার','মঙ্গলবার','বুধবার','বৃহস্পতিবার','শুক্রবার','শনিবার'];
 const MON=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
@@ -132,22 +138,29 @@ const byTime=(a,b)=>(a.time||'99:99').localeCompare(b.time||'99:99');
 function streak(now){let n=0;for(let i=0;i<365;i++){const d=new Date(now);d.setDate(d.getDate()-i);const L=S.tasks.filter(t=>due(t,d));
 if(!L.length){if(i==0)continue;else break}
 const dn=L.filter(t=>(S.done[key(d)]||{})[t.id]).length;if(dn==L.length)n++;else if(i==0)continue;else break}return n}
-function render(){const now=new Date(),K=key(now);root.dataset.t=S.theme||0;root.dataset.d=S.dark||0;
+function render(){const now=new Date(),K=key(now);const et=E!=null?S.tasks.find(t=>t.id==E):null;if(E!=null&&!et)E=null;const fv=et||{title:'',start:key(now),type:'once',n:3,time:''},sel=v=>fv.type==v?' selected':'';root.dataset.t=S.theme||0;root.dataset.d=S.dark||0;
 const tt=S.tasks.filter(t=>due(t,now)).sort(byTime),dn=tt.filter(t=>(S.done[K]||{})[t.id]),pct=tt.length?Math.round(dn.length/tt.length*100):0;
 const week=Array.from({length:7},(_,i)=>{const d=new Date(now);d.setDate(d.getDate()+i);const L=S.tasks.filter(t=>due(t,d)).sort(byTime);return{d,L}});
 $.innerHTML=`<header><div><h1>✅ কাজ</h1><div class="sub">${DAY[now.getDay()]}, ${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())}</div></div></header>
 <div class="grid"><section class="card wide"><h2>আজকের কাজ <span class="pill">${bn(dn.length)}/${bn(tt.length)}</span></h2>
-${tt.length?tt.map(t=>`<div class="row"><label style="display:flex;gap:10px;align-items:center;${(S.done[K]||{})[t.id]?'opacity:.55;text-decoration:line-through':''}"><input type="checkbox" class="chk" data-a="task" data-i="${t.id}" ${(S.done[K]||{})[t.id]?'checked':''}>${t.title}</label><span class="m">${t.time?bn(t.time)+' · ':''}${lbl(t)}${bp(t)}</span></div>`).join(''):'<div class="m">আজ কোনো কাজ নেই। নিচে নতুন কাজ যোগ করুন।</div>'}
+${tt.length?tt.map(t=>`<div class="row"><label style="display:flex;gap:10px;align-items:center;${(S.done[K]||{})[t.id]?'opacity:.55;text-decoration:line-through':''}"><input type="checkbox" class="chk" data-a="task" data-i="${t.id}" ${(S.done[K]||{})[t.id]?'checked':''}>${ex(t.title)}</label><span class="m" style="display:flex;align-items:center;gap:2px">${t.time?bn(t.time)+' · ':''}${lbl(t)}${bp(t)}<button class="x ed" data-a="edit" data-i="${t.id}" aria-label="এডিট" title="এডিট">✎</button></span></div>`).join(''):'<div class="m">আজ কোনো কাজ নেই। নিচে নতুন কাজ যোগ করুন।</div>'}
 <div class="bar"><i style="width:${pct}%"></i></div>
 ${tt.length&&dn.length==tt.length?'<div class="okb">মাশাআল্লাহ! আজকের সব কাজ শেষ ✓</div>':''}
-<form data-f="task"><input name="title" placeholder="কাজের নাম" required style="flex:2 1 160px"><input name="date" type="date" value="${key(new Date())}" title="কোন দিনের কাজ" style="flex:1 1 140px"><select name="type" title="পুনরাবৃত্তি" onchange="this.form.n.style.display=this.value=='every'?'':'none'"><option value="once">শুধু এই দিন (পুনরাবৃত্তি নেই)</option><option value="daily">প্রতিদিন</option><option value="weekly">প্রতি সপ্তাহে</option><option value="every">নির্দিষ্ট দিন পর পর</option><option value="monthly">প্রতি মাসে</option><option value="yearly">প্রতি বছর</option></select><input name="n" type="number" min="1" value="3" title="কত দিন পর পর" style="display:none;flex:0 1 80px"><input name="time" type="time"><button>যোগ করুন</button></form></section>
-<section class="card wide"><h2>সব কাজ <span class="pill">${bn(S.tasks.length)} টি</span></h2>${S.tasks.length?S.tasks.map(t=>`<div class="row"><span>${t.title}<span class="m"> · ${t.time?bn(t.time)+' · ':''}${t.type=='once'?dt(t):lbl(t)+' · শুরু '+dt(t)}${bp(t)}</span></span><button class="x" data-a="del" data-i="${t.id}">✕</button></div>`).join(''):'<div class="m">এখনো কোনো কাজ যোগ করা হয়নি।</div>'}</section>
+${et?`<div class="ebn">✎ কাজ এডিট<button type="button" class="x" data-a="cancel" style="margin-left:auto">✕</button></div>`:''}<form data-f="task" id="tf"><input name="title" placeholder="কাজের নাম" value="${ex(fv.title)}" required style="flex:2 1 160px"><input name="date" type="date" value="${ex(fv.start)}" title="কোন দিনের কাজ" style="flex:1 1 140px"><select name="type" title="পুনরাবৃত্তি" onchange="this.form.n.style.display=this.value=='every'?'':'none'"><option value="once"${sel('once')}>শুধু এই দিন (পুনরাবৃত্তি নেই)</option><option value="daily"${sel('daily')}>প্রতিদিন</option><option value="weekly"${sel('weekly')}>প্রতি সপ্তাহে</option><option value="every"${sel('every')}>নির্দিষ্ট দিন পর পর</option><option value="monthly"${sel('monthly')}>প্রতি মাসে</option><option value="yearly"${sel('yearly')}>প্রতি বছর</option></select><input name="n" type="number" min="1" value="${ex(fv.n||3)}" title="কত দিন পর পর" style="display:${fv.type=='every'?'':'none'};flex:0 1 80px"><input name="time" type="time" value="${ex(fv.time||'')}"><button>${et?'আপডেট করুন':'যোগ করুন'}</button>${et?'<button type="button" class="g" data-a="cancel">বাতিল</button>':''}</form></section>
+<section class="card wide"><h2>সব কাজ <span class="pill">${bn(S.tasks.length)} টি</span></h2>${S.tasks.length?S.tasks.map(t=>`<div class="row"><span>${ex(t.title)}<span class="m"> · ${t.time?bn(t.time)+' · ':''}${t.type=='once'?dt(t):lbl(t)+' · শুরু '+dt(t)}${bp(t)}</span></span><span style="display:flex;flex:none"><button class="x ed" data-a="edit" data-i="${t.id}" aria-label="এডিট" title="এডিট">✎</button><button class="x" data-a="del" data-i="${t.id}" aria-label="মুছুন">✕</button></span></div>`).join(''):'<div class="m">এখনো কোনো কাজ যোগ করা হয়নি।</div>'}</section>
 <section class="card"><h2>পরিসংখ্যান</h2><div class="st"><div><div class="m">আজ সম্পন্ন</div><b>${bn(pct)}%</b></div><div><div class="m">টানা পূর্ণ দিন</div><b>${bn(streak(now))}</b></div></div><div class="row"><span>মোট কাজ</span><b>${bn(S.tasks.length)} টি</b></div></section>
-<section class="card"><h2>আগামী ৭ দিন</h2>${week.map(({d,L},i)=>`<div class="spt">${i==0?'আজ':i==1?'আগামীকাল':DAY[d.getDay()]} · ${bn(d.getDate())} ${MON[d.getMonth()]}</div>${L.length?L.map(t=>`<div class="sr"><span>${t.title}</span><span>${t.time?bn(t.time):''}</span></div>`).join(''):'<div class="sr"><span>কোনো কাজ নেই</span><span></span></div>'}`).join('')}</section>
+<section class="card"><h2>আগামী ৭ দিন</h2>${week.map(({d,L},i)=>`<div class="spt">${i==0?'আজ':i==1?'আগামীকাল':DAY[d.getDay()]} · ${bn(d.getDate())} ${MON[d.getMonth()]}</div>${L.length?L.map(t=>`<div class="sr"><span>${ex(t.title)}</span><span>${t.time?bn(t.time):''}</span></div>`).join(''):'<div class="sr"><span>কোনো কাজ নেই</span><span></span></div>'}`).join('')}</section>
 </div>`}
-$.addEventListener('click',e=>{const a=e.target.dataset.a,i=e.target.dataset.i;if(a=='del'&&confirm('কাজটি মুছে ফেলবেন?')){const dt0=S.tasks.find(t=>t.id==i);if(dt0&&dt0.bag){const bb=(S.bags||[]).find(x=>x.id===dt0.bag);if(bb)bb.dt=''}S.tasks=S.tasks.filter(t=>t.id!=i);save();render()}});
+$.addEventListener('click',e=>{const bt=e.target.closest('[data-a]');if(!bt||bt.type=='checkbox')return;const a=bt.dataset.a,i=bt.dataset.i;
+if(a=='edit'){E=+i;render();const f=document.getElementById('tf');if(f){f.scrollIntoView({behavior:'smooth',block:'center'});const n=f.elements.title;if(n)n.focus()}return}
+if(a=='cancel'){E=null;render();return}
+if(a=='del'&&confirm('কাজটি মুছে ফেলবেন?')){if(E==i)E=null;const dt0=S.tasks.find(t=>t.id==i);if(dt0&&dt0.bag){const bb=(S.bags||[]).find(x=>x.id===dt0.bag);if(bb)bb.dt=''}S.tasks=S.tasks.filter(t=>t.id!=i);save();render()}});
 $.addEventListener('change',e=>{if(e.target.dataset.a!='task')return;const K=key(new Date());(S.done[K]=S.done[K]||{})[e.target.dataset.i]=e.target.checked;save();render()});
 $.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);
-S.tasks.push({id:Date.now(),title:f.get('title'),type:f.get('type'),n:+f.get('n')||1,time:f.get('time'),start:f.get('date')||key(new Date())});save();render()});
+const v={title:(f.get('title')||'').trim(),type:f.get('type'),n:+f.get('n')||1,time:f.get('time'),start:f.get('date')||key(new Date())};if(!v.title)return;
+const cur=E!=null?S.tasks.find(t=>t.id==E):null;
+if(cur){Object.assign(cur,v);if(cur.bag){const b=(S.bags||[]).find(x=>x.id===cur.bag);if(b&&typeof b.dt==='string')b.dt=v.start}E=null}
+else S.tasks.push(Object.assign({id:Date.now()},v));
+save();render()});
 render();
 </script><script src="trip.js"></script><script src="suggest.js"></script><script src="pwa.js"></script></body></html>
