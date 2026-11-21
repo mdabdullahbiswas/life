@@ -32,7 +32,7 @@ async function checkDigest(){
     for(const k of ks){
       const x=HDG.build(k,m,now);
       if(x)await self.registration.showNotification(x.t,{body:x.b,icon:'icon-512.png',badge:'badge-96.png',tag:'hayat-digest-'+k,data:{url:x.url}});
-      sent[k]=K}
+      sent[k]=HDG.stamp(k,m,now)}
     if(ks.length)await dbPut('dgsent',sent);
   }catch(e){}}
 const checkAll=()=>Promise.all([checkSched().catch(()=>{}),checkDigest()]);
