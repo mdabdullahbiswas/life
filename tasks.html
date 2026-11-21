@@ -262,7 +262,7 @@ ${dgCard()}
 $.addEventListener('click',e=>{const bt=e.target.closest('[data-a]');if(!bt||bt.type=='checkbox')return;const a=bt.dataset.a,i=bt.dataset.i;
 if(a=='pushon'){bt.disabled=true;bt.textContent='…';(window.hayatPush?window.hayatPush.enable():Promise.reject(new Error('push.js লোড হয়নি — পেজ রিফ্রেশ করুন'))).then(()=>{render();alert('✓ এই ডিভাইসে পুশ চালু হয়েছে। "পুশ পরীক্ষা" চেপে দেখে নিন।')}).catch(e=>{alert(String(e&&e.message||e));render()});return}
 if(a=='pushoff'){(window.hayatPush?window.hayatPush.disable():Promise.resolve()).then(render);return}
-if(a=='pushtest'){bt.disabled=true;window.hayatPush.test(bt.dataset.k).then(()=>{bt.disabled=false;alert('পরীক্ষার পুশ পাঠানো হয়েছে — কয়েক সেকেন্ডে নোটিফিকেশন আসবে।')}).catch(e=>{bt.disabled=false;alert(String(e&&e.message||e))});return}
+if(a=='pushtest'){bt.disabled=true;window.hayatPush.test(bt.dataset.k).then(r=>{bt.disabled=false;alert('পরীক্ষার পুশ পাঠানো হয়েছে — কয়েক সেকেন্ডে আসবে।'+(r&&r.info?'\n\n'+r.info:'')+(r&&r.warn?'\n⚠ '+r.warn:''))}).catch(e=>{bt.disabled=false;alert(String(e&&e.message||e))});return}
 if(a=='dgon'){setDG(o=>{o.dg=Object.assign({},o.dg,{on:DGV().on?0:1})});render();return}
 if(a=='dgperm'){if(!window.Notification){alert(TL('এই ব্রাউজারে নোটিফিকেশন সমর্থিত নয়'));return}
 Notification.requestPermission().then(p=>{if(p==='granted')setDG(o=>{o.notif=true});else alert(TL('অনুমতি দেওয়া হয়নি'));render()});return}
