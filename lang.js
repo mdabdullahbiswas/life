@@ -151,7 +151,28 @@ const D={
 'এই ব্রাউজারে শেয়ার নেই, ছবি সেভ হয়েছে':'Sharing is not available in this browser; image saved',
 'আমাদের হিসাব বিবরণী পাঠালাম':'I\u2019ve sent our account statement',
 'আমাদের লেনদেনের হিসাব':'Our transaction summary',
-'আলহামদুলিল্লাহ, হিসাব মিটে গেছে ✓':'Alhamdulillah, the account is settled ✓'
+'আলহামদুলিল্লাহ, হিসাব মিটে গেছে ✓':'Alhamdulillah, the account is settled ✓',
+/* সেটিং পেজ */
+'পরবর্তী নামাজের কাউন্টডাউন':'Next prayer countdown','নফল নামাজসহ':'Including voluntary prayers','শুধু নফল রোজার দিনে আসে':'Shows only on voluntary fast days','হিসাবের সারাংশ':'Account summary',
+'শিটে সংরক্ষিত':'Saved to Sheet','✅ তথ্য গুগল শিটে সিঙ্ক হচ্ছে। শেষ সিঙ্ক:':'✅ Data is syncing to Google Sheet. Last sync:','এইমাত্র':'just now','এছাড়া ব্যাকআপ ফাইলও নিয়ে রাখতে পারেন।':'You can also keep a backup file.',
+'ব্যাকআপ নেই':'No backup','ব্যাকআপ পুরোনো':'Backup is old','ব্যাকআপ নিরাপদ':'Backup is safe','⚠️ এখনো ব্যাকআপ নেওয়া হয়নি। ব্রাউজারের ডেটা মুছলে সব হারাবে।':'⚠️ No backup has been taken yet. If the browser data is cleared, everything will be lost.','✅ শেষ ব্যাকআপ আজ।':'✅ Last backup: today.',
+'আপনার তথ্য':'Your data','আকার':'Size','🔔 পরীক্ষা করুন':'🔔 Send a test','অ্যাপ':'App','✅ অ্যাপ হিসেবে ইনস্টল করা আছে':'✅ Installed as an app',
+'হোম স্ক্রিন থেকে এক ট্যাপে খুলুন, অফলাইনেও চলবে।':'Open it from your home screen in one tap; it works offline too.','📲 অ্যাপ ইনস্টল করুন':'📲 Install app',
+'iPhone-এ Safari-র শেয়ার বাটন থেকে "হোম স্ক্রিনে যোগ করুন" চাপুন। Android-এ Chrome-এর মেনু থেকে "ইনস্টল" করুন।':'On iPhone, tap Safari\u2019s Share button, then \u201cAdd to Home Screen\u201d. On Android, open Chrome\u2019s menu and choose \u201cInstall\u201d.',
+'🔄 আপডেট ও ক্যাশ পরিষ্কার':'🔄 Update & clear cache','আপডেট ও ক্যাশ পরিষ্কার':'Update & clear cache','নতুন সংস্করণ না এলে এটি চাপুন। আপনার তথ্য মুছবে না।':'If the new version doesn\u2019t appear, tap this. Your data won\u2019t be deleted.',
+'হোম পেজ':'Home page','কোন কার্ড দেখাবে আর কোন ক্রমে, তা ঠিক করুন।':'Choose which cards to show and in what order.','উপরে':'Up','নিচে':'Down','↺ আগের মতো করুন':'↺ Reset to default',
+'✅ শেষ সিঙ্ক:':'✅ Last sync:','এখনো সিঙ্ক হয়নি':'Not synced yet','চালু':'On',
+'ফোন ও কম্পিউটারের তথ্য গুগল শিটের মাধ্যমে মিলিয়ে রাখে। ইন্টারনেট না থাকলেও অ্যাপ চলবে, সংযোগ ফিরলে নিজে সিঙ্ক হবে। একই তথ্য দুই জায়গায় বদলালে সর্বশেষ বদলটি জেতে।':'Keeps your phone and computer data in step through Google Sheets. The app keeps working without internet and syncs by itself when the connection returns. If the same data is changed in two places, the latest change wins.',
+'গোপন টোকেন':'Secret token','সংরক্ষণ ও সংযোগ':'Save & connect','🔄 এখনই সিঙ্ক':'🔄 Sync now','সংযোগ বিচ্ছিন্ন করুন':'Disconnect',
+'সব তথ্য শুধু এই ব্রাউজারে জমা থাকে। নিয়মিত ব্যাকআপ নিয়ে রাখুন।':'All data is stored only in this browser. Please back up regularly.',
+'ব্যাকআপ নামানো হয়েছে ✓':'Backup downloaded ✓','নোটিফিকেশন ঠিকমতো কাজ করছে ✓':'Notifications are working ✓','পাঠানো যায়নি':'Could not send',
+'সব তথ্য (নামাজ, কাজ, হিসাব, কাযা, সেটিং) এই ডিভাইস থেকে মুছে যাবে।':'All data (prayers, tasks, accounts, qaza, settings) will be erased from this device.',
+'সিঙ্ক চালু থাকলে শিটের তথ্য থেকে যাবে এবং আবার নেমে আসবে।':'If sync is on, the Sheet data will remain and come back down again.','নিশ্চিত?':'Are you sure?',
+'ক্যাশ মুছে অ্যাপ নতুন করে লোড হবে। তথ্য মুছবে না। চালিয়ে যাবেন?':'The cache will be cleared and the app will reload. Your data won\u2019t be deleted. Continue?',
+'sync.js লোড হয়নি — ফাইলটি আপলোড করেছেন?':'sync.js did not load \u2014 did you upload the file?','sync.js লোড হয়নি — ফাইলটি আপলোড করেছেন? তারপর "আপডেট ও ক্যাশ পরিষ্কার" চাপুন':'sync.js did not load \u2014 did you upload the file? Then tap \u201cUpdate & clear cache\u201d',
+'সিঙ্ক হচ্ছে…':'Syncing…','সিঙ্ক হয়েছে ✓':'Synced ✓','সিঙ্ক হয়নি:':'Sync failed:',
+'এই ডিভাইসে সিঙ্ক বন্ধ হবে। শিটের তথ্য ও এই ডিভাইসের তথ্য থেকে যাবে।':'Sync will stop on this device. The Sheet data and this device\u2019s data will both remain.',
+'অনুমতি দেওয়া হয়নি':'Permission was not granted','সংযোগ হচ্ছে…':'Connecting…','সংযোগ সফল ✓':'Connected ✓','সংযোগ হয়নি:':'Connection failed:'
 };
 /* অক্ষরের বদলে শব্দ — গণনার পরে প্রযোজ্য */
 const U={'ঘণ্টা':'Hours','মিনিট':'Minutes','সেকেন্ড':'Seconds','থেকে':'from','পর্যন্ত':'until','ভোর':'Dawn','সকাল':'Morning','দুপুর':'Noon','বিকাল':'Afternoon','সন্ধ্যা':'Evening','রাত':'Night','টি':'items','মোট':'Total'};
@@ -167,6 +188,13 @@ function tm(h,m,p){h=+num(h);m=num(m);let ap;
  return h+':'+m+' '+ap}
 function tr(s){
  if(!/[\u0980-\u09FF]/.test(s))return s;
+ /* সেটিং পেজ: সময়/সংখ্যা বসানো বাক্য */
+ const Pl=(n,w)=>(+num(n)===1?'1 '+w:num(n)+' '+w+'s');
+ s=s.replace(new RegExp('^(.+) দেখান$'),'Show $1');
+ s=s.replace(new RegExp('⚠️ শেষ ব্যাকআপ ('+BD+'+) দিন আগের। নতুন একটি নিন।','g'),(_,n)=>'⚠️ Your last backup was '+Pl(n,'day')+' ago. Please take a new one.');
+ s=s.replace(new RegExp('✅ শেষ ব্যাকআপ ('+BD+'+) দিন আগে।','g'),(_,n)=>'✅ Last backup: '+Pl(n,'day')+' ago.');
+ s=s.replace(new RegExp('('+BD+'+) মিনিট আগে','g'),'$1 min ago').replace(new RegExp('('+BD+'+) ঘণ্টা আগে','g'),'$1 h ago').replace(new RegExp('('+BD+'+) দিন আগে','g'),(_,n)=>Pl(n,'day')+' ago');
+ s=s.replace(new RegExp('('+BD+'+)টি বদল পাঠানো বাকি','g'),(_,n)=>(+num(n)===1?'1 change':num(n)+' changes')+' waiting to be sent');
  s=s.replace(new RegExp('আর ('+BD+'+) দিন বাকি','g'),'$1 days left');
  /* লেনদেনের খাতা: নাম/সংখ্যা বসানো বাক্য */
  const Nn=(n,one,many)=>(+num(n)===1?'1 '+one:num(n)+' '+many);
