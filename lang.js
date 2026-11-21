@@ -7,6 +7,7 @@ window.LANG=LANG;
 if(LANG!=='en'){window.L=s=>s;return}
 
 const D={
+'মাস':'Month','বছর':'Year',
 /* তাসবিহ */
 'তাসবিহ':'Tasbih','কোনটা কতবার পড়েছেন, এখানে লিখে রাখুন':'Log what you recited and how many times','আজকের মোট':'Today\u2019s total','সুবহানাল্লাহ':'SubhanAllah','আল্লাহু আকবার':'Allahu Akbar','ইস্তিগফার':'Istighfar','দরূদ শরীফ':'Durood Sharif','লা ইলাহা ইল্লাল্লাহ':'La ilaha illallah',
 'তাসবিহ / যিকিরের নাম':'Tasbih / dhikr name','তাসবিহের নাম':'Tasbih name','কতবার':'How many times','তারিখ':'Date','বার':'times','এডিট':'Edit','বাতিল':'Cancel','সংরক্ষণ করুন':'Save','এখনও কোনো এন্ট্রি নেই':'No entries yet',
