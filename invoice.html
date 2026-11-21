@@ -226,7 +226,9 @@ const ex=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;',
 const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const MON=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
 const bd=s=>s?bn(s.slice(8))+' '+MON[+s.slice(5,7)-1]+' '+bn(s.slice(0,4)):'-';
-const sd=s=>s?bn(s.slice(8))+' '+MON[+s.slice(5,7)-1].slice(0,3)+' '+bn(s.slice(2,4)):'-';
+const MON3=window.LANG==='en'?['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']:['জানু','ফেব্রু','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টে','অক্টো','নভে','ডিসে'];
+const sd=s=>s?bn(s.slice(8))+' '+MON3[+s.slice(5,7)-1]+' '+bn(s.slice(2,4)):'-';
+const TL=m=>(window.L||(x=>x))(m);   /* English মোডে হোয়াটসঅ্যাপ/শেয়ারের বার্তাও ইংরেজিতে যায় */
 /* s: +১ হলে "সে আমাকে আরও দেবে", −১ হলে কমবে। side 0 = আমি দিয়েছি, side 1 = সে দিয়েছে */
 /* এখন শুধু দুটি দিক: আমি দিলাম / সে দিল। owe ও repay পুরনো ডাটার জন্য রাখা — হিসাব একই, নামও একই দেখায় */
 const T={give:{l:'আমি দিলাম',h:'ধার বা তার জন্য খরচ',s:1,side:0},recv:{l:'সে দিল',h:'ধার, ফেরত বা আমার জন্য খরচ',s:-1,side:1},owe:{l:'সে দিল',h:'',s:-1,side:1},repay:{l:'আমি দিলাম',h:'',s:1,side:0}};
@@ -385,12 +387,14 @@ document.addEventListener('toggle',e=>{const d=e.target;if(d&&d.classList&&d.cla
 $('me').addEventListener('input',()=>{S.myName=$('me').value.trim();save();render()});
 
 /* ---------- শেয়ার ---------- */
-function summary(){
+function summary(){return TL(summary0())}
+function summary0(){
  const es=cyc().c.es,bal=cbal(cyc().c),me=S.myName?'\n— '+S.myName:'';
  const lines=es.slice(-15).map(e=>'• '+sd(e.d)+' — '+(e.n||'লেনদেন')+': '+(T[e.t].side?'আপনি দিয়েছেন ':'আমি দিয়েছি ')+fm(e.a));
  return 'আসসালামু আলাইকুম '+SEL+',\nআমাদের লেনদেনের হিসাব ('+bd(key(new Date()))+' পর্যন্ত):\n'+lines.join('\n')+'\n\n'+(bal>0?'মোট বাকি: আপনি আমাকে '+fm(bal)+' দেবেন।':bal<0?'মোট দেনা: আমি আপনাকে '+fm(-bal)+' দেব।':'আলহামদুলিল্লাহ, হিসাব মিটে গেছে ✓\nজাযাকাল্লাহু খাইরান 🤍')+me}
 /* হোয়াটসঅ্যাপের মেসেজ: মিটে গেলে ছোট দোয়া-ধন্যবাদ, না মিটলে সংক্ষিপ্ত হিসাব */
-function waMsg(){
+function waMsg(){return TL(waMsg0())}
+function waMsg0(){
  const b=cbal(cyc().c);
  if(b===0)return 'আলহামদুলিল্লাহ, হিসাব মিটে গেছে ✓\nজাযাকাল্লাহু খাইরান 🤍';
  return 'আসসালামু আলাইকুম '+SEL+',\nআমাদের হিসাব বিবরণী পাঠালাম।\n'+(b>0?'মোট বাকি: আপনি আমাকে '+fm(b)+' দেবেন।':'মোট দেনা: আমি আপনাকে '+fm(-b)+' দেব।')+(S.myName?'\n— '+S.myName:'')}
