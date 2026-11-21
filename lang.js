@@ -172,7 +172,9 @@ const D={
 'sync.js লোড হয়নি — ফাইলটি আপলোড করেছেন?':'sync.js did not load \u2014 did you upload the file?','sync.js লোড হয়নি — ফাইলটি আপলোড করেছেন? তারপর "আপডেট ও ক্যাশ পরিষ্কার" চাপুন':'sync.js did not load \u2014 did you upload the file? Then tap \u201cUpdate & clear cache\u201d',
 'সিঙ্ক হচ্ছে…':'Syncing…','সিঙ্ক হয়েছে ✓':'Synced ✓','সিঙ্ক হয়নি:':'Sync failed:',
 'এই ডিভাইসে সিঙ্ক বন্ধ হবে। শিটের তথ্য ও এই ডিভাইসের তথ্য থেকে যাবে।':'Sync will stop on this device. The Sheet data and this device\u2019s data will both remain.',
-'অনুমতি দেওয়া হয়নি':'Permission was not granted','সংযোগ হচ্ছে…':'Connecting…','সংযোগ সফল ✓':'Connected ✓','সংযোগ হয়নি:':'Connection failed:'
+'অনুমতি দেওয়া হয়নি':'Permission was not granted',
+/* হেডার মেনু */
+'খাতা':'Ledger','ব্যাগ':'Bags','প্রধান মেনু':'Main menu','সংযোগ হচ্ছে…':'Connecting…','সংযোগ সফল ✓':'Connected ✓','সংযোগ হয়নি:':'Connection failed:'
 };
 /* অক্ষরের বদলে শব্দ — গণনার পরে প্রযোজ্য */
 const U={'ঘণ্টা':'Hours','মিনিট':'Minutes','সেকেন্ড':'Seconds','থেকে':'from','পর্যন্ত':'until','ভোর':'Dawn','সকাল':'Morning','দুপুর':'Noon','বিকাল':'Afternoon','সন্ধ্যা':'Evening','রাত':'Night','টি':'items','মোট':'Total'};
