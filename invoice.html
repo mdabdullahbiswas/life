@@ -364,10 +364,15 @@ function summary(){
  const es=entsOf(SEL),bal=r2(es.reduce((s,e)=>s+T[e.t].s*e.a,0)),me=S.myName?'\n— '+S.myName:'';
  const lines=es.slice(-15).map(e=>'• '+sd(e.d)+' — '+(e.n||'লেনদেন')+': '+(T[e.t].side?'আপনি দিয়েছেন ':'আমি দিয়েছি ')+fm(e.a));
  return 'আসসালামু আলাইকুম '+SEL+',\nআমাদের লেনদেনের হিসাব ('+bd(key(new Date()))+' পর্যন্ত):\n'+lines.join('\n')+'\n\n'+(bal>0?'মোট বাকি: আপনি আমাকে '+fm(bal)+' দেবেন।':bal<0?'মোট দেনা: আমি আপনাকে '+fm(-bal)+' দেব।':'আলহামদুলিল্লাহ, হিসাব মিটে গেছে ✓\nজাযাকাল্লাহু খাইরান 🤍')+me}
+/* হোয়াটসঅ্যাপের মেসেজ: মিটে গেলে ছোট দোয়া-ধন্যবাদ, না মিটলে সংক্ষিপ্ত হিসাব */
+function waMsg(){
+ const b=(people()[SEL]||{}).bal||0;
+ if(b===0)return 'আলহামদুলিল্লাহ, হিসাব মিটে গেছে ✓\nজাযাকাল্লাহু খাইরান 🤍';
+ return 'আসসালামু আলাইকুম '+SEL+',\nআমাদের হিসাব বিবরণী পাঠালাম।\n'+(b>0?'মোট বাকি: আপনি আমাকে '+fm(b)+' দেবেন।':'মোট দেনা: আমি আপনাকে '+fm(-b)+' দেব।')+(S.myName?'\n— '+S.myName:'')}
 function snap(then){
  if(!window.html2canvas){toast('ছবির টুল লোড হয়নি, ইন্টারনেট দেখুন');return}
  const nm='Hisab_'+SEL+'_'+key(new Date())+'.jpg';toast('ছবি বানানো হচ্ছে…');
- html2canvas($('paper'),{scale:2,backgroundColor:'#fffdf8'}).then(c=>c.toBlob(b=>then(b,nm),'image/jpeg',.92)).catch(()=>toast('ছবি বানানো যায়নি'))}
+ html2canvas($('paper'),{scale:2,backgroundColor:'#fffdf8'}).then(c=>c.toBlob(b=>then(b,nm,c),'image/jpeg',.92)).catch(()=>toast('ছবি বানানো যায়নি'))}
 const saveBlob=(b,nm)=>{const a=document.createElement('a');a.download=nm;a.href=URL.createObjectURL(b);a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
 function dl(name,type,data){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 
@@ -388,8 +393,18 @@ document.addEventListener('click',e=>{
  else if(a==='settle'){const es=entsOf(SEL),bal=r2(es.reduce((s,v)=>s+T[v.t].s*v.a,0));if(!bal)return;
   if(!confirm(bal>0?SEL+' পুরো '+fm(bal)+' ফেরত দিয়েছে — মিটিয়ে দেবেন?':'আপনি '+SEL+'-কে পুরো '+fm(-bal)+' ফেরত দিয়েছেন — মিটিয়ে দেবেন?'))return;
   S.led.push({id:Date.now(),p:SEL,t:bal>0?'recv':'give',a:Math.abs(bal),d:key(new Date()),n:'হিসাব মিটল'});save();render();toast('হিসাব মিটে গেছে ✓')}
- else if(a==='wa'){const ph=phoneOf(SEL);if(!ph){toast('এই মানুষের ফোন নম্বর দেওয়া নেই — ফর্মে ফোন লিখে একটা লেনদেন সেভ করুন');return}
-  window.open('https://wa.me/'+waNum(ph)+'?text='+encodeURIComponent(summary()),'_blank','noopener')}
+ else if(a==='wa'){const ph=phoneOf(SEL),msg=waMsg(),mob=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent),
+   url=(ph?'https://wa.me/'+waNum(ph):'https://api.whatsapp.com/send')+(ph?'?':'?')+'text='+encodeURIComponent(msg);
+  /* কম্পিউটারে: ছবি আগেই কপি হয়, চ্যাট খুলে Ctrl+V করলেই ছবি যায়। ট্যাব আগেই খুলে রাখি যাতে পপআপ ব্লক না হয় */
+  const w=mob?null:window.open('about:blank','_blank');
+  snap((b,nm,c)=>{
+   const f=new File([b],nm,{type:'image/jpeg'});
+   if(mob&&navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],text:msg,title:SEL+'-এর হিসাব'}).catch(()=>{});return}
+   const go=()=>{if(w)w.location.href=url;else window.open(url,'_blank','noopener')};
+   c.toBlob(pb=>{
+    if(navigator.clipboard&&window.ClipboardItem&&pb){navigator.clipboard.write([new ClipboardItem({'image/png':pb})]).then(()=>{toast('ছবি কপি হয়েছে — চ্যাটে Ctrl+V করে পাঠান');go()}).catch(()=>{saveBlob(b,nm);toast('ছবি সেভ হয়েছে — চ্যাটে অ্যাটাচ করে পাঠান');go()})}
+    else{saveBlob(b,nm);toast('ছবি সেভ হয়েছে — চ্যাটে অ্যাটাচ করে পাঠান');go()}
+   },'image/png')})}
  else if(a==='print')window.print();
  else if(a==='jpg')snap(saveBlob);
  else if(a==='share')snap((b,nm)=>{const f=new File([b],nm,{type:'image/jpeg'});
