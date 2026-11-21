@@ -146,6 +146,7 @@ button.sm{padding:5px 12px;font-size:12px;border-radius:10px}
   <section class="card" id="ed">
    <h2 id="ed-t">নতুন লেনদেন</h2>
    <div class="tg" id="tg"></div>
+   <div class="fg hidden" id="rpw" style="margin-top:14px"><label class="l">সাম্প্রতিক — ট্যাপ করলেই নাম ও ফোন বসে যাবে</label><div class="cps" id="rp" style="margin-top:0"></div></div>
    <div class="two" style="margin-top:14px">
     <div class="fg"><label class="l" for="p">কার সাথে</label><input id="p" list="names" placeholder="নাম লিখুন বা বেছে নিন" autocomplete="off"><datalist id="names"></datalist></div>
     <div class="fg"><label class="l" for="ph">ফোন (ঐচ্ছিক)</label><input id="ph" inputmode="tel" placeholder="০১৭xxxxxxxx"></div>
@@ -157,6 +158,8 @@ button.sm{padding:5px 12px;font-size:12px;border-radius:10px}
    <div class="fg" style="margin-top:12px"><label class="l">আগে লেখা জিনিস — ট্যাপ করলে বসে যাবে</label><div class="cps" id="cps" style="margin-top:0"></div></div>
    <div class="acts"><button type="button" data-a="save" id="save">লেনদেন সেভ করুন</button><button class="g" type="button" data-a="cancel" id="cancel" hidden>বাতিল</button></div>
   </section>
+
+  <section class="card hidden" id="ents"><h2 id="ents-t">লেনদেনসমূহ</h2><div class="list" id="el"></div><div class="acts"><button class="x sm" style="padding:6px 12px" data-a="delp">এই মানুষের পুরো খাতা মুছুন</button></div></section>
 
   <section class="card">
    <h2>মানুষের খাতা <span class="pill" id="cnt"></span></h2>
@@ -183,7 +186,6 @@ button.sm{padding:5px 12px;font-size:12px;border-radius:10px}
    <button type="button" data-a="wa">💬 হোয়াটসঅ্যাপে পাঠান</button><button type="button" data-a="share">📤 ছবি শেয়ার</button><button class="g" type="button" data-a="jpg">JPG</button><button class="g" type="button" data-a="print">প্রিন্ট / PDF</button>
    <button class="g" type="button" data-a="settle" id="settle">✓ হিসাব মিটিয়ে দিন</button>
   </div>
-  <section class="card hidden" id="ents"><h2 id="ents-t">লেনদেনসমূহ</h2><div class="list" id="el"></div><div class="acts"><button class="x sm" style="padding:6px 12px" data-a="delp">এই মানুষের পুরো খাতা মুছুন</button></div></section>
  </div>
 </div>
 </main>
@@ -202,8 +204,10 @@ const MON=['জানুয়ারি','ফেব্রুয়ারি','�
 const bd=s=>s?bn(s.slice(8))+' '+MON[+s.slice(5,7)-1]+' '+bn(s.slice(0,4)):'-';
 const sd=s=>s?bn(s.slice(8))+' '+MON[+s.slice(5,7)-1].slice(0,3)+' '+bn(s.slice(2,4)):'-';
 /* s: +১ হলে "সে আমাকে আরও দেবে", −১ হলে কমবে। side 0 = আমি দিয়েছি, side 1 = সে দিয়েছে */
-const T={give:{l:'আমি দিলাম',h:'আমার টাকায় খরচ বা ধার',s:1,side:0},recv:{l:'সে ফেরত দিল',h:'আমাকে টাকা ফেরত',s:-1,side:1},owe:{l:'আমি নিলাম',h:'সে আমার জন্য দিল বা ধার',s:-1,side:1},repay:{l:'আমি ফেরত দিলাম',h:'তার পাওনা মেটালাম',s:1,side:0}};
-const TY=['give','recv','owe','repay'];
+/* এখন শুধু দুটি দিক: আমি দিলাম / সে দিল। owe ও repay পুরনো ডাটার জন্য রাখা — হিসাব একই, নামও একই দেখায় */
+const T={give:{l:'আমি দিলাম',h:'ধার বা তার জন্য খরচ',s:1,side:0},recv:{l:'সে দিল',h:'ধার, ফেরত বা আমার জন্য খরচ',s:-1,side:1},owe:{l:'সে দিল',h:'',s:-1,side:1},repay:{l:'আমি দিলাম',h:'',s:1,side:0}};
+const TY=['give','recv'];
+const tyOf=t=>T[t]&&T[t].side?'recv':'give';
 const CH=['কাজের খরচ','ধার','বাজার','যাতায়াত','রিচার্জ / বিল','চিকিৎসা','উপহার','অন্যান্য'];
 const ACC=[['সোনালি','#B8892B','#E2C275'],['এমারেল্ড','#0D4C3C','#2FA37F'],['নেভি','#16213E','#4B6CB7'],['বারগান্ডি','#5B1A2B','#B0475F']];
 const $=id=>document.getElementById(id),root=document.documentElement;
@@ -232,7 +236,7 @@ const phoneOf=n=>(S.ppl[n]&&S.ppl[n].ph)||'';
 const waNum=p=>{const d=toEn(p).replace(/\D/g,'');return d.startsWith('880')?d:d.startsWith('0')?'88'+d:d.length===10?'880'+d:d};
 
 /* ---------- ফর্ম ---------- */
-function paintTy(){$('tg').innerHTML=TY.map(k=>`<button type="button" data-ty="${k}" class="${k===TYP?'on':''}">${T[k].l}<small>${T[k].h}</small></button>`).join('')}
+function paintTy(){$('tg').innerHTML=TY.map(k=>`<button type="button" data-ty="${k}" class="${k===tyOf(TYP)?'on':''}">${T[k].l}<small>${T[k].h}</small></button>`).join('')}
 /* আগে যেকোনো মানুষের বেলায় লেখা জিনিসের নাম সবার জন্য সাজেশন; সাথে শেষবারের টাকা মনে রাখে */
 let SG={};
 function sugs(){
@@ -279,7 +283,7 @@ function saveEntry(){
  SEL=p;save();resetForm(true);render();toast(was&&L.length===1?'আপডেট হয়েছে ✓':L.length>1?bn(L.length)+'টি জিনিস সেভ হয়েছে ✓':'সেভ হয়েছে ✓')}
 function editEntry(id){
  const e=S.led.find(x=>String(x.id)===String(id));if(!e)return;
- editId=e.id;TYP=e.t;$('p').value=e.p;$('ph').value=phoneOf(e.p);$('d').value=e.d;
+ editId=e.id;TYP=tyOf(e.t);$('p').value=e.p;$('ph').value=phoneOf(e.p);$('d').value=e.d;
  $('items').innerHTML='';addRow(e.n||'',e.a,false);
  $('save').textContent='আপডেট করুন';$('cancel').hidden=false;$('ed-t').textContent='লেনদেন এডিট';paintTy();$('ed').scrollIntoView({behavior:'smooth',block:'start'})}
 
@@ -297,6 +301,9 @@ function render(){
  const net=r2(G-O);$('h-net').textContent=net>0?'হিসাব মেটালে আমার হাতে আসবে '+fm(net):net<0?'হিসাব মেটালে আমার দিতে হবে '+fm(-net):'পাওনা-দেনা সমান';
  $('h-cnt').textContent=bn(list.length)+' জন · '+bn(S.led.length)+' লেনদেন';
  $('names').innerHTML=list.map(x=>`<option value="${ex(x.n)}">`).join('');paintSug();
+ const rc=list.slice().sort((a,b)=>(b.last||'').localeCompare(a.last||'')||b.cnt-a.cnt).slice(0,6);
+ $('rpw').classList.toggle('hidden',!rc.length);
+ $('rp').innerHTML=rc.map(x=>`<button type="button" class="cp" data-pc="${ex(x.n)}"${x.n===SEL?' style="border-color:var(--a);color:var(--t)"':''}>${ex(x.n)}</button>`).join('');
  /* মানুষের তালিকা */
  document.querySelectorAll('#seg button').forEach(b=>b.classList.toggle('on',b.dataset.f===F));
  const q=$('q').value.trim().toLowerCase(),qe=toEn(q);
@@ -316,7 +323,7 @@ function paper(P){
  $('p-no').textContent=bd(key(new Date()))+' পর্যন্ত';
  $('p-name').textContent=SEL;$('p-phone').textContent=phoneOf(SEL)||'-';$('p-date').textContent=bd(key(new Date()));
  let s0=0,s1=0;
- $('p-body').innerHTML=es.map(e=>{const t=T[e.t];if(t.side)s1+=e.a;else s0+=e.a;const a=bn(r2(e.a).toLocaleString('en-IN'));return`<tr><td class="dt">${sd(e.d)}</td><td>${ex(e.n)||'—'}${e.t==='repay'||e.t==='recv'?' <span style="color:#7A6A55;font-size:11px">('+(e.t==='repay'?'ফেরত':'ফেরত পেলাম')+')</span>':''}</td><td class="r">${t.side?'':a}</td><td class="r">${t.side?a:''}</td></tr>`}).join('');
+ $('p-body').innerHTML=es.map(e=>{const t=T[e.t];if(t.side)s1+=e.a;else s0+=e.a;const a=bn(r2(e.a).toLocaleString('en-IN'));return`<tr><td class="dt">${sd(e.d)}</td><td>${ex(e.n)||'—'}</td><td class="r">${t.side?'':a}</td><td class="r">${t.side?a:''}</td></tr>`}).join('');
  s0=r2(s0);s1=r2(s1);const bal=r2(s0-s1);
  $('p-s0').textContent=fm(s0);$('p-s1').textContent=fm(s1);
  const st=$('stamp');
@@ -346,6 +353,7 @@ document.addEventListener('click',e=>{
  const cp=e.target.closest('[data-cp]');if(cp){const nm=cp.dataset.cp;let r=rows().find(x=>!x.children[0].value.trim()&&!x.children[1].value.trim())||rows().find(x=>!x.children[0].value.trim());if(!r){addRow('','',false);r=rows().pop()}r.children[0].value=nm;const s=SG[nm];if(s&&s.a&&!r.children[1].value.trim())r.children[1].value=s.a;itot();r.children[1].focus();return}
  const ac=e.target.closest('[data-ac]');if(ac){curAcc=+ac.dataset.ac;S.invAcc=curAcc;save();paintAcc();return}
  const fl=e.target.closest('[data-f]');if(fl){F=fl.dataset.f;render();return}
+ const rp=e.target.closest('[data-pc]');if(rp){selectP(rp.dataset.pc,false);return}
  const pr=e.target.closest('[data-pn]');if(pr){selectP(pr.dataset.pn,true);return}
  const t=e.target.closest('[data-a]');if(!t)return;const a=t.dataset.a,id=t.dataset.i;
  if(a==='save')saveEntry();
@@ -356,7 +364,7 @@ document.addEventListener('click',e=>{
  else if(a==='delp'){if(!confirm(SEL+'-এর সব লেনদেন মুছে ফেলবেন? এটা ফেরানো যাবে না।'))return;S.led=S.led.filter(v=>(v.p||'').trim()!==SEL);delete S.ppl[SEL];SEL='';save();resetForm(false);render();toast('খাতা মুছে ফেলা হয়েছে')}
  else if(a==='settle'){const es=entsOf(SEL),bal=r2(es.reduce((s,v)=>s+T[v.t].s*v.a,0));if(!bal)return;
   if(!confirm(bal>0?SEL+' পুরো '+fm(bal)+' ফেরত দিয়েছে — মিটিয়ে দেবেন?':'আপনি '+SEL+'-কে পুরো '+fm(-bal)+' ফেরত দিয়েছেন — মিটিয়ে দেবেন?'))return;
-  S.led.push({id:Date.now(),p:SEL,t:bal>0?'recv':'repay',a:Math.abs(bal),d:key(new Date()),n:'হিসাব মিটল'});save();render();toast('হিসাব মিটে গেছে ✓')}
+  S.led.push({id:Date.now(),p:SEL,t:bal>0?'recv':'give',a:Math.abs(bal),d:key(new Date()),n:'হিসাব মিটল'});save();render();toast('হিসাব মিটে গেছে ✓')}
  else if(a==='wa'){const ph=phoneOf(SEL);if(!ph){toast('এই মানুষের ফোন নম্বর দেওয়া নেই — ফর্মে ফোন লিখে একটা লেনদেন সেভ করুন');return}
   window.open('https://wa.me/'+waNum(ph)+'?text='+encodeURIComponent(summary()),'_blank','noopener')}
  else if(a==='print')window.print();
