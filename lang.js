@@ -52,7 +52,106 @@ const D={
 'গন্তব্যের আবহাওয়া':'Destination weather','খুঁজুন':'Search','জেলা/উপজেলা বা শহরের নাম':'District, upazila or city name','গন্তব্যের নাম দিলে সেখানকার আবহাওয়া দেখে দরকারি জিনিসের পরামর্শ দেওয়া হবে।':'Enter a destination to get packing suggestions based on its weather.','জায়গাটি খুঁজে পাওয়া যায়নি':'Place not found','তারিখটি ১৬ দিনের পূর্বাভাসের বাইরে — কাছাকাছি এলে পরামর্শ আসবে।':'The date is beyond the 16-day forecast — suggestions will appear closer to the date.','দরকারি জিনিস যোগ করা আছে ✓':'Needed items are already added ✓','আবহাওয়া স্বাভাবিক — বাড়তি কিছু লাগবে না।':'Weather looks normal — nothing extra needed.','কাল':'Tomorrow','যাত্রার সময়':'Trip time','টুপি':'Cap',
 /* শ্রুতিমধুর নতুন লেখা (namaz.html) — পুরোনো চাবি অন্য পেজের জন্য রাখা আছে */
 'কোন যিকির কতবার পড়লেন, এখানে যত্ন করে লিখে রাখুন':'Log what you recited and how many times','এখনও কিছু লেখা হয়নি':'No entries yet','যে ওয়াক্ত পেরিয়ে গেছে অথচ টিক পড়েনি, তা এখানে জমা থাকবে · কাযা আদায় করে ওয়াক্তের নামে ট্যাপ করুন — তা আদায় হিসেবে লেখা থাকবে আর তালিকা থেকে সরে যাবে':'Prayers whose time ended without a tick appear here · tap a prayer once made up — it counts as prayed, is recorded, and leaves this list',
-'ভাষা':'Language','সেটিং':'Settings','হোম':'Home'
+'ভাষা':'Language','সেটিং':'Settings','হোম':'Home',
+/* লেনদেনের খাতা (invoice.html) */
+'জানু':'Jan','ফেব্রু':'Feb','সেপ্টে':'Sep','অক্টো':'Oct','নভে':'Nov','ডিসে':'Dec',
+'লেনদেনের খাতা':'Transaction ledger',
+'কে কত পাবে, কাকে কত দেব — মানুষ ধরে হিসাব, আর যে কাউকে বিবরণী পাঠানো যায়':'Who owes me, whom I owe — tracked person by person, with a statement you can send to anyone',
+'নতুন লেনদেন':'New transaction',
+'লেনদেন এডিট':'Edit transaction',
+'লেনদেন সেভ করুন':'Save transaction',
+'আপডেট করুন':'Update',
+'আমি দিলাম':'I gave',
+'সে দিল':'They gave',
+'সে দিয়েছে':'They gave',
+'আমি দিয়েছি':'I gave',
+'আপনি দিয়েছেন':'You gave',
+'আপনি':'You',
+'ধার বা তার জন্য খরচ':'A loan, or an expense paid for them',
+'ধার, ফেরত বা আমার জন্য খরচ':'A loan, a repayment, or an expense paid for me',
+'সাম্প্রতিক — ট্যাপ করলেই নাম ও ফোন বসে যাবে':'Recent — tap to fill in name and phone',
+'নাম':'Name',
+'ফোন (ঐচ্ছিক)':'Phone (optional)',
+'ফোন':'Phone',
+'নাম লিখুন বা বেছে নিন':'Type or pick a name',
+'কিসের বাবদ ও কত টাকা':'What for, and how much',
+'একসাথে একাধিক জিনিস যোগ করা যায়':'you can add several items at once',
+'কিসের বাবদ (যেমন: ফর্ম ফি)':'What for (e.g. form fee)',
+'+ আরেকটা জিনিস':'+ Add another item',
+'জিনিসটি সরান':'Remove this item',
+'সরান':'Remove',
+'বাবদ':'For',
+'কাজের খরচ':'Work expense',
+'ধার':'Loan',
+'বাজার':'Groceries',
+'যাতায়াত':'Transport',
+'রিচার্জ / বিল':'Recharge / bill',
+'চিকিৎসা':'Medical',
+'উপহার':'Gift',
+'অন্যান্য':'Other',
+'লেনদেনসমূহ':'Transactions',
+'লেনদেন':'Transaction',
+'এই মানুষের পুরো খাতা মুছুন':'Delete this person\u2019s entire ledger',
+'চলমান হিসাব':'Open account',
+'চলমান':'Open',
+'পাব':'to receive',
+'দেব':'to pay',
+'✓ সব হিসাব মিটে গেছে':'✓ All accounts settled',
+'নতুন লেনদেন যোগ করলে নতুন পর্ব শুরু হবে':'Adding a transaction starts a new cycle',
+'মিটেছে':'Settled',
+'পর্ব:':'Cycle:',
+'পর্ব':'Cycle',
+'মানুষের খাতা':'People\u2019s ledgers',
+'নাম বা ফোন দিয়ে খুঁজুন':'Search by name or phone',
+'সবাই':'Everyone',
+'আমি পাব':'I\u2019ll receive',
+'আমি দেব':'I owe',
+'মিটে গেছে':'Settled',
+'এই ফিল্টারে কেউ নেই':'No one in this filter',
+'এখনো কোনো লেনদেন নেই — ওপরের ফর্ম থেকে শুরু করুন':'No transactions yet — start from the form above',
+'ব্যাকআপ':'Backup',
+'কার হিসাব দেখবেন?':'Whose account would you like to see?',
+'বাম পাশ থেকে কাউকে বেছে নিন, অথবা প্রথম লেনদেনটা যোগ করুন।':'Pick someone from the left, or add the first transaction.',
+'এখানে তার হিসাব বিবরণী তৈরি হবে — ছবি বা মেসেজ করে পাঠাতে পারবেন।':'Their account statement will appear here — you can send it as an image or a message.',
+'আমার নাম (বিবরণীর মাথায় থাকবে)':'My name (shown at the top of the statement)',
+'হিসাব বিবরণী':'Account statement',
+'লেনদেনের হিসাব বিবরণী':'Transaction statement',
+'আমি আপনাকে দেব':'I owe you',
+'আপনি আমাকে দেবেন':'You owe me',
+'বাকি আছে':'Due',
+'আমার দেনা':'I owe',
+'মিটে গেছে ✓':'Settled ✓',
+'হিসাব মিটে গেছে':'Account settled',
+'হিসাব মিটল':'Settled',
+'জাযাকাল্লাহু খাইরান':'Jazakallahu khayran',
+'হিসাব পরিষ্কার, সম্পর্ক আরও পরিষ্কার':'clear accounts, clearer relations',
+'হিসাবে কোনো ভুল থাকলে জানাবেন — ধন্যবাদ':'Please let me know if there is any mistake — thank you',
+'আগের হিসাব মিটে গেছে — এটি নতুন পর্বের বিবরণী। ভুল থাকলে জানাবেন':'The earlier account is settled — this is the statement for the new cycle. Please let me know of any mistakes',
+'📤 শেয়ার':'📤 Share',
+'প্রিন্ট / PDF':'Print / PDF',
+'✓ হিসাব মিটিয়ে দিন':'✓ Mark as settled',
+'সোনালি':'Gold',
+'নাম লিখুন':'Enter a name',
+'অন্তত একটি জিনিসের টাকা লিখুন':'Enter the amount for at least one item',
+'প্রতিটি জিনিসের টাকা লিখুন':'Enter an amount for each item',
+'তারিখ দিন':'Enter a date',
+'এই জিনিসের টাকা লিখুন':'Enter the amount for this item',
+'টাকা লিখুন':'Enter an amount',
+'আপডেট হয়েছে ✓':'Updated ✓',
+'সেভ হয়েছে ✓':'Saved ✓',
+'মুছে ফেলা হয়েছে':'Deleted',
+'খাতা মুছে ফেলা হয়েছে':'Ledger deleted',
+'হিসাব মিটে গেছে ✓ — আগের হিসাব “পর্ব” হিসেবে জমা থাকল':'Account settled ✓ — the earlier account is kept as a cycle',
+'সেভ করা যায়নি, জায়গা ভরে গেছে?':'Could not save — is storage full?',
+'ছবির টুল লোড হয়নি, ইন্টারনেট দেখুন':'Image tool did not load — check your internet',
+'ছবি বানানো হচ্ছে…':'Creating image…',
+'ছবি বানানো যায়নি':'Could not create the image',
+'ছবি কপি হয়েছে — চ্যাটে Ctrl+V করে পাঠান':'Image copied — paste it into the chat with Ctrl+V',
+'ছবি সেভ হয়েছে — চ্যাটে অ্যাটাচ করে পাঠান':'Image saved — attach it in the chat',
+'এই ব্রাউজারে শেয়ার নেই, ছবি সেভ হয়েছে':'Sharing is not available in this browser; image saved',
+'আমাদের হিসাব বিবরণী পাঠালাম':'I\u2019ve sent our account statement',
+'আমাদের লেনদেনের হিসাব':'Our transaction summary',
+'আলহামদুলিল্লাহ, হিসাব মিটে গেছে ✓':'Alhamdulillah, the account is settled ✓'
 };
 /* অক্ষরের বদলে শব্দ — গণনার পরে প্রযোজ্য */
 const U={'ঘণ্টা':'Hours','মিনিট':'Minutes','সেকেন্ড':'Seconds','থেকে':'from','পর্যন্ত':'until','ভোর':'Dawn','সকাল':'Morning','দুপুর':'Noon','বিকাল':'Afternoon','সন্ধ্যা':'Evening','রাত':'Night','টি':'items','মোট':'Total'};
@@ -69,6 +168,21 @@ function tm(h,m,p){h=+num(h);m=num(m);let ap;
 function tr(s){
  if(!/[\u0980-\u09FF]/.test(s))return s;
  s=s.replace(new RegExp('আর ('+BD+'+) দিন বাকি','g'),'$1 days left');
+ /* লেনদেনের খাতা: নাম/সংখ্যা বসানো বাক্য */
+ const Nn=(n,one,many)=>(+num(n)===1?'1 '+one:num(n)+' '+many);
+ s=s.replace(new RegExp('^✓ (.+?)-এর আগের হিসাব মিটে গেছে। এখন লেনদেন করলে নতুন পর্ব শুরু হবে — আগের হিসাব “লেনদেনসমূহ”-এ আর বিবরণীর পর্ব-বোতামে থেকে যাবে।$'),'\u2713 $1\u2019s earlier account is settled. A new transaction now starts a new cycle \u2014 the earlier account stays under \u201cTransactions\u201d and in the statement\u2019s cycle buttons.');
+ s=s.replace(new RegExp('^(.+)-এর সব লেনদেন মুছে ফেলবেন\\? এটা ফেরানো যাবে না।$'),'Delete all of $1\u2019s transactions? This cannot be undone.');
+ s=s.replace(new RegExp('^(.+)-এর লেনদেন$'),'$1\u2019s transactions');
+ s=s.replace(new RegExp('^এই লেনদেনটি \\((.+?)\\) মুছে ফেলবেন\\?$'),'Delete this transaction ($1)?');
+ s=s.replace(new RegExp('^আপনি (.+?)-কে পুরো (৳ [০-৯,.]+) ফেরত দিয়েছেন — মিটিয়ে দেবেন\\?$'),'You repaid $1 the full $2 \u2014 mark as settled?');
+ s=s.replace(new RegExp('^(.+?) পুরো (৳ [০-৯,.]+) ফেরত দিয়েছে — মিটিয়ে দেবেন\\?$'),'$1 has repaid the full $2 \u2014 mark as settled?');
+ s=s.replace(new RegExp('('+BD+'+)টি লেনদেন','g'),(_,n)=>Nn(n,'transaction','transactions'));
+ s=s.replace(new RegExp('('+BD+'+)টি জিনিস সেভ হয়েছে','g'),(_,n)=>Nn(n,'item','items')+' saved');
+ s=s.replace(new RegExp('('+BD+'+) জন(?!['+B+'])','g'),(_,n)=>Nn(n,'person','people'));
+ s=s.replace(new RegExp('(['+BD.slice(1,-1)+']+ \\S+ ['+BD.slice(1,-1)+']+) থেকে (['+BD.slice(1,-1)+']+ \\S+ ['+BD.slice(1,-1)+']+) পর্যন্ত','g'),'from $1 to $2');
+ s=s.replace(new RegExp('মোট বাকি: আপনি আমাকে (৳ [০-৯,.]+) দেবেন','g'),'Total due: you owe me $1');
+ s=s.replace(new RegExp('মোট দেনা: আমি আপনাকে (৳ [০-৯,.]+) দেব','g'),'Total owed: I owe you $1');
+
  const wd=w=>w==='কাল'?'Tomorrow':'Trip time';
  s=s.replace(new RegExp('(কাল|যাত্রার সময়) বৃষ্টির সম্ভাবনা ('+BD+'+)%, (ছাতা ও রেইনকোট|ছাতা) যোগ করুন।','g'),(_,w,n,i)=>wd(w)+': '+n+'% chance of rain — add '+(i==='ছাতা'?'an umbrella':'an umbrella and raincoat')+'.');
  s=s.replace(new RegExp('(কাল|যাত্রার সময়) সর্বোচ্চ ('+BD+'+)° — গরম থাকবে, পানির বোতল ও টুপি যোগ করুন।','g'),(_,w,n)=>wd(w)+': up to '+n+'° — hot, add a water bottle and a cap.');
@@ -81,7 +195,7 @@ function tr(s){
  s=s.replace(new RegExp('('+BD+'+) ?ঘণ্টা (?='+BD+')','g'),'$1 h ').replace(new RegExp('('+BD+'+) ঘণ্টা','g'),'$1 h').replace(new RegExp('('+BD+'+) মিনিট','g'),'$1 min');
  s=s.replace(new RegExp('('+BD+'+) ?টি(?![\u0980-\u09FF])','g'),(_,n)=>(+num(n)===1?n+' item':n+' items'));
  s=s.replace(RU,m=>U[m]);
- return num(s)}
+ return num(s).replace(/।/g,'.')}
 window.L=tr;
 
 const SKIP={SCRIPT:1,STYLE:1,TEXTAREA:1,NOSCRIPT:1};
