@@ -1,7 +1,7 @@
 /* Hayat — Service Worker
    অফলাইন সাপোর্ট: পেজ/স্ক্রিপ্ট আগে ক্যাশ থেকে দেখায়, পেছনে নতুন সংস্করণ এনে রাখে।
    কোড বদলালে নিচের VER সংখ্যা বাড়িয়ে দিন — পুরনো ক্যাশ নিজে মুছে যাবে। */
-const VER='hayat-v13';
+const VER='hayat-v14';
 const PRE=['./','index.html','tasks.html','namaz.html','roza.html','study.html','hisab.html','invoice.html','bags.html','settings.html','lang.js','trip.js','sync.js','header.js','suggest.js','pwa.js','digest.js','manifest.json','offline.html',
   'icon-192.png','icon-512.png','icon-maskable-512.png','badge-96.png'];
 
