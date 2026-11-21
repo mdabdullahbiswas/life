@@ -1,8 +1,8 @@
 /* Hayat — Service Worker
    অফলাইন সাপোর্ট: পেজ/স্ক্রিপ্ট আগে ক্যাশ থেকে দেখায়, পেছনে নতুন সংস্করণ এনে রাখে।
    কোড বদলালে নিচের VER সংখ্যা বাড়িয়ে দিন — পুরনো ক্যাশ নিজে মুছে যাবে। */
-const VER='hayat-v16';
-const PRE=['./','index.html','tasks.html','namaz.html','roza.html','study.html','hisab.html','invoice.html','bags.html','settings.html','lang.js','trip.js','sync.js','header.js','suggest.js','pwa.js','digest.js','digest-core.js','dialog.js','manifest.json','offline.html',
+const VER='hayat-v17';
+const PRE=['./','index.html','tasks.html','namaz.html','roza.html','study.html','hisab.html','invoice.html','bags.html','settings.html','lang.js','trip.js','sync.js','header.js','suggest.js','pwa.js','digest.js','digest-core.js','dialog.js','push.js','manifest.json','offline.html',
   'icon-192.png','icon-512.png','icon-maskable-512.png','badge-96.png'];
 
 /* নামাজের রিমাইন্ডার: namaz.html সময়সূচি IndexedDB ('hayat-n') এ লেখে, এখানে সময় হলে নোটিফিকেশন দেখানো হয় */
@@ -67,12 +67,19 @@ self.addEventListener('fetch',e=>{
   }));
 });
 
+/* Firebase পুশ (অ্যাপ বন্ধ থাকলেও আসে): সার্ভার থেকে আসা সামারি দেখানো */
+self.addEventListener('push',e=>{
+  let d={};try{d=e.data?e.data.json():{}}catch(x){try{d={title:e.data.text()}}catch(y){}}
+  const p=Object.assign({},d.notification||{},d.data||{});
+  e.waitUntil(self.registration.showNotification(p.title||'Hayat',{body:p.body||'',icon:'icon-512.png',badge:'badge-96.png',tag:p.tag||'hayat-push',data:{url:p.url||'tasks.html'}}));
+});
+
 /* নোটিফিকেশনে ট্যাপ করলে অ্যাপ খুলবে */
 self.addEventListener('notificationclick',e=>{
   e.notification.close();
   const url=(e.notification.data&&e.notification.data.url)||'bags.html';
   e.waitUntil(self.clients.matchAll({type:'window',includeUncontrolled:true}).then(ws=>{
-    for(const w of ws){if('focus' in w)return w.focus()}
+    for(const w of ws){if('focus' in w)return w.focus().then(c=>{try{if(c&&c.navigate)return c.navigate(url)}catch(x){}})}
     return self.clients.openWindow(url);
   }));
 });
