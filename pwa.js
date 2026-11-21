@@ -27,6 +27,9 @@ if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostnam
   addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 }
 
+/* প্রিমিয়াম পপআপ (confirm/alert-এর বদলে) — যে পেজে আলাদা করে যোগ করা নেই সেখানে নিজে লোড করে */
+if(!window.hconfirm)add('script',{src:'dialog.js'});
+
 /* দৈনিক সামারি ও রাতের রিমাইন্ডার */
 add('script',{src:'digest.js',defer:''});
 
