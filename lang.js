@@ -315,7 +315,57 @@ const D={
 'যখন ঠিক দুপুরে সূর্য আকাশের মধ্যভাগে থাকে, যতক্ষণ না তা ঢলে পড়ে':'when the sun is at the middle of the sky at noon, until it declines',
 'যখন সূর্য অস্ত যাওয়ার উপক্রম হয়, যতক্ষণ না তা ডুবে যায়':'when the sun is about to set, until it has set',
 'মনে রাখবেন':'Remember',
-'এই সময়ে ফরজ, ওয়াজিব, কাযা ও নফল — কোনো নামাজই পড়া যায় না।':'At this time no prayer — Fard, Wajib, Qaza or voluntary — may be offered.'
+'এই সময়ে ফরজ, ওয়াজিব, কাযা ও নফল — কোনো নামাজই পড়া যায় না।':'At this time no prayer — Fard, Wajib, Qaza or voluntary — may be offered.',
+/* রোজা পেজ */
+/* রোজা পেজ — অতিরিক্ত */
+'✓ আজ রোজা রেখেছি':'✓ I fasted today','রমজান শুরু':'Ramadan begins','রমজান চলছে':'Ramadan is ongoing','শাওয়ালের ছয় রোজা শুরু':'Six fasts of Shawwal begin','আইয়ামে বীজ (১৩–১৫)':'Ayyam al-Bid (13–15)','এ মাসে (নফল)':'This month (voluntary)','মোট নফল':'Total voluntary','এ মাসে নফল রোজা':'Voluntary fasts this month','হিজরি তারিখ সমন্বয়':'Hijri date adjustment',
+
+'শা\'বান':'Sha’ban',
+'আগের ও পরের এক বছরের গুনাহের কাফফারা (সহিহ মুসলিম)':'Expiates the sins of the previous and the coming year (Sahih Muslim)',
+'গত এক বছরের গুনাহের কাফফারা (সহিহ মুসলিম)':'Expiates the sins of the previous year (Sahih Muslim)',
+'প্রতি মাসের তিন রোজা সারা বছর রোজা রাখার সমান সওয়াব (বুখারি–মুসলিম)':'Three fasts each month earn the reward of fasting the whole year (Bukhari–Muslim)',
+'রমজানের পর ছয় রোজা পুরো বছরের রোজার সমান (সহিহ মুসলিম)':'Six fasts after Ramadan equal fasting the whole year (Sahih Muslim)',
+'সোম–বৃহস্পতিবার আমল আল্লাহর কাছে পেশ করা হয় (তিরমিযি)':'Deeds are presented to Allah on Mondays and Thursdays (Tirmidhi)',
+'সময় লোড হয়নি':'Times did not load',
+'আবার চেষ্টা করুন':'Try again',
+'সেহরি শেষ হতে':'Until Suhoor ends',
+'ইফতারে বাকি':'Left until Iftar',
+'ইফতারের সময় 🌙':'Iftar time 🌙',
+'রোজার সঙ্গী · নফল ট্র্যাকার, সময় ও দোয়া':'Fasting companion · voluntary tracker, times & duas',
+'হিজরি':'Hijri',
+'আজ রমজানের রোজা রেখেছি':'I fasted today (Ramadan)',
+'নফল রোজা / বিশেষ দিন':'Voluntary fast / special day',
+'রমজানের রোজা':'Ramadan fasts',
+'নিষিদ্ধ দিনে রোজা রাখা যায় না':'Fasting is not allowed on prohibited days',
+'ঘরের নিচের ছোট সংখ্যা হিজরি তারিখ। ভবিষ্যতের তারিখ চিহ্নিত করা যায় না।':'The small number under each date is the Hijri date. Future dates cannot be marked.',
+'আমার পরিসংখ্যান':'My statistics',
+'এ বছরে (নফল)':'This year (voluntary)',
+'এ বছরে':'This year',
+'বর্তমান টানা':'Current streak',
+'সর্বোচ্চ টানা':'Best streak',
+'📤 শেয়ার কার্ড':'📤 Share card',
+'সামনের রোজার দিন':'Upcoming fast days',
+'রাখা হয়েছে':'kept',
+'রমজান আসতে বাকি':'Until Ramadan',
+'রমজানের কাযা রোজা':'Ramadan Qaza fasts',
+'এখনো বাকি আছে এমন কাযা রোজার সংখ্যা। একটি রাখলে − চাপুন।':'Number of Qaza fasts still owed. Tap − when you keep one.',
+'দোয়া ও নিয়ত':'Duas & intentions',
+'ইফতারের দোয়া':'Iftar dua',
+'অর্থ: পিপাসা মিটেছে, শিরা-উপশিরা সিক্ত হয়েছে এবং ইনশাআল্লাহ প্রতিদান নির্ধারিত হয়েছে। (আবু দাউদ)':'Meaning: The thirst is gone, the veins are moistened, and the reward is confirmed, if Allah wills. (Abu Dawud)',
+'অর্থ: হে আল্লাহ, আপনার জন্যই রোজা রেখেছি এবং আপনার দেওয়া রিজিক দিয়েই ইফতার করছি। (প্রচলিত দোয়া)':'Meaning: O Allah, I fasted for You and I break my fast with the provision You gave. (commonly recited dua)',
+'সেহরির নিয়ত':'Suhoor intention',
+'অর্থ: আমি আগামীকাল আল্লাহর জন্য রোজা রাখার নিয়ত করলাম। নিয়ত মূলত মনের সংকল্প, মুখে বলা জরুরি নয়।':'Meaning: I intend to fast tomorrow for the sake of Allah. Intention is mainly a resolve of the heart; saying it aloud is not required.',
+'সমন্বয়':'Adjustments',
+'হিজরি তারিখ':'Hijri date',
+'চাঁদ দেখা অনুযায়ী মিলিয়ে নিন':'Adjust to the moon sighting',
+'সেহরি-ইফতারের অবস্থান':'Suhoor & Iftar location',
+'আপনার অবস্থান ব্যবহার হচ্ছে':'Using your location',
+'এখন ঢাকার সময় দেখাচ্ছে':'Currently showing Dhaka time',
+'📍 আপডেট':'📍 Update',
+'🌙 আমার রোজা':'🌙 My fasts',
+'আমার রোজা':'My fasts',
+'এই ব্রাউজারে অবস্থান সমর্থিত নয়':'Location is not supported in this browser',
+'অবস্থানের অনুমতি পাওয়া যায়নি':'Location permission was not granted'
 };
 /* অক্ষরের বদলে শব্দ — গণনার পরে প্রযোজ্য */
 const U={'ঘণ্টা':'Hours','মিনিট':'Minutes','সেকেন্ড':'Seconds','থেকে':'from','পর্যন্ত':'until','ভোর':'Dawn','সকাল':'Morning','দুপুর':'Noon','বিকাল':'Afternoon','সন্ধ্যা':'Evening','রাত':'Night','টি':'items','মোট':'Total'};
@@ -337,6 +387,8 @@ function tr(s){
  s=s.replace(new RegExp('🔥 ('+BD+'+) দিন সব ওয়াক্ত','g'),(_,n)=>'🔥 '+Pl(n,'day')+' · all prayers');
  s=s.replace(new RegExp('🔥 ('+BD+'+) দিন টানা সব ওয়াক্ত','g'),(_,n)=>'🔥 '+Pl(n,'day')+' in a row · all prayers');
  s=s.replace(new RegExp('('+BD+'+) মিনিট পরে \\(','g'),'In $1 min (');
+ s=s.replace(new RegExp('রমজানের ('+BD+'+) তম দিন','g'),'Day $1 of Ramadan');
+ s=s.replace(new RegExp('^('+BD+'+) দিন পর$'),(_,n)=>'in '+Pl(n,'day'));
  s=s.replace(new RegExp('⚠️ শেষ ব্যাকআপ ('+BD+'+) দিন আগের। নতুন একটি নিন।','g'),(_,n)=>'⚠️ Your last backup was '+Pl(n,'day')+' ago. Please take a new one.');
  s=s.replace(new RegExp('✅ শেষ ব্যাকআপ ('+BD+'+) দিন আগে।','g'),(_,n)=>'✅ Last backup: '+Pl(n,'day')+' ago.');
  s=s.replace(new RegExp('('+BD+'+) মিনিট আগে','g'),'$1 min ago').replace(new RegExp('('+BD+'+) ঘণ্টা আগে','g'),'$1 h ago').replace(new RegExp('('+BD+'+) দিন আগে','g'),(_,n)=>Pl(n,'day')+' ago');
