@@ -126,17 +126,17 @@ button.sm{padding:5px 12px;font-size:12px;border-radius:10px}
 #paper.done .seal{display:flex}
 #paper .seal .tx{display:flex;align-items:center;justify-content:center;gap:10px}
 #paper.done .stamp{display:none}
-#paper.done{border-color:#d9b866;background:linear-gradient(180deg,#fffdf6,#fff8e4 70%,#fffdf8)}
+#paper.done{border-color:#d9b866}
 #paper #sealg{display:none;margin:2px auto 2px;line-height:0}
 #paper.done #sealg{display:block}
 #paper.done .mono{display:none}
-#paper #sealg svg{display:block;margin:0 auto}
+#paper #sealg img{display:block;margin:0 auto}
 #paper .seal .ar{font-family:"Noto Naskh Arabic","Amiri","Traditional Arabic","Times New Roman",serif;font-size:20px;line-height:1.4;color:#B8892B}
 #paper .seal h4{margin:0 0 1px;font-size:18px;font-weight:700;color:var(--pa);letter-spacing:.3px}
 #paper .seal p{margin:0;font-size:11px;color:#7A6A55}
-#paper.done #sealg svg{animation:sealin .9s cubic-bezier(.2,1.25,.3,1) both}
+#paper.done #sealg img{animation:sealin .9s cubic-bezier(.2,1.25,.3,1) both}
 @keyframes sealin{from{opacity:0;transform:scale(1.6) rotate(-16deg)}to{opacity:1;transform:none}}
-@media(prefers-reduced-motion:reduce){#paper.done #sealg svg{animation:none}}
+@media(prefers-reduced-motion:reduce){#paper.done #sealg img{animation:none}}
 #toast{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);left:50%;transform:translateX(-50%) translateY(10px);background:var(--t);color:var(--bg);padding:10px 20px;border-radius:12px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:99}
 #toast.show{opacity:1;transform:translateX(-50%)}
 .hidden{display:none!important}
@@ -312,6 +312,18 @@ function editEntry(id){
 function paintAcc(){
  const a=ACC[curAcc]||ACC[0],p=$('paper');p.style.setProperty('--pa',a[1]);p.style.setProperty('--pa2',a[2]);
  $('acc').innerHTML=ACC.map((x,i)=>`<b data-ac="${i}" title="${x[0]}" role="button" aria-label="${x[0]}" class="${i==curAcc?'on':''}" style="background:linear-gradient(135deg,${x[1]} 50%,${x[2]} 50%)"></b>`).join('')}
+/* কার্ডের পিছনের হালকা নকশা: আটকোণা তারা-জালি + কোণে সোনালি আভা; মাঝখানটা ফিকে রাখা হয় যাতে লেখা পরিষ্কার থাকে। রঙ বদলায় বেছে নেওয়া থিম অনুযায়ী */
+function paintBg(){
+ const p=$('paper'),a=(ACC[curAcc]||ACC[0])[1],done=p.classList.contains('done');
+ const rgb=[1,3,5].map(i=>parseInt(a.slice(i,i+2),16)).join(',');
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><g fill="none" stroke="${a}" stroke-width=".8" opacity=".16"><rect x="15" y="15" width="30" height="30"/><rect x="15" y="15" width="30" height="30" transform="rotate(45 30 30)"/><circle cx="30" cy="30" r="3.2"/></g><g fill="${a}" opacity=".2"><circle cx="0" cy="0" r="1.6"/><circle cx="60" cy="0" r="1.6"/><circle cx="0" cy="60" r="1.6"/><circle cx="60" cy="60" r="1.6"/></g></svg>`;
+ const L=['radial-gradient(ellipse at 50% 48%,rgba(255,253,248,.9) 0%,rgba(255,253,248,.62) 46%,rgba(255,253,248,0) 82%)',
+  `radial-gradient(circle at 0% 0%,rgba(${rgb},.15),rgba(${rgb},0) 42%)`,`radial-gradient(circle at 100% 100%,rgba(${rgb},.15),rgba(${rgb},0) 42%)`,
+  'url("data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)+'")'];
+ if(done)L.push('linear-gradient(180deg,#fffdf6,#fff6dc)');
+ p.style.backgroundImage=L.join(',');
+ p.style.backgroundSize=L.map((x,i)=>i===3?'60px 60px':'auto').join(',');
+ p.style.backgroundRepeat=L.map((x,i)=>i===3?'repeat':'no-repeat').join(',')}
 function render(){
  const P=people(),list=Object.values(P);
  /* হিরো */
@@ -351,7 +363,7 @@ function paper(P){
  else if(bal<0){$('p-rl').textContent='আমি আপনাকে দেব';$('p-rv').textContent=fm(-bal);st.textContent='আমার দেনা';st.className='stamp s-owe'}
  else{$('p-rl').textContent='হিসাব';$('p-rv').textContent='মিটে গেছে ✓';st.textContent='মিটে গেছে';st.className='stamp s-ok'}
  $('settle').classList.toggle('hidden',bal===0);
- const done=bal===0&&es.length>0;$('paper').classList.toggle('done',done);
+ const done=bal===0&&es.length>0;$('paper').classList.toggle('done',done);paintBg();
  if(done){$('p-sd').textContent='হিসাব মিটে গেছে · '+bd(es[es.length-1].d||key(new Date()));$('p-ty').textContent='জাযাকাল্লাহু খাইরান 🤍 — হিসাব পরিষ্কার, সম্পর্ক আরও পরিষ্কার'}
  else $('p-ty').textContent='হিসাবে কোনো ভুল থাকলে জানাবেন — ধন্যবাদ';
  $('ents-t').textContent=SEL+'-এর লেনদেন';
@@ -372,14 +384,15 @@ function waMsg(){
 function snap(then){
  if(!window.html2canvas){toast('ছবির টুল লোড হয়নি, ইন্টারনেট দেখুন');return}
  const nm='Hisab_'+SEL+'_'+key(new Date())+'.jpg';toast('ছবি বানানো হচ্ছে…');
- html2canvas($('paper'),{scale:2,backgroundColor:'#fffdf8'}).then(c=>c.toBlob(b=>then(b,nm,c),'image/jpeg',.92)).catch(()=>toast('ছবি বানানো যায়নি'))}
+ html2canvas($('paper'),{scale:2,backgroundColor:'#fffdf8',onclone:d=>{   /* কপির ভেতরে অ্যানিমেশন বন্ধ — নইলে সিল "শুরুর অবস্থায়" (অদৃশ্য) আঁকা হয় */
+   const st=d.createElement('style');st.textContent='*{animation:none!important;transition:none!important}';d.head.appendChild(st)}}).then(c=>c.toBlob(b=>then(b,nm,c),'image/jpeg',.92)).catch(()=>toast('ছবি বানানো যায়নি'))}
 const saveBlob=(b,nm)=>{const a=document.createElement('a');a.download=nm;a.href=URL.createObjectURL(b);a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
 function dl(name,type,data){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 
 document.addEventListener('click',e=>{
  const ty=e.target.closest('[data-ty]');if(ty){TYP=ty.dataset.ty;paintTy();return}
  const cp=e.target.closest('[data-cp]');if(cp){const nm=cp.dataset.cp;let r=rows().find(x=>!x.children[0].value.trim()&&!x.children[1].value.trim())||rows().find(x=>!x.children[0].value.trim());if(!r){addRow('','',false);r=rows().pop()}r.children[0].value=nm;const s=SG[nm];if(s&&s.a&&!r.children[1].value.trim())r.children[1].value=s.a;itot();r.children[1].focus();return}
- const ac=e.target.closest('[data-ac]');if(ac){curAcc=+ac.dataset.ac;S.invAcc=curAcc;save();paintAcc();return}
+ const ac=e.target.closest('[data-ac]');if(ac){curAcc=+ac.dataset.ac;S.invAcc=curAcc;save();paintAcc();paintBg();return}
  const fl=e.target.closest('[data-f]');if(fl){F=fl.dataset.f;render();return}
  const rp=e.target.closest('[data-pc]');if(rp){selectP(rp.dataset.pc,false);return}
  const pr=e.target.closest('[data-pn]');if(pr){selectP(pr.dataset.pn,true);return}
@@ -450,7 +463,8 @@ ${sp(22,28,11)}${sp(180,24,8)}${sp(20,204,7)}${sp(182,206,10)}
 <path d="M72 106L92 126L130 82" fill="none" stroke="#052B21" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity=".35"/>
 <path d="M72 102L92 122L130 78" fill="none" stroke="url(#sgc)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>`}
-$('sealg').innerHTML=sealSVG();
+/* inline SVG নয়, ছবি (img) হিসেবে বসাই — html2canvas তাতে নির্ভুলভাবে আঁকতে পারে */
+$('sealg').innerHTML='<img alt="হিসাব মিটে গেছে" width="92" height="115" src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(sealSVG())+'">';
 resetForm(false);render();
 /* অন্য ডিভাইস থেকে সিঙ্কে ডাটা এলে sync.js নিজেই পেজ রিফ্রেশ করে */
 </script><script src="suggest.js"></script><script src="pwa.js"></script></body></html>
