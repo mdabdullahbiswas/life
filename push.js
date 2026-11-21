@@ -4,12 +4,12 @@
 (function(){
 if(window.__hpush)return;window.__hpush=1;
 const CONFIG={
-  apiKey:'PASTE_API_KEY',
-  authDomain:'PASTE_PROJECT_ID.firebaseapp.com',
-  projectId:'PASTE_PROJECT_ID',
-  messagingSenderId:'PASTE_SENDER_ID',
-  appId:'PASTE_APP_ID',
-  vapidKey:'PASTE_WEB_PUSH_PUBLIC_KEY'
+  apiKey:'AIzaSyC6HPN2GK3FKbK1y5iKmqK7ec3byvRJ54Y',
+  authDomain:'life-1625c.firebaseapp.com',
+  projectId:'life-1625c',
+  messagingSenderId:'77245924818',
+  appId:'1:77245924818:web:b0106d59bfc7da6f7bb40b',
+  vapidKey:'BNEXDLjUcizKgeEisR6DxDaDMv7ggLEqcNzGj82ehY0ca8mhLF1FnC1m4nlh9-pN8Dq6QbX7TsLZ0qMeT4pP_44'
 };
 const FB='10.14.1';
 const sync=()=>{try{return JSON.parse(localStorage.getItem('dl_sync')||'{}')||{}}catch(e){return{}}};
