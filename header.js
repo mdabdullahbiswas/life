@@ -2,7 +2,7 @@
    নাম, লোগো বা মেনুর লিংক বদলাতে শুধু এই ফাইলটি বদলান। */
 (function(){
 const NAME='Hayat',LOGO='H';
-const LINKS=[['index.html','হোম'],['tasks.html','কাজ'],['namaz.html','নামাজ'],['roza.html','রোজা'],['study.html','পড়া'],['hisab.html','হিসাব'],['invoice.html','ইনভয়েস'],['bags.html','ব্যাগ'],['settings.html','সেটিং']];
+const LINKS=[['index.html','হোম'],['tasks.html','কাজ'],['namaz.html','নামাজ'],['roza.html','রোজা'],['study.html','পড়া'],['hisab.html','হিসাব'],['invoice.html','খাতা'],['bags.html','ব্যাগ'],['settings.html','সেটিং']];
 const CSS=`body::after{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:49;background:var(--bg)}
 .nvw{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;padding:10px 16px 0}
 .nv{max-width:1080px;margin:auto;display:flex;align-items:center;gap:14px;padding:8px 10px 8px 14px;border-radius:20px;position:relative;overflow:hidden;
