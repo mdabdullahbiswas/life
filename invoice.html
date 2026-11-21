@@ -117,6 +117,18 @@ button.sm{padding:5px 12px;font-size:12px;border-radius:10px}
 #paper .stamp{position:absolute;top:22px;right:14px;padding:3px 12px;border:2px solid;border-radius:6px;font-weight:700;font-size:13px;transform:rotate(-6deg);opacity:.9;z-index:2}
 .s-due{color:#991b1b;background:#fee2e2}.s-owe{color:#92400e;background:#fef3c7}.s-ok{color:#166534;background:#dcfce7}
 #paper .ty{text-align:center;margin-top:16px;padding-top:10px;border-top:1px dashed #d9caa0;font-size:12px;color:var(--pa);font-weight:600}
+/* হিসাব মিটে গেলে প্রিমিয়াম সিল */
+#paper .seal{display:none;text-align:center;margin:20px 0 8px;padding:14px 0 4px;border-top:1px solid #eadfc6}
+#paper.done .seal{display:block}
+#paper.done .stamp{display:none}
+#paper.done{border-color:#d9b866;background:linear-gradient(180deg,#fffdf6,#fff8e4 70%,#fffdf8)}
+#paper .seal svg{display:block;margin:0 auto}
+#paper .seal .orn{color:#C9972E;font-size:11px;letter-spacing:8px;margin-top:8px}
+#paper .seal h4{margin:4px 0 2px;font-size:22px;font-weight:700;color:var(--pa);letter-spacing:.3px}
+#paper .seal p{margin:0;font-size:12.5px;color:#7A6A55}
+#paper.done .seal svg{animation:sealin .9s cubic-bezier(.2,1.25,.3,1) both}
+@keyframes sealin{from{opacity:0;transform:scale(1.6) rotate(-16deg)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){#paper.done .seal svg{animation:none}}
 #toast{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);left:50%;transform:translateX(-50%) translateY(10px);background:var(--t);color:var(--bg);padding:10px 20px;border-radius:12px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:99}
 #toast.show{opacity:1;transform:translateX(-50%)}
 .hidden{display:none!important}
@@ -180,7 +192,8 @@ button.sm{padding:5px 12px;font-size:12px;border-radius:10px}
    <div class="det"><div><b>সাথে:</b> <span id="p-name">-</span><br><b>ফোন:</b> <span id="p-phone">-</span></div><div style="text-align:right"><b>তারিখ:</b> <span id="p-date">-</span></div></div>
    <table><thead><tr><th>তারিখ</th><th>বাবদ</th><th class="r">আমি দিয়েছি</th><th class="r">আপনি দিয়েছেন</th></tr></thead><tbody id="p-body"></tbody></table>
    <div class="sum"><div><span>আমি দিয়েছি মোট</span><b id="p-s0">০</b></div><div><span>আপনি দিয়েছেন মোট</span><b id="p-s1">০</b></div><div class="tt"><span id="p-rl">বাকি</span><b id="p-rv">০ ৳</b></div></div>
-   <div class="ty">হিসাবে কোনো ভুল থাকলে জানাবেন — ধন্যবাদ</div>
+   <div class="seal"><div id="sealg"></div><div class="orn">✦ ✦ ✦</div><h4>হিসাব মিটে গেছে</h4><p id="p-sd">সব হিসাব পরিষ্কার</p></div>
+   <div class="ty" id="p-ty">হিসাবে কোনো ভুল থাকলে জানাবেন — ধন্যবাদ</div>
   </div>
   <div class="acts hidden" id="pact" style="margin-top:0">
    <button type="button" data-a="wa">💬 হোয়াটসঅ্যাপে পাঠান</button><button type="button" data-a="share">📤 ছবি শেয়ার</button><button class="g" type="button" data-a="jpg">JPG</button><button class="g" type="button" data-a="print">প্রিন্ট / PDF</button>
@@ -331,6 +344,9 @@ function paper(P){
  else if(bal<0){$('p-rl').textContent='আমি আপনাকে দেব';$('p-rv').textContent=fm(-bal);st.textContent='আমার দেনা';st.className='stamp s-owe'}
  else{$('p-rl').textContent='হিসাব';$('p-rv').textContent='মিটে গেছে ✓';st.textContent='মিটে গেছে';st.className='stamp s-ok'}
  $('settle').classList.toggle('hidden',bal===0);
+ const done=bal===0&&es.length>0;$('paper').classList.toggle('done',done);
+ if(done){$('p-sd').textContent=bd(es[es.length-1].d||key(new Date()))+' · সব হিসাব পরিষ্কার';$('p-ty').textContent='হিসাব পরিষ্কার, সম্পর্ক আরও পরিষ্কার 🤍 — পাশে থাকার জন্য ধন্যবাদ'}
+ else $('p-ty').textContent='হিসাবে কোনো ভুল থাকলে জানাবেন — ধন্যবাদ';
  $('ents-t').textContent=SEL+'-এর লেনদেন';
  $('el').innerHTML=es.slice().reverse().map(e=>{const t=T[e.t];return`<div class="row"><div class="rt"><div>${ex(e.n)||'—'}</div><div class="m">${bd(e.d)} · <span class="pill ${t.s>0?'ok':'er'}">${t.l}</span></div></div><b class="nm">${fm(e.a)}</b><div style="display:flex;gap:6px;flex:none"><button class="g sm" data-a="edit" data-i="${ex(e.id)}" aria-label="এডিট">✎</button><button class="x sm" style="padding:5px 10px" data-a="del" data-i="${ex(e.id)}" aria-label="মুছুন">✕</button></div></div>`}).join('')}
 $('q').addEventListener('input',render);
@@ -340,7 +356,7 @@ $('me').addEventListener('input',()=>{S.myName=$('me').value.trim();save();rende
 function summary(){
  const es=entsOf(SEL),bal=r2(es.reduce((s,e)=>s+T[e.t].s*e.a,0)),me=S.myName?'\n— '+S.myName:'';
  const lines=es.slice(-15).map(e=>'• '+sd(e.d)+' — '+(e.n||'লেনদেন')+': '+(T[e.t].side?'আপনি দিয়েছেন ':'আমি দিয়েছি ')+fm(e.a));
- return 'আসসালামু আলাইকুম '+SEL+',\nআমাদের লেনদেনের হিসাব ('+bd(key(new Date()))+' পর্যন্ত):\n'+lines.join('\n')+'\n\n'+(bal>0?'মোট বাকি: আপনি আমাকে '+fm(bal)+' দেবেন।':bal<0?'মোট দেনা: আমি আপনাকে '+fm(-bal)+' দেব।':'হিসাব মিটে গেছে ✓')+me}
+ return 'আসসালামু আলাইকুম '+SEL+',\nআমাদের লেনদেনের হিসাব ('+bd(key(new Date()))+' পর্যন্ত):\n'+lines.join('\n')+'\n\n'+(bal>0?'মোট বাকি: আপনি আমাকে '+fm(bal)+' দেবেন।':bal<0?'মোট দেনা: আমি আপনাকে '+fm(-bal)+' দেব।':'হিসাব মিটে গেছে ✓ — পাশে থাকার জন্য ধন্যবাদ 🤍')+me}
 function snap(then){
  if(!window.html2canvas){toast('ছবির টুল লোড হয়নি, ইন্টারনেট দেখুন');return}
  const nm='Hisab_'+SEL+'_'+key(new Date())+'.jpg';toast('ছবি বানানো হচ্ছে…');
@@ -387,6 +403,26 @@ $('ed').addEventListener('keydown',e=>{
  const last=rows().pop();
  if(last.children[0].value.trim()){toast('এই জিনিসের টাকা লিখুন');return}
  if(rows().some(r=>num(r.children[1].value)>0))saveEntry();else toast('টাকা লিখুন')});
+/* সোনালি রোজেট সিল: শুধু আকার SVG-তে, লেখা HTML-এ — যাতে JPG-তেও ফন্ট ঠিক থাকে */
+function sealSVG(){
+ const pts=[];for(let i=0;i<360;i++){const a=i*Math.PI/180,r=95+3.6*Math.cos(a*28);pts.push((100+r*Math.cos(a)).toFixed(1)+','+(100+r*Math.sin(a)).toFixed(1))}
+ return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 250" width="150" height="188" role="img" aria-label="হিসাব মিটে গেছে"><defs>
+<linearGradient id="sg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E7AE"/><stop offset=".35" stop-color="#D4A63F"/><stop offset=".65" stop-color="#9A7120"/><stop offset="1" stop-color="#F0D27E"/></linearGradient>
+<linearGradient id="sg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF1BF"/><stop offset=".5" stop-color="#E3BC5C"/><stop offset="1" stop-color="#B98A2C"/></linearGradient>
+<linearGradient id="sg3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2FB587"/><stop offset="1" stop-color="#0D4C3C"/></linearGradient>
+<linearGradient id="sgr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14735A"/><stop offset="1" stop-color="#0A3A2E"/></linearGradient>
+<linearGradient id="sgc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF6D2"/><stop offset="1" stop-color="#F0CF72"/></linearGradient></defs>
+<path d="M64 150L46 244L72 230L92 246L104 160Z" fill="url(#sgr)" stroke="#0A3A2E" stroke-width=".8"/>
+<path d="M136 150L154 244L128 230L108 246L96 160Z" fill="url(#sgr)" stroke="#0A3A2E" stroke-width=".8"/>
+<polygon points="${pts.join(' ')}" fill="url(#sg1)" stroke="#8A6420" stroke-width=".8"/>
+<circle cx="100" cy="100" r="82" fill="none" stroke="#FFF3C4" stroke-width="1.6" opacity=".85"/>
+<circle cx="100" cy="100" r="78" fill="url(#sg2)" stroke="#A67C1F" stroke-width="1"/>
+<circle cx="100" cy="100" r="68" fill="none" stroke="#7A5614" stroke-width="2.2" stroke-dasharray="1 5.2" stroke-linecap="round" opacity=".55"/>
+<circle cx="100" cy="100" r="58" fill="url(#sg3)" stroke="#FFF3C4" stroke-width="2"/>
+<ellipse cx="82" cy="72" rx="34" ry="14" transform="rotate(-30 82 72)" fill="#fff" opacity=".16"/>
+<path d="M72 102L92 122L130 78" fill="none" stroke="url(#sgc)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`}
+$('sealg').innerHTML=sealSVG();
 resetForm(false);render();
 /* অন্য ডিভাইস থেকে সিঙ্কে ডাটা এলে sync.js নিজেই পেজ রিফ্রেশ করে */
 </script><script src="suggest.js"></script><script src="pwa.js"></script></body></html>
