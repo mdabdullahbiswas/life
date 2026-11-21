@@ -117,8 +117,8 @@ form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}form input{flex:1 1 110
 .sb{margin:8px 0 2px 34px;display:grid;gap:7px}.sb label{display:flex;gap:8px;align-items:center;font-size:13px}
 .chk.sm{width:18px;height:18px;border-radius:6px}.chk.sm:checked::after{font-size:11px}
 .sbx{flex:1 1 100%}.sbl{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}.sbl:empty{display:none}
-.sc{display:inline-flex;align-items:center;gap:2px;padding:3px 4px 3px 12px;border-radius:99px;font-size:13px;background:color-mix(in srgb,var(--a) 16%,transparent);border:1px solid var(--cb)}
-.sc .x{padding:2px 8px}.sba{display:flex;gap:8px}.sba input{flex:1}.sba button{padding:8px 16px}
+.stc{display:inline-flex;align-items:center;gap:2px;padding:3px 4px 3px 12px;border-radius:99px;font-size:13px;background:color-mix(in srgb,var(--a) 16%,transparent);border:1px solid var(--cb)}
+.stc .x{padding:2px 8px}.sba{display:flex;gap:8px}.sba input{flex:1}.sba button{padding:8px 16px}
 .dg{display:flex;gap:6px;flex:1 1 230px;min-width:0}.dg select{flex:1 1 0;min-width:0;padding:9px 6px}.dg.tg{flex:1 1 190px}
 
 /* ===== প্রিমিয়াম বাটন ও টিক · প্রতিটি কার্ডের নিজস্ব রং ===== */
@@ -138,7 +138,7 @@ form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}form input{flex:1 1 110
 .card input:focus,.card select:focus{outline-color:var(--pc)}
 .card input:not([type=checkbox]):not([type=hidden]),.card select{border-color:color-mix(in srgb,var(--pc) 30%,var(--b));background:color-mix(in srgb,var(--pc) 4%,var(--c));transition:border-color .2s,box-shadow .2s}
 .card input:not([type=checkbox]):focus,.card select:focus{border-color:var(--pc);box-shadow:0 0 0 4px color-mix(in srgb,var(--pc) 18%,transparent);outline:0}
-.sc{background:color-mix(in srgb,var(--pc) 14%,transparent);border-color:color-mix(in srgb,var(--pc) 40%,transparent)}
+.stc{background:color-mix(in srgb,var(--pc) 14%,transparent);border-color:color-mix(in srgb,var(--pc) 40%,transparent)}
 /* টিক বক্স */
 .chk{width:26px;height:26px;border-radius:9px;border:2px solid color-mix(in srgb,var(--pt,var(--a)) 62%,transparent);background:color-mix(in srgb,var(--pc,var(--a)) 6%,var(--c));box-shadow:inset 0 1px 2px rgba(0,0,0,.08);transition:transform .18s,box-shadow .25s,background .25s,border-color .25s}
 .chk:hover{transform:scale(1.08);border-color:var(--pc,var(--a));box-shadow:0 0 0 4px color-mix(in srgb,var(--pc,var(--a)) 18%,transparent)}
@@ -160,7 +160,7 @@ form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}form input{flex:1 1 110
 .card .x{width:32px;height:32px;padding:0;display:inline-grid;place-items:center;border-radius:50%;font-size:14px;color:var(--m);background:transparent;border:1px solid transparent;box-shadow:none;transition:background .2s,color .2s,border-color .2s,transform .18s}
 .card .x:hover{background:color-mix(in srgb,#d33 14%,transparent);color:#d33;border-color:color-mix(in srgb,#d33 32%,transparent);transform:scale(1.08)}
 .card .x.ed:hover{background:color-mix(in srgb,var(--pc) 16%,transparent);color:var(--pt);border-color:color-mix(in srgb,var(--pc) 40%,transparent)}
-.sc .x{width:24px;height:24px;font-size:12px}
+.stc .x{width:24px;height:24px;font-size:12px}
 @media (prefers-reduced-motion:reduce){.chk,.chk::after,.card button{animation:none!important;transition:none!important}}
 .tk .row{flex-wrap:wrap}.card button.nx{padding:6px 12px;font-size:12px;margin-left:6px}
 
@@ -207,7 +207,7 @@ function streak(now){let n=0;for(let i=0;i<365;i++){const d=new Date(now);d.setD
 if(!L.length){if(i==0)continue;else break}
 const dn=L.filter(t=>(S.done[key(d)]||{})[t.id]).length;if(dn==L.length)n++;else if(i==0)continue;else break}return n}
 /* উপকাজ: t.subs=[{id,t}] · তারিখ ধরে অবস্থা S.sd[তারিখ][কাজ id][উপকাজ id] · বাদ দেওয়া বাকি কাজ S.skip[তারিখ][কাজ id] · বাকি গোনা শুরু S.ovFrom */
-const chip=(txt,id)=>`<span class="sc"><input type="hidden" name="sub" value="${ex(txt)}"><input type="hidden" name="sid" value="${ex(id||'')}">${ex(txt)}<button type="button" class="x" data-a="subdel" aria-label="সরান" title="সরান">✕</button></span>`;
+const chip=(txt,id)=>`<span class="stc"><input type="hidden" name="sub" value="${ex(txt)}"><input type="hidden" name="sid" value="${ex(id||'')}">${ex(txt)}<button type="button" class="x" data-a="subdel" aria-label="সরান" title="সরান">✕</button></span>`;
 function addSub(){const i=document.getElementById('subn'),l=document.getElementById('sbl');if(!i||!l)return;const v=i.value.trim();if(!v)return;l.insertAdjacentHTML('beforeend',chip(v,''));i.value='';i.focus()}
 const subs=(t,k)=>{const L=t.subs||[];if(!L.length)return '';const dd=((S.sd||{})[k]||{})[t.id]||{};return `<div class="sb">${L.map(s=>`<label style="${dd[s.id]?'color:var(--m)':''}"><input type="checkbox" class="chk sm" data-a="sub" data-i="${t.id}" data-s="${s.id}" data-k="${k}" ${dd[s.id]?'checked':''}><span style="${dd[s.id]?'text-decoration:line-through':''}">${ex(s.t)}</span></label>`).join('')}</div>`};
 /* পুনরাবৃত্ত কাজের পরের নির্ধারিত দিন (আজ থেকে গুনে) */
@@ -242,7 +242,7 @@ $.addEventListener('click',e=>{const bt=e.target.closest('[data-a]');if(!bt||bt.
 if(a=='edit'){E=+i;render();const f=document.getElementById('tf');if(f){f.scrollIntoView({behavior:'smooth',block:'center'});const n=f.elements.title;if(n)n.focus()}return}
 if(a=='cancel'){E=null;render();return}
 if(a=='subadd'){addSub();return}
-if(a=='subdel'){const c=bt.closest('.sc');if(c)c.remove();return}
+if(a=='subdel'){const c=bt.closest('.stc');if(c)c.remove();return}
 if(a=='skip'){const k=bt.dataset.k;(S.skip[k]=S.skip[k]||{})[i]=true;save();render();return}
 if(a=='nextt'){overdue(new Date()).filter(x=>x.t.id==i).forEach(({k})=>{(S.skip[k]=S.skip[k]||{})[i]=true});save();render();return}
 if(a=='resched'){const t=S.tasks.find(x=>x.id==i);if(t){t.start=key(new Date());if(t.bag){const b=(S.bags||[]).find(x=>x.id===t.bag);if(b&&typeof b.dt==='string')b.dt=t.start}save();render()}return}
