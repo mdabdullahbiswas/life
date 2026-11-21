@@ -384,8 +384,11 @@ function waMsg(){
 function snap(then){
  if(!window.html2canvas){toast('ছবির টুল লোড হয়নি, ইন্টারনেট দেখুন');return}
  const nm='Hisab_'+SEL+'_'+key(new Date())+'.jpg';toast('ছবি বানানো হচ্ছে…');
- html2canvas($('paper'),{scale:2,backgroundColor:'#fffdf8',onclone:d=>{   /* কপির ভেতরে অ্যানিমেশন বন্ধ — নইলে সিল "শুরুর অবস্থায়" (অদৃশ্য) আঁকা হয় */
-   const st=d.createElement('style');st.textContent='*{animation:none!important;transition:none!important}';d.head.appendChild(st)}}).then(c=>c.toBlob(b=>then(b,nm,c),'image/jpeg',.92)).catch(()=>toast('ছবি বানানো যায়নি'))}
+ html2canvas($('paper'),{scale:3,windowWidth:1200,useCORS:true,backgroundColor:'#fffdf8',onclone:d=>{   /* কপির ভেতরে অ্যানিমেশন বন্ধ — নইলে সিল "শুরুর অবস্থায়" (অদৃশ্য) আঁকা হয় */
+   const st=d.createElement('style');st.textContent='*{animation:none!important;transition:none!important}';d.head.appendChild(st);
+   /* ছবির মাপ সব ডিভাইসে এক: কার্ডটা আলাদা করে ৫২০px চওড়ায় বসিয়ে ৩ গুণ বড় করে আঁকা (≈১৫৬০px) — ফোনে ছোট স্ক্রিনেও ঝাপসা হয় না */
+   const p=d.getElementById('paper');d.body.innerHTML='';d.body.style.cssText='margin:0;padding:0;background:#fffdf8';
+   p.style.width='520px';p.style.maxWidth='none';p.style.margin='0';p.style.boxShadow='none';d.body.appendChild(p)}}).then(c=>c.toBlob(b=>then(b,nm,c),'image/jpeg',.97)).catch(()=>toast('ছবি বানানো যায়নি'))}
 const saveBlob=(b,nm)=>{const a=document.createElement('a');a.download=nm;a.href=URL.createObjectURL(b);a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
 function dl(name,type,data){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 
