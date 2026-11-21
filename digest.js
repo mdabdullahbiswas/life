@@ -36,7 +36,7 @@ async function show(t,opts){
 
 function markSent(k,K){
   const s=lsent();s[k]=K;try{localStorage.setItem('dl_dg',JSON.stringify(s))}catch(e){}
-  idbSent[k]=K;dbPut('dgsent',Object.assign({},idbSent))}
+  idbSent[k]=K;dbPut('dgsent',Object.assign({},idbSent))}   /* K = 'তারিখ@সময়' */
 
 const inflight={};
 /* force=true হলে সময়ের হিসাব ছাড়াই এখনই পাঠায় ("পরীক্ষা" বাটন)। শর্ত না মিললে false ফেরত দেয় */
@@ -46,16 +46,16 @@ function run(kind,force){
     const o=load();if(!o.notif)return false;
     const c=H.cfg(o);if(!c.on&&!force)return false;
     const now=new Date(),K=H.key(now),sent=lsent();
-    ['am','pm'].forEach(k=>{if(idbSent[k]===K)sent[k]=K});
+    ['am','pm'].forEach(k=>{const z=H.stamp(k,o,now);if(idbSent[k]===z)sent[k]=z});
     const ks=force?(kind?[kind]:['am','pm']):H.plan(o,now,sent).filter(k=>!kind||k===kind);
     ks.forEach(k=>{
       if(inflight[k])return;
       let m=H.build(k,o,now);
       if(!m&&force)m={t:o.lang==='en'?'🔔 Test':'🔔 পরীক্ষা',b:o.lang==='en'?'No tasks today, so there is nothing to list.':'আজ কোনো কাজ নেই, তাই দেখানোর মতো তালিকা নেই।',url:'tasks.html'};
-      if(!m){markSent(k,K);return}
+      if(!m){markSent(k,H.stamp(k,o,now));return}
       inflight[k]=1;
       show(m.t,{body:m.b,tag:'hayat-digest-'+k+(force?'-test-'+Date.now():''),renotify:!!force,icon:'icon-512.png',badge:'badge-96.png',data:{url:m.url}})
-        .then(ok=>{inflight[k]=0;if(ok&&!force)markSent(k,K)});
+        .then(ok=>{inflight[k]=0;if(ok&&!force)markSent(k,H.stamp(k,o,now))});
     });
     return true;
   }catch(e){return false}}
