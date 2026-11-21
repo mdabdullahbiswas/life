@@ -15,6 +15,8 @@ const SKIP={'st/run':1,'st/sel':1,'st/mode':1,'ts/ed':1}; /* ts/ed = তাস�
 const TABS={tasks:'tasks',done:'tasks',fin:'hisab',goal:'hisab',bud:'hisab',hide:'hisab',pr:'namaz',qaza:'namaz',ts:'namaz',
   fast:'roza',rf:'roza',rq:'roza',ho:'roza',loc:'roza',fn:'roza',ram:'roza',bags:'bags',st:'study',led:'invoice',ppl:'invoice',inv:'invoice'};
 const tabOf=k=>TABS[k.split(/[\/#]/)[0]]||'settings';
+/* সারির পরিচয় = বিষয়বস্তুর হ্যাশ + ট্যাব। আগে ভুল ট্যাবে (যেমন settings) গেছে এমন সারি নতুন ট্যাবে আবার যাবে */
+const sig=(k,v)=>hs(v)+'@'+tabOf(k);
 
 const isObj=v=>!!v&&typeof v==='object'&&!Array.isArray(v);
 const esc=s=>String(s).replace(/[%\/#~]/g,c=>'%'+c.charCodeAt(0).toString(16).toUpperCase().padStart(2,'0'));
@@ -75,7 +77,7 @@ async function run(c){
   if(!Object.keys(dl).filter(k=>k!=='sg').length&&Object.keys(sh).length){sh={};since=0}
   const first=!c.init,T=Date.now()+off,cur={},out=[];
   /* প্রথম সিঙ্কে (নতুন ডিভাইস) লোকাল সারি 'খুব পুরনো' ধরা হয়, তাই শিটে আগে থেকে থাকা তথ্য জেতে */
-  for(const k in rows){const h=hs(rows[k]);cur[k]=h;if(sh[k]!==h)out.push({k,tab:tabOf(k),v:rows[k],u:first?1:T,d:0})}
+  for(const k in rows){const h=sig(k,rows[k]);cur[k]=h;if(sh[k]!==h)out.push({k,tab:tabOf(k),v:rows[k],u:first?1:T,d:0})}
   for(const k in sh)if(!(k in rows))out.push({k,tab:tabOf(k),v:'',u:T,d:1});
 
   const pulled=[],N=Math.max(1,Math.ceil(out.length/400));
@@ -88,12 +90,12 @@ async function run(c){
   const dl2=getAll(),cur2=flat(dl2),nsh=Object.assign({},sh);let changed=0,chSG=0;
   out.forEach(r=>{if(r.d)delete nsh[r.k];else nsh[r.k]=cur[r.k]});
   for(const r of pulled){
-    const nowH=r.k in cur2?hs(cur2[r.k]):null,wasH=r.k in cur?cur[r.k]:null;
+    const nowH=r.k in cur2?sig(r.k,cur2[r.k]):null,wasH=r.k in cur?cur[r.k]:null;
     if(nowH!==wasH)continue;                         // পাঠানোর সময়ে লোকালে আবার বদলেছে → লোকালটা নতুন, পরের রাউন্ডে যাবে
     const isSG=r.k.slice(0,3)==='sg/';
     if(r.d){if(nowH!==null){setRow(dl2,r.k,null,1);if(isSG)chSG=1;else changed=1}delete nsh[r.k];continue}
     let val;try{val=JSON.parse(r.v)}catch(e){continue}   // শিটে হাতে ভুল JSON লিখলে সারিটা এড়িয়ে যাবে
-    const cv=JSON.stringify(val),h=hs(cv);
+    const cv=JSON.stringify(val),h=sig(r.k,cv);
     if(nowH!==h){setRow(dl2,r.k,val,0);if(isSG)chSG=1;else changed=1}
     nsh[r.k]=h}
   const sg2=isObj(dl2.sg)?dl2.sg:{};delete dl2.sg;
@@ -141,7 +143,7 @@ function setup(url,token){
 function clear(){const c=cfg();put({dev:c.dev});fire()}
 function status(){
   const c=cfg();let pending=0;
-  if(c.url){const rows=flat(getAll()),sh=c.sh||{};for(const k in rows)if(sh[k]!==hs(rows[k]))pending++;for(const k in sh)if(!(k in rows))pending++}
+  if(c.url){const rows=flat(getAll()),sh=c.sh||{};for(const k in rows)if(sh[k]!==sig(k,rows[k]))pending++;for(const k in sh)if(!(k in rows))pending++}
   return{on:!!(c.url&&c.token),url:c.url||'',token:c.token||'',lastOk:c.lastOk||0,err:c.err||'',busy:!!busy,pending}}
 
 window.hayatSync={sync,setup,clear,status,_flat:flat,_setRow:setRow};
