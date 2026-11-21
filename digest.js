@@ -54,7 +54,7 @@ function run(kind,force){
       if(!m&&force)m={t:o.lang==='en'?'🔔 Test':'🔔 পরীক্ষা',b:o.lang==='en'?'No tasks today, so there is nothing to list.':'আজ কোনো কাজ নেই, তাই দেখানোর মতো তালিকা নেই।',url:'tasks.html'};
       if(!m){markSent(k,K);return}
       inflight[k]=1;
-      show(m.t,{body:m.b,tag:'hayat-digest-'+k,icon:'icon-512.png',badge:'badge-96.png',data:{url:m.url}})
+      show(m.t,{body:m.b,tag:'hayat-digest-'+k+(force?'-test-'+Date.now():''),renotify:!!force,icon:'icon-512.png',badge:'badge-96.png',data:{url:m.url}})
         .then(ok=>{inflight[k]=0;if(ok&&!force)markSent(k,K)});
     });
     return true;
@@ -85,7 +85,7 @@ const rs=Storage.prototype.setItem;
 Storage.prototype.setItem=function(k){const r=rs.apply(this,arguments);if(this===localStorage&&k==='dl'){mirrorSoon();schedule();reg()}return r};
 window.addEventListener('hdg',()=>{mirror();refreshIdb().then(()=>{run();schedule();reg()})});
 
-window.hayatDigest=run;
+run.v=2;window.hayatDigest=run;
 refreshIdb().then(()=>{mirror();run();schedule();reg()});
 setInterval(()=>{run()},20000);
 const wake=()=>{if(document.hidden)return;refreshIdb().then(()=>{run();schedule()})};
