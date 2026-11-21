@@ -7,6 +7,7 @@ window.LANG=LANG;
 if(LANG!=='en'){window.L=s=>s;return}
 
 const D={
+'বাকি কাজ খাতা':'Pending tasks log','বাকি কাজ':'Pending tasks','উপকাজ':'Subtasks','উপকাজ লিখে ＋ চাপুন (ঐচ্ছিক)':'Type a subtask and press ＋ (optional)','উপকাজ যোগ':'Add subtask','আজকের কাজে নিন':'Move to today','বাদ দিন':'Dismiss','সব বাদ দিন':'Dismiss all','কোনো বাকি কাজ নেই':'No pending tasks','সব বাকি কাজ বাদ দেবেন? (খাতা থেকে মুছে যাবে)':'Dismiss all pending tasks? (They will be removed from the log.)',
 'মাস':'Month','বছর':'Year',
 /* তাসবিহ */
 'তাসবিহ':'Tasbih','কোনটা কতবার পড়েছেন, এখানে লিখে রাখুন':'Log what you recited and how many times','আজকের মোট':'Today\u2019s total','সুবহানাল্লাহ':'SubhanAllah','আল্লাহু আকবার':'Allahu Akbar','ইস্তিগফার':'Istighfar','দরূদ শরীফ':'Durood Sharif','লা ইলাহা ইল্লাল্লাহ':'La ilaha illallah',
