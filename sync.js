@@ -12,7 +12,7 @@ const CK='dl_sync',DK='dl';
 const LOCAL={notif:1,url:1,lastBak:1,tn:1,tp:1};
 const SKIP={'st/run':1,'st/sel':1,'st/mode':1,'ts/ed':1}; /* ts/ed = তাসবিহ এডিটের সাময়িক অবস্থা, সিঙ্ক হবে না */
 /* কোন কী শিটের কোন ট্যাবে যাবে (বাকি সব settings-এ) */
-const TABS={tasks:'tasks',done:'tasks',fin:'hisab',goal:'hisab',bud:'hisab',hide:'hisab',pr:'namaz',qaza:'namaz',ts:'namaz',
+const TABS={tasks:'tasks',done:'tasks',fin:'hisab',inv:'hisab',goal:'hisab',bud:'hisab',hide:'hisab',pr:'namaz',qaza:'namaz',ts:'namaz',
   fast:'roza',rf:'roza',rq:'roza',ho:'roza',loc:'roza',fn:'roza',ram:'roza',bags:'bags',st:'study'};
 const tabOf=k=>TABS[k.split(/[\/#]/)[0]]||'settings';
 
