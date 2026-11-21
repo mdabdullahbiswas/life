@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="bn"><head><meta charset="utf-8">
-<script src="lang.js"></script>
+<script src="lang.js"></script><script src="dialog.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>কাজ · Hayat</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
@@ -270,8 +270,8 @@ if(a=='subdel'){const c=bt.closest('.stc');if(c)c.remove();return}
 if(a=='skip'){const k=bt.dataset.k;(S.skip[k]=S.skip[k]||{})[i]=true;save();render();return}
 if(a=='nextt'){overdue(new Date()).filter(x=>x.t.id==i).forEach(({k})=>{(S.skip[k]=S.skip[k]||{})[i]=true});save();render();return}
 if(a=='resched'){const t=S.tasks.find(x=>x.id==i);if(t){t.start=key(new Date());if(t.bag){const b=(S.bags||[]).find(x=>x.id===t.bag);if(b&&typeof b.dt==='string')b.dt=t.start}save();render()}return}
-if(a=='skipall'){if(confirm('সব বাকি কাজ বাদ দেবেন? (খাতা থেকে মুছে যাবে)')){overdue(new Date()).forEach(({t,k})=>{(S.skip[k]=S.skip[k]||{})[t.id]=true});save();render()}return}
-if(a=='del'&&confirm('কাজটি মুছে ফেলবেন?')){if(E==i)E=null;const dt0=S.tasks.find(t=>t.id==i);if(dt0&&dt0.bag){const bb=(S.bags||[]).find(x=>x.id===dt0.bag);if(bb)bb.dt=''}S.tasks=S.tasks.filter(t=>t.id!=i);save();render()}});
+if(a=='skipall'){hconfirm('এগুলো বাকি কাজ খাতা থেকে মুছে যাবে।',{title:'সব বাকি কাজ বাদ দেবেন?',ok:'হ্যাঁ, বাদ দিন',danger:1}).then(ok=>{if(ok){overdue(new Date()).forEach(({t,k})=>{(S.skip[k]=S.skip[k]||{})[t.id]=true});save();render()}});return}
+if(a=='del'){const dt0=S.tasks.find(t=>t.id==i);hconfirm(dt0?dt0.title:'',{title:'কাজটি মুছে ফেলবেন?',ok:'হ্যাঁ, মুছুন',danger:1}).then(ok=>{if(!ok)return;if(E==i)E=null;if(dt0&&dt0.bag){const bb=(S.bags||[]).find(x=>x.id===dt0.bag);if(bb)bb.dt=''}S.tasks=S.tasks.filter(t=>t.id!=i);save();render()})}});
 $.addEventListener('change',e=>{const el=e.target,nm=el.name;
 if(el.dataset.dg){dgChange(el);return}
 if(nm=='mm'||nm=='yy'){const f=el.form,yv=+f.elements.yy.value,mv=+f.elements.mm.value;f.elements.dd.innerHTML=dayOpts(yv,mv,Math.min(+f.elements.dd.value,dim(yv,mv)));return}
