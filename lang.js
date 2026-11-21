@@ -7,6 +7,7 @@ window.LANG=LANG;
 if(LANG!=='en'){window.L=s=>s;return}
 
 const D={
+'পরের বার':'Next time','এই কাজের বাকি পড়া সব দিন বাদ দিয়ে পরের বারে যান':'Skip all missed days of this task and go to the next time',
 'বাকি কাজ খাতা':'Pending tasks log','বাকি কাজ':'Pending tasks','উপকাজ':'Subtasks','উপকাজ লিখে ＋ চাপুন (ঐচ্ছিক)':'Type a subtask and press ＋ (optional)','উপকাজ যোগ':'Add subtask','আজকের কাজে নিন':'Move to today','বাদ দিন':'Dismiss','সব বাদ দিন':'Dismiss all','কোনো বাকি কাজ নেই':'No pending tasks','সব বাকি কাজ বাদ দেবেন? (খাতা থেকে মুছে যাবে)':'Dismiss all pending tasks? (They will be removed from the log.)',
 'মাস':'Month','বছর':'Year',
 /* তাসবিহ */
