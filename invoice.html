@@ -255,7 +255,7 @@ function addRow(n='',a='',focus=true){
  x.onclick=()=>{if(rows().length>1){r.remove()}else{i1.value='';i2.value=''}itot()};
  i1.addEventListener('change',()=>{const s=SG[i1.value.trim()];if(s&&s.a&&!i2.value.trim()){i2.value=s.a;itot()}});   /* চেনা জিনিস হলে শেষবারের টাকা বসে */
  i2.addEventListener('input',itot);
- i2.addEventListener('keydown',e=>{if(e.key!=='Enter')return;e.preventDefault();const nx=r.nextElementSibling;if(nx)nx.children[0].focus();else addRow()});
+ i1.enterKeyHint='next';i2.enterKeyHint='next';i2.addEventListener('focus',()=>i2.select());   /* আগে বসে থাকা টাকা সিলেক্ট হয়, নতুন লিখলে বদলে যায় */
  r.append(i1,i2,x);$('items').appendChild(r);if(focus)i1.focus();itot()}
 function resetForm(keepP){
  editId=null;if(!keepP){$('p').value='';$('ph').value=''}
@@ -367,6 +367,18 @@ document.addEventListener('click',e=>{
  else if(a==='backup')dl('hayat-khata-backup-'+key(new Date())+'.json','application/json',JSON.stringify({led:S.led,ppl:S.ppl},null,2));
  else if(a==='csv')dl('khata.csv','text/csv','\ufeffতারিখ,নাম,ধরন,বাবদ,টাকা\n'+S.led.map(e=>[e.d,'"'+(e.p||'').replace(/"/g,'""')+'"',(T[e.t]||{}).l||'','"'+(e.n||'').replace(/"/g,'""')+'"',e.a].join(',')).join('\n'))});
 
+/* Enter চাপলে পরের ঘরে যায়: কার সাথে → ফোন → তারিখ → বাবদ → টাকা → (পরের জিনিস)।
+   শেষ টাকার ঘরে লেখা থাকলে নতুন সারি খোলে; সারি খালি রেখে Enter চাপলে সেভ হয়। */
+['p','ph','d'].forEach(id=>$(id).enterKeyHint='next');
+$('ed').addEventListener('keydown',e=>{
+ if(e.key!=='Enter'||e.isComposing||e.target.tagName!=='INPUT')return;
+ const seq=[$('p'),$('ph'),$('d'),...rows().flatMap(r=>[r.children[0],r.children[1]])],i=seq.indexOf(e.target);
+ if(i<0)return;e.preventDefault();
+ if(i<seq.length-1){const n=seq[i+1];n.focus();if(n.select&&n.type!=='date')n.select();return}
+ if(e.target.value.trim()){addRow();return}                       /* শেষ সারি ভরা → আরেকটা জিনিস */
+ const last=rows().pop();
+ if(last.children[0].value.trim()){toast('এই জিনিসের টাকা লিখুন');return}
+ if(rows().some(r=>num(r.children[1].value)>0))saveEntry();else toast('টাকা লিখুন')});
 resetForm(false);render();
 /* অন্য ডিভাইস থেকে সিঙ্কে ডাটা এলে sync.js নিজেই পেজ রিফ্রেশ করে */
 </script><script src="suggest.js"></script><script src="pwa.js"></script></body></html>
