@@ -392,7 +392,8 @@ const D={
 'অনুমতি দেওয়া হয়নি':'Permission was not granted','আগে নোটিফিকেশন চালু করুন':'Enable notifications first',
 /* পপআপ */
 'নিশ্চিত করুন':'Please confirm','বার্তা':'Notice','ঠিক আছে':'OK','হ্যাঁ, নিশ্চিত':'Yes, confirm','হ্যাঁ, মুছুন':'Yes, delete','হ্যাঁ, বাদ দিন':'Yes, dismiss',
-'কাজটি মুছে ফেলবেন?':'Delete this task?','সব বাকি কাজ বাদ দেবেন?':'Dismiss all pending tasks?','এগুলো বাকি কাজ খাতা থেকে মুছে যাবে।':'These will be removed from the pending log.'
+'কাজটি মুছে ফেলবেন?':'Delete this task?','সব বাকি কাজ বাদ দেবেন?':'Dismiss all pending tasks?','এগুলো বাকি কাজ খাতা থেকে মুছে যাবে।':'These will be removed from the pending log.',
+'📲 অ্যাপ বন্ধ থাকলেও (পুশ)':'📲 Even when the app is closed (push)','পুশ চালু আছে':'Push is on','পুশ চালু নেই':'Push is off','এই ডিভাইসে পুশ চালু করুন':'Enable push on this device','পুশ পরীক্ষা':'Test push','পুশ বন্ধ করুন':'Turn off push'
 };
 /* অক্ষরের বদলে শব্দ — গণনার পরে প্রযোজ্য */
 const U={'ঘণ্টা':'Hours','মিনিট':'Minutes','সেকেন্ড':'Seconds','থেকে':'from','পর্যন্ত':'until','ভোর':'Dawn','সকাল':'Morning','দুপুর':'Noon','বিকাল':'Afternoon','সন্ধ্যা':'Evening','রাত':'Night','টি':'items','মোট':'Total'};
