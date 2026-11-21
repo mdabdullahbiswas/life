@@ -121,16 +121,18 @@ button.sm{padding:5px 12px;font-size:12px;border-radius:10px}
 #paper::after{content:"";position:absolute;inset:13px 7px 7px;border:1px solid var(--pa);opacity:.3;border-radius:10px;pointer-events:none}
 #paper .seal{display:none;align-items:center;justify-content:center;gap:14px;margin:8px 0 2px;padding:10px 0 0;border-top:1px solid #eadfc6}
 #paper.done .seal{display:flex}
-#paper .seal .tx{text-align:left}
+#paper .seal .tx{text-align:center}
 #paper.done .stamp{display:none}
 #paper.done{border-color:#d9b866;background:linear-gradient(180deg,#fffdf6,#fff8e4 70%,#fffdf8)}
-#paper .seal svg{display:block;flex:none}
+#paper>#sealg{display:none;position:absolute;top:12px;right:12px;z-index:2;line-height:0}
+#paper.done>#sealg{display:block}
+#paper #sealg svg{display:block}
 #paper .seal .ar{font-family:"Noto Naskh Arabic","Amiri","Traditional Arabic","Times New Roman",serif;font-size:22px;line-height:1.4;color:#B8892B}
 #paper .seal h4{margin:0 0 1px;font-size:18px;font-weight:700;color:var(--pa);letter-spacing:.3px}
 #paper .seal p{margin:0;font-size:11px;color:#7A6A55}
-#paper.done .seal svg{animation:sealin .9s cubic-bezier(.2,1.25,.3,1) both}
+#paper.done #sealg svg{animation:sealin .9s cubic-bezier(.2,1.25,.3,1) both}
 @keyframes sealin{from{opacity:0;transform:scale(1.6) rotate(-16deg)}to{opacity:1;transform:none}}
-@media(prefers-reduced-motion:reduce){#paper.done .seal svg{animation:none}}
+@media(prefers-reduced-motion:reduce){#paper.done #sealg svg{animation:none}}
 #toast{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);left:50%;transform:translateX(-50%) translateY(10px);background:var(--t);color:var(--bg);padding:10px 20px;border-radius:12px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:99}
 #toast.show{opacity:1;transform:translateX(-50%)}
 .hidden{display:none!important}
@@ -190,11 +192,12 @@ button.sm{padding:5px 12px;font-size:12px;border-radius:10px}
   <div id="paper" class="hidden">
    <div class="wm" id="wm">H</div>
    <div class="stamp s-ok" id="stamp">মিটে গেছে</div>
+   <div id="sealg"></div>
    <div class="hd"><div class="mono" id="p-mono">H</div><h3 id="p-me">হিসাব বিবরণী</h3><p>লেনদেনের হিসাব বিবরণী</p><div class="no" id="p-no"></div></div>
    <div class="det"><div><b>সাথে:</b> <span id="p-name">-</span><br><b>ফোন:</b> <span id="p-phone">-</span></div><div style="text-align:right"><b>তারিখ:</b> <span id="p-date">-</span></div></div>
    <table><thead><tr><th>তারিখ</th><th>বাবদ</th><th class="r">আমি দিয়েছি</th><th class="r">আপনি দিয়েছেন</th></tr></thead><tbody id="p-body"></tbody></table>
    <div class="sum"><div><span>আমি দিয়েছি মোট</span><b id="p-s0">০</b></div><div><span>আপনি দিয়েছেন মোট</span><b id="p-s1">০</b></div><div class="tt"><span id="p-rl">বাকি</span><b id="p-rv">০ ৳</b></div></div>
-   <div class="seal"><div id="sealg"></div><div class="tx"><div class="ar" lang="ar" dir="rtl">الْحَمْدُ لِلَّهِ</div><h4>আলহামদুলিল্লাহ</h4><p id="p-sd">হিসাব মিটে গেছে</p></div></div>
+   <div class="seal"><div class="tx"><div class="ar" lang="ar" dir="rtl">الْحَمْدُ لِلَّهِ</div><h4>আলহামদুলিল্লাহ</h4><p id="p-sd">হিসাব মিটে গেছে</p></div></div>
    <div class="ty" id="p-ty">হিসাবে কোনো ভুল থাকলে জানাবেন — ধন্যবাদ</div>
   </div>
   <div class="acts hidden" id="pact" style="margin-top:0">
@@ -408,7 +411,7 @@ $('ed').addEventListener('keydown',e=>{
 /* সোনালি রোজেট সিল: শুধু আকার SVG-তে, লেখা HTML-এ — যাতে JPG-তেও ফন্ট ঠিক থাকে */
 function sealSVG(){
  const pts=[];for(let i=0;i<360;i++){const a=i*Math.PI/180,r=95+3.6*Math.cos(a*28);pts.push((100+r*Math.cos(a)).toFixed(1)+','+(100+r*Math.sin(a)).toFixed(1))}
- return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 250" width="82" height="102" role="img" aria-label="হিসাব মিটে গেছে"><defs>
+ return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 250" width="68" height="85" role="img" aria-label="হিসাব মিটে গেছে"><defs>
 <linearGradient id="sg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E7AE"/><stop offset=".35" stop-color="#D4A63F"/><stop offset=".65" stop-color="#9A7120"/><stop offset="1" stop-color="#F0D27E"/></linearGradient>
 <linearGradient id="sg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF1BF"/><stop offset=".5" stop-color="#E3BC5C"/><stop offset="1" stop-color="#B98A2C"/></linearGradient>
 <linearGradient id="sg3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2FB587"/><stop offset="1" stop-color="#0D4C3C"/></linearGradient>
