@@ -7,13 +7,13 @@
 (function(){
 'use strict';
 if(window.__hsync)return;window.__hsync=1;
-const CK='dl_sync',DK='dl';
+const CK='dl_sync',DK='dl',SK='dl_sg';
 /* শুধু এই ডিভাইসের জিনিস — সিঙ্ক হয় না */
 const LOCAL={notif:1,url:1,lastBak:1,tn:1,tp:1};
 const SKIP={'st/run':1,'st/sel':1,'st/mode':1,'ts/ed':1}; /* ts/ed = তাসবিহ এডিটের সাময়িক অবস্থা, সিঙ্ক হবে না */
 /* কোন কী শিটের কোন ট্যাবে যাবে (বাকি সব settings-এ) */
-const TABS={tasks:'tasks',done:'tasks',fin:'hisab',inv:'invoice',led:'invoice',ppl:'invoice',goal:'hisab',bud:'hisab',hide:'hisab',pr:'namaz',qaza:'namaz',ts:'namaz',
-  fast:'roza',rf:'roza',rq:'roza',ho:'roza',loc:'roza',fn:'roza',ram:'roza',bags:'bags',st:'study'};
+const TABS={tasks:'tasks',done:'tasks',fin:'hisab',goal:'hisab',bud:'hisab',hide:'hisab',pr:'namaz',qaza:'namaz',ts:'namaz',
+  fast:'roza',rf:'roza',rq:'roza',ho:'roza',loc:'roza',fn:'roza',ram:'roza',bags:'bags',st:'study',led:'invoice',ppl:'invoice',inv:'invoice'};
 const tabOf=k=>TABS[k.split(/[\/#]/)[0]]||'settings';
 
 const isObj=v=>!!v&&typeof v==='object'&&!Array.isArray(v);
@@ -50,8 +50,11 @@ const rawSet=Storage.prototype.setItem;
 const cfg=()=>{try{return JSON.parse(localStorage.getItem(CK)||'{}')||{}}catch(e){return{}}};
 const put=c=>{try{rawSet.call(localStorage,CK,JSON.stringify(c))}catch(e){}};
 const getDL=()=>{try{const o=JSON.parse(localStorage.getItem(DK)||'{}');return isObj(o)?o:{}}catch(e){return{}}};
+/* স্মার্ট সাজেশন ('dl_sg') আলাদা কীতে থাকে, কারণ পেজগুলো 'dl' পুরোটা নিজেদের কপি থেকে লেখে। সিঙ্কের সময় এটি 'sg' নামে ডাটার সাথে জুড়ে নেওয়া হয় */
+const getSG=()=>{try{const o=JSON.parse(localStorage.getItem(SK)||'{}');return isObj(o)?o:{}}catch(e){return{}}};
+const getAll=()=>{const o=getDL(),g=getSG();if(Object.keys(g).length)o.sg=g;return o};
 
-let busy=0,again=0,timer=0,applying=0;
+let busy=0,again=0,timer=0,applying=0,applyingSG=0;
 const fire=()=>{try{window.dispatchEvent(new Event('hsync'))}catch(e){}};
 const msg=e=>(e&&e.name==='AbortError')?'সময় শেষ — সার্ভার সাড়া দেয়নি':(e instanceof TypeError)?'সংযোগ হয়নি (ইন্টারনেট বা URL দেখুন)':String(e&&e.message||e);
 
@@ -66,10 +69,10 @@ async function call(c,body){
   finally{clearTimeout(tm)}}
 
 async function run(c){
-  const dl=getDL(),rows=flat(dl);
+  const dl=getAll(),rows=flat(dl);
   let sh=c.sh||{},since=c.since||0,off=c.off||0;
   /* ব্রাউজারের ডাটা মুছে গেলে শিটের ডাটা মুছে ফেলা নয় — উল্টো শিট থেকে ফিরিয়ে আনা */
-  if(!Object.keys(dl).length&&Object.keys(sh).length){sh={};since=0}
+  if(!Object.keys(dl).filter(k=>k!=='sg').length&&Object.keys(sh).length){sh={};since=0}
   const first=!c.init,T=Date.now()+off,cur={},out=[];
   /* প্রথম সিঙ্কে (নতুন ডিভাইস) লোকাল সারি 'খুব পুরনো' ধরা হয়, তাই শিটে আগে থেকে থাকা তথ্য জেতে */
   for(const k in rows){const h=hs(rows[k]);cur[k]=h;if(sh[k]!==h)out.push({k,tab:tabOf(k),v:rows[k],u:first?1:T,d:0})}
@@ -82,16 +85,20 @@ async function run(c){
     since=j.rev;off=j.now-Date.now();pulled.push(...j.rows)}
 
   /* শিট থেকে আসা বদল লোকালে বসানো */
-  const dl2=getDL(),cur2=flat(dl2),nsh=Object.assign({},sh);let changed=0;
+  const dl2=getAll(),cur2=flat(dl2),nsh=Object.assign({},sh);let changed=0,chSG=0;
   out.forEach(r=>{if(r.d)delete nsh[r.k];else nsh[r.k]=cur[r.k]});
   for(const r of pulled){
     const nowH=r.k in cur2?hs(cur2[r.k]):null,wasH=r.k in cur?cur[r.k]:null;
     if(nowH!==wasH)continue;                         // পাঠানোর সময়ে লোকালে আবার বদলেছে → লোকালটা নতুন, পরের রাউন্ডে যাবে
-    if(r.d){if(nowH!==null){setRow(dl2,r.k,null,1);changed=1}delete nsh[r.k];continue}
+    const isSG=r.k.slice(0,3)==='sg/';
+    if(r.d){if(nowH!==null){setRow(dl2,r.k,null,1);if(isSG)chSG=1;else changed=1}delete nsh[r.k];continue}
     let val;try{val=JSON.parse(r.v)}catch(e){continue}   // শিটে হাতে ভুল JSON লিখলে সারিটা এড়িয়ে যাবে
     const cv=JSON.stringify(val),h=hs(cv);
-    if(nowH!==h){setRow(dl2,r.k,val,0);changed=1}
+    if(nowH!==h){setRow(dl2,r.k,val,0);if(isSG)chSG=1;else changed=1}
     nsh[r.k]=h}
+  const sg2=isObj(dl2.sg)?dl2.sg:{};delete dl2.sg;
+  /* সাজেশন বদলালে পেজ রিলোড লাগে না — শুধু 'dl_sg' নতুন করে লিখি */
+  if(chSG){applyingSG=1;try{rawSet.call(localStorage,SK,JSON.stringify(sg2))}finally{applyingSG=0}}
   if(changed){applying=1;try{rawSet.call(localStorage,DK,JSON.stringify(dl2))}finally{applying=0}}
   const c2=cfg();Object.assign(c2,{sh:nsh,since,off,init:1,dev:c.dev});put(c2);
   return{ok:true,changed,pushed:out.length,pulled:pulled.length}}
@@ -121,7 +128,7 @@ function sched(ms){clearTimeout(timer);timer=setTimeout(()=>{sync()},ms)}
 /* পেজ যেকোনো সময় localStorage 'dl'-এ লিখলেই ৩ সেকেন্ড পরে সিঙ্ক */
 Storage.prototype.setItem=function(k,v){
   const r=rawSet.apply(this,arguments);
-  if(k===DK&&this===localStorage&&!applying)sched(3000);
+  if(this===localStorage&&((k===DK&&!applying)||(k===SK&&!applyingSG)))sched(3000);
   return r};
 
 function setup(url,token){
@@ -134,7 +141,7 @@ function setup(url,token){
 function clear(){const c=cfg();put({dev:c.dev});fire()}
 function status(){
   const c=cfg();let pending=0;
-  if(c.url){const rows=flat(getDL()),sh=c.sh||{};for(const k in rows)if(sh[k]!==hs(rows[k]))pending++;for(const k in sh)if(!(k in rows))pending++}
+  if(c.url){const rows=flat(getAll()),sh=c.sh||{};for(const k in rows)if(sh[k]!==hs(rows[k]))pending++;for(const k in sh)if(!(k in rows))pending++}
   return{on:!!(c.url&&c.token),url:c.url||'',token:c.token||'',lastOk:c.lastOk||0,err:c.err||'',busy:!!busy,pending}}
 
 window.hayatSync={sync,setup,clear,status,_flat:flat,_setRow:setRow};
