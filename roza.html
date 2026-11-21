@@ -103,7 +103,8 @@ summary{cursor:pointer;font-weight:600;font-size:15px}
 .act{display:flex;gap:8px;flex-wrap:wrap}
 </style></head><body><script src="header.js"></script><main id="app"></main>
 <script>
-const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
+const EN=window.LANG==='en',LC=EN?'en-US':LC,TT=window.L||(x=>x);
+const bn=n=>EN?String(n):String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
 const $=document.getElementById('app'),root=document.documentElement,D=864e5;
 let S={theme:0,dark:0,fast:{},rf:{},rq:0,ho:0};
 try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
@@ -170,7 +171,7 @@ const dn=h.m==9?h.d:0;
 $.innerHTML=`<header><h1>🌙 রোজা</h1><div class="sub">রোজার সঙ্গী · নফল ট্র্যাকার, সময় ও দোয়া</div></header>
 <div class="grid">
 <section class="card hero wide"><div>
-<div class="m">${now.toLocaleDateString('bn-BD',{weekday:'long',day:'numeric',month:'long'})}</div>
+<div class="m">${now.toLocaleDateString(LC,{weekday:'long',day:'numeric',month:'long'})}</div>
 <div class="big">${bn(h.d)} ${MN[h.m-1]}</div><div class="m">${bn(h.y)} হিজরি</div>
 <span class="pill ${f.f?'f':f.x?'x':''}">${f.l}</span>
 ${f.z?`<div class="hz">✨ ${f.z}</div>`:''}
@@ -179,8 +180,8 @@ ${f.z?`<div class="hz">✨ ${f.z}</div>`:''}
 <circle class="tr" cx="85" cy="85" r="60"/><circle class="dc" cx="85" cy="85" r="74"/><circle class="pg" id="pg" cx="85" cy="85" r="60"/></svg>
 <div class="rc"><b id="cdv">--:--</b><span id="cdl"></span></div></div><div class="tm" id="tm"></div></div></section>
 
-<section class="card wide"><div class="mh"><button class="g" data-a="pm">‹</button><h2>${vd.toLocaleDateString('bn-BD',{month:'long',year:'numeric'})}</h2><button class="g" data-a="nm">›</button></div>
-<div class="cal">${['র','সো','ম','বু','বৃ','শু','শ'].map(x=>`<i>${x}</i>`).join('')}${cal}</div>
+<section class="card wide"><div class="mh"><button class="g" data-a="pm">‹</button><h2>${vd.toLocaleDateString(LC,{month:'long',year:'numeric'})}</h2><button class="g" data-a="nm">›</button></div>
+<div class="cal">${(EN?['S','M','T','W','T','F','S']:['র','সো','ম','বু','বৃ','শু','শ']).map(x=>`<i>${x}</i>`).join('')}${cal}</div>
 <div class="leg"><span>নফল রোজা / বিশেষ দিন</span><span class="r">রমজানের রোজা</span><span class="n">নিষিদ্ধ দিনে রোজা রাখা যায় না</span></div>
 <div class="m" style="margin-top:6px">ঘরের নিচের ছোট সংখ্যা হিজরি তারিখ। ভবিষ্যতের তারিখ চিহ্নিত করা যায় না।</div></section>
 
@@ -192,7 +193,7 @@ ${f.z?`<div class="hz">✨ ${f.z}</div>`:''}
 <section class="card"><h2>${dn?'রমজান চলছে':'সামনের রোজার দিন'}</h2>
 ${dn?`<div class="row"><span>রমজানের ${bn(dn)} তম দিন</span><span class="pill">${bn(s.rf)}/${bn(dn)} রাখা হয়েছে</span></div><div class="bar"><i style="width:${Math.min(100,dn/30*100)}%"></i></div>`:
 (u.rd?`<div class="row"><span>রমজান আসতে বাকি</span><span class="pill">${bn(u.rd)} দিন</span></div>`:'')}
-${u.o.filter(x=>x.n!='রমজান শুরু').map(x=>`<div class="ev"><div>${x.n}<small>${x.d.toLocaleDateString('bn-BD',{weekday:'short',day:'numeric',month:'short'})}</small></div><span class="pill">${bn(x.i)} দিন পর</span></div>`).join('')}</section>
+${u.o.filter(x=>x.n!='রমজান শুরু').map(x=>`<div class="ev"><div>${x.n}<small>${x.d.toLocaleDateString(LC,{weekday:'short',day:'numeric',month:'short'})}</small></div><span class="pill">${bn(x.i)} দিন পর</span></div>`).join('')}</section>
 
 <section class="card"><h2>রমজানের কাযা রোজা</h2><div class="qz"><button class="g" data-a="qd">−</button><div class="big">${bn(S.rq||0)}</div><button data-a="qu">+</button></div>
 <div class="m" style="text-align:center;margin-top:8px">এখনো বাকি আছে এমন কাযা রোজার সংখ্যা। একটি রাখলে − চাপুন।</div></section>
@@ -214,12 +215,12 @@ async function share(){await (document.fonts&&document.fonts.ready);const s=stat
 const x=c.getContext('2d'),g=x.createLinearGradient(0,0,1080,1350);g.addColorStop(0,'#0C0A07');g.addColorStop(1,'#2B2118');x.fillStyle=g;x.fillRect(0,0,1080,1350);
 x.strokeStyle='#E0B84F';x.lineWidth=3;x.strokeRect(44,44,992,1262);x.textAlign='center';
 const F='"Noto Serif Bengali",serif',W=(t,y,z,col)=>{x.font='700 '+z+'px '+F;x.fillStyle=col;x.fillText(t,540,y)};
-W('🌙 আমার রোজা',210,76,'#F2D88A');W(bn(h.d)+' '+MN[h.m-1]+' '+bn(h.y)+' হিজরি',290,38,'#B3A68B');
-W(bn(s.mo),620,260,'#E0B84F');W('এ মাসে নফল রোজা',700,44,'#F6EDD8');
-[[s.yr,'এ বছরে'],[s.cur,'বর্তমান টানা'],[s.best,'সর্বোচ্চ টানা']].forEach((a,i)=>{const cx=240+i*300;x.font='700 90px '+F;x.fillStyle='#F2D88A';x.fillText(bn(a[0]),cx,940);x.font='400 32px '+F;x.fillStyle='#B3A68B';x.fillText(a[1],cx,1000)});
+W('🌙 '+TT('আমার রোজা'),210,76,'#F2D88A');W(bn(h.d)+' '+TT(MN[h.m-1])+' '+bn(h.y)+' '+TT('হিজরি'),290,38,'#B3A68B');
+W(bn(s.mo),620,260,'#E0B84F');W(TT('এ মাসে নফল রোজা'),700,44,'#F6EDD8');
+[[s.yr,TT('এ বছরে')],[s.cur,TT('বর্তমান টানা')],[s.best,TT('সর্বোচ্চ টানা')]].forEach((a,i)=>{const cx=240+i*300;x.font='700 90px '+F;x.fillStyle='#F2D88A';x.fillText(bn(a[0]),cx,940);x.font='400 32px '+F;x.fillStyle='#B3A68B';x.fillText(a[1],cx,1000)});
 W('Hayat',1230,40,'#B8892B');
 c.toBlob(async b=>{const fl=new File([b],'roza.png',{type:'image/png'});
-if(navigator.canShare&&navigator.canShare({files:[fl]})){try{await navigator.share({files:[fl],title:'আমার রোজা'})}catch(e){}return}
+if(navigator.canShare&&navigator.canShare({files:[fl]})){try{await navigator.share({files:[fl],title:TT('আমার রোজা')})}catch(e){}return}
 const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='roza.png';a.click()})}
 
 $.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!el||el.disabled)return;const a=el.dataset.a,now=new Date(),K=key(now);
