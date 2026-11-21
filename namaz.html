@@ -640,7 +640,7 @@ setInterval(()=>{const els=document.querySelectorAll('#app [data-cd]');for(const
 
 /* রিমাইন্ডার ইঞ্জিন */
 const lt=document.createElement('div');lt.id='lt';lt.addEventListener('click',()=>lt.classList.remove('on'));document.body.appendChild(lt);
-function fire(t,b,tag){lt.textContent='🔔 '+t+' · '+b;lt.classList.add('on');clearTimeout(fire.h);fire.h=setTimeout(()=>lt.classList.remove('on'),30000);
+function fire(t,b,tag){t=L(t);b=L(b);lt.textContent='🔔 '+t+' · '+b;lt.classList.add('on');clearTimeout(fire.h);fire.h=setTimeout(()=>lt.classList.remove('on'),30000);
  try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(x){}
  try{if(window.Notification&&Notification.permission=='granted'){const o={body:b,icon:'icon-192.png',badge:'badge-96.png',tag:tag||'namaz-rem',renotify:true,data:{url:'namaz.html'}};
   if(navigator.serviceWorker&&navigator.serviceWorker.getRegistration)navigator.serviceWorker.getRegistration().then(r=>{try{r?r.showNotification(t,o):new Notification(t,o)}catch(x){}}).catch(()=>{});else new Notification(t,o)}}catch(x){}}
@@ -663,7 +663,7 @@ async function syncSched(){try{if(!window.indexedDB)return;const L=S.loc,items=[
  if(L.on&&reg.periodicSync)try{await reg.periodicSync.register('namaz-rem',{minInterval:15*60*1000})}catch(e){}
  if(typeof TimestampTrigger!='undefined'){const ids=new Set(items.map(x=>'nr-'+x.id));
   try{(await reg.getNotifications({includeTriggered:true})).forEach(x=>{if(x.tag&&x.tag.indexOf('nr-')==0&&!ids.has(x.tag))x.close()})}catch(e){}
-  for(const x of items)if(x.f>n)try{await reg.showNotification('🔔 '+x.t,{body:bn(Math.round((x.tm-x.f)/6e4))+' মিনিট পরে ('+x.tg+')',tag:'nr-'+x.id,icon:'icon-512.png',badge:'badge-96.png',data:{url:'namaz.html'},showTrigger:new TimestampTrigger(x.f)})}catch(e){}}
+  for(const x of items)if(x.f>n)try{await reg.showNotification(L('🔔 '+x.t),{body:L(bn(Math.round((x.tm-x.f)/6e4))+' মিনিট পরে ('+x.tg+')'),tag:'nr-'+x.id,icon:'icon-512.png',badge:'badge-96.png',data:{url:'namaz.html'},showTrigger:new TimestampTrigger(x.f)})}catch(e){}}
  if(reg.active)reg.active.postMessage({type:'namaz-check'})}catch(e){}}
 syncSched();setInterval(syncSched,15000);
 setInterval(chk,15000);chk();document.addEventListener('visibilitychange',()=>{if(!document.hidden)chk()});
