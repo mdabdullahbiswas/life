@@ -111,7 +111,7 @@ button.sm{padding:5px 12px;font-size:12px;border-radius:10px}
 #paper th{background:#f7f0df;color:var(--pa);font-weight:700;font-size:12px}
 #paper .r{text-align:right;white-space:nowrap}
 #paper .dt{white-space:nowrap;color:#7A6A55;font-size:12px}
-#paper .sum{line-height:1.6;font-size:12.5px;margin-left:auto;max-width:300px}
+#paper .sum{line-height:1.65;font-size:12.5px;margin:0 0 6px;padding:8px 14px;border:1px solid #e8d9ae;border-radius:10px;background:linear-gradient(180deg,#fffaf0,#faf0d6)}
 #paper .sum div{display:flex;justify-content:space-between;gap:16px}
 #paper .sum .tt{margin-top:4px;padding-top:5px;border-top:2px solid var(--pa);font-size:15px;font-weight:700;color:var(--pa)}
 #paper .stamp{position:absolute;top:22px;right:14px;padding:3px 12px;border:2px solid;border-radius:6px;font-weight:700;font-size:13px;transform:rotate(-6deg);opacity:.9;z-index:2}
@@ -119,15 +119,16 @@ button.sm{padding:5px 12px;font-size:12px;border-radius:10px}
 #paper .ty{text-align:center;margin-top:8px;padding-top:7px;border-top:1px dashed #d9caa0;font-size:12px;color:var(--pa);font-weight:600}
 /* হিসাব মিটে গেলে প্রিমিয়াম সিল */
 #paper::after{content:"";position:absolute;inset:13px 7px 7px;border:1px solid var(--pa);opacity:.3;border-radius:10px;pointer-events:none}
-#paper .seal{display:none;align-items:center;justify-content:center;gap:14px;margin:8px 0 2px;padding:10px 0 0;border-top:1px solid #eadfc6}
+#paper .seal{display:none;flex-direction:column;align-items:center;justify-content:center;gap:1px;margin:6px 0 0;padding:8px 0 0;border-top:1px solid #eadfc6}
 #paper.done .seal{display:flex}
-#paper .seal .tx{text-align:center}
+#paper .seal .tx{display:flex;align-items:center;justify-content:center;gap:10px}
 #paper.done .stamp{display:none}
 #paper.done{border-color:#d9b866;background:linear-gradient(180deg,#fffdf6,#fff8e4 70%,#fffdf8)}
-#paper>#sealg{display:none;position:absolute;top:12px;right:12px;z-index:2;line-height:0}
-#paper.done>#sealg{display:block}
-#paper #sealg svg{display:block}
-#paper .seal .ar{font-family:"Noto Naskh Arabic","Amiri","Traditional Arabic","Times New Roman",serif;font-size:22px;line-height:1.4;color:#B8892B}
+#paper #sealg{display:none;margin:2px auto 2px;line-height:0}
+#paper.done #sealg{display:block}
+#paper.done .mono{display:none}
+#paper #sealg svg{display:block;margin:0 auto}
+#paper .seal .ar{font-family:"Noto Naskh Arabic","Amiri","Traditional Arabic","Times New Roman",serif;font-size:20px;line-height:1.4;color:#B8892B}
 #paper .seal h4{margin:0 0 1px;font-size:18px;font-weight:700;color:var(--pa);letter-spacing:.3px}
 #paper .seal p{margin:0;font-size:11px;color:#7A6A55}
 #paper.done #sealg svg{animation:sealin .9s cubic-bezier(.2,1.25,.3,1) both}
@@ -192,12 +193,11 @@ button.sm{padding:5px 12px;font-size:12px;border-radius:10px}
   <div id="paper" class="hidden">
    <div class="wm" id="wm">H</div>
    <div class="stamp s-ok" id="stamp">মিটে গেছে</div>
-   <div id="sealg"></div>
-   <div class="hd"><div class="mono" id="p-mono">H</div><h3 id="p-me">হিসাব বিবরণী</h3><p>লেনদেনের হিসাব বিবরণী</p><div class="no" id="p-no"></div></div>
+   <div class="hd"><div id="sealg"></div><div class="mono" id="p-mono">H</div><h3 id="p-me">হিসাব বিবরণী</h3><p>লেনদেনের হিসাব বিবরণী</p><div class="no" id="p-no"></div></div>
    <div class="det"><div><b>সাথে:</b> <span id="p-name">-</span><br><b>ফোন:</b> <span id="p-phone">-</span></div><div style="text-align:right"><b>তারিখ:</b> <span id="p-date">-</span></div></div>
    <table><thead><tr><th>তারিখ</th><th>বাবদ</th><th class="r">আমি দিয়েছি</th><th class="r">আপনি দিয়েছেন</th></tr></thead><tbody id="p-body"></tbody></table>
-   <div class="sum"><div><span>আমি দিয়েছি মোট</span><b id="p-s0">০</b></div><div><span>আপনি দিয়েছেন মোট</span><b id="p-s1">০</b></div><div class="tt"><span id="p-rl">বাকি</span><b id="p-rv">০ ৳</b></div></div>
-   <div class="seal"><div class="tx"><div class="ar" lang="ar" dir="rtl">الْحَمْدُ لِلَّهِ</div><h4>আলহামদুলিল্লাহ</h4><p id="p-sd">হিসাব মিটে গেছে</p></div></div>
+   <div class="sum"><div><span>মোট লেনদেন</span><b id="p-n">০</b></div><div><span>আমি দিয়েছি মোট</span><b id="p-s0">০</b></div><div><span>আপনি দিয়েছেন মোট</span><b id="p-s1">০</b></div><div class="tt"><span id="p-rl">বাকি</span><b id="p-rv">০ ৳</b></div></div>
+   <div class="seal"><div class="tx"><span class="ar" lang="ar" dir="rtl">الْحَمْدُ لِلَّهِ</span><h4>আলহামদুলিল্লাহ</h4></div><p id="p-sd">হিসাব মিটে গেছে</p></div>
    <div class="ty" id="p-ty">হিসাবে কোনো ভুল থাকলে জানাবেন — ধন্যবাদ</div>
   </div>
   <div class="acts hidden" id="pact" style="margin-top:0">
@@ -343,7 +343,7 @@ function paper(P){
  let s0=0,s1=0;
  $('p-body').innerHTML=es.map(e=>{const t=T[e.t];if(t.side)s1+=e.a;else s0+=e.a;const a=bn(r2(e.a).toLocaleString('en-IN'));return`<tr><td class="dt">${sd(e.d)}</td><td>${ex(e.n)||'—'}</td><td class="r">${t.side?'':a}</td><td class="r">${t.side?a:''}</td></tr>`}).join('');
  s0=r2(s0);s1=r2(s1);const bal=r2(s0-s1);
- $('p-s0').textContent=fm(s0);$('p-s1').textContent=fm(s1);
+ $('p-s0').textContent=fm(s0);$('p-s1').textContent=fm(s1);$('p-n').textContent=bn(es.length)+'টি';
  const st=$('stamp');
  if(bal>0){$('p-rl').textContent='আপনি আমাকে দেবেন';$('p-rv').textContent=fm(bal);st.textContent='বাকি আছে';st.className='stamp s-due'}
  else if(bal<0){$('p-rl').textContent='আমি আপনাকে দেব';$('p-rv').textContent=fm(-bal);st.textContent='আমার দেনা';st.className='stamp s-owe'}
@@ -410,13 +410,17 @@ $('ed').addEventListener('keydown',e=>{
  if(rows().some(r=>num(r.children[1].value)>0))saveEntry();else toast('টাকা লিখুন')});
 /* সোনালি রোজেট সিল: শুধু আকার SVG-তে, লেখা HTML-এ — যাতে JPG-তেও ফন্ট ঠিক থাকে */
 function sealSVG(){
+ const sp=(x,y,s)=>`<path d="M${x} ${y-s}L${x+s*.28} ${y-s*.28}L${x+s} ${y}L${x+s*.28} ${y+s*.28}L${x} ${y+s}L${x-s*.28} ${y+s*.28}L${x-s} ${y}L${x-s*.28} ${y-s*.28}Z" fill="#E3BC5C"/>`;
  const pts=[];for(let i=0;i<360;i++){const a=i*Math.PI/180,r=95+3.6*Math.cos(a*28);pts.push((100+r*Math.cos(a)).toFixed(1)+','+(100+r*Math.sin(a)).toFixed(1))}
- return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 250" width="68" height="85" role="img" aria-label="হিসাব মিটে গেছে"><defs>
+ return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 250" width="92" height="115" role="img" aria-label="হিসাব মিটে গেছে"><defs>
 <linearGradient id="sg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E7AE"/><stop offset=".35" stop-color="#D4A63F"/><stop offset=".65" stop-color="#9A7120"/><stop offset="1" stop-color="#F0D27E"/></linearGradient>
 <linearGradient id="sg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF1BF"/><stop offset=".5" stop-color="#E3BC5C"/><stop offset="1" stop-color="#B98A2C"/></linearGradient>
 <linearGradient id="sg3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2FB587"/><stop offset="1" stop-color="#0D4C3C"/></linearGradient>
 <linearGradient id="sgr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14735A"/><stop offset="1" stop-color="#0A3A2E"/></linearGradient>
+<radialGradient id="sgl"><stop offset=".55" stop-color="#F7E7AE" stop-opacity=".6"/><stop offset="1" stop-color="#F7E7AE" stop-opacity="0"/></radialGradient>
 <linearGradient id="sgc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF6D2"/><stop offset="1" stop-color="#F0CF72"/></linearGradient></defs>
+<circle cx="100" cy="100" r="104" fill="url(#sgl)"/>
+${sp(22,28,11)}${sp(180,24,8)}${sp(20,204,7)}${sp(182,206,10)}
 <path d="M64 150L46 244L72 230L92 246L104 160Z" fill="url(#sgr)" stroke="#0A3A2E" stroke-width=".8"/>
 <path d="M136 150L154 244L128 230L108 246L96 160Z" fill="url(#sgr)" stroke="#0A3A2E" stroke-width=".8"/>
 <polygon points="${pts.join(' ')}" fill="url(#sg1)" stroke="#8A6420" stroke-width=".8"/>
@@ -425,6 +429,8 @@ function sealSVG(){
 <circle cx="100" cy="100" r="68" fill="none" stroke="#7A5614" stroke-width="2.2" stroke-dasharray="1 5.2" stroke-linecap="round" opacity=".55"/>
 <circle cx="100" cy="100" r="58" fill="url(#sg3)" stroke="#FFF3C4" stroke-width="2"/>
 <ellipse cx="82" cy="72" rx="34" ry="14" transform="rotate(-30 82 72)" fill="#fff" opacity=".16"/>
+<circle cx="100" cy="100" r="50" fill="none" stroke="#E3BC5C" stroke-width="1" opacity=".55"/>
+<path d="M72 106L92 126L130 82" fill="none" stroke="#052B21" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity=".35"/>
 <path d="M72 102L92 122L130 78" fill="none" stroke="url(#sgc)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>`}
 $('sealg').innerHTML=sealSVG();
