@@ -95,38 +95,39 @@ button.sm{padding:5px 12px;font-size:12px;border-radius:10px}
 .acc b:hover{transform:scale(1.15)}.acc b.on{border-color:var(--t)}
 .hide .nm{filter:blur(7px)}
 /* বিবরণীর কাগজ — থিম যাই হোক সাদা থাকে, রঙ বদলায় --pa দিয়ে */
-#paper{--pa:#B8892B;--pa2:#E2C275;background:#fffdf8;color:#2B2118;border-radius:14px;padding:34px 26px 22px;position:relative;overflow:hidden;border:1px solid #e6dcc3;box-shadow:0 22px 46px -20px var(--sh);font-family:"Noto Serif Bengali",serif}
+#paper{--pa:#B8892B;--pa2:#E2C275;background:#fffdf8;color:#2B2118;border-radius:14px;padding:24px 22px 14px;position:relative;overflow:hidden;border:1px solid #e6dcc3;box-shadow:0 22px 46px -20px var(--sh);font-family:"Noto Serif Bengali",serif}
 #paper::before{content:"";position:absolute;inset:0 0 auto;height:8px;background:linear-gradient(90deg,var(--pa),var(--pa2),var(--pa))}
 #paper *{font-family:"Noto Serif Bengali",serif}
-#paper .wm{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%) rotate(-12deg);font-size:250px;font-weight:700;color:var(--pa);opacity:.05;pointer-events:none;line-height:1}
+#paper .wm{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%) rotate(-12deg);font-size:160px;font-weight:700;color:var(--pa);opacity:.05;pointer-events:none;line-height:1}
 #paper>*:not(.wm){position:relative}
-#paper .hd{text-align:center;margin:10px 0 14px;padding-bottom:14px;border-bottom:1px solid #e6dcc3}
-#paper .mono{width:46px;height:46px;border-radius:50%;margin:0 auto 8px;display:grid;place-items:center;font-size:22px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--pa),var(--pa2));box-shadow:0 0 0 3px #fffdf8,0 0 0 4px var(--pa)}
-#paper .hd h3{margin:0;font-size:22px;color:#2B2118;border:0;padding:0}
-#paper .hd p{margin:3px 0 0;font-size:12px;color:#7A6A55}
-#paper .no{display:inline-block;margin-top:9px;padding:2px 14px;border:1px solid var(--pa);border-radius:99px;font-size:12px;color:var(--pa);font-weight:600}
-#paper .det{display:flex;justify-content:space-between;gap:10px;font-size:14px;margin-bottom:14px;line-height:1.8}
-#paper table{width:100%;border-collapse:collapse;margin-bottom:12px}
-#paper th,#paper td{padding:8px 6px;font-size:13px;text-align:left;border-bottom:1px solid #eadfc6;vertical-align:top}
+#paper .hd{text-align:center;margin:4px 0 10px;padding-bottom:9px;border-bottom:1px solid #e6dcc3}
+#paper .mono{width:36px;height:36px;border-radius:50%;margin:0 auto 5px;display:grid;place-items:center;font-size:17px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--pa),var(--pa2));box-shadow:0 0 0 3px #fffdf8,0 0 0 4px var(--pa)}
+#paper .hd h3{margin:0;font-size:18px;letter-spacing:.3px;color:#2B2118;border:0;padding:0}
+#paper .hd p{margin:2px 0 0;font-size:11px;color:#7A6A55}
+#paper .no{display:inline-block;margin-top:6px;padding:1px 12px;border:1px solid var(--pa);border-radius:99px;font-size:11px;color:var(--pa);font-weight:600}
+#paper .det{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;margin-bottom:8px;line-height:1.6}
+#paper table{width:100%;border-collapse:collapse;margin-bottom:6px}
+#paper th,#paper td{padding:4px 6px;font-size:12px;text-align:left;border-bottom:1px solid #eadfc6;vertical-align:top}
 #paper th{background:#f7f0df;color:var(--pa);font-weight:700;font-size:12px}
 #paper .r{text-align:right;white-space:nowrap}
 #paper .dt{white-space:nowrap;color:#7A6A55;font-size:12px}
-#paper .sum{line-height:1.9;font-size:14px;margin-left:auto;max-width:300px}
+#paper .sum{line-height:1.6;font-size:12.5px;margin-left:auto;max-width:300px}
 #paper .sum div{display:flex;justify-content:space-between;gap:16px}
-#paper .sum .tt{margin-top:6px;padding-top:8px;border-top:2px solid var(--pa);font-size:16px;font-weight:700;color:var(--pa)}
+#paper .sum .tt{margin-top:4px;padding-top:5px;border-top:2px solid var(--pa);font-size:15px;font-weight:700;color:var(--pa)}
 #paper .stamp{position:absolute;top:22px;right:14px;padding:3px 12px;border:2px solid;border-radius:6px;font-weight:700;font-size:13px;transform:rotate(-6deg);opacity:.9;z-index:2}
 .s-due{color:#991b1b;background:#fee2e2}.s-owe{color:#92400e;background:#fef3c7}.s-ok{color:#166534;background:#dcfce7}
-#paper .ty{text-align:center;margin-top:16px;padding-top:10px;border-top:1px dashed #d9caa0;font-size:12px;color:var(--pa);font-weight:600}
+#paper .ty{text-align:center;margin-top:8px;padding-top:7px;border-top:1px dashed #d9caa0;font-size:12px;color:var(--pa);font-weight:600}
 /* হিসাব মিটে গেলে প্রিমিয়াম সিল */
-#paper .seal{display:none;text-align:center;margin:20px 0 8px;padding:14px 0 4px;border-top:1px solid #eadfc6}
-#paper.done .seal{display:block}
+#paper::after{content:"";position:absolute;inset:13px 7px 7px;border:1px solid var(--pa);opacity:.3;border-radius:10px;pointer-events:none}
+#paper .seal{display:none;align-items:center;justify-content:center;gap:14px;margin:8px 0 2px;padding:10px 0 0;border-top:1px solid #eadfc6}
+#paper.done .seal{display:flex}
+#paper .seal .tx{text-align:left}
 #paper.done .stamp{display:none}
 #paper.done{border-color:#d9b866;background:linear-gradient(180deg,#fffdf6,#fff8e4 70%,#fffdf8)}
-#paper .seal svg{display:block;margin:0 auto}
-#paper .seal .orn{color:#C9972E;font-size:11px;letter-spacing:8px;margin-top:8px}
-#paper .seal .ar{font-family:"Noto Naskh Arabic","Amiri","Traditional Arabic","Times New Roman",serif;font-size:28px;line-height:1.5;color:#B8892B;margin-top:2px}
-#paper .seal h4{margin:4px 0 2px;font-size:22px;font-weight:700;color:var(--pa);letter-spacing:.3px}
-#paper .seal p{margin:0;font-size:12.5px;color:#7A6A55}
+#paper .seal svg{display:block;flex:none}
+#paper .seal .ar{font-family:"Noto Naskh Arabic","Amiri","Traditional Arabic","Times New Roman",serif;font-size:22px;line-height:1.4;color:#B8892B}
+#paper .seal h4{margin:0 0 1px;font-size:18px;font-weight:700;color:var(--pa);letter-spacing:.3px}
+#paper .seal p{margin:0;font-size:11px;color:#7A6A55}
 #paper.done .seal svg{animation:sealin .9s cubic-bezier(.2,1.25,.3,1) both}
 @keyframes sealin{from{opacity:0;transform:scale(1.6) rotate(-16deg)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){#paper.done .seal svg{animation:none}}
@@ -193,7 +194,7 @@ button.sm{padding:5px 12px;font-size:12px;border-radius:10px}
    <div class="det"><div><b>সাথে:</b> <span id="p-name">-</span><br><b>ফোন:</b> <span id="p-phone">-</span></div><div style="text-align:right"><b>তারিখ:</b> <span id="p-date">-</span></div></div>
    <table><thead><tr><th>তারিখ</th><th>বাবদ</th><th class="r">আমি দিয়েছি</th><th class="r">আপনি দিয়েছেন</th></tr></thead><tbody id="p-body"></tbody></table>
    <div class="sum"><div><span>আমি দিয়েছি মোট</span><b id="p-s0">০</b></div><div><span>আপনি দিয়েছেন মোট</span><b id="p-s1">০</b></div><div class="tt"><span id="p-rl">বাকি</span><b id="p-rv">০ ৳</b></div></div>
-   <div class="seal"><div id="sealg"></div><div class="orn">✦ ✦ ✦</div><div class="ar" lang="ar" dir="rtl">الْحَمْدُ لِلَّهِ</div><h4>আলহামদুলিল্লাহ</h4><p id="p-sd">হিসাব মিটে গেছে</p></div>
+   <div class="seal"><div id="sealg"></div><div class="tx"><div class="ar" lang="ar" dir="rtl">الْحَمْدُ لِلَّهِ</div><h4>আলহামদুলিল্লাহ</h4><p id="p-sd">হিসাব মিটে গেছে</p></div></div>
    <div class="ty" id="p-ty">হিসাবে কোনো ভুল থাকলে জানাবেন — ধন্যবাদ</div>
   </div>
   <div class="acts hidden" id="pact" style="margin-top:0">
@@ -407,7 +408,7 @@ $('ed').addEventListener('keydown',e=>{
 /* সোনালি রোজেট সিল: শুধু আকার SVG-তে, লেখা HTML-এ — যাতে JPG-তেও ফন্ট ঠিক থাকে */
 function sealSVG(){
  const pts=[];for(let i=0;i<360;i++){const a=i*Math.PI/180,r=95+3.6*Math.cos(a*28);pts.push((100+r*Math.cos(a)).toFixed(1)+','+(100+r*Math.sin(a)).toFixed(1))}
- return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 250" width="150" height="188" role="img" aria-label="হিসাব মিটে গেছে"><defs>
+ return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 250" width="82" height="102" role="img" aria-label="হিসাব মিটে গেছে"><defs>
 <linearGradient id="sg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E7AE"/><stop offset=".35" stop-color="#D4A63F"/><stop offset=".65" stop-color="#9A7120"/><stop offset="1" stop-color="#F0D27E"/></linearGradient>
 <linearGradient id="sg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF1BF"/><stop offset=".5" stop-color="#E3BC5C"/><stop offset="1" stop-color="#B98A2C"/></linearGradient>
 <linearGradient id="sg3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2FB587"/><stop offset="1" stop-color="#0D4C3C"/></linearGradient>
