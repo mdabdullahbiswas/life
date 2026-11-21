@@ -379,7 +379,17 @@ const D={
 '🌙 আমার রোজা':'🌙 My fasts',
 'আমার রোজা':'My fasts',
 'এই ব্রাউজারে অবস্থান সমর্থিত নয়':'Location is not supported in this browser',
-'অবস্থানের অনুমতি পাওয়া যায়নি':'Location permission was not granted'
+'অবস্থানের অনুমতি পাওয়া যায়নি':'Location permission was not granted',
+/* কাজের সারাংশ নোটিফিকেশন */
+'কাজের সারাংশ নোটিফিকেশন':'Task summary notifications','চালু':'On','বন্ধ':'Off',
+'প্রথম সময়':'First time','আজ কী কী কাজ করতে হবে':'What you have to do today',
+'দ্বিতীয় সময়':'Second time','আজ এখনো কী কী বাকি':'What is still pending today',
+'🔔 নোটিফিকেশন চালু করুন':'🔔 Enable notifications','প্রথমটি পরীক্ষা':'Test the first','দ্বিতীয়টি পরীক্ষা':'Test the second',
+'নোটিফিকেশন চালু আছে':'Notifications are on','নোটিফিকেশন চালু নেই — নিচের বাটন চাপুন':'Notifications are off — tap the button below',
+'ব্রাউজারে নোটিফিকেশন বন্ধ করা আছে — সাইট সেটিং থেকে "Allow" করুন':'Notifications are blocked in the browser — set them to \u201cAllow\u201d in site settings',
+'ঠিক সময়ে পেতে অ্যাপটি Home Screen-এ ইনস্টল করে রাখুন। অ্যাপ/পেজ একেবারে বন্ধ থাকলে ব্রাউজার সময়মতো জাগাতে নাও পারে — তখন পরের বার খুললেই সামারি আসবে।':'For on-time delivery, install the app to your Home Screen. If the app is fully closed, the browser may not wake it on time \u2014 the summary will then arrive the next time you open it.',
+'এই ব্রাউজারে নোটিফিকেশন সমর্থিত নয়':'Notifications are not supported in this browser',
+'অনুমতি দেওয়া হয়নি':'Permission was not granted','আগে নোটিফিকেশন চালু করুন':'Enable notifications first'
 };
 /* অক্ষরের বদলে শব্দ — গণনার পরে প্রযোজ্য */
 const U={'ঘণ্টা':'Hours','মিনিট':'Minutes','সেকেন্ড':'Seconds','থেকে':'from','পর্যন্ত':'until','ভোর':'Dawn','সকাল':'Morning','দুপুর':'Noon','বিকাল':'Afternoon','সন্ধ্যা':'Evening','রাত':'Night','টি':'items','মোট':'Total'};
