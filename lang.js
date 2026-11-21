@@ -316,6 +316,16 @@ const D={
 'যখন সূর্য অস্ত যাওয়ার উপক্রম হয়, যতক্ষণ না তা ডুবে যায়':'when the sun is about to set, until it has set',
 'মনে রাখবেন':'Remember',
 'এই সময়ে ফরজ, ওয়াজিব, কাযা ও নফল — কোনো নামাজই পড়া যায় না।':'At this time no prayer — Fard, Wajib, Qaza or voluntary — may be offered.',
+/* পড়াশোনা পেজ — রুটিন ও বার্তা */
+'আজকের লক্ষ্য পূরণ হয়েছে। এই ধারাবাহিকতাই আসল শক্তি।':'Today\u2019s goal is reached. This consistency is the real strength.','আজকের প্রথম সেশনটা এখনই শুরু করুন।':'Start today\u2019s first session now.','দৈনিক লক্ষ্য':'Daily goal','রুটিন':'Routine','দৈনিক রুটিন':'Daily routine','অন্যান্য দিনের রুটিন':'Routines for other days','আজকের জন্য কোনো রুটিন নেই।':'No routine for today.','প্রতিদিনের নির্দিষ্ট পড়া এখানে ঠিক করে রাখুন, যেমন "গণিত · ৪৫ মিনিট"। টিক দিলে সময়টা সেই বিষয়ে যোগ হবে।':'Set up your fixed daily study here, e.g. \u201cMaths \u00b7 45 min\u201d. Ticking it adds the time to that subject.','কী পড়বেন? যেমন: গণিত অনুশীলন':'What will you study? e.g. Maths practice','রুটিনে যোগ করুন':'Add to routine','রুটিনটি মুছে ফেলবেন?':'Delete this routine?','৫ সপ্তাহের ধারাবাহিকতা':'5-week consistency','কম':'Less','বেশি':'More','সম্পন্ন':'done','প্রতিদিন (মিনিট)':'Minutes per day','গোল্ড + এমারেল্ড':'Gold + Emerald','গোল্ড + নেভি':'Gold + Navy','গোল্ড + বারগান্ডি':'Gold + Burgundy',
+/* হিসাব পেজ */
+'খাবার':'Food','বিল':'Bills','কেনাকাটা':'Shopping','স্বাস্থ্য':'Health','বিনোদন':'Entertainment','শিক্ষা':'Education','বেতন':'Salary','ব্যবসা':'Business','অন্য আয়':'Other income',
+'আগের মাস':'Previous month','পরের মাস':'Next month','অঙ্ক লুকান':'Hide amounts','এ মাসে অবশিষ্ট':'Remaining this month','সঞ্চয়ের হার':'Savings rate',
+'হিসাব এডিট':'Edit entry','নতুন হিসাব':'New entry','বিবরণ (ঐচ্ছিক)':'Description (optional)','বাজেট (৳)':'Budget (\u09f3)',
+'মাসিক বাজেট':'Monthly budget','সেট':'Set','বাজেট দিলে খরচের সীমা ও সতর্কবার্তা দেখাবে।':'Set a budget to see your spending limit and alerts.',
+'সঞ্চয় লক্ষ্য':'Savings goal','লক্ষ্য (যেমন: বাইক)':'Goal (e.g. bike)','সেভ':'Save','মোট সঞ্চিত':'Total saved',
+'ব্যয়ের ধরন':'Spending by category','এ মাসে কোনো ব্যয় নেই।':'No expenses this month.','৬ মাসের ধারা':'6-month trend',
+'কোনো হিসাব পাওয়া যায়নি। উপরের ফর্ম থেকে প্রথমটি যোগ করুন।':'No entries found. Add the first one from the form above.','এই হিসাবটি মুছবেন?':'Delete this entry?','ধরন':'Type','ক্যাটাগরি':'Category',
 /* রোজা পেজ */
 /* রোজা পেজ — অতিরিক্ত */
 '✓ আজ রোজা রেখেছি':'✓ I fasted today','রমজান শুরু':'Ramadan begins','রমজান চলছে':'Ramadan is ongoing','শাওয়ালের ছয় রোজা শুরু':'Six fasts of Shawwal begin','আইয়ামে বীজ (১৩–১৫)':'Ayyam al-Bid (13–15)','এ মাসে (নফল)':'This month (voluntary)','মোট নফল':'Total voluntary','এ মাসে নফল রোজা':'Voluntary fasts this month','হিজরি তারিখ সমন্বয়':'Hijri date adjustment',
@@ -413,6 +423,10 @@ function tr(s){
  s=s.replace(new RegExp('(কাল|যাত্রার সময়) বৃষ্টির সম্ভাবনা ('+BD+'+)%, (ছাতা ও রেইনকোট|ছাতা) যোগ করুন।','g'),(_,w,n,i)=>wd(w)+': '+n+'% chance of rain — add '+(i==='ছাতা'?'an umbrella':'an umbrella and raincoat')+'.');
  s=s.replace(new RegExp('(কাল|যাত্রার সময়) সর্বোচ্চ ('+BD+'+)° — গরম থাকবে, পানির বোতল ও টুপি যোগ করুন।','g'),(_,w,n)=>wd(w)+': up to '+n+'° — hot, add a water bottle and a cap.');
  s=s.replace(new RegExp('(কাল|যাত্রার সময়) সর্বনিম্ন ('+BD+'+)° — ঠান্ডা থাকবে, চাদর/সোয়েটার ও মাফলার যোগ করুন।','g'),(_,w,n)=>wd(w)+': down to '+n+'° — cold, add a shawl/sweater and a scarf.');
+ s=s.replace(/^লক্ষ্যে পৌঁছাতে আর (.+) বাকি।$/,'$1 left to reach your goal.');
+ s=s.replace(new RegExp('^⚠️ বাজেট (৳ [০-৯,.]+) ছাড়িয়েছে$'),'\u26a0\ufe0f Over budget by $1');
+ s=s.replace(new RegExp('^⚠️ বাজেটের ('+BD+'+)% শেষ$'),'\u26a0\ufe0f $1% of budget used');
+ s=s.replace(new RegExp('^✅ দৈনিক খরচের সীমা (৳ [০-৯,.]+)$'),'\u2705 Daily spending limit: $1');
  s=s.replace(RD,m=>D[m]);
  s=s.replace(new RegExp('(ভোর|সকাল|দুপুর|বিকাল|সন্ধ্যা|রাত) ('+BD+'+):('+BD+'+)','g'),(_,p,h,m)=>tm(h,m,p));
  s=s.replace(/(\d+:\d\d [AP]M) থেকে Isha পর্যন্ত/g,'from $1 until Isha');
