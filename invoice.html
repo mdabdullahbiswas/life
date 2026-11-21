@@ -158,6 +158,7 @@ details.cy>summary::-webkit-details-marker{display:none}
 details.cy[open]>summary{color:var(--t)}
 #cyn{margin:-4px 0 12px;padding:8px 12px;border-radius:10px;background:color-mix(in srgb,var(--ok) 12%,transparent);color:var(--ok);font-size:12.5px;line-height:1.6}
 </style></head><body><script src="header.js"></script>
+<script>if(window.LANG===undefined)document.write('<script src="lang.js"><\/script>')</script>
 <main id="app">
 <header class="ph"><h1>📒 লেনদেনের খাতা</h1><div class="sub">কে কত পাবে, কাকে কত দেব — মানুষ ধরে হিসাব, আর যে কাউকে বিবরণী পাঠানো যায়</div></header>
 
@@ -243,7 +244,17 @@ let S={theme:0,dark:0,hide:0,led:[],ppl:{},myName:'',invAcc:0};
 try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
 if(!Array.isArray(S.led))S.led=[];
 if(!S.ppl||typeof S.ppl!=='object'||Array.isArray(S.ppl))S.ppl={};
-const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){toast('সেভ করা যায়নি, জায়গা ভরে গেছে?')}};
+/* শুধু এই পেজের নিজের ডাটা (OWN) লিখি; ভাষা/থিম/রাতের মোডসহ বাকি সব সর্বশেষ সংরক্ষিত অবস্থা থেকে আসে — নইলে সেটিং থেকে বদলানো মান পুরনো কপি দিয়ে মুছে যেত */
+const OWN=['led','ppl','myName','invAcc'];
+const save=()=>{try{let c={};try{c=JSON.parse(localStorage.getItem('dl')||'{}')}catch(e){}if(!c||typeof c!=='object'||Array.isArray(c))c={};OWN.forEach(k=>{c[k]=S[k]});localStorage.setItem('dl',JSON.stringify(c))}catch(e){toast('সেভ করা যায়নি, জায়গা ভরে গেছে?')}};
+/* সেটিং অন্য ট্যাবে/পেজে বদলালে এখানেও সাথে সাথে প্রযোজ্য: থিম ও রাতের মোড নিজে বদলায়, ভাষা বদলালে পেজ নতুন করে লোড হয় */
+function applyPrefs(){try{const c=JSON.parse(localStorage.getItem('dl')||'{}')||{};
+ if((c.lang==='en'?'en':'bn')!==(window.LANG==='en'?'en':'bn')){location.reload();return}
+ S.theme=c.theme||0;S.dark=c.dark||0;S.hide=c.hide||0;
+ root.dataset.t=S.theme;root.dataset.d=S.dark;root.classList.toggle('hide',!!S.hide)}catch(e){}}
+addEventListener('storage',e=>{if(e.key==='dl'||e.key===null)applyPrefs()});
+addEventListener('pageshow',e=>{if(e.persisted)applyPrefs()});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)applyPrefs()});
 root.dataset.t=S.theme||0;root.dataset.d=S.dark||0;root.classList.toggle('hide',!!S.hide);
 
 let TYP='give',editId=null,SEL='',F='all',curAcc=+S.invAcc||0;
