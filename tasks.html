@@ -123,7 +123,9 @@ form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}form input{flex:1 1 110
 
 /* ===== প্রিমিয়াম বাটন ও টিক · প্রতিটি কার্ডের নিজস্ব রং ===== */
 .c1{--pc:#0F8A5F;--pc2:#4FD6A1}.c2{--pc:#A8781F;--pc2:#E6C066}.c3{--pc:#C23B58;--pc2:#F58FA6}
-.c4{--pc:#4659D6;--pc2:#9AA7FF}.c5{--pc:#8244C9;--pc2:#C7A0F7}.c6{--pc:#0B7F93;--pc2:#5AD0E0}
+.c4{--pc:#4659D6;--pc2:#9AA7FF}.c5{--pc:#8244C9;--pc2:#C7A0F7}.c6{--pc:#0B7F93;--pc2:#5AD0E0}.c7{--pc:#C2571A;--pc2:#F4A66A}
+.dgr{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 0;border-bottom:1px dashed var(--b)}.dgr .dl{flex:1 1 190px;min-width:0}.dgr .dl b{display:block;font-size:14px}.dgr .dg.tg{flex:0 1 270px}
+.dga{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.dga button{padding:8px 16px;font-size:13px}
 .card{--pt:var(--pc)}:root[data-d="1"] .card{--pt:var(--pc2)}
 .card{background:linear-gradient(160deg,color-mix(in srgb,var(--pc) 8%,var(--c)),var(--c) 65%);border-color:color-mix(in srgb,var(--pc) 38%,transparent);box-shadow:0 12px 32px -14px color-mix(in srgb,var(--pc) 55%,transparent)}
 .card:hover{box-shadow:0 18px 40px -14px color-mix(in srgb,var(--pc) 65%,transparent)}
@@ -182,6 +184,23 @@ if(!S.skip||typeof S.skip!=='object')S.skip={};if(!S.sd||typeof S.sd!=='object')
 const OWN=['tasks','done','bags','skip','sd','ovFrom'];
 const save=()=>{try{let c={};try{c=JSON.parse(localStorage.getItem('dl')||'{}')}catch(e){}if(!c||typeof c!=='object'||Array.isArray(c))c={};OWN.forEach(k=>{if(S[k]!==undefined)c[k]=S[k]});localStorage.setItem('dl',JSON.stringify(c))}catch(e){}};
 const ex=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/* কাজের সারাংশ নোটিফিকেশন: সেটিং থাকে 'dl'-এর dg={on,am,pm} ও notif-এ (digest.js এগুলোই পড়ে) */
+const ld=()=>{try{const o=JSON.parse(localStorage.getItem('dl')||'{}');return o&&typeof o==='object'&&!Array.isArray(o)?o:{}}catch(e){return{}}};
+const DGV=()=>{const o=ld(),c=o.dg||{};return{on:c.on!==0,am:/^\d\d:\d\d$/.test(c.am)?c.am:'07:00',pm:/^\d\d:\d\d$/.test(c.pm)?c.pm:'22:00',notif:!!o.notif}};
+const setDG=fn=>{const o=ld();fn(o);try{localStorage.setItem('dl',JSON.stringify(o))}catch(e){}try{window.dispatchEvent(new Event('hdg'))}catch(e){}};
+const TL=s=>window.L?window.L(s):s;
+function dgSel(w,v){const H=+v.slice(0,2),M=+v.slice(3,5);
+return `<span class="dg tg"><select data-dg="${w}" data-p="h" title="ঘণ্টা">${opts(Array.from({length:12},(_,i)=>[i+1,bn(i+1)]),H%12||12)}</select><select data-dg="${w}" data-p="m" title="মিনিট">${opts(Array.from({length:60},(_,i)=>[i,bn(String(i).padStart(2,'0'))]),M)}</select><select data-dg="${w}" data-p="p" title="AM/PM">${opts([['AM','AM'],['PM','PM']],H>=12?'PM':'AM')}</select></span>`}
+function dgCard(){const c=DGV(),perm=window.Notification?Notification.permission:'unsupported',ok=perm==='granted'&&c.notif;
+return `<section class="card wide c7" id="dgc"><h2>🔔 কাজের সারাংশ নোটিফিকেশন <span class="pill">${c.on&&ok?'চালু':'বন্ধ'}</span></h2>
+<div class="m" style="margin-bottom:6px">${perm==='denied'?'ব্রাউজারে নোটিফিকেশন বন্ধ করা আছে — সাইট সেটিং থেকে "Allow" করুন':ok?'নোটিফিকেশন চালু আছে':'নোটিফিকেশন চালু নেই — নিচের বাটন চাপুন'}</div>
+<div class="dgr"><span class="dl"><b>প্রথম সময়</b><span class="m">আজ কী কী কাজ করতে হবে</span></span>${dgSel('am',c.am)}</div>
+<div class="dgr"><span class="dl"><b>দ্বিতীয় সময়</b><span class="m">আজ এখনো কী কী বাকি</span></span>${dgSel('pm',c.pm)}</div>
+<div class="dga">${ok?'':'<button type="button" data-a="dgperm">🔔 নোটিফিকেশন চালু করুন</button>'}<button type="button" class="g" data-a="dgon">${c.on?'চালু':'বন্ধ'}</button><button type="button" class="g" data-a="dgtest" data-k="am">প্রথমটি পরীক্ষা</button><button type="button" class="g" data-a="dgtest" data-k="pm">দ্বিতীয়টি পরীক্ষা</button></div>
+<div class="m" style="margin-top:10px;font-size:12px">ঠিক সময়ে পেতে অ্যাপটি Home Screen-এ ইনস্টল করে রাখুন। অ্যাপ/পেজ একেবারে বন্ধ থাকলে ব্রাউজার সময়মতো জাগাতে নাও পারে — তখন পরের বার খুললেই সামারি আসবে।</div></section>`}
+function dgChange(el){const w=el.dataset.dg,g=[...document.querySelectorAll('[data-dg="'+w+'"]')],v={};g.forEach(x=>v[x.dataset.p]=x.value);
+const h=(+v.h%12)+(v.p==='PM'?12:0),val=String(h).padStart(2,'0')+':'+String(+v.m||0).padStart(2,'0');
+setDG(o=>{o.dg=Object.assign({},o.dg,{[w]:val})})}
 let E=null; /* এডিট করা কাজের id */
 const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const DAY=['রবিবার','সোমবার','মঙ্গলবার','বুধবার','বৃহস্পতিবার','শুক্রবার','শনিবার'];
@@ -237,8 +256,13 @@ ${et?`<div class="ebn">✎ ${ex(et.title)}<button type="button" class="x" data-a
 <section class="card wide c4"><h2>সব কাজ <span class="pill">${bn(S.tasks.length)} টি</span></h2>${S.tasks.length?S.tasks.map(t=>`<div class="row"><span>${ex(t.title)}<span class="m"> · ${t.time?tf(t.time)+' · ':''}${t.type=='once'?dt(t):lbl(t)+' · শুরু '+dt(t)}${(t.subs||[]).length?' · উপকাজ '+bn(t.subs.length)+' টি':''}${bp(t)}</span></span><span style="display:flex;flex:none"><button class="x ed" data-a="edit" data-i="${t.id}" aria-label="এডিট" title="এডিট">✎</button><button class="x" data-a="del" data-i="${t.id}" aria-label="মুছুন">✕</button></span></div>`).join(''):'<div class="m">এখনো কোনো কাজ যোগ করা হয়নি।</div>'}</section>
 <section class="card c5"><h2>পরিসংখ্যান</h2><div class="st"><div><div class="m">আজ সম্পন্ন</div><b>${bn(pct)}%</b></div><div><div class="m">টানা পূর্ণ দিন</div><b>${bn(streak(now))}</b></div></div><div class="row"><span>মোট কাজ</span><b>${bn(S.tasks.length)} টি</b></div></section>
 <section class="card c6"><h2>আগামী ৭ দিন</h2>${week.map(({d,L},i)=>`<div class="spt">${i==0?'আজ':i==1?'আগামীকাল':DAY[d.getDay()]} · ${bn(d.getDate())} ${MON[d.getMonth()]}</div>${L.length?L.map(t=>`<div class="sr"><span>${ex(t.title)}</span><span>${t.time?tf(t.time):''}</span></div>`).join(''):'<div class="sr"><span>কোনো কাজ নেই</span><span></span></div>'}`).join('')}</section>
+${dgCard()}
 </div>`;if(sy>0)window.scrollTo(0,sy);$.classList.add('rd')}
 $.addEventListener('click',e=>{const bt=e.target.closest('[data-a]');if(!bt||bt.type=='checkbox')return;const a=bt.dataset.a,i=bt.dataset.i;
+if(a=='dgon'){setDG(o=>{o.dg=Object.assign({},o.dg,{on:DGV().on?0:1})});render();return}
+if(a=='dgperm'){if(!window.Notification){alert(TL('এই ব্রাউজারে নোটিফিকেশন সমর্থিত নয়'));return}
+Notification.requestPermission().then(p=>{if(p==='granted')setDG(o=>{o.notif=true});else alert(TL('অনুমতি দেওয়া হয়নি'));render()});return}
+if(a=='dgtest'){if(!(window.hayatDigest&&window.hayatDigest(bt.dataset.k,true)))alert(TL('আগে নোটিফিকেশন চালু করুন'));return}
 if(a=='edit'){E=+i;render();const f=document.getElementById('tf');if(f){f.scrollIntoView({behavior:'smooth',block:'center'});const n=f.elements.title;if(n)n.focus()}return}
 if(a=='cancel'){E=null;render();return}
 if(a=='subadd'){addSub();return}
@@ -249,6 +273,7 @@ if(a=='resched'){const t=S.tasks.find(x=>x.id==i);if(t){t.start=key(new Date());
 if(a=='skipall'){if(confirm('সব বাকি কাজ বাদ দেবেন? (খাতা থেকে মুছে যাবে)')){overdue(new Date()).forEach(({t,k})=>{(S.skip[k]=S.skip[k]||{})[t.id]=true});save();render()}return}
 if(a=='del'&&confirm('কাজটি মুছে ফেলবেন?')){if(E==i)E=null;const dt0=S.tasks.find(t=>t.id==i);if(dt0&&dt0.bag){const bb=(S.bags||[]).find(x=>x.id===dt0.bag);if(bb)bb.dt=''}S.tasks=S.tasks.filter(t=>t.id!=i);save();render()}});
 $.addEventListener('change',e=>{const el=e.target,nm=el.name;
+if(el.dataset.dg){dgChange(el);return}
 if(nm=='mm'||nm=='yy'){const f=el.form,yv=+f.elements.yy.value,mv=+f.elements.mm.value;f.elements.dd.innerHTML=dayOpts(yv,mv,Math.min(+f.elements.dd.value,dim(yv,mv)));return}
 const a=el.dataset.a;if(a!='task'&&a!='sub')return;
 const k=el.dataset.k||key(new Date()),id=el.dataset.i,t=S.tasks.find(x=>x.id==id),L=(t&&t.subs)||[];
