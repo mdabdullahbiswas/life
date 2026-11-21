@@ -33,6 +33,9 @@ if(!window.hconfirm)add('script',{src:'dialog.js'});
 /* দৈনিক সামারি ও রাতের রিমাইন্ডার */
 add('script',{src:'digest.js',defer:''});
 
+/* পুশ নোটিফিকেশন (Firebase) — অ্যাপ বন্ধ থাকলেও */
+add('script',{src:'push.js',defer:''});
+
 /* গুগল শিট সিঙ্ক (সেটিং থেকে URL ও টোকেন দিলে চালু হয়) */
 add('script',{src:'sync.js',defer:''});
 
