@@ -17,7 +17,7 @@ function plan(o,now,sent){
   if(!c.on)return out;
   sent=sent||{};
   for(const k of ['am','pm']){
-    if(sent[k]===K)continue;
+    if(sent[k]===K+'@'+c[k])continue;      /* সময় বদলালে আবার পাঠানোর যোগ্য */
     const at=mins(c[k]);if(cur<at)continue;
     /* দেরিতে খুললে: প্রথমটা সর্বোচ্চ ৫ ঘণ্টা (আর দ্বিতীয় সময়ের আগ পর্যন্ত), দ্বিতীয়টা রাত ১১:৫৯ পর্যন্ত */
     const end=k==='am'?Math.min(at+300,mins(c.pm)>at?mins(c.pm)-1:1439):1439;
@@ -48,5 +48,6 @@ function build(kind,o,now){
   if(!pend.length)return{t:LN?'🌙 All done for today ✅':'🌙 আলহামদুলিল্লাহ — আজকের সব কাজ শেষ ✅',b:LN?n+'/'+n+' tasks completed. Rest well.':bn(n)+'/'+bn(n)+' টি কাজ সম্পন্ন। নিশ্চিন্তে ঘুমান।',url:'tasks.html'};
   return{t:LN?'⏳ '+pend.length+' task'+(pend.length>1?'s':'')+' still pending today':'⏳ আজ এখনো '+bn(pend.length)+' টি কাজ বাকি',b:lines(pend,6,false)+(LN?'\nDone: ':'\nসম্পন্ন: ')+bn(n-pend.length)+'/'+bn(n),url:'tasks.html'}}
 
-g.HDG={key,mins,due,cfg,plan,build};
+const stamp=(k,o,now)=>key(now)+'@'+cfg(o)[k];
+g.HDG={key,mins,due,cfg,plan,build,stamp};
 })(typeof self!=='undefined'?self:window);
