@@ -118,6 +118,9 @@ button.sm{padding:5px 12px;font-size:12px;border-radius:10px}
 .s-due{color:#991b1b;background:#fee2e2}.s-owe{color:#92400e;background:#fef3c7}.s-ok{color:#166534;background:#dcfce7}
 #paper .ty{text-align:center;margin-top:8px;padding-top:7px;border-top:1px dashed #d9caa0;font-size:12px;color:var(--pa);font-weight:600}
 /* হিসাব মিটে গেলে প্রিমিয়াম সিল */
+#paper tfoot td{font-weight:700;color:var(--pa);background:#f7f0df;border-top:2px solid var(--pa);border-bottom:0;padding:6px}
+#paper .sum{margin-top:8px;padding:7px 14px}
+#paper .sum .tt{margin-top:0;padding-top:0;border-top:0}
 #paper::after{content:"";position:absolute;inset:13px 7px 7px;border:1px solid var(--pa);opacity:.3;border-radius:10px;pointer-events:none}
 #paper .seal{display:none;flex-direction:column;align-items:center;justify-content:center;gap:1px;margin:6px 0 0;padding:8px 0 0;border-top:1px solid #eadfc6}
 #paper.done .seal{display:flex}
@@ -165,7 +168,7 @@ button.sm{padding:5px 12px;font-size:12px;border-radius:10px}
    <div class="tg" id="tg"></div>
    <div class="fg hidden" id="rpw" style="margin-top:14px"><label class="l">সাম্প্রতিক — ট্যাপ করলেই নাম ও ফোন বসে যাবে</label><div class="cps" id="rp" style="margin-top:0"></div></div>
    <div class="two" style="margin-top:14px">
-    <div class="fg"><label class="l" for="p">কার সাথে</label><input id="p" list="names" placeholder="নাম লিখুন বা বেছে নিন" autocomplete="off"><datalist id="names"></datalist></div>
+    <div class="fg"><label class="l" for="p">নাম</label><input id="p" list="names" placeholder="নাম লিখুন বা বেছে নিন" autocomplete="off"><datalist id="names"></datalist></div>
     <div class="fg"><label class="l" for="ph">ফোন (ঐচ্ছিক)</label><input id="ph" inputmode="tel" placeholder="০১৭xxxxxxxx"></div>
    </div>
    <div class="fg"><label class="l" for="d">তারিখ</label><input id="d" type="date"></div>
@@ -194,9 +197,9 @@ button.sm{padding:5px 12px;font-size:12px;border-radius:10px}
    <div class="wm" id="wm">H</div>
    <div class="stamp s-ok" id="stamp">মিটে গেছে</div>
    <div class="hd"><div id="sealg"></div><div class="mono" id="p-mono">H</div><h3 id="p-me">হিসাব বিবরণী</h3><p>লেনদেনের হিসাব বিবরণী</p><div class="no" id="p-no"></div></div>
-   <div class="det"><div><b>সাথে:</b> <span id="p-name">-</span><br><b>ফোন:</b> <span id="p-phone">-</span></div><div style="text-align:right"><b>তারিখ:</b> <span id="p-date">-</span></div></div>
-   <table><thead><tr><th>তারিখ</th><th>বাবদ</th><th class="r">আমি দিয়েছি</th><th class="r">আপনি দিয়েছেন</th></tr></thead><tbody id="p-body"></tbody></table>
-   <div class="sum"><div><span>মোট লেনদেন</span><b id="p-n">০</b></div><div><span>আমি দিয়েছি মোট</span><b id="p-s0">০</b></div><div><span>আপনি দিয়েছেন মোট</span><b id="p-s1">০</b></div><div class="tt"><span id="p-rl">বাকি</span><b id="p-rv">০ ৳</b></div></div>
+   <div class="det"><div><b>নাম:</b> <span id="p-name">-</span><br><b>ফোন:</b> <span id="p-phone">-</span></div><div style="text-align:right"><b>তারিখ:</b> <span id="p-date">-</span></div></div>
+   <table><thead><tr><th>তারিখ</th><th>বাবদ</th><th class="r">আমি দিয়েছি</th><th class="r">আপনি দিয়েছেন</th></tr></thead><tbody id="p-body"></tbody><tfoot><tr><td colspan="2">মোট</td><td class="r" id="p-s0">০</td><td class="r" id="p-s1">০</td></tr></tfoot></table>
+   <div class="sum"><div class="tt"><span id="p-rl">বাকি</span><b id="p-rv">০ ৳</b></div></div>
    <div class="seal"><div class="tx"><span class="ar" lang="ar" dir="rtl">الْحَمْدُ لِلَّهِ</span><h4>আলহামদুলিল্লাহ</h4></div><p id="p-sd">হিসাব মিটে গেছে</p></div>
    <div class="ty" id="p-ty">হিসাবে কোনো ভুল থাকলে জানাবেন — ধন্যবাদ</div>
   </div>
@@ -291,7 +294,7 @@ $('p').addEventListener('input',()=>{const n=$('p').value.trim();if(people()[n])
 function saveEntry(){
  const p=$('p').value.trim(),d=$('d').value;
  const L=rows().map(r=>({n:r.children[0].value.trim(),a:r2(num(r.children[1].value))})).filter(x=>x.n||x.a);
- if(!p){toast('কার সাথে লেনদেন — নাম লিখুন');$('p').focus();return}
+ if(!p){toast('নাম লিখুন');$('p').focus();return}
  if(!L.length){toast('অন্তত একটি জিনিসের টাকা লিখুন');rows()[0].children[1].focus();return}
  const bad=L.findIndex(x=>!(x.a>0));if(bad>=0){toast('প্রতিটি জিনিসের টাকা লিখুন');const r=rows().filter(r=>r.children[0].value.trim()||r.children[1].value.trim())[bad];if(r)r.children[1].focus();return}
  if(!d){toast('তারিখ দিন');return}
@@ -343,8 +346,7 @@ function paper(P){
  let s0=0,s1=0;
  $('p-body').innerHTML=es.map(e=>{const t=T[e.t];if(t.side)s1+=e.a;else s0+=e.a;const a=bn(r2(e.a).toLocaleString('en-IN'));return`<tr><td class="dt">${sd(e.d)}</td><td>${ex(e.n)||'—'}</td><td class="r">${t.side?'':a}</td><td class="r">${t.side?a:''}</td></tr>`}).join('');
  s0=r2(s0);s1=r2(s1);const bal=r2(s0-s1);
- $('p-s0').textContent=fm(s0);$('p-s1').textContent=fm(s1);$('p-n').textContent=bn(es.length)+'টি';
- const st=$('stamp');
+ $('p-s0').textContent=fm(s0);$('p-s1').textContent=fm(s1); const st=$('stamp');
  if(bal>0){$('p-rl').textContent='আপনি আমাকে দেবেন';$('p-rv').textContent=fm(bal);st.textContent='বাকি আছে';st.className='stamp s-due'}
  else if(bal<0){$('p-rl').textContent='আমি আপনাকে দেব';$('p-rv').textContent=fm(-bal);st.textContent='আমার দেনা';st.className='stamp s-owe'}
  else{$('p-rl').textContent='হিসাব';$('p-rv').textContent='মিটে গেছে ✓';st.textContent='মিটে গেছে';st.className='stamp s-ok'}
