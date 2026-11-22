@@ -24,7 +24,13 @@ add('link',{rel:'apple-touch-icon',href:'icon-512.png'});
 add('link',{rel:'icon',type:'image/png',href:'icon-512.png'});
 
 if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1')){
-  addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+  /* নতুন sw.js পেলে নিজে একবার রিলোড (টাইপ করার সময় নয়), আর পেজ ফোকাসে এলে নতুন সংস্করণ আছে কিনা দেখা */
+  const hadCtl=!!navigator.serviceWorker.controller;let rl=false;
+  const typing=()=>{const a=document.activeElement;return !!a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)&&a.type!=='checkbox'};
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||rl||typing())return;rl=true;location.reload()});
+  addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>{
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden)r.update().catch(()=>{})});
+  }).catch(()=>{}));
 }
 
 /* প্রিমিয়াম পপআপ (confirm/alert-এর বদলে) — যে পেজে আলাদা করে যোগ করা নেই সেখানে নিজে লোড করে */
