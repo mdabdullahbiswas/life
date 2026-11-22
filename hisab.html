@@ -173,6 +173,9 @@ form .f2{grid-column:1/-1}
 @keyframes dbd{from{opacity:0}to{opacity:1}}
 @keyframes dbo{to{opacity:0}}
 @keyframes dpop{from{opacity:0;transform:translateY(12px) scale(.94)}to{opacity:1;transform:none}}
+.ftl{text-align:center;margin:26px 0 8px}
+.ftl button{background:none;border:0;box-shadow:none;filter:none;padding:6px 10px;font-size:12px;font-weight:500;color:var(--m);opacity:.55;cursor:pointer;transform:none}
+.ftl button:hover{opacity:1;text-decoration:underline}
 .cashl{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:12px 0 2px;padding:10px 14px;border-radius:14px;border:1px solid var(--ln);background:color-mix(in srgb,var(--a) 9%,transparent);font-size:13px;color:var(--m)}
 .cashl b{font-size:17px;color:var(--t);font-weight:700}
 .ol{display:block;font-size:12.5px;font-weight:600;color:var(--m)}
@@ -238,6 +241,7 @@ let V=new Date();V.setDate(1);let Q='',F='all',T='out',E=null,PP='',FP='',PV={ed
 const PU={edu:['🎓','পড়াশোনার খরচ','পড়াশোনা','cap'],job:['💼','চাকরির খরচ','চাকরি','bag']};
 /* খাত/ধরন বদলালে ফর্ম নতুন করে আঁকা হয় — তাই আগে টাইপ করা টাকা, তারিখ, বিবরণ ধরে রেখে ফেরত দিই */
 function kf(fn,kc){const f=$.querySelector('form[data-f=fin]'),v=f?{a:f.elements.a.value,d:f.elements.d.value,n:f.elements.n.value,c:f.elements.c.value}:null;fn();const g=v&&$.querySelector('form[data-f=fin]');if(g){g.elements.a.value=v.a;g.elements.d.value=v.d;g.elements.n.value=v.n;if(kc){g.elements.c.value=v.c;sg()}}}
+let OE=0;
 const netNow=()=>{const A=S.fin.concat(virt());return sum(A,'in')-sum(A,'out')};
 const cashNow=()=>(+S.open.cash||0)+netNow();
 function pcard(p,mk,exp){const u=PU[p],all=S.fin.filter(f=>f.t=='out'&&f.p==p),mo=all.filter(f=>f.d.startsWith(mk)),tm=sum(mo,'out'),ta=sum(all,'out')+(+S.open[p]||0),v=PV[p]||'m',src=v=='a'?all:mo,tv=v=='a'?ta:tm;
@@ -284,7 +288,7 @@ const mx=Math.max(1,...tr.flatMap(x=>[x.i,x.e]));
 // budget
 const pc=S.bud>0?exp/S.bud*100:0,dim=new Date(V.getFullYear(),V.getMonth()+1,0).getDate(),left=dim-now.getDate()+1;
 const bm=S.bud>0?(pc>=100?`<div class="warn nm">বাজেট ${fm(exp-S.bud)} ছাড়িয়েছে</div>`:pc>=80?`<div class="warn nm">বাজেটের ${bn(Math.round(pc))}% শেষ</div>`:isNow?`<div class="okb nm">দৈনিক খরচের সীমা ${fm((S.bud-exp)/left)}</div>`:''):'';
-const OPn=S.open,oc=`<section class="card k-open"><h2>${H('flag','শুরুর হিসাব')}</h2><div class="m" style="margin:-4px 0 12px;font-size:12.5px;line-height:1.5">আগের হিসাব একবার বসিয়ে দিন, আর কিছু যোগ করতে হবে না।</div><form data-f="open"><label class="ol f2">💼 চাকরির জন্য এ পর্যন্ত খরচ<input name="j" type="number" min="0" step="any" inputmode="decimal" placeholder="টাকা" value="${OPn.job>0?OPn.job:''}"></label><label class="ol f2">🎓 লেখাপড়ায় এ পর্যন্ত খরচ<input name="e" type="number" min="0" step="any" inputmode="decimal" placeholder="টাকা" value="${OPn.edu>0?OPn.edu:''}"></label><label class="ol f2">💰 এখন আমার কাছে আছে<input name="m" type="number" step="any" inputmode="decimal" placeholder="টাকা" value="${OPn.set?Math.round(cashNow()*100)/100:''}"></label><button class="f2">সেভ করুন</button></form></section>`;
+const OPn=S.open,sv=OPn.set||OPn.job>0||OPn.edu>0,oc=(!sv||OE)?`<section class="card k-open" id="of"><h2>${H('flag','শুরুর হিসাব')}</h2><div class="m" style="margin:-4px 0 12px;font-size:12.5px;line-height:1.5">আগের হিসাব একবার বসিয়ে দিন, আর কিছু যোগ করতে হবে না।</div><form data-f="open"><label class="ol f2">💼 চাকরির জন্য এ পর্যন্ত খরচ<input name="j" type="number" min="0" step="any" inputmode="decimal" placeholder="টাকা" value="${OPn.job>0?OPn.job:''}"></label><label class="ol f2">🎓 লেখাপড়ায় এ পর্যন্ত খরচ<input name="e" type="number" min="0" step="any" inputmode="decimal" placeholder="টাকা" value="${OPn.edu>0?OPn.edu:''}"></label><label class="ol f2">💰 এখন আমার কাছে আছে<input name="m" type="number" step="any" inputmode="decimal" placeholder="টাকা" value="${OPn.set?Math.round(cashNow()*100)/100:''}"></label><button class="f2">সেভ করুন</button>${sv?'<button type="button" class="g f2" data-a="openclose">বন্ধ করুন</button>':''}</form></section>`:'';
 const pseg=`<div class="seg f2" title="কোন খাতের খরচ?"><button type="button" class="${PP?'':'on'}" data-pp="">সাধারণ</button><button type="button" class="${PP=='edu'?'on':''}" data-pp="edu">🎓 পড়াশোনা</button><button type="button" class="${PP=='job'?'on':''}" data-pp="job">💼 চাকরি</button></div>`,pcs=pcard('edu',mk,exp)+pcard('job',mk,exp);
 // auto donation
 const A=S.auto,ay=(()=>{const d=new Date();d.setDate(d.getDate()+1);return key(d)})();
@@ -308,7 +312,7 @@ ${S.goal.a>0?`<div class="bar"><i style="width:${gp}%"></i></div><div class="m n
 <section class="card w2 k-tr"><h2>${H('chart','৬ মাসের ধারা')}<span class="m"><span style="color:var(--ok)">●</span> আয় <span style="color:var(--a)">●</span> ব্যয়</span></h2><div class="tr nm">${tr.map(x=>`<div><div class="bs"><i style="height:${x.i/mx*100}%"></i><i style="height:${x.e/mx*100}%"></i></div><small>${x.n}</small></div>`).join('')}</div></section>
 <section class="card wide k-ls"><h2>${H('list','এ মাসের তালিকা')}<span class="pill" id="cnt"></span></h2><div class="flt"><input id="q" type="search" placeholder="🔎 খুঁজুন" value="${Q}"><select id="ft"><option value="all">সব</option><option value="in"${F=='in'?' selected':''}>আয়</option><option value="out"${F=='out'?' selected':''}>ব্যয়</option></select><select id="fp"><option value="">সব খাত</option><option value="edu"${FP=='edu'?' selected':''}>🎓 পড়াশোনা</option><option value="job"${FP=='job'?' selected':''}>💼 চাকরি</option></select></div><div id="lst"></div>
 <div class="acts"><button class="g" data-a="csv">⬇️ CSV</button></div></section>
-${kc}</div>`;
+${kc}</div>${sv&&!OE?'<div class="ftl"><button type="button" data-a="openedit">শুরুর হিসাব বদলান</button></div>':''}`;
 list();cu(bal);sg();}
 function list(){
 const mk=key(V).slice(0,7),q=Q.trim().toLowerCase();
@@ -318,7 +322,7 @@ document.getElementById('lst').innerHTML=l.length?l.map(f=>{const c=cat(f);retur
 function cu(v){const e=document.getElementById('cu');if(!e||matchMedia('(prefers-reduced-motion:reduce)').matches)return;const t0=performance.now();(function s(t){const p=Math.min(1,(t-t0)/800),k=1-Math.pow(1-p,3);e.textContent=fmn(v*k);if(p<1)requestAnimationFrame(s)})(t0)}
 function dl(name,type,data){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 $.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);
-if(e.target.dataset.f=='open'){const ms=String(f.get('m')||'').trim(),net=netNow();S.open={job:Math.max(0,+f.get('j')||0),edu:Math.max(0,+f.get('e')||0),cash:ms===''?0:(+ms||0)-net,set:ms===''?0:1};save();render();ask({t:'শুরুর হিসাব সেভ হয়েছে',m:'চাকরি ও লেখাপড়ার কার্ডে "এ পর্যন্ত মোট" আর ওপরে "এখন আমার কাছে মোট" দেখুন।',no:null});return}
+if(e.target.dataset.f=='open'){const ms=String(f.get('m')||'').trim(),net=netNow();S.open={job:Math.max(0,+f.get('j')||0),edu:Math.max(0,+f.get('e')||0),cash:ms===''?0:(+ms||0)-net,set:ms===''?0:1};save();OE=0;render();ask({t:'শুরুর হিসাব সেভ হয়েছে',m:'চাকরি ও লেখাপড়ার কার্ডে "এ পর্যন্ত মোট" আর ওপরে "এখন আমার কাছে মোট" দেখুন।',no:null});return}
 if(e.target.dataset.f!='fin')return;const nmv=cname(f.get('c')),eo=E!=null?S.fin[E]:null,it={t:T,c:T=='in'?'oi':'o',a:+f.get('a'),n:f.get('n').trim(),d:f.get('d')||(eo&&eo.d)||((mk0)=>mk0==key(new Date()).slice(0,7)?key(new Date()):mk0+'-01')(key(V).slice(0,7))};if(nmv){if(eo&&!eo.cn&&eo.t==T&&C[eo.c]&&C[eo.c][1]==nmv)it.c=eo.c;else it.cn=nmv;bump(T,nmv,it.a)}if(T=='out'&&PP)it.p=PP;if(E!=null&&S.fin[E])S.fin[E]=it;else S.fin.push(it);E=null;save();render()});
 $.addEventListener('input',e=>{if(e.target.id=='q'){Q=e.target.value;list()}if(e.target.name=='c')sg()});
 $.addEventListener('change',e=>{if(e.target.name=='c'&&e.target.form&&e.target.form.dataset.f=='fin'){const am=e.target.form.elements.a,x=getCat(T,cname(e.target.value));if(am&&x&&x.a&&!am.value)am.value=x.a}if(e.target.id=='ft'){F=e.target.value;list()}if(e.target.id=='fp'){FP=e.target.value;list()}});
@@ -334,6 +338,8 @@ if(D.unhs!=null){const uid=D.unhs;ask({t:'আয়-ব্যয় থেকে
 if(D.ed!=null){E=+D.ed;T=S.fin[E].t;PP=S.fin[E].p||'';render();const nf=document.getElementById('nf');if(nf)nf.scrollIntoView({behavior:'smooth',block:'center'});return}
 if(D.del!=null){const ent=S.fin[+D.del];ask({t:'হিসাবটি মুছবেন?',m:'মুছে ফেললে এটি আর ফেরানো যাবে না।',ok:'হ্যাঁ, মুছুন',danger:1}).then(y=>{if(!y)return;const ix=S.fin.indexOf(ent);if(ix>=0){S.fin.splice(ix,1);E=null;save();render()}});return}
 const a=D.a;
+if(a=='openedit'){OE=1;render();const x=document.getElementById('of');if(x)x.scrollIntoView({behavior:'smooth',block:'center'});return}
+if(a=='openclose'){OE=0;return render()}
 if(a=='hsall'||a=='hsnone'){const v=a=='hsall'?1:0;ledSet(e=>{if(e.t in LS)e.hs=v});return render()}
 if(a=='cancel'){E=null;return render()}
 if(a=='auto'){const am=+document.getElementById('aa').value||0,tm=document.getElementById('at').value;if(!(am>0)||!tm){ask({t:'তথ্য অসম্পূর্ণ',m:'দানের টাকা ও সময় দুটোই দিন',no:null});return}
