@@ -7,6 +7,7 @@ window.LANG=LANG;
 if(LANG!=='en'){window.L=s=>s;return}
 
 const D={
+'আজকের লক্ষ্য পূরণ হয়েছে।':'Today\u2019s goal is reached.','আজকের প্রথম সেশন শুরু করুন।':'Start today\u2019s first session.','ফোকাস সেশন সম্পন্ন। বিরতি নিন।':'Focus session complete. Take a break.','বিরতি শেষ। ফোকাসে ফিরুন।':'Break over. Back to focus.','প্রতিদিনের পড়া ঠিক করুন। টিক দিলে সময় যোগ হবে।':'Set your daily study. Ticking adds the time.','রুটিনের নাম':'Routine name',
 'পরের বার':'Next time','এই কাজের বাকি পড়া সব দিন বাদ দিয়ে পরের বারে যান':'Skip all missed days of this task and go to the next time',
 'বাকি কাজ খাতা':'Pending tasks log','বাকি কাজ':'Pending tasks','উপকাজ':'Subtasks','উপকাজ লিখে ＋ চাপুন (ঐচ্ছিক)':'Type a subtask and press ＋ (optional)','উপকাজ যোগ':'Add subtask','আজকের কাজে নিন':'Move to today','বাদ দিন':'Dismiss','সব বাদ দিন':'Dismiss all','কোনো বাকি কাজ নেই':'No pending tasks','সব বাকি কাজ বাদ দেবেন? (খাতা থেকে মুছে যাবে)':'Dismiss all pending tasks? (They will be removed from the log.)',
 'মাস':'Month','বছর':'Year',
@@ -161,6 +162,7 @@ const D={
 'তালিকা থেকে কাউকে বেছে নিন, অথবা নতুন লেনদেন যোগ করুন।':'Pick someone from the list, or add a transaction.',
 'আয়-ব্যয়ের হিসাবে যুক্ত হয়েছে':'Added to income & expenses','হিসাব থেকে সরানো হয়েছে':'Removed from accounts','সব হিসাব থেকে সরানো হয়েছে':'All removed from accounts','সব লেনদেন হিসাবে যুক্ত হয়েছে':'All transactions added to accounts',
 'শেষ সিঙ্ক:':'Last sync:','শেষ ব্যাকআপ:':'Last backup:','ব্যাকআপ নেওয়া হয়নি':'No backup yet','এখনো ব্যাকআপ নেওয়া হয়নি':'No backup yet','পরীক্ষা করুন':'Send a test','ইনস্টল করা আছে':'Installed','অ্যাপ ইনস্টল করুন':'Install app','ব্রাউজারের মেনু থেকে “হোম স্ক্রিনে যোগ করুন” বা “ইনস্টল” বেছে নিন।':'From the browser menu, choose \u201cAdd to Home Screen\u201d or \u201cInstall\u201d.','আগের মতো করুন':'Reset to default','এখনই সিঙ্ক':'Sync now',
+'আজকের পড়া শুরু করুন':'Start today\u2019s study',
 /* সেটিং পেজ */
 'পরবর্তী নামাজের কাউন্টডাউন':'Next prayer countdown','নফল নামাজসহ':'Including voluntary prayers','শুধু নফল রোজার দিনে আসে':'Shows only on voluntary fast days','হিসাবের সারাংশ':'Account summary',
 'শিটে সংরক্ষিত':'Saved to Sheet','✅ তথ্য গুগল শিটে সিঙ্ক হচ্ছে। শেষ সিঙ্ক:':'✅ Data is syncing to Google Sheet. Last sync:','এইমাত্র':'just now','এছাড়া ব্যাকআপ ফাইলও নিয়ে রাখতে পারেন।':'You can also keep a backup file.',
