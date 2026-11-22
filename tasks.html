@@ -174,6 +174,59 @@ body::before{will-change:transform;pointer-events:none}
 .card:hover{transform:none}
 @media (hover:hover){.card:hover{transform:translateY(-3px)}}
 @media (prefers-reduced-motion:reduce){body::before{animation:none}}
+
+/* ── Refined premium layer ── */
+body{font-feature-settings:"tnum" 1,"lnum" 1;line-height:1.55}
+body::before{animation:none;height:46vh;background:radial-gradient(55% 70% at 50% 0,color-mix(in srgb,var(--a) 13%,transparent),transparent)}
+main{padding:32px 20px 80px}
+header{margin-bottom:26px}
+h1{font-size:clamp(28px,5vw,40px);letter-spacing:-.4px;line-height:1.25}
+.sub{font-size:14px;margin-top:6px}
+.grid{gap:18px}
+/* রং সংযত: সোনালি; শুধু বাকি কাজে সতর্কতার লাল */
+.c1,.c2,.c4,.c5,.c6,.c7{--pc:var(--a);--pc2:var(--a2)}
+.c3{--pc:#B8323F;--pc2:#E57582}
+.card,:root[data-d="1"] .card{--pt:var(--p)}
+.c3{--pt:#B8323F}:root[data-d="1"] .c3{--pt:#FF9A9A}
+.card{padding:22px 24px;border-radius:18px;background:color-mix(in srgb,#fff 72%,var(--bg));border:1px solid var(--b);box-shadow:0 1px 2px rgba(40,28,8,.05),0 18px 36px -24px var(--sh)}
+:root[data-d="1"] .card{background:var(--c)}
+.card:hover{box-shadow:0 1px 2px rgba(40,28,8,.05),0 18px 36px -24px var(--sh)}
+@media (hover:hover){.card:hover{transform:none}}
+.card::after{display:none}
+.c3{border-color:color-mix(in srgb,#B8323F 28%,transparent)}
+h2{font-size:15px;font-weight:700;letter-spacing:.1px;margin-bottom:16px}
+h2::before,.card h2::before{display:none}
+h2 .pill{margin-left:auto}
+.pill,.card .pill{padding:3px 11px;font-size:12px;font-weight:600;background:color-mix(in srgb,var(--pc,var(--a)) 12%,transparent);border:1px solid color-mix(in srgb,var(--pc,var(--a)) 34%,transparent);color:var(--pt,var(--p))}
+.row,.card .row,.card .tk{border-bottom:1px solid var(--b)}
+.row:last-child,.card .row:last-child,.card .tk:last-child,.card .tk .row{border:0}
+.dgr{border-bottom:1px solid var(--b)}
+.spt,.card .spt{letter-spacing:.2px;margin-top:16px;border-bottom-color:var(--b)}
+input,select,.card input:not([type=checkbox]):not([type=hidden]),.card select{border-radius:10px;padding:10px 13px;background:color-mix(in srgb,var(--bg) 55%,#fff);border:1px solid color-mix(in srgb,var(--t) 14%,transparent)}
+:root[data-d="1"] input,:root[data-d="1"] select,:root[data-d="1"] .card input:not([type=checkbox]):not([type=hidden]),:root[data-d="1"] .card select{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12)}
+.card input:not([type=checkbox]):focus,.card select:focus{border-color:var(--a);box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 22%,transparent)}
+.stc{background:color-mix(in srgb,var(--a) 12%,transparent);border-color:color-mix(in srgb,var(--a) 34%,transparent)}
+.ebn{border-radius:10px;font-weight:600}
+/* বাটন: গাঢ় এসপ্রেসো + সোনালি লেখা */
+.card button:not(.x):not(.g){background:var(--bb);color:var(--bt);border:1px solid var(--bd);border-radius:10px;text-shadow:none;box-shadow:none;letter-spacing:.2px}
+.card button:not(.x):not(.g):hover{transform:none;filter:none;background:color-mix(in srgb,var(--bb) 86%,var(--bt));box-shadow:0 8px 18px -12px var(--sh)}
+.card button:not(.x):not(.g):active{transform:translateY(1px);filter:none}
+.card button.g{border:1px solid color-mix(in srgb,var(--a) 45%,transparent);color:var(--t);border-radius:10px}
+.card button.g:hover{transform:none;background:color-mix(in srgb,var(--a) 12%,transparent);border-color:var(--a)}
+.card .x:hover{transform:none}
+.card button:focus-visible{outline-color:var(--a)}
+/* টিক বক্স */
+.chk{border-width:1.5px;border-radius:8px;box-shadow:none;border-color:color-mix(in srgb,var(--t) 28%,transparent);background:transparent}
+.chk:hover{transform:none;border-color:var(--a);box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 18%,transparent)}
+.chk:checked{background:linear-gradient(135deg,var(--pc,var(--a)),var(--pc2,var(--a2)));border-color:transparent;box-shadow:none;animation:none}
+.chk:checked::after{color:var(--on);text-shadow:none;animation:none}
+.c3 .chk:checked::after{color:#fff}
+.card .st>div{background:transparent;border:1px solid var(--b);border-radius:12px;padding:12px 8px}
+.card .st b{font-size:20px}
+.bar,.card .bar{height:5px;background:color-mix(in srgb,var(--t) 9%,transparent)}
+.card .bar i{box-shadow:none}
+.okb{border-radius:10px}
+@media (max-width:560px){main{padding:22px 14px 64px}.card{padding:18px}}
 </style></head><body><script src="header.js"></script><main id="app"></main>
 <script>
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
@@ -192,14 +245,14 @@ const setDG=fn=>{const o=ld();fn(o);try{localStorage.setItem('dl',JSON.stringify
 const TL=s=>window.L?window.L(s):s;
 function dgSel(w,v){return `<input type="time" class="dgt" data-dgt="${w}" value="${v}" aria-label="সময়" style="flex:0 1 150px">`}
 function dgCard(){const pushOn=!!(window.hayatPush&&window.hayatPush.on()),c=DGV(),perm=window.Notification?Notification.permission:'unsupported',ok=perm==='granted'&&c.notif;
-return `<section class="card wide c7" id="dgc"><h2>🔔 কাজের সারাংশ নোটিফিকেশন <span class="pill">${c.on&&ok?'চালু':'বন্ধ'}</span></h2>
-<div class="m" style="margin-bottom:6px">${perm==='denied'?'ব্রাউজারে নোটিফিকেশন বন্ধ করা আছে — সাইট সেটিং থেকে "Allow" করুন':ok?'নোটিফিকেশন চালু আছে':'নোটিফিকেশন চালু নেই — নিচের বাটন চাপুন'}</div>
-<div class="dgr"><span class="dl"><b>প্রথম সময়</b><span class="m">আজ কী কী কাজ করতে হবে</span></span>${dgSel('am',c.am)}</div>
-<div class="dgr"><span class="dl"><b>দ্বিতীয় সময়</b><span class="m">আজ এখনো কী কী বাকি</span></span>${dgSel('pm',c.pm)}</div>
-<div class="dgr"><span class="dl"><b>⏰ কাজের নিজস্ব সময়ে রিমাইন্ডার</b><span class="m">কাজে সময় দেওয়া থাকলে ঠিক সেই সময়ে নোটিফিকেশন (পুশ চালু থাকতে হবে)</span></span><span class="dga" style="margin:0"><select data-lead="1" title="কত মিনিট আগে">${opts([[0,'ঠিক সময়ে'],[5,'৫ মিনিট আগে'],[10,'১০ মিনিট আগে'],[15,'১৫ মিনিট আগে'],[30,'৩০ মিনিট আগে']],c.lead)}</select><button type="button" class="g" data-a="dgtk">${c.tk?'চালু':'বন্ধ'}</button></span></div>
-<div class="dga">${ok?'':'<button type="button" data-a="dgperm">🔔 নোটিফিকেশন চালু করুন</button>'}<button type="button" class="g" data-a="dgon">${c.on?'চালু':'বন্ধ'}</button><button type="button" class="g" data-a="dgtest" data-k="am">প্রথমটি পরীক্ষা</button><button type="button" class="g" data-a="dgtest" data-k="pm">দ্বিতীয়টি পরীক্ষা</button></div>
-<div class="dgr" style="margin-top:8px;border-bottom:0"><span class="dl"><b>📲 অ্যাপ বন্ধ থাকলেও (পুশ)</b><span class="m">${pushOn?'পুশ চালু আছে':'পুশ চালু নেই'}</span></span><span class="dga" style="margin:0">${pushOn?'<button type="button" class="g" data-a="pushtest" data-k="am">পুশ পরীক্ষা</button><button type="button" class="g" data-a="pushoff">পুশ বন্ধ করুন</button>':'<button type="button" data-a="pushon">এই ডিভাইসে পুশ চালু করুন</button>'}</span></div>
-<div class="m" style="margin-top:10px;font-size:12px">ঠিক সময়ে পেতে অ্যাপটি Home Screen-এ ইনস্টল করে রাখুন। অ্যাপ/পেজ একেবারে বন্ধ থাকলে ব্রাউজার সময়মতো জাগাতে নাও পারে — তখন পরের বার খুললেই সামারি আসবে।</div></section>`}
+return `<section class="card wide c7" id="dgc"><h2>নোটিফিকেশন <span class="pill">${c.on&&ok?'চালু':'বন্ধ'}</span></h2>
+<div class="m" style="margin-bottom:6px">${perm==='denied'?'ব্রাউজারে নোটিফিকেশন বন্ধ আছে। সাইট সেটিং থেকে অনুমতি দিন।':ok?'নোটিফিকেশন চালু আছে':'নোটিফিকেশন চালু নেই'}</div>
+<div class="dgr"><span class="dl"><b>প্রথম সময়</b><span class="m">আজকের কাজের তালিকা</span></span>${dgSel('am',c.am)}</div>
+<div class="dgr"><span class="dl"><b>দ্বিতীয় সময়</b><span class="m">আজ এখনো বাকি</span></span>${dgSel('pm',c.pm)}</div>
+<div class="dgr"><span class="dl"><b>কাজের সময়ে রিমাইন্ডার</b><span class="m">নির্ধারিত সময়ে নোটিফিকেশন</span></span><span class="dga" style="margin:0"><select data-lead="1" title="কত মিনিট আগে">${opts([[0,'ঠিক সময়ে'],[5,'৫ মিনিট আগে'],[10,'১০ মিনিট আগে'],[15,'১৫ মিনিট আগে'],[30,'৩০ মিনিট আগে']],c.lead)}</select><button type="button" class="g" data-a="dgtk">${c.tk?'চালু':'বন্ধ'}</button></span></div>
+<div class="dga">${ok?'':'<button type="button" data-a="dgperm">নোটিফিকেশন চালু করুন</button>'}<button type="button" class="g" data-a="dgon">${c.on?'চালু':'বন্ধ'}</button><button type="button" class="g" data-a="dgtest" data-k="am">প্রথমটি পরীক্ষা</button><button type="button" class="g" data-a="dgtest" data-k="pm">দ্বিতীয়টি পরীক্ষা</button></div>
+<div class="dgr" style="margin-top:8px;border-bottom:0"><span class="dl"><b>পুশ নোটিফিকেশন</b><span class="m">${pushOn?'পুশ চালু আছে':'পুশ চালু নেই'}</span></span><span class="dga" style="margin:0">${pushOn?'<button type="button" class="g" data-a="pushtest" data-k="am">পুশ পরীক্ষা</button><button type="button" class="g" data-a="pushoff">পুশ বন্ধ করুন</button>':'<button type="button" data-a="pushon">এই ডিভাইসে পুশ চালু করুন</button>'}</span></div>
+<div class="m" style="margin-top:10px;font-size:12px">ঠিক সময়ে পেতে অ্যাপটি Home Screen-এ ইনস্টল করুন।</div></section>`}
 function dgChange(el){const w=el.dataset.dg,g=[...document.querySelectorAll('[data-dg="'+w+'"]')],v={};g.forEach(x=>v[x.dataset.p]=x.value);
 const h=(+v.h%12)+(v.p==='PM'?12:0),val=String(h).padStart(2,'0')+':'+String(+v.m||0).padStart(2,'0');
 setDG(o=>{o.dg=Object.assign({},o.dg,{[w]:val})})}
@@ -234,7 +287,7 @@ const subs=(t,k)=>{const L=t.subs||[];if(!L.length)return '';const dd=((S.sd||{}
 /* পুনরাবৃত্ত কাজের পরের নির্ধারিত দিন (আজ থেকে গুনে) */
 const nxl=t=>{const n=new Date();for(let i=0;i<=800;i++){const d=new Date(n);d.setDate(d.getDate()+i);if(due(t,d))return i==0?'আজ':i==1?'আগামীকাল':bn(d.getDate())+' '+MON[d.getMonth()]}return ''};
 const rowT=(t,k,late)=>{const dn_=(S.done[k]||{})[t.id],L=t.subs||[],dd=((S.sd||{})[k]||{})[t.id]||{},sc=L.filter(s=>dd[s.id]).length;
-return `<div class="tk"><div class="row"><label style="display:flex;gap:10px;align-items:center;${dn_?'color:var(--m)':''}"><input type="checkbox" class="chk" data-a="task" data-i="${t.id}" data-k="${k}" ${dn_?'checked':''}><span style="${dn_?'text-decoration:line-through':''}">${ex(t.title)}</span></label><span class="m" style="display:flex;align-items:center;gap:2px;flex-wrap:wrap;justify-content:flex-end">${[t.time?tf(t.time):'',late&&t.type=='once'?'':lbl(t),L.length?'উপকাজ '+bn(sc)+'/'+bn(L.length):''].filter(Boolean).join(' · ')}${bp(t)}${late?(t.type=='once'?`<button class="x ed" data-a="resched" data-i="${t.id}" aria-label="আজকের কাজে নিন" title="আজকের কাজে নিন">↪</button><button class="x" data-a="skip" data-i="${t.id}" data-k="${k}" aria-label="বাদ দিন" title="বাদ দিন">✕</button>`:(()=>{const nx=nxl(t);return nx?`<button type="button" class="g nx" data-a="nextt" data-i="${t.id}" title="এই কাজের বাকি পড়া সব দিন বাদ দিয়ে পরের বারে যান">পরের বার: ${nx} ⏭</button>`:`<button class="x" data-a="skip" data-i="${t.id}" data-k="${k}" aria-label="বাদ দিন" title="বাদ দিন">✕</button>`})()):`<button class="x ed" data-a="edit" data-i="${t.id}" aria-label="এডিট" title="এডিট">✎</button>`}</span></div>${subs(t,k)}</div>`};
+return `<div class="tk"><div class="row"><label style="display:flex;gap:10px;align-items:center;${dn_?'color:var(--m)':''}"><input type="checkbox" class="chk" data-a="task" data-i="${t.id}" data-k="${k}" ${dn_?'checked':''}><span style="${dn_?'text-decoration:line-through':''}">${ex(t.title)}</span></label><span class="m" style="display:flex;align-items:center;gap:2px;flex-wrap:wrap;justify-content:flex-end">${[t.time?tf(t.time):'',late&&t.type=='once'?'':lbl(t),L.length?'উপকাজ '+bn(sc)+'/'+bn(L.length):''].filter(Boolean).join(' · ')}${bp(t)}${late?(t.type=='once'?`<button class="x ed" data-a="resched" data-i="${t.id}" aria-label="আজকের কাজে নিন" title="আজকের কাজে নিন">↪</button><button class="x" data-a="skip" data-i="${t.id}" data-k="${k}" aria-label="বাদ দিন" title="বাদ দিন">✕</button>`:(()=>{const nx=nxl(t);return nx?`<button type="button" class="g nx" data-a="nextt" data-i="${t.id}" title="এই কাজের বাকি পড়া সব দিন বাদ দিয়ে পরের বারে যান">পরের বার: ${nx}</button>`:`<button class="x" data-a="skip" data-i="${t.id}" data-k="${k}" aria-label="বাদ দিন" title="বাদ দিন">✕</button>`})()):`<button class="x ed" data-a="edit" data-i="${t.id}" aria-label="এডিট" title="এডিট">✎</button>`}</span></div>${subs(t,k)}</div>`};
 /* যে দিন পার হয়ে গেছে অথচ কাজ শেষ হয়নি (একবারের কাজ শুরুর দিন থেকে; পুনরাবৃত্ত কাজ নতুন সংস্করণ চালুর দিন থেকে, সর্বোচ্চ ৩০ দিন) */
 function overdue(now){const T=key(now),out=[],dn=S.done||{},sk=S.skip||{};
 S.tasks.forEach(t=>{if(!t.start)return;const miss=k=>!(dn[k]||{})[t.id]&&!(sk[k]||{})[t.id];
@@ -245,25 +298,25 @@ function render(){const sy=window.scrollY,now=new Date(),K=key(now);if(!S.ovFrom
 const tt=S.tasks.filter(t=>due(t,now)).sort(byTime),dn=tt.filter(t=>(S.done[K]||{})[t.id]),pct=tt.length?Math.round(dn.length/tt.length*100):0;
 const week=Array.from({length:7},(_,i)=>{const d=new Date(now);d.setDate(d.getDate()+i);const L=S.tasks.filter(t=>due(t,d)).sort(byTime);return{d,L}});
 const od=overdue(now);let odH='',last='';od.forEach(({t,k})=>{if(k!=last){last=k;const d=new Date(k+'T00:00');odH+=`<div class="spt">${DAY[d.getDay()]} · ${bn(d.getDate())} ${MON[d.getMonth()]} ${bn(d.getFullYear())}</div>`}odH+=rowT(t,k,true)});
-$.innerHTML=`<header><div><h1>✅ কাজ</h1><div class="sub">${DAY[now.getDay()]}, ${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())}</div></div>${od.length?`<span class="pill bad">📒 বাকি কাজ ${bn(od.length)}</span>`:''}</header>
+$.innerHTML=`<header><div><h1>কাজ</h1><div class="sub">${DAY[now.getDay()]}, ${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())}</div></div></header>
 <div class="grid"><section class="card wide c1"><h2>আজকের কাজ <span class="pill">${bn(dn.length)}/${bn(tt.length)}</span></h2>
-${tt.length?tt.map(t=>rowT(t,K,false)).join(''):'<div class="m">আজ কোনো কাজ নেই। নিচে নতুন কাজ যোগ করুন।</div>'}
+${tt.length?tt.map(t=>rowT(t,K,false)).join(''):'<div class="m">আজ কোনো কাজ নেই।</div>'}
 <div class="bar"><i style="width:${pct}%"></i></div>
-${tt.length&&dn.length==tt.length?'<div class="okb">মাশাআল্লাহ! আজকের সব কাজ শেষ ✓</div>':''}</section>
-<section class="card wide c2" id="addc"><h2>${et?'✎ কাজ এডিট':'➕ নতুন কাজ যোগ করুন'}</h2>
-${et?`<div class="ebn">✎ ${ex(et.title)}<button type="button" class="x" data-a="cancel" style="margin-left:auto">✕</button></div>`:''}<form data-f="task" id="tf"><input name="title" placeholder="কাজের নাম" value="${ex(fv.title)}" required style="flex:2 1 160px">${dateField(fv.start)}<select name="type" title="পুনরাবৃত্তি" onchange="var f=this.form,v=this.value,w=f.querySelector('.nw');w.style.display=(v=='every'||v=='mevery')?'':'none';w.querySelector('.nu').textContent=v=='mevery'?'মাস পর পর':'দিন পর পর';if(v=='mevery'&&f.n.value==3)f.n.value=2"><option value="once"${sel('once')}>শুধু এই দিন (পুনরাবৃত্তি নেই)</option><option value="daily"${sel('daily')}>প্রতিদিন</option><option value="weekly"${sel('weekly')}>প্রতি সপ্তাহে</option><option value="every"${sel('every')}>নির্দিষ্ট দিন পর পর</option><option value="mevery"${sel('mevery')}>নির্দিষ্ট মাস পর পর (যেমন ২ মাসে একবার)</option><option value="monthly"${sel('monthly')}>প্রতি মাসে</option><option value="yearly"${sel('yearly')}>প্রতি বছর</option></select><span class="nw" style="display:${fv.type=='every'||fv.type=='mevery'?'':'none'};align-items:center;gap:6px"><span class="m">প্রতি</span><input name="n" type="number" min="1" max="365" value="${ex(fv.n||3)}" title="কত পর পর" style="flex:0 0 72px"><span class="m nu">${fv.type=='mevery'?'মাস পর পর':'দিন পর পর'}</span></span>${timeField(fv.time)}
-<div class="sbx"><div class="m" style="margin-bottom:6px">উপকাজ</div><div id="sbl" class="sbl">${(fv.subs||[]).map(s=>chip(s.t,s.id)).join('')}</div><div class="sba"><input id="subn" placeholder="উপকাজ লিখে ＋ চাপুন (ঐচ্ছিক)" maxlength="120"><button type="button" data-a="subadd" aria-label="উপকাজ যোগ" title="উপকাজ যোগ">＋</button></div></div>
+${tt.length&&dn.length==tt.length?'<div class="okb">আজকের সব কাজ শেষ</div>':''}</section>
+<section class="card wide c2" id="addc"><h2>${et?'কাজ এডিট':'নতুন কাজ যোগ করুন'}</h2>
+${et?`<div class="ebn">${ex(et.title)}<button type="button" class="x" data-a="cancel" style="margin-left:auto">✕</button></div>`:''}<form data-f="task" id="tf"><input name="title" placeholder="কাজের নাম" value="${ex(fv.title)}" required style="flex:2 1 160px">${dateField(fv.start)}<select name="type" title="পুনরাবৃত্তি" onchange="var f=this.form,v=this.value,w=f.querySelector('.nw');w.style.display=(v=='every'||v=='mevery')?'':'none';w.querySelector('.nu').textContent=v=='mevery'?'মাস পর পর':'দিন পর পর';if(v=='mevery'&&f.n.value==3)f.n.value=2"><option value="once"${sel('once')}>একবার</option><option value="daily"${sel('daily')}>প্রতিদিন</option><option value="weekly"${sel('weekly')}>প্রতি সপ্তাহে</option><option value="every"${sel('every')}>নির্দিষ্ট দিন পর পর</option><option value="mevery"${sel('mevery')}>নির্দিষ্ট মাস পর পর</option><option value="monthly"${sel('monthly')}>প্রতি মাসে</option><option value="yearly"${sel('yearly')}>প্রতি বছর</option></select><span class="nw" style="display:${fv.type=='every'||fv.type=='mevery'?'':'none'};align-items:center;gap:6px"><span class="m">প্রতি</span><input name="n" type="number" min="1" max="365" value="${ex(fv.n||3)}" title="কত পর পর" style="flex:0 0 72px"><span class="m nu">${fv.type=='mevery'?'মাস পর পর':'দিন পর পর'}</span></span>${timeField(fv.time)}
+<div class="sbx"><div class="m" style="margin-bottom:6px">উপকাজ</div><div id="sbl" class="sbl">${(fv.subs||[]).map(s=>chip(s.t,s.id)).join('')}</div><div class="sba"><input id="subn" placeholder="উপকাজের নাম" maxlength="120"><button type="button" data-a="subadd" aria-label="উপকাজ যোগ" title="উপকাজ যোগ">＋</button></div></div>
 <button>${et?'আপডেট করুন':'যোগ করুন'}</button>${et?'<button type="button" class="g" data-a="cancel">বাতিল</button>':''}</form></section>
-<section class="card wide c3"><h2>📒 বাকি কাজ খাতা <span class="pill${od.length?' bad':''}">${bn(od.length)}</span></h2>${od.length?odH+(od.length>1?'<div style="margin-top:10px"><button type="button" class="g" data-a="skipall">সব বাদ দিন</button></div>':''):'<div class="m">কোনো বাকি কাজ নেই ✓</div>'}</section>
-<section class="card wide c4"><h2>সব কাজ <span class="pill">${bn(S.tasks.length)} টি</span></h2>${S.tasks.length?S.tasks.map(t=>`<div class="row"><span>${ex(t.title)}<span class="m"> · ${t.time?tf(t.time)+' · ':''}${t.type=='once'?dt(t):lbl(t)+' · শুরু '+dt(t)}${(t.subs||[]).length?' · উপকাজ '+bn(t.subs.length)+' টি':''}${bp(t)}</span></span><span style="display:flex;flex:none"><button class="x ed" data-a="edit" data-i="${t.id}" aria-label="এডিট" title="এডিট">✎</button><button class="x" data-a="del" data-i="${t.id}" aria-label="মুছুন">✕</button></span></div>`).join(''):'<div class="m">এখনো কোনো কাজ যোগ করা হয়নি।</div>'}</section>
-<section class="card c5"><h2>পরিসংখ্যান</h2><div class="st"><div><div class="m">আজ সম্পন্ন</div><b>${bn(pct)}%</b></div><div><div class="m">টানা পূর্ণ দিন</div><b>${bn(streak(now))}</b></div></div><div class="row"><span>মোট কাজ</span><b>${bn(S.tasks.length)} টি</b></div></section>
-<section class="card c6"><h2>আগামী ৭ দিন</h2>${week.map(({d,L},i)=>`<div class="spt">${i==0?'আজ':i==1?'আগামীকাল':DAY[d.getDay()]} · ${bn(d.getDate())} ${MON[d.getMonth()]}</div>${L.length?L.map(t=>`<div class="sr"><span>${ex(t.title)}</span><span>${t.time?tf(t.time):''}</span></div>`).join(''):'<div class="sr"><span>কোনো কাজ নেই</span><span></span></div>'}`).join('')}</section>
+<section class="card wide c3"><h2>বাকি কাজ <span class="pill${od.length?' bad':''}">${bn(od.length)}</span></h2>${od.length?odH+(od.length>1?'<div style="margin-top:10px"><button type="button" class="g" data-a="skipall">সব বাদ দিন</button></div>':''):'<div class="m">কোনো বাকি কাজ নেই</div>'}</section>
+<section class="card wide c4"><h2>সব কাজ <span class="pill">${bn(S.tasks.length)} টি</span></h2>${S.tasks.length?S.tasks.map(t=>`<div class="row"><span>${ex(t.title)}<span class="m"> · ${t.time?tf(t.time)+' · ':''}${t.type=='once'?dt(t):lbl(t)+' · শুরু '+dt(t)}${(t.subs||[]).length?' · উপকাজ '+bn(t.subs.length)+' টি':''}${bp(t)}</span></span><span style="display:flex;flex:none"><button class="x ed" data-a="edit" data-i="${t.id}" aria-label="এডিট" title="এডিট">✎</button><button class="x" data-a="del" data-i="${t.id}" aria-label="মুছুন">✕</button></span></div>`).join(''):'<div class="m">এখনো কোনো কাজ যোগ করা হয়নি</div>'}</section>
+<section class="card c5"><h2>পরিসংখ্যান</h2><div class="st"><div><div class="m">আজ সম্পন্ন</div><b>${bn(pct)}%</b></div><div><div class="m">টানা পূর্ণ দিন</div><b>${bn(streak(now))}</b></div></div></section>
+<section class="card c6"><h2>আগামী ৭ দিন</h2>${week.map(({d,L},i)=>`<div class="spt">${i==0?'আজ':i==1?'আগামীকাল':DAY[d.getDay()]} · ${bn(d.getDate())} ${MON[d.getMonth()]}</div>${L.length?L.map(t=>`<div class="sr"><span>${ex(t.title)}</span><span>${t.time?tf(t.time):''}</span></div>`).join(''):'<div class="sr"><span>—</span><span></span></div>'}`).join('')}</section>
 ${dgCard()}
 </div>`;if(sy>0)window.scrollTo(0,sy);$.classList.add('rd')}
 $.addEventListener('click',e=>{const bt=e.target.closest('[data-a]');if(!bt||bt.type=='checkbox')return;const a=bt.dataset.a,i=bt.dataset.i;
-if(a=='pushon'){bt.disabled=true;bt.textContent='…';(window.hayatPush?window.hayatPush.enable():Promise.reject(new Error('push.js লোড হয়নি — পেজ রিফ্রেশ করুন'))).then(()=>{render();alert('✓ এই ডিভাইসে পুশ চালু হয়েছে। "পুশ পরীক্ষা" চেপে দেখে নিন।')}).catch(e=>{alert(String(e&&e.message||e));render()});return}
+if(a=='pushon'){bt.disabled=true;bt.textContent='…';(window.hayatPush?window.hayatPush.enable():Promise.reject(new Error('push.js লোড হয়নি — পেজ রিফ্রেশ করুন'))).then(()=>{render();alert('এই ডিভাইসে পুশ চালু হয়েছে।')}).catch(e=>{alert(String(e&&e.message||e));render()});return}
 if(a=='pushoff'){(window.hayatPush?window.hayatPush.disable():Promise.resolve()).then(render);return}
-if(a=='pushtest'){bt.disabled=true;window.hayatPush.test(bt.dataset.k).then(r=>{bt.disabled=false;alert('পরীক্ষার পুশ পাঠানো হয়েছে — কয়েক সেকেন্ডে আসবে।'+(r&&r.info?'\n\n'+r.info:'')+(r&&r.warn?'\n⚠ '+r.warn:''))}).catch(e=>{bt.disabled=false;alert(String(e&&e.message||e))});return}
+if(a=='pushtest'){bt.disabled=true;window.hayatPush.test(bt.dataset.k).then(r=>{bt.disabled=false;alert('পরীক্ষার পুশ পাঠানো হয়েছে।'+(r&&r.info?'\n\n'+r.info:'')+(r&&r.warn?'\n⚠ '+r.warn:''))}).catch(e=>{bt.disabled=false;alert(String(e&&e.message||e))});return}
 if(a=='tclr'){const f=bt.closest('form'),ti=f&&f.elements.time;if(ti)ti.value='';return}
 if(a=='dgtk'){setDG(o=>{o.dg=Object.assign({},o.dg,{tk:DGV().tk?0:1})});render();return}
 if(a=='dgon'){setDG(o=>{o.dg=Object.assign({},o.dg,{on:DGV().on?0:1})});render();return}
