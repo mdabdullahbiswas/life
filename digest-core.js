@@ -7,7 +7,7 @@ function due(t,d){
   if(!t||!t.start)return 0;
   const s=new Date(t.start+'T00:00'),k=Math.round((new Date(key(d)+'T00:00')-s)/864e5);if(k<0)return 0;
   const dim=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();
-  return t.type=='once'?k==0:t.type=='daily'||(t.type=='every'&&k%t.n==0)||(t.type=='weekly'&&k%7==0)||(t.type=='monthly'&&Math.min(s.getDate(),dim)==d.getDate())||(t.type=='yearly'&&s.getDate()==d.getDate()&&s.getMonth()==d.getMonth())}
+  return t.type=='once'?k==0:t.type=='daily'||(t.type=='every'&&k%t.n==0)||(t.type=='weekly'&&k%7==0)||(t.type=='monthly'&&Math.min(s.getDate(),dim)==d.getDate())||(t.type=='mevery'&&(t.n||1)>0&&(((d.getFullYear()-s.getFullYear())*12+d.getMonth()-s.getMonth())%(t.n||1)==0)&&Math.min(s.getDate(),dim)==d.getDate())||(t.type=='yearly'&&s.getDate()==d.getDate()&&s.getMonth()==d.getMonth())}
 /* o.dg = {on, am, pm}: am = প্রথম সময় (আজ কী কী করতে হবে), pm = দ্বিতীয় সময় (আজ এখনো কী বাকি) */
 function cfg(o){const c=(o&&o.dg)||{};return{on:c.on!==0,am:/^\d\d:\d\d$/.test(c.am)?c.am:'07:00',pm:/^\d\d:\d\d$/.test(c.pm)?c.pm:'22:00'}}
 
