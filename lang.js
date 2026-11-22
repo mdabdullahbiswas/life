@@ -155,6 +155,11 @@ const D={
 'আমাদের হিসাব বিবরণী পাঠালাম':'I\u2019ve sent our account statement',
 'আমাদের লেনদেনের হিসাব':'Our transaction summary',
 'আলহামদুলিল্লাহ, হিসাব মিটে গেছে ✓':'Alhamdulillah, the account is settled ✓',
+'মোট আমি পাব':'Total to receive','মোট আমি দেব':'Total to pay','আয়-ব্যয়ের হিসাব →':'Income & expenses →','আয়-ব্যয়ের হিসাব':'Income & expenses',
+'সাম্প্রতিক':'Recent','আমার নাম':'My name','আয়-ব্যয়ের হিসাবেও রাখুন':'Also keep in income & expenses','হিসাব থেকে সরান':'Remove from accounts',
+'সব হিসাবে তুলুন / সরান':'Add / remove all to accounts','হিসাব মিটিয়ে দিন':'Mark as settled','এখনো কোনো লেনদেন নেই':'No transactions yet',
+'তালিকা থেকে কাউকে বেছে নিন, অথবা নতুন লেনদেন যোগ করুন।':'Pick someone from the list, or add a transaction.',
+'আয়-ব্যয়ের হিসাবে যুক্ত হয়েছে':'Added to income & expenses','হিসাব থেকে সরানো হয়েছে':'Removed from accounts','সব হিসাব থেকে সরানো হয়েছে':'All removed from accounts','সব লেনদেন হিসাবে যুক্ত হয়েছে':'All transactions added to accounts',
 /* সেটিং পেজ */
 'পরবর্তী নামাজের কাউন্টডাউন':'Next prayer countdown','নফল নামাজসহ':'Including voluntary prayers','শুধু নফল রোজার দিনে আসে':'Shows only on voluntary fast days','হিসাবের সারাংশ':'Account summary',
 'শিটে সংরক্ষিত':'Saved to Sheet','✅ তথ্য গুগল শিটে সিঙ্ক হচ্ছে। শেষ সিঙ্ক:':'✅ Data is syncing to Google Sheet. Last sync:','এইমাত্র':'just now','এছাড়া ব্যাকআপ ফাইলও নিয়ে রাখতে পারেন।':'You can also keep a backup file.',
@@ -460,6 +465,7 @@ function tr(s){
  /* লেনদেনের খাতা: নাম/সংখ্যা বসানো বাক্য */
  const Nn=(n,one,many)=>(+num(n)===1?'1 '+one:num(n)+' '+many);
  s=s.replace(new RegExp('^✓ (.+?)-এর আগের হিসাব মিটে গেছে। এখন লেনদেন করলে নতুন পর্ব শুরু হবে — আগের হিসাব “লেনদেনসমূহ”-এ আর বিবরণীর পর্ব-বোতামে থেকে যাবে।$'),'\u2713 $1\u2019s earlier account is settled. A new transaction now starts a new cycle \u2014 the earlier account stays under \u201cTransactions\u201d and in the statement\u2019s cycle buttons.');
+ s=s.replace(new RegExp('^✓ (.+?)-এর আগের হিসাব মিটে গেছে — নতুন লেনদেনে নতুন পর্ব শুরু হবে।$'),'\\u2713 $1\\u2019s earlier account is settled \\u2014 a new transaction starts a new cycle.');
  s=s.replace(new RegExp('^(.+)-এর সব লেনদেন মুছে ফেলবেন\\? এটা ফেরানো যাবে না।$'),'Delete all of $1\u2019s transactions? This cannot be undone.');
  s=s.replace(new RegExp('^(.+)-এর লেনদেন$'),'$1\u2019s transactions');
  s=s.replace(new RegExp('^এই লেনদেনটি \\((.+?)\\) মুছে ফেলবেন\\?$'),'Delete this transaction ($1)?');
