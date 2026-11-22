@@ -15,51 +15,70 @@
 :root[data-t="3"]:not([data-d="1"]){--g:#5B1A2B;--p:#5B1A2B;--t:#2A0F16;--m:#76616A;--bg:#FAF5EF}
 :root[data-t="3"][data-d="1"]{--bg:#0E0709;--c:rgba(91,26,43,.42);--g:#8A2D45}
 html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
-*{box-sizing:border-box}
+:root[data-d="1"]{color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;font-family:Inter,"Noto Serif Bengali",serif;color:var(--t);background:var(--bg);min-height:100vh;line-height:1.55;transition:background .4s}
 body::before{content:"";position:fixed;inset:-20% -10% auto;height:70vh;background:radial-gradient(60% 60% at 30% 30%,color-mix(in srgb,var(--g) 11%,transparent),transparent),radial-gradient(50% 50% at 80% 20%,color-mix(in srgb,var(--a) 7%,transparent),transparent);z-index:-1}
 button,input,select,h1,h2{font-family:"Noto Serif Bengali",Inter,serif}
-main{max-width:1040px;margin:auto;padding:22px 18px 80px}
+main{max-width:1040px;margin:auto;padding:22px 18px 88px}
+@media(min-width:700px){main{padding:34px 28px 96px}.cols{gap:0 26px}}
 .top{margin-bottom:20px}
-h1{font-size:clamp(26px,5vw,34px);margin:0;font-weight:700;letter-spacing:-.3px}
-.m{color:var(--m);font-size:13px}
+h1{font-size:clamp(28px,5.5vw,36px);margin:0;font-weight:700;line-height:1.25}
+.sub{margin:6px 0 0;color:var(--m);font-size:14px}
+.m{color:var(--m);font-size:12.5px;line-height:1.5}
+svg{display:block}
 
-/* ডেটা-ভল্ট: পেজের একমাত্র গাঢ় অংশ — থিমের রঙে গাঢ়, সোনালি সূক্ষ্ম বৃত্ত-নকশা */
-.vault{position:relative;overflow:hidden;border-radius:22px;padding:26px 26px 24px;margin-bottom:28px;color:#FBF3DC;
-background:radial-gradient(120% 140% at 100% 0,rgba(226,194,117,.30),transparent 55%),repeating-radial-gradient(circle at 100% 0,rgba(226,194,117,.11) 0 1px,transparent 1px 24px),linear-gradient(135deg,color-mix(in srgb,var(--g) 60%,#120c05),color-mix(in srgb,var(--g) 38%,#0b0703));
-border:1px solid rgba(226,194,117,.5);box-shadow:0 28px 48px -30px rgba(31,22,8,.75),inset 0 1px 0 rgba(255,255,255,.14);animation:rise .6s both}
+/* ডেটা-ভল্ট */
+.vault{position:relative;overflow:hidden;isolation:isolate;border-radius:26px;padding:24px;margin-bottom:28px;color:#FBF3DC;
+background:radial-gradient(110% 130% at 100% 0,rgba(226,194,117,.28),transparent 58%),linear-gradient(145deg,color-mix(in srgb,var(--g) 62%,#120c05),color-mix(in srgb,var(--g) 36%,#0b0703));
+border:1px solid rgba(226,194,117,.45);box-shadow:0 30px 50px -32px rgba(31,22,8,.8),inset 0 1px 0 rgba(255,255,255,.16);animation:rise .6s both}
+.vault::before{content:"";position:absolute;inset:0;z-index:-1;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44' fill='none' stroke='%23E2C275' stroke-opacity='.24'%3E%3Crect x='9' y='9' width='26' height='26'/%3E%3Crect x='9' y='9' width='26' height='26' transform='rotate(45 22 22)'/%3E%3Ccircle cx='22' cy='22' r='4'/%3E%3C/svg%3E");-webkit-mask-image:radial-gradient(90% 130% at 100% 0,#000,transparent 72%);mask-image:radial-gradient(90% 130% at 100% 0,#000,transparent 72%)}
 @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.vault .hl{font-size:13px;color:rgba(251,243,220,.72);letter-spacing:.3px}
-.vault .big{font-size:clamp(28px,6vw,40px);font-weight:700;line-height:1.25;margin:4px 0 16px;background:linear-gradient(90deg,#FFF1C2,#E2C275 60%,#C99A3A);-webkit-background-clip:text;background-clip:text;color:transparent}
-.vault .vs,.vault .vs.okb,.vault .vs.warn{display:inline-flex;align-items:center;gap:9px;margin:0;padding:7px 15px;border-radius:99px;font-size:14px;font-weight:500;color:rgba(251,243,220,.92);background:rgba(255,255,255,.08);border:1px solid rgba(226,194,117,.3)}
+.vt{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.vi{width:54px;height:54px;border-radius:17px;display:grid;place-items:center;flex:none;color:#F2D88A;background:linear-gradient(145deg,rgba(255,241,194,.24),rgba(255,241,194,.05));border:1px solid rgba(226,194,117,.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.22)}
+.vi svg{width:27px;height:27px}
+.vault .hl{font-size:13px;color:rgba(251,243,220,.72)}
+.vault .big{font-size:clamp(26px,6vw,36px);font-weight:700;line-height:1.3;background:linear-gradient(90deg,#FFF1C2,#E2C275 60%,#C99A3A);-webkit-background-clip:text;background-clip:text;color:transparent}
+.vault .vs,.vault .vs.okb,.vault .vs.warn{display:inline-flex;align-items:center;gap:9px;margin:0;padding:7px 15px;border-radius:99px;font-size:13.5px;font-weight:500;color:rgba(251,243,220,.92);background:rgba(255,255,255,.08);border:1px solid rgba(226,194,117,.3)}
 .vault .vs i{width:8px;height:8px;border-radius:50%;background:#4fd7a0;box-shadow:0 0 0 4px rgba(79,215,160,.2)}
 .vault .vs.warn i{background:#ff9a8a;box-shadow:0 0 0 4px rgba(255,138,138,.22)}
+.vrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.vault button{background:linear-gradient(135deg,#F6E2A0,#C99A3A);color:#2A1C05;border-color:rgba(255,255,255,.35)}
+.vault button.g{background:rgba(255,255,255,.08);color:#FBF3DC;border-color:rgba(226,194,117,.45)}
+.vault button.g:hover{background:rgba(255,255,255,.15)}
 
-/* হোম পেজের সাথে মেলানো সাজ */
-.sec>h2::before{content:"";width:8px;height:8px;border-radius:2px;transform:rotate(45deg);background:linear-gradient(135deg,var(--a2),var(--a));box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 18%,transparent);flex:none}
-.top{padding-bottom:16px;border-bottom:1px solid transparent;border-image:linear-gradient(90deg,color-mix(in srgb,var(--a) 55%,transparent),transparent 78%) 1}
-@media(min-width:700px){main{padding:32px 28px 96px}.cols{gap:0 26px}}
 /* ভাগ ও কার্ড */
 .cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 22px;align-items:start}
 .col{min-width:0}
-.sec{margin-bottom:24px}
-.sec>h2{display:flex;align-items:center;gap:8px;margin:0 4px 10px;font-size:14.5px;font-weight:700;color:var(--p);letter-spacing:.2px}
-.card{background:var(--c);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid color-mix(in srgb,var(--a) 30%,transparent);border-radius:20px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.03),0 20px 36px -26px var(--sh)}
+.sec{margin-bottom:26px}
+.sec>h2{display:flex;align-items:center;gap:10px;margin:0 4px 11px;font-size:15.5px;font-weight:700;color:var(--t)}
+.sec>h2 .pill{margin-left:auto}
+.hi{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;flex:none;color:var(--on);background:linear-gradient(145deg,var(--a2),var(--a));box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 6px 12px -6px var(--sh)}
+.hi svg{width:17px;height:17px}
+.card{position:relative;background:var(--c);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid color-mix(in srgb,var(--a) 28%,transparent);border-radius:22px;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 1px 2px rgba(0,0,0,.03),0 22px 38px -28px var(--sh)}
+:root[data-d="1"] .card{box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 22px 38px -28px rgba(0,0,0,.85)}
+.card+.card{margin-top:14px}
 .pad{padding:16px 18px}.pad>*+*{margin-top:12px}
-.row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 18px;border-bottom:1px solid var(--b)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 16px;border-bottom:1px solid var(--b)}
 .card>.row:last-child{border-bottom:0}
-.row>div>b{font-weight:600;font-size:15px}
+.rl{display:flex;align-items:center;gap:12px;min-width:0}
+.ri{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;flex:none;color:var(--p);background:color-mix(in srgb,var(--a) 15%,transparent);border:1px solid color-mix(in srgb,var(--a) 22%,transparent)}
+.ri svg{width:18px;height:18px}
+.ri.dz{color:var(--er);background:color-mix(in srgb,var(--er) 12%,transparent);border-color:color-mix(in srgb,var(--er) 30%,transparent)}
+.row b{display:block;font-weight:600;font-size:15px;line-height:1.4}
 .hr{gap:10px}.hb{display:flex;align-items:center;gap:8px;flex:none}
 .acts{display:flex;gap:8px;flex-wrap:wrap}
-.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;background:color-mix(in srgb,var(--a) 20%,transparent);color:var(--p);font-weight:600}
+.row .acts{justify-content:flex-end}
+.pill{display:inline-block;padding:2px 11px;border-radius:99px;font-size:12px;background:color-mix(in srgb,var(--a) 20%,transparent);color:var(--p);font-weight:600}
 .warn,.okb{padding:10px 13px;border-radius:12px;font-size:13px;font-weight:600}
 .warn{background:color-mix(in srgb,var(--er) 12%,transparent);border:1px solid color-mix(in srgb,var(--er) 40%,transparent);color:var(--er)}
 .okb{background:color-mix(in srgb,var(--ok) 13%,transparent);border:1px solid color-mix(in srgb,var(--ok) 40%,transparent);color:var(--ok)}
+.card.dz{border-color:color-mix(in srgb,var(--er) 35%,transparent)}
 
-/* বাটন: সোনালি মূল বাটন, বাকিগুলো রেখার */
+/* বাটন */
 button{border:1px solid color-mix(in srgb,var(--a) 65%,#5a3c08);border-radius:12px;padding:10px 18px;background:linear-gradient(135deg,var(--a2),var(--a));color:var(--on);font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 1px 0 rgba(255,255,255,.45) inset,0 10px 18px -12px var(--sh);transition:filter .2s,transform .12s,background .2s}
 button:hover{filter:brightness(1.05)}
-button:active{transform:translateY(1px)}
+button:active{transform:translateY(1px) scale(.99)}
 button:focus-visible,input:focus-visible{outline:2px solid var(--g);outline-offset:2px}
 button.g{background:transparent;color:var(--t);border-color:var(--cb);box-shadow:none;font-weight:600;padding:9px 16px;font-size:13px}
 button.g:hover{background:color-mix(in srgb,var(--a) 12%,transparent);filter:none}
@@ -67,29 +86,33 @@ button.dg{background:transparent;color:var(--er);border-color:color-mix(in srgb,
 button.dg:hover{background:color-mix(in srgb,var(--er) 10%,transparent);filter:none}
 button.sm{padding:4px 11px;min-width:36px;font-size:15px;border-radius:10px}
 button:disabled{opacity:.35;pointer-events:none}
-.seg{display:flex;gap:4px;padding:4px;border-radius:14px;background:color-mix(in srgb,var(--a) 9%,transparent);border:1px solid var(--b)}
-.seg button{flex:1;background:transparent;color:var(--m);border-color:transparent;box-shadow:none;font-weight:600;padding:9px 12px}
+.seg{display:flex;gap:4px;padding:4px;border-radius:15px;background:color-mix(in srgb,var(--a) 9%,transparent);border:1px solid var(--b)}
+.seg button{flex:1;background:transparent;color:var(--m);border-color:transparent;box-shadow:none;font-weight:600;padding:10px 12px}
 .seg button.on{background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on);box-shadow:0 6px 14px -8px var(--sh)}
 
 /* থিম বাছাই */
-.thm{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-button.tc{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 4px 10px;background:transparent;color:var(--m);border:1px solid var(--b);border-radius:14px;font-size:11.5px;font-weight:600;line-height:1.3;text-align:center;box-shadow:none}
-button.tc i{width:34px;height:34px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 2px rgba(255,255,255,.35),0 4px 10px -4px rgba(0,0,0,.4)}
+.thm{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+button.tc{display:flex;align-items:center;gap:11px;padding:10px 12px;text-align:left;background:color-mix(in srgb,var(--a) 5%,transparent);color:var(--t);border:1px solid var(--b);border-radius:16px;font-size:13px;font-weight:600;line-height:1.35;box-shadow:none}
+button.tc i{width:38px;height:38px;border-radius:12px;flex:none;display:grid;place-items:center;color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.4),0 6px 12px -6px rgba(0,0,0,.5)}
+button.tc i svg{width:18px;height:18px;opacity:0;transform:scale(.6);transition:.2s;stroke-width:2.6;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))}
+button.tc.on i svg{opacity:1;transform:none}
 button.tc:hover{filter:none;border-color:var(--cb)}
-button.tc.on{border-color:var(--a);color:var(--t);background:color-mix(in srgb,var(--a) 12%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 22%,transparent)}
+button.tc.on{border-color:var(--a);background:color-mix(in srgb,var(--a) 13%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 22%,transparent)}
 
 /* টগল ও ফিল্ড */
-.tgl{appearance:none;-webkit-appearance:none;width:46px;height:27px;border-radius:99px;border:1px solid var(--cb);background:color-mix(in srgb,var(--t) 10%,transparent);position:relative;cursor:pointer;transition:.22s;flex:none;padding:0;margin:0}
-.tgl::after{content:"";position:absolute;top:2px;left:2px;width:21px;height:21px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.35);transition:.22s}
+.tgl{appearance:none;-webkit-appearance:none;width:48px;height:28px;border-radius:99px;border:1px solid var(--cb);background:color-mix(in srgb,var(--t) 10%,transparent);box-shadow:inset 0 1px 3px rgba(0,0,0,.12);position:relative;cursor:pointer;transition:.25s;flex:none;padding:0;margin:0}
+.tgl::after{content:"";position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.35);transition:left .25s cubic-bezier(.3,1.4,.5,1)}
 .tgl:checked{background:linear-gradient(135deg,var(--a),var(--a2));border-color:transparent}
-.tgl:checked::after{left:21px}
-input{border:1px solid var(--b);background:var(--c);color:var(--t);border-radius:12px;padding:11px 13px;font-size:14px;min-width:0;width:100%}
-select,.tin{border:1px solid var(--b);background:var(--c);color:var(--t);border-radius:12px;padding:10px 12px;font-size:14px;font-family:inherit;min-width:0}
-.tin{width:auto;flex:none}select:focus,.tin:focus{border-color:var(--a);box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 20%,transparent);outline:0}
-.row .acts{justify-content:flex-end}
-input:focus{border-color:var(--a);box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 20%,transparent);outline:0}
-form{display:flex;gap:8px;flex-wrap:wrap}
-.ts{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--t);color:var(--bg);padding:11px 20px;border-radius:99px;font-size:14px;font-weight:600;box-shadow:0 12px 30px -10px rgba(0,0,0,.5);z-index:99;animation:rise .3s both}
+.tgl:checked::after{left:22px}
+input,select,.tin{border:1px solid var(--b);background:var(--c);color:var(--t);border-radius:12px;padding:11px 13px;font-size:14px;min-width:0;font-family:inherit}
+input{width:100%}
+select,.tin{padding:9px 12px}
+.tin{width:auto;flex:none}
+input:focus,select:focus,.tin:focus{border-color:var(--a);box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 20%,transparent);outline:0}
+form{display:flex;gap:12px;flex-wrap:wrap}
+.fl{display:flex;flex-direction:column;gap:6px;flex:1 1 100%;font-size:12.5px;font-weight:600;color:var(--m)}
+form>button{flex:1 1 100%}
+.ts{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--t);color:var(--bg);padding:12px 22px;border-radius:99px;font-size:14px;font-weight:600;box-shadow:0 14px 34px -10px rgba(0,0,0,.55);z-index:99;animation:rise .3s both;max-width:90vw;text-align:center}
 @media(max-width:820px){.cols{grid-template-columns:1fr}.vault{padding:22px 20px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head>
@@ -126,7 +149,10 @@ if(Array.isArray(hc)&&hc.length>20&&String(hc[hc.length-1][0])>=key(far))return;
 const out=[],d=new Date(t);d.setDate(d.getDate()-45);
 for(let i=0;i<1150;i++){const f=HF.formatToParts(d),g=q=>+f.find(p=>p.type===q).value;if(g('day')==1)out.push([key(d),g('month')]);d.setDate(d.getDate()+1)}
 if(out.length>20){o.hc=out;localStorage.setItem('dl',JSON.stringify(o))}}catch(e){}}
-const tg=(a,t,d,on)=>`<div class="row"><div><b>${t}</b>${d?`<div class="m">${d}</div>`:''}</div><input type="checkbox" class="tgl" data-a="${a}" aria-label="${t}" ${on?'checked':''}></div>`;
+const P={contrast:'<circle cx="12" cy="12" r="9"/><path d="M12 3v18a9 9 0 0 0 0-18z" fill="currentColor"/>',crescent:'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/><path d="M17 3v4M15 5h4"/>',moon:'<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/>',list:'<path d="M9 6h12M9 12h12M9 18h12M3.5 6l1 1 2-2M3.5 12l1 1 2-2M3.5 18l1 1 2-2"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',sunset:'<path d="M12 3v4M5 12H3M21 12h-2M6.3 6.3L4.9 4.9M17.7 6.3l1.4-1.4"/><path d="M7 17a5 5 0 0 1 10 0M3 20h18"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',calendar:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',palette:'<circle cx="8.5" cy="8" r="1"/><circle cx="13.5" cy="6.5" r="1"/><circle cx="17.5" cy="10.5" r="1"/><circle cx="6.5" cy="12.5" r="1"/><path d="M12 22a10 10 0 1 1 10-10c0 2.5-2 3.5-4 3.5h-2a2 2 0 0 0-1.5 3.3c.6.8.3 3.2-2.5 3.2z"/>',globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',phone:'<rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/>',home:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',cloud:'<path d="M7 18a4.5 4.5 0 0 1-.5-9A6 6 0 0 1 18 9.5 4 4 0 0 1 17.5 18z"/>',database:'<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',shieldx:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 8v5M12 16.5v.01"/>',check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',download:'<path d="M12 4v11M7 11l5 5 5-5M5 20h14"/>',upload:'<path d="M12 16V5M7 9l5-5 5 5M5 20h14"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',wallet:'<path d="M4 7a2 2 0 0 1 2-2h12v4"/><path d="M4 7v11a2 2 0 0 0 2 2h14V9H6a2 2 0 0 1-2-2z"/><path d="M16 14.5h.01"/>'};
+const ic=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]||''}</svg>`;
+const TI={dark:'contrast',rm:'crescent',notif:'bell',dgon:'list',dgtk:'clock',rzon:'bell',rzift:'sunset',rzni:'moon',rzwk:'calendar'},HIC={cd:'clock',wx:'sun',pr:'crescent',rz:'calendar',bal:'wallet',tk:'list'};
+const tg=(a,t,d,on)=>`<div class="row"><div class="rl"><span class="ri">${ic(TI[a])}</span><div class="tx"><b>${t}</b>${d?`<div class="m">${d}</div>`:''}</div></div><input type="checkbox" class="tgl" data-a="${a}" aria-label="${t}" ${on?'checked':''}></div>`;
 const HN={cd:['পরবর্তী নামাজের কাউন্টডাউন',''],wx:['আবহাওয়া',''],pr:['আজকের নামাজ',''],rz:['রোজা',''],bal:['ব্যালেন্স',''],tk:['আজকের কাজ','']};
 const HD=Object.keys(HN);
 const homeOrder=()=>{const o=Array.isArray(S.home&&S.home.order)?S.home.order.filter(k=>HN[k]):[];HD.forEach(k=>{if(!o.includes(k))o.push(k)});return o};
@@ -135,39 +161,39 @@ const days=S.lastBak?Math.floor((Date.now()-S.lastBak)/864e5):-1;
 const hsy=window.hayatSync?hayatSync.status():{on:0};const synced=hsy.on&&!hsy.err&&hsy.lastOk&&Date.now()-hsy.lastOk<864e5;
 const bs=synced?['শিটে সংরক্ষিত','okb','শেষ সিঙ্ক: '+(Date.now()-hsy.lastOk<6e4?'এইমাত্র':bn(Math.floor((Date.now()-hsy.lastOk)/6e4))+' মিনিট আগে')]:days<0?['ব্যাকআপ নেই','warn','এখনো ব্যাকআপ নেওয়া হয়নি']:days>7?['ব্যাকআপ পুরোনো','warn','শেষ ব্যাকআপ: '+bn(days)+' দিন আগে']:['ব্যাকআপ নিরাপদ','okb','শেষ ব্যাকআপ: '+(days?bn(days)+' দিন আগে':'আজ')];
 const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
-const hero=`<section class="vault"><div class="hl">আপনার তথ্য</div><div class="big">${bs[0]}</div><div class="vs ${bs[1]}"><i></i>${bs[2]}</div></section>`;
-const look=`<section class="sec"><h2>চেহারা</h2><div class="card">${tg('dark','রাতের মোড','',S.dark)}<div class="pad"><div class="thm">${TH.map((t,i)=>`<button class="tc ${i==S.theme?'on':''}" data-a="th" data-i="${i}"><i style="background:linear-gradient(135deg,${t[1]} 50%,#E0B84F 50%)"></i>${t[0]}</button>`).join('')}</div></div></div></section>`;
-const lang=`<section class="sec"><h2>ভাষা</h2><div class="card pad"><div class="seg"><button class="${(S.lang||'bn')=='bn'?'on':''}" data-a="lg" data-i="bn">বাংলা</button><button class="${S.lang=='en'?'on':''}" data-a="lg" data-i="en">English</button></div></div></section>`;
-const mode=`<section class="sec"><h2>মোড</h2><div class="card">${tg('rm','রমজান মোড','',S.rm)}</div></section>`;
+const hero=`<section class="vault"><div class="vt"><span class="vi">${ic(bs[1]=='warn'?'shieldx':'shield')}</span><div><div class="hl">আপনার তথ্য</div><div class="big">${bs[0]}</div></div></div><div class="vs ${bs[1]}"><i></i>${bs[2]}</div><div class="vrow"><button data-a="exp">ব্যাকআপ নামান</button>${hsy.on?'<button class="g" data-a="sy">এখনই সিঙ্ক</button>':''}</div></section>`;
+const look=`<section class="sec"><h2><span class="hi">${ic('palette')}</span>চেহারা</h2><div class="card">${tg('dark','রাতের মোড','',S.dark)}<div class="pad"><div class="thm">${TH.map((t,i)=>`<button class="tc ${i==S.theme?'on':''}" data-a="th" data-i="${i}"><i style="background:linear-gradient(135deg,${t[1]} 50%,#E0B84F 50%)">${ic('check')}</i><span>${t[0]}</span></button>`).join('')}</div></div></div></section>`;
+const lang=`<section class="sec"><h2><span class="hi">${ic('globe')}</span>ভাষা</h2><div class="card pad"><div class="seg"><button class="${(S.lang||'bn')=='bn'?'on':''}" data-a="lg" data-i="bn">বাংলা</button><button class="${S.lang=='en'?'on':''}" data-a="lg" data-i="en">English</button></div></div></section>`;
+const mode=`<section class="sec"><h2><span class="hi">${ic('crescent')}</span>মোড</h2><div class="card">${tg('rm','রমজান মোড','',S.rm)}</div></section>`;
 const dg=DGV(),perm=window.Notification?Notification.permission:'unsupported',nok=perm==='granted'&&dg.notif,pushOn=!!(window.hayatPush&&window.hayatPush.on());
 const rz=RZV(),rsel=`<select class="tin" data-rz="sh" aria-label="সেহরির আগে">${[[0,'বন্ধ'],[10,'১০ মিনিট আগে'],[20,'২০ মিনিট আগে'],[30,'৩০ মিনিট আগে'],[45,'৪৫ মিনিট আগে'],[60,'১ ঘণ্টা আগে']].map(([x,y])=>`<option value="${x}"${rz.sh===x?' selected':''}>${y}</option>`).join('')}</select>`;
-const rzs=`<section class="sec"><h2>রোজার রিমাইন্ডার ${rz.on&&nok&&pushOn?'<span class="pill">চালু</span>':''}</h2><div class="card">${tg('rzon','রোজার রিমাইন্ডার',pushOn?'সেহরি, ইফতার ও আগের রাতের মনে করানো':'আগে নোটিফিকেশনের পুশ চালু করুন',rz.on)}
-<div class="row"><div><b>সেহরি শেষের আগে সতর্কতা</b><div class="m">রোজার দিনে, সেহরি শেষ হওয়ার আগে</div></div>${rsel}</div>
+const rzs=`<section class="sec"><h2><span class="hi">${ic('sunset')}</span>রোজার রিমাইন্ডার ${rz.on&&nok&&pushOn?'<span class="pill">চালু</span>':''}</h2><div class="card">${tg('rzon','রোজার রিমাইন্ডার',pushOn?'সেহরি, ইফতার ও আগের রাতের মনে করানো':'আগে নোটিফিকেশনের পুশ চালু করুন',rz.on)}
+<div class="row"><div class="rl"><span class="ri">${ic('sunset')}</span><div class="tx"><b>সেহরি শেষের আগে সতর্কতা</b><div class="m">রোজার দিনে, সেহরি শেষ হওয়ার আগে</div></div></div>${rsel}</div>
 ${tg('rzift','ইফতারের সময় নোটিফিকেশন','ঠিক ইফতারের সময়ে',rz.ift)}
 ${tg('rzni','আগের রাতের মনে করানো','কাল রোজার দিন হলে নিয়ত ও সেহরির কথা',!!rz.ni)}
-${rz.ni?`<div class="row"><div><b>মনে করানোর সময়</b><div class="m">আগের রাতে কখন জানাবে</div></div><input type="time" class="tin" data-rz="ni" value="${rz.ni}" aria-label="সময়"></div>`:''}
+${rz.ni?`<div class="row"><div class="rl"><span class="ri">${ic('moon')}</span><div class="tx"><b>মনে করানোর সময়</b><div class="m">আগের রাতে কখন জানাবে</div></div></div><input type="time" class="tin" data-rz="ni" value="${rz.ni}" aria-label="সময়"></div>`:''}
 ${tg('rzwk','সোম–বৃহস্পতিবারও ধরুন','বন্ধ থাকলে শুধু রমজান ও বিশেষ নফল দিন',rz.wk)}
 <div class="pad"><div class="acts"><button class="g" data-a="rztest">পরীক্ষা করুন</button></div></div></div></section>`;
-const nt=`<section class="sec"><h2>নোটিফিকেশন ${nok&&dg.on?'<span class="pill">চালু</span>':''}</h2><div class="card">${tg('notif','নোটিফিকেশন',perm==='denied'?'ব্রাউজারে বন্ধ আছে। সাইট সেটিং থেকে অনুমতি দিন।':'অনুমতি দিলে চালু হয়',S.notif)}
+const nt=`<section class="sec"><h2><span class="hi">${ic('bell')}</span>নোটিফিকেশন ${nok&&dg.on?'<span class="pill">চালু</span>':''}</h2><div class="card">${tg('notif','নোটিফিকেশন',perm==='denied'?'ব্রাউজারে বন্ধ আছে। সাইট সেটিং থেকে অনুমতি দিন।':'অনুমতি দিলে চালু হয়',S.notif)}
 ${tg('dgon','দৈনিক সারাংশ','প্রতিদিন দুটি সময়ে কাজের সারাংশ',dg.on)}
-<div class="row"><div><b>প্রথম সময়</b><div class="m">আজকের কাজের তালিকা</div></div>${tin('am',dg.am)}</div>
-<div class="row"><div><b>দ্বিতীয় সময়</b><div class="m">আজ এখনো বাকি কাজ</div></div>${tin('pm',dg.pm)}</div>
+<div class="row"><div class="rl"><span class="ri">${ic('sun')}</span><div class="tx"><b>প্রথম সময়</b><div class="m">আজকের কাজের তালিকা</div></div></div>${tin('am',dg.am)}</div>
+<div class="row"><div class="rl"><span class="ri">${ic('moon')}</span><div class="tx"><b>দ্বিতীয় সময়</b><div class="m">আজ এখনো বাকি কাজ</div></div></div>${tin('pm',dg.pm)}</div>
 ${tg('dgtk','কাজের সময়ে রিমাইন্ডার','কাজে সময় দেওয়া থাকলে ঠিক সেই সময়ে',dg.tk)}
-<div class="row"><div><b>কখন জানাবে</b><div class="m">কাজের সময়ের কত আগে</div></div>${lsel(dg.lead)}</div>
-<div class="row"><div><b>পুশ নোটিফিকেশন</b><div class="m">${pushOn?'চালু। অ্যাপ বন্ধ থাকলেও আসবে':'অ্যাপ বন্ধ থাকলেও পেতে চালু করুন'}</div></div><div class="acts">${pushOn?'<button class="g" data-a="pushtest">পরীক্ষা</button><button class="g" data-a="pushoff">বন্ধ করুন</button>':'<button data-a="pushon">চালু করুন</button>'}</div></div>
+<div class="row"><div class="rl"><span class="ri">${ic('clock')}</span><div class="tx"><b>কখন জানাবে</b><div class="m">কাজের সময়ের কত আগে</div></div></div>${lsel(dg.lead)}</div>
+<div class="row"><div class="rl"><span class="ri">${ic('bell')}</span><div class="tx"><b>পুশ নোটিফিকেশন</b><div class="m">${pushOn?'চালু। অ্যাপ বন্ধ থাকলেও আসবে':'অ্যাপ বন্ধ থাকলেও পেতে চালু করুন'}</div></div></div><div class="acts">${pushOn?'<button class="g" data-a="pushtest">পরীক্ষা</button><button class="g" data-a="pushoff">বন্ধ করুন</button>':'<button data-a="pushon">চালু করুন</button>'}</div></div>
 <div class="pad"><div class="acts"><button class="g" data-a="tn">নোটিফিকেশন পরীক্ষা</button><button class="g" data-a="dgtest" data-k="am">প্রথম সারাংশ পরীক্ষা</button><button class="g" data-a="dgtest" data-k="pm">দ্বিতীয় সারাংশ পরীক্ষা</button></div><div class="m">ঠিক সময়ে পেতে অ্যাপটি Home Screen-এ ইনস্টল করুন। পুশ চালু করতে গুগল শিট সিঙ্ক চালু থাকতে হবে।</div></div></div></section>`;
-const app=`<section class="sec"><h2>অ্যাপ</h2><div class="card pad">${standalone?'<div class="okb">ইনস্টল করা আছে</div>':DP?'<div class="acts"><button data-a="inst">অ্যাপ ইনস্টল করুন</button></div>':'<div class="m">ব্রাউজারের মেনু থেকে “হোম স্ক্রিনে যোগ করুন” বা “ইনস্টল” বেছে নিন।</div>'}<div class="acts"><button class="g" data-a="ref">আপডেট ও ক্যাশ পরিষ্কার</button></div></div></section>`;
+const app=`<section class="sec"><h2><span class="hi">${ic('phone')}</span>অ্যাপ</h2><div class="card pad">${standalone?'<div class="okb">ইনস্টল করা আছে</div>':DP?'<div class="acts"><button data-a="inst">অ্যাপ ইনস্টল করুন</button></div>':'<div class="m">ব্রাউজারের মেনু থেকে “হোম স্ক্রিনে যোগ করুন” বা “ইনস্টল” বেছে নিন।</div>'}<div class="acts"><button class="g" data-a="ref">আপডেট ও ক্যাশ পরিষ্কার</button></div></div></section>`;
 const HO=homeOrder();
 const HH=(S.home&&S.home.hide)||{};
 const HOM=HO.filter(k=>k!='bal');
-const balRow=`<div class="row hr"><div><b>${HN.bal[0]}</b></div><div class="hb"><input type="checkbox" class="tgl" data-a="hv" data-i="bal" aria-label="${HN.bal[0]} দেখান" ${HH.bal?'':'checked'}></div></div>`;
-const home=`<section class="sec"><h2>হোম পেজ</h2><div class="card">${balRow}${HOM.map((k,i)=>`<div class="row hr"><div><b>${HN[k][0]}</b>${HN[k][1]?`<div class="m">${HN[k][1]}</div>`:''}</div><div class="hb"><button class="g sm" data-a="hu" data-i="${k}" aria-label="উপরে" ${i?'':'disabled'}>↑</button><button class="g sm" data-a="hd" data-i="${k}" aria-label="নিচে" ${i<HOM.length-1?'':'disabled'}>↓</button><input type="checkbox" class="tgl" data-a="hv" data-i="${k}" aria-label="${HN[k][0]} দেখান" ${HH[k]?'':'checked'}></div></div>`).join('')}<div class="pad"><div class="acts"><button class="g" data-a="hr">আগের মতো করুন</button></div></div></div></section>`;
+const balRow=`<div class="row hr"><div class="rl"><span class="ri">${ic('wallet')}</span><div class="tx"><b>${HN.bal[0]}</b></div></div><div class="hb"><input type="checkbox" class="tgl" data-a="hv" data-i="bal" aria-label="${HN.bal[0]} দেখান" ${HH.bal?'':'checked'}></div></div>`;
+const home=`<section class="sec"><h2><span class="hi">${ic('home')}</span>হোম পেজ</h2><div class="card">${balRow}${HOM.map((k,i)=>`<div class="row hr"><div class="rl"><span class="ri">${ic(HIC[k])}</span><div class="tx"><b>${HN[k][0]}</b>${HN[k][1]?`<div class="m">${HN[k][1]}</div>`:''}</div></div><div class="hb"><button class="g sm" data-a="hu" data-i="${k}" aria-label="উপরে" ${i?'':'disabled'}>↑</button><button class="g sm" data-a="hd" data-i="${k}" aria-label="নিচে" ${i<HOM.length-1?'':'disabled'}>↓</button><input type="checkbox" class="tgl" data-a="hv" data-i="${k}" aria-label="${HN[k][0]} দেখান" ${HH[k]?'':'checked'}></div></div>`).join('')}<div class="pad"><div class="acts"><button class="g" data-a="hr">আগের মতো করুন</button></div></div></div></section>`;
 const sy=window.hayatSync?hayatSync.status():{on:0,url:'',token:'',pending:0};
 const ago=t=>{const m=Math.floor((Date.now()-t)/6e4);return m<1?'এইমাত্র':m<60?bn(m)+' মিনিট আগে':m<1440?bn(Math.floor(m/60))+' ঘণ্টা আগে':bn(Math.floor(m/1440))+' দিন আগে'};
 const syst=!sy.on?'':sy.err?`<div class="warn" style="margin-top:12px">${esc(sy.err)}</div>`:sy.lastOk?`<div class="okb" style="margin-top:12px">শেষ সিঙ্ক: ${ago(sy.lastOk)}${sy.pending?' · '+bn(sy.pending)+'টি বদল পাঠানো বাকি':''}</div>`:'<div class="m" style="margin-top:12px">এখনো সিঙ্ক হয়নি</div>';
-const sheet=`<section class="sec"><h2>গুগল শিট সিঙ্ক ${sy.on?'<span class="pill">চালু</span>':''}</h2><div class="card pad"><form data-f="sync"><input name="u" style="flex:1 1 260px" value="${esc(sy.url)}" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off" required><input name="t" type="password" style="flex:1 1 160px" value="${esc(sy.token)}" placeholder="গোপন টোকেন" autocomplete="off" required><button>সংরক্ষণ ও সংযোগ</button></form>${syst}<div class="acts"><button class="g" data-a="sy">এখনই সিঙ্ক</button>${sy.on?'<button class="g" data-a="syx">সংযোগ বিচ্ছিন্ন করুন</button>':''}</div></div></section>`;
-const data=`<section class="sec"><h2>ডেটা ব্যবস্থাপনা</h2><div class="card pad"><div class="acts"><button data-a="exp">ব্যাকআপ নামান</button><button class="g" data-a="imp">ব্যাকআপ আনুন</button><button class="dg" data-a="rst">সব মুছুন</button></div><input type="file" id="imp" accept=".json,application/json" hidden></div></section>`;
-$.innerHTML=`<header class="top"><h1>সেটিং</h1></header>${hero}<div class="cols"><div class="col">${look}${lang}${mode}${app}</div><div class="col">${home}${sheet}${nt}${rzs}${data}</div></div>`}
+const sheet=`<section class="sec"><h2><span class="hi">${ic('cloud')}</span>গুগল শিট সিঙ্ক ${sy.on?'<span class="pill">চালু</span>':''}</h2><div class="card pad"><form data-f="sync"><label class="fl">ওয়েব অ্যাপ লিংক<input name="u" value="${esc(sy.url)}" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off" required></label><label class="fl">গোপন টোকেন<input name="t" type="password" value="${esc(sy.token)}" placeholder="টোকেন লিখুন" autocomplete="off" required></label><button>সংরক্ষণ ও সংযোগ</button></form>${syst}<div class="acts"><button class="g" data-a="sy">এখনই সিঙ্ক</button>${sy.on?'<button class="g" data-a="syx">সংযোগ বিচ্ছিন্ন করুন</button>':''}</div></div></section>`;
+const data=`<section class="sec"><h2><span class="hi">${ic('database')}</span>ডেটা ব্যবস্থাপনা</h2><div class="card"><input type="file" id="imp" accept=".json,application/json" hidden><div class="row"><div class="rl"><span class="ri">${ic('download')}</span><div class="tx"><b>ব্যাকআপ নামান</b><div class="m">সব তথ্য একটি ফাইলে সংরক্ষণ করুন</div></div></div><button data-a="exp">নামান</button></div><div class="row"><div class="rl"><span class="ri">${ic('upload')}</span><div class="tx"><b>ব্যাকআপ আনুন</b><div class="m">আগের ব্যাকআপ ফাইল থেকে ফিরিয়ে আনুন</div></div></div><button class="g" data-a="imp">আনুন</button></div></div><div class="card dz"><div class="row"><div class="rl"><span class="ri dz">${ic('trash')}</span><div class="tx"><b>সব তথ্য মুছুন</b><div class="m">এই ডিভাইস থেকে সব মুছে যাবে</div></div></div><button class="dg" data-a="rst">মুছুন</button></div></div></section>`;
+$.innerHTML=`<header class="top"><h1>সেটিং</h1><p class="sub">চেহারা, নোটিফিকেশন ও তথ্যের নিরাপত্তা এক জায়গায়</p></header>${hero}<div class="cols"><div class="col">${look}${lang}${mode}${app}</div><div class="col">${home}${sheet}${nt}${rzs}${data}</div></div>`}
 function exportData(){S.lastBak=Date.now();save();let all=S;try{all=JSON.parse(localStorage.getItem('dl')||'{}')}catch(e){}const b=new Blob([JSON.stringify(all,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),l=document.createElement('a');l.href=u;l.download='hayat-backup-'+key(new Date())+'.json';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);render();toast('ব্যাকআপ নামানো হয়েছে ✓')}
 async function refreshApp(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()));const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.reload()}
 async function testNotif(){const o={body:L('নোটিফিকেশন ঠিকমতো কাজ করছে ✓'),icon:'icon-192.png',data:{url:'index.html'}};try{const r=navigator.serviceWorker&&await navigator.serviceWorker.getRegistration();r?await r.showNotification('Hayat',o):new Notification('Hayat',o)}catch(e){toast('পাঠানো যায়নি')}}
