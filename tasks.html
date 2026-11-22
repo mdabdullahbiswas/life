@@ -124,7 +124,7 @@ form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}form input{flex:1 1 110
 /* ===== প্রিমিয়াম বাটন ও টিক · প্রতিটি কার্ডের নিজস্ব রং ===== */
 .c1{--pc:#0F8A5F;--pc2:#4FD6A1}.c2{--pc:#A8781F;--pc2:#E6C066}.c3{--pc:#C23B58;--pc2:#F58FA6}
 .c4{--pc:#4659D6;--pc2:#9AA7FF}.c5{--pc:#8244C9;--pc2:#C7A0F7}.c6{--pc:#0B7F93;--pc2:#5AD0E0}.c7{--pc:#C2571A;--pc2:#F4A66A}
-.tbx{flex:1 1 100%}.tbr{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.tbr input[type=time]{flex:0 1 150px;min-width:0}.tch{padding:5px 12px!important;font-size:12.5px!important;border-radius:99px!important}.tch.on{outline:2px solid var(--pc,var(--a));outline-offset:1px}
+.tbx{flex:1 1 100%}.tbr{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.tbr input[type=time]{flex:0 1 150px;min-width:0}
 .dgr{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 0;border-bottom:1px dashed var(--b)}.dgr .dl{flex:1 1 190px;min-width:0}.dgr .dl b{display:block;font-size:14px}.dgr .dg.tg{flex:0 1 270px}
 .dga{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.dga button{padding:8px 16px;font-size:13px}
 .card{--pt:var(--pc)}:root[data-d="1"] .card{--pt:var(--pc2)}
@@ -213,10 +213,10 @@ const tf=s=>{if(!s)return '';const[h,m]=String(s).split(':').map(Number);if(isNa
 const opts=(a,sel)=>a.map(([v,l])=>`<option value="${v}"${String(v)===String(sel)?' selected':''}>${l}</option>`).join('');
 const dim=(y,m)=>new Date(y,m,0).getDate();
 const dayOpts=(y,m,sel)=>opts(Array.from({length:dim(y,m)},(_,i)=>[i+1,bn(i+1)]),sel);
-function dateField(v){const y=+v.slice(0,4),m=+v.slice(5,7),d=+v.slice(8,10),y0=new Date().getFullYear(),from=Math.min(y0-1,y),to=Math.max(y0+10,y);
-return `<span class="dg" title="কোন দিনের কাজ"><select name="dd" title="দিন">${dayOpts(y,m,d)}</select><select name="mm" title="মাস">${opts(MON.map((n,i)=>[i+1,n]),m)}</select><select name="yy" title="বছর">${opts(Array.from({length:to-from+1},(_,i)=>[from+i,bn(from+i)]),y)}</select></span>`}
-function timeField(v){const has=/^\d{1,2}:\d{2}$/.test(v||''),val=has?v.split(':').map(x=>x.padStart(2,'0')).join(':'):'',ch=['06:00','08:00','12:00','15:00','18:00','21:00'];
-return `<div class="tbx"><div class="m" style="margin-bottom:6px">সময় (ঐচ্ছিক)</div><div class="tbr"><input type="time" name="time" value="${val}" aria-label="সময়">${ch.map(c=>`<button type="button" class="g tch${val===c?' on':''}" data-a="tpick" data-v="${c}">${tf(c)}</button>`).join('')}<button type="button" class="g tch" data-a="tpick" data-v="">সময় নেই</button></div></div>`}
+function dateField(v){const val=/^\d{4}-\d\d-\d\d$/.test(v||'')?v:key(new Date());
+return `<input type="date" name="date" value="${val}" title="কোন দিনের কাজ" aria-label="তারিখ" required style="flex:1 1 150px;min-width:0">`}
+function timeField(v){const val=/^\d{1,2}:\d{2}$/.test(v||'')?v.split(':').map(x=>x.padStart(2,'0')).join(':'):'';
+return `<div class="tbx"><div class="m" style="margin-bottom:6px">সময় (ঐচ্ছিক)</div><div class="tbr"><input type="time" name="time" value="${val}" aria-label="সময়"><button type="button" class="x" data-a="tclr" aria-label="সময় মুছুন" title="সময় মুছুন">✕</button></div></div>`}
 const dt=t=>bn(+t.start.slice(8))+' '+MON[+t.start.slice(5,7)-1];
 function due(t,d){const s=new Date(t.start+'T00:00'),k=Math.round((new Date(key(d)+'T00:00')-s)/864e5);if(k<0)return 0;
 const dim=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();
@@ -264,7 +264,7 @@ $.addEventListener('click',e=>{const bt=e.target.closest('[data-a]');if(!bt||bt.
 if(a=='pushon'){bt.disabled=true;bt.textContent='…';(window.hayatPush?window.hayatPush.enable():Promise.reject(new Error('push.js লোড হয়নি — পেজ রিফ্রেশ করুন'))).then(()=>{render();alert('✓ এই ডিভাইসে পুশ চালু হয়েছে। "পুশ পরীক্ষা" চেপে দেখে নিন।')}).catch(e=>{alert(String(e&&e.message||e));render()});return}
 if(a=='pushoff'){(window.hayatPush?window.hayatPush.disable():Promise.resolve()).then(render);return}
 if(a=='pushtest'){bt.disabled=true;window.hayatPush.test(bt.dataset.k).then(r=>{bt.disabled=false;alert('পরীক্ষার পুশ পাঠানো হয়েছে — কয়েক সেকেন্ডে আসবে।'+(r&&r.info?'\n\n'+r.info:'')+(r&&r.warn?'\n⚠ '+r.warn:''))}).catch(e=>{bt.disabled=false;alert(String(e&&e.message||e))});return}
-if(a=='tpick'){const f=bt.closest('form'),ti=f&&f.elements.time;if(ti){ti.value=bt.dataset.v||'';f.querySelectorAll('.tch').forEach(b=>b.classList.toggle('on',b===bt&&!!bt.dataset.v))}return}
+if(a=='tclr'){const f=bt.closest('form'),ti=f&&f.elements.time;if(ti)ti.value='';return}
 if(a=='dgtk'){setDG(o=>{o.dg=Object.assign({},o.dg,{tk:DGV().tk?0:1})});render();return}
 if(a=='dgon'){setDG(o=>{o.dg=Object.assign({},o.dg,{on:DGV().on?0:1})});render();return}
 if(a=='dgperm'){if(!window.Notification){alert(TL('এই ব্রাউজারে নোটিফিকেশন সমর্থিত নয়'));return}
@@ -283,7 +283,6 @@ $.addEventListener('change',e=>{const el=e.target,nm=el.name;
 if(el.dataset.dgt){if(/^\d\d:\d\d$/.test(el.value))setDG(o=>{o.dg=Object.assign({},o.dg,{[el.dataset.dgt]:el.value})});return}
 if(el.dataset.lead){setDG(o=>{o.dg=Object.assign({},o.dg,{lead:+el.value||0})});return}
 if(el.dataset.dg){dgChange(el);return}
-if(nm=='mm'||nm=='yy'){const f=el.form,yv=+f.elements.yy.value,mv=+f.elements.mm.value;f.elements.dd.innerHTML=dayOpts(yv,mv,Math.min(+f.elements.dd.value,dim(yv,mv)));return}
 const a=el.dataset.a;if(a!='task'&&a!='sub')return;
 const k=el.dataset.k||key(new Date()),id=el.dataset.i,t=S.tasks.find(x=>x.id==id),L=(t&&t.subs)||[];
 S.done[k]=S.done[k]||{};S.sd[k]=S.sd[k]||{};
@@ -296,10 +295,10 @@ if(el.id=='subn'){e.preventDefault();if(el.value.trim())addSub();else if(el.form
 if(el.name=='title'&&el.form&&el.form.id=='tf'){e.preventDefault();if(el.value.trim()){const s=document.getElementById('subn');if(s)s.focus()}else el.form.reportValidity();return}
 if(el.classList&&el.classList.contains('chk')){e.preventDefault();el.click()}});
 $.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);
-const p2=n=>String(n).padStart(2,'0'),Y=+f.get('yy'),Mo=+f.get('mm'),Dd=Math.min(+f.get('dd'),dim(Y,Mo));
+const p2=n=>String(n).padStart(2,'0');
 const sb=f.getAll('sub'),si=f.getAll('sid'),pn=document.getElementById('subn'),pv=pn?pn.value.trim():'';if(pv){sb.push(pv);si.push('')}
 const subs=sb.map((x,j)=>({id:si[j]?+si[j]:Date.now()+j,t:x.trim()})).filter(s=>s.t);
-const v={title:(f.get('title')||'').trim(),type:f.get('type'),n:+f.get('n')||1,time:/^\d{1,2}:\d{2}$/.test(f.get('time')||'')?f.get('time'):'',start:Y&&Mo&&Dd?Y+'-'+p2(Mo)+'-'+p2(Dd):key(new Date()),subs};if(!v.title)return;
+const v={title:(f.get('title')||'').trim(),type:f.get('type'),n:+f.get('n')||1,time:/^\d{1,2}:\d{2}$/.test(f.get('time')||'')?f.get('time'):'',start:/^\d{4}-\d\d-\d\d$/.test(f.get('date')||'')?f.get('date'):key(new Date()),subs};if(!v.title)return;
 const cur=E!=null?S.tasks.find(t=>t.id==E):null;
 if(cur){Object.assign(cur,v);if(cur.bag){const b=(S.bags||[]).find(x=>x.id===cur.bag);if(b&&typeof b.dt==='string')b.dt=v.start}E=null}
 else S.tasks.push(Object.assign({id:Date.now()},v));
