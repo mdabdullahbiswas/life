@@ -114,51 +114,90 @@ button.g::before{background:linear-gradient(115deg,transparent 35%,rgba(226,194,
 .x.ed{padding:4px 8px;color:var(--m)}.x.ed:hover{color:var(--a)}
 .x::before{display:none}
 @media(prefers-reduced-motion:reduce){button,button::before{transition:none!important}}
+
+/* ===== খাতা সংযোগ ===== */
+a.ic{text-decoration:none;color:var(--t)}
+.lk{color:var(--p);font-weight:700;font-size:13px;text-decoration:none;border-bottom:1px dashed var(--a);white-space:nowrap}
+.lk:hover{color:var(--a)}
+.kh{border-color:var(--a)}
+.kh .kt{margin-bottom:8px}
+.kp{display:flex;align-items:center;gap:12px;padding:10px 8px;border-bottom:1px dashed var(--b);cursor:pointer;border-radius:12px;transition:background .2s}
+.kp:last-of-type{border-bottom:0}
+.kp:hover{background:color-mix(in srgb,var(--a) 9%,transparent)}
+.kav{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;font-weight:700;font-size:17px;color:#fff;flex:none;background:linear-gradient(135deg,hsl(var(--h) 45% 38%),hsl(var(--h) 55% 56%))}
 </style></head><body><script src="header.js"></script><main id="app"></main>
 <script>
 if(!window.L)window.L=s=>s;
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
 const fm=n=>'৳ '+bn(Math.round(n).toLocaleString('en-IN'));
 const $=document.getElementById('app'),root=document.documentElement;
-let S={theme:0,dark:0,hide:0,bud:0,goal:{n:'',a:0},fin:[]};
+let S={theme:0,dark:0,hide:0,bud:0,goal:{n:'',a:0},fin:[],led:[],auto:{on:0,a:0,t:'06:00',last:''}};
 try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
+if(!Array.isArray(S.led))S.led=[];
+if(!S.auto||typeof S.auto!=='object'||Array.isArray(S.auto))S.auto={on:0,a:0,t:'06:00',last:''};
 /* শুধু এই পেজের নিজের কী (OWN) লিখি; থিম, রাতের মোড, ভাষা ইত্যাদি সেটিং সর্বশেষ সংরক্ষিত অবস্থা থেকেই থাকে — নইলে পুরোনো মান ফিরে এসে সেটিং মুছে দিত */
-const OWN=['hide','bud','goal','fin'];
+const OWN=['hide','bud','goal','fin','auto'];
 const rd=()=>{let c={};try{c=JSON.parse(localStorage.getItem('dl')||'{}')}catch(e){}return c&&typeof c==='object'&&!Array.isArray(c)?c:{}};
 const save=()=>{try{const c=rd();OWN.forEach(k=>{c[k]=S[k]});localStorage.setItem('dl',JSON.stringify(c))}catch(e){}};
 const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const MON=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
-const C={food:['🍽️','খাবার','#E0A63A','out'],trans:['🚌','যাতায়াত','#4C8BD6','out'],bill:['💡','বিল','#9B6BD6','out'],shop:['🛍️','কেনাকাটা','#D6609B','out'],health:['💊','স্বাস্থ্য','#2FB38A','out'],fun:['🎬','বিনোদন','#E0743A','out'],edu:['📚','শিক্ষা','#3AA7C9','out'],o:['📦','অন্যান্য','#8C8576','out'],sal:['💼','বেতন','#1f9d6b','in'],biz:['📈','ব্যবসা','#2FB38A','in'],gift:['🎁','উপহার','#C9A23A','in'],oi:['💰','অন্য আয়','#6FB36F','in']};
+const C={food:['🍽️','খাবার','#E0A63A','out'],trans:['🚌','যাতায়াত','#4C8BD6','out'],bill:['💡','বিল','#9B6BD6','out'],shop:['🛍️','কেনাকাটা','#D6609B','out'],health:['💊','স্বাস্থ্য','#2FB38A','out'],fun:['🎬','বিনোদন','#E0743A','out'],edu:['📚','শিক্ষা','#3AA7C9','out'],don:['💝','দান','#C9732E','out'],o:['📦','অন্যান্য','#8C8576','out'],sal:['💼','বেতন','#1f9d6b','in'],biz:['📈','ব্যবসা','#2FB38A','in'],gift:['🎁','উপহার','#C9A23A','in'],oi:['💰','অন্য আয়','#6FB36F','in'],kd:['🤝','খাতা · দিলাম','#7C8FD9','out',1],kr:['🤲','খাতা · পেলাম','#4FB3A6','in',1]};
 const ck=f=>C[f.c]?f.c:(f.t=='in'?'oi':'o');
 let V=new Date();V.setDate(1);let Q='',F='all',T='out',E=null;
 const ex=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const sum=(l,t)=>l.filter(f=>f.t==t).reduce((a,f)=>a+f.a,0);
+/* ===== খাতার সাথে সংযোগ: খাতার (invoice) যে লেনদেনে hs=1, সেগুলো এখানে আয়-ব্যয়ে মিশে দেখা যায়। ডাটা একটাই (S.led), কপি নেই — তাই দুই পেজ সবসময় মিলে থাকে ===== */
+const r2=n=>Math.round(n*100)/100;
+const hue=n=>{let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))%360;return h};
+const LO={give:1,repay:1,recv:0,owe:0},LS={give:1,repay:1,recv:-1,owe:-1};
+const virt=()=>S.led.filter(e=>e&&e.hs&&e.t in LO&&/^\d{4}-\d{2}-\d{2}$/.test(e.d||'')&&+e.a>0).map(e=>({t:LO[e.t]?'out':'in',c:LO[e.t]?'kd':'kr',a:+e.a,d:e.d,n:(e.p||'').trim()+(e.n?' · '+e.n:''),p:(e.p||'').trim(),lid:e.id,v:1,i:-1}));
+function kh(){const m={};S.led.forEach(e=>{const p=((e&&e.p)||'').trim();if(!p||!(e.t in LS))return;const o=m[p]||(m[p]={n:p,b:0,h:0,c:0}),v=LS[e.t]*(+e.a||0);o.b+=v;if(e.hs)o.h+=v;o.c++});
+ const L=Object.values(m).map(o=>({...o,b:r2(o.b),h:r2(o.h)}));
+ return{L,G:r2(L.filter(x=>x.b>0).reduce((s,x)=>s+x.b,0)),O:r2(L.filter(x=>x.b<0).reduce((s,x)=>s-x.b,0)),Hn:r2(L.reduce((s,x)=>s+x.h,0)),hc:S.led.filter(e=>e&&e.hs&&e.t in LS).length,tot:S.led.filter(e=>e&&e.t in LS).length}}
+/* খাতার ফ্ল্যাগ বদলাই সর্বশেষ সংরক্ষিত কপিতে, যাতে খাতা পেজের ডাটা কখনো পুরোনো কপি দিয়ে মুছে না যায় */
+function ledSet(fn){const c=rd();if(!Array.isArray(c.led))return;c.led.forEach(e=>{if(e&&typeof e==='object')fn(e)});try{localStorage.setItem('dl',JSON.stringify(c))}catch(e){}S.led=c.led}
+
+/* ===== স্বয়ংক্রিয় দৈনিক দান: নির্ধারিত সময় হলে (বা পেজ বন্ধ থাকলে পরে খুললে, মিস হওয়া দিনগুলোর জন্য) হিসাব থেকে ব্যয় হিসেবে কাটা হয়। প্রতিদিনের জন্য একবারই — A.last শেষ কাটা তারিখ মনে রাখে ===== */
+const tmf=t=>{const h=+t.slice(0,2),p=h<4?'রাত':h<12?'সকাল':h<16?'দুপুর':h<18?'বিকাল':h<20?'সন্ধ্যা':'রাত';return p+' '+bn(String(h%12||12))+':'+bn(t.slice(3,5))};
+function autoRun(){
+ const c=rd();if(c.auto&&typeof c.auto==='object'&&!Array.isArray(c.auto))S.auto=c.auto;if(Array.isArray(c.fin))S.fin=c.fin;
+ const A=S.auto;if(!A.on||!(+A.a>0)||!/^\d{2}:\d{2}$/.test(A.t||'')||!/^\d{4}-\d{2}-\d{2}$/.test(A.last||''))return 0;
+ const now=new Date(),td=key(now),hm=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+ let n=0;const d=new Date(A.last+'T12:00:00');
+ for(let i=0;i<400;i++){d.setDate(d.getDate()+1);const k=key(d);if(k>td||(k==td&&hm<A.t))break;S.fin.push({t:'out',c:'don',a:+A.a,n:'স্বয়ংক্রিয় দান',d:k,au:1});A.last=k;n++}
+ if(n)save();return n}
+function tick(){if(autoRun()){const a=document.activeElement;if(!(a&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)&&$.contains(a)))render()}}
 function render(){
 if(E!=null&&!S.fin[E])E=null;const ef=E!=null?S.fin[E]:null;
 root.dataset.t=S.theme||0;root.dataset.d=S.dark||0;root.classList.toggle('hd',!!S.hide);
 const mk=key(V).slice(0,7),now=new Date(),isNow=mk==key(now).slice(0,7);
-const mf=S.fin.filter(f=>f.d.startsWith(mk)),inc=sum(mf,'in'),exp=sum(mf,'out'),bal=inc-exp;
+const AL=S.fin.concat(virt()),mf=AL.filter(f=>f.d.startsWith(mk)),inc=sum(mf,'in'),exp=sum(mf,'out'),bal=inc-exp;
 const sr=inc>0?Math.round(bal/inc*100):0;
 // donut
 const by={};mf.filter(f=>f.t=='out').forEach(f=>by[ck(f)]=(by[ck(f)]||0)+f.a);
 const ents=Object.entries(by).sort((a,b)=>b[1]-a[1]);let off=0;
 const segs=ents.map(([k,v])=>{const l=v/exp*251.3,s=`<circle r="40" cx="50" cy="50" fill="none" stroke="${C[k][2]}" stroke-width="13" stroke-dasharray="${l} ${251.3-l}" stroke-dashoffset="${-off}"/>`;off+=l;return s}).join('');
 // trend
-const tr=[];for(let i=5;i>=0;i--){const d=new Date(V.getFullYear(),V.getMonth()-i,1),m=key(d).slice(0,7),l=S.fin.filter(f=>f.d.startsWith(m));tr.push({n:L(MON[d.getMonth()]).slice(0,3),i:sum(l,'in'),e:sum(l,'out')})}
+const tr=[];for(let i=5;i>=0;i--){const d=new Date(V.getFullYear(),V.getMonth()-i,1),m=key(d).slice(0,7),l=AL.filter(f=>f.d.startsWith(m));tr.push({n:L(MON[d.getMonth()]).slice(0,3),i:sum(l,'in'),e:sum(l,'out')})}
 const mx=Math.max(1,...tr.flatMap(x=>[x.i,x.e]));
 // budget
 const pc=S.bud>0?exp/S.bud*100:0,dim=new Date(V.getFullYear(),V.getMonth()+1,0).getDate(),left=dim-now.getDate()+1;
 const bm=S.bud>0?(pc>=100?`<div class="warn nm">⚠️ বাজেট ${fm(exp-S.bud)} ছাড়িয়েছে</div>`:pc>=80?`<div class="warn nm">⚠️ বাজেটের ${bn(Math.round(pc))}% শেষ</div>`:isNow?`<div class="okb nm">✅ দৈনিক খরচের সীমা ${fm((S.bud-exp)/left)}</div>`:''):'';
+// auto donation
+const A=S.auto,ay=(()=>{const d=new Date();d.setDate(d.getDate()+1);return key(d)})();
+let as='';if(A.on&&A.a>0&&A.last){const nd=new Date(A.last+'T12:00:00');nd.setDate(nd.getDate()+1);const nk=key(nd);as=`<div class="okb nm">✅ চালু আছে · পরের কাটা: ${nk==key(now)?'আজ':nk==ay?'কাল':bn(nk.slice(8))+' '+MON[+nk.slice(5,7)-1]} ${tmf(A.t)} · ${fm(A.a)}</div>`}
+const ac=`<section class="card"><h2>💝 স্বয়ংক্রিয় দৈনিক দান ${A.on?'<span class="pill">চালু</span>':''}</h2><div class="inl"><input id="aa" type="number" min="1" step="any" placeholder="টাকা" value="${A.a||''}"><input id="at" type="time" value="${A.t||'06:00'}"></div><div class="acts" style="margin-top:8px"><button class="g" data-a="auto">${A.on?'আপডেট করুন':'চালু করুন'}</button>${A.on?'<button class="g" data-a="autooff">বন্ধ করুন</button>':''}</div>${as}<div class="m" style="margin-top:10px">প্রতিদিন ঠিক এই সময়ে এই পরিমাণ টাকা ‘দান’ ব্যয় হিসেবে হিসাব থেকে কাটা যাবে। পেজ বন্ধ থাকলে পরের বার খোলার সাথে সাথে মিস হওয়া দিনগুলোর দান কেটে নেওয়া হবে।</div></section>`;
 // goal
-const net=sum(S.fin,'in')-sum(S.fin,'out'),gp=S.goal.a>0?Math.max(0,Math.min(100,net/S.goal.a*100)):0;
-$.innerHTML=`<header><h1>💰 হিসাব</h1><div class="tools"><div class="mn"><button class="ic" data-nav="-1" aria-label="আগের মাস">‹</button><span>${MON[V.getMonth()]} ${bn(V.getFullYear())}</span><button class="ic" data-nav="1" aria-label="পরের মাস">›</button></div><button class="ic" data-a="hide" aria-label="অঙ্ক লুকান">${S.hide?'🙈':'👁️'}</button></div></header>
+const net=sum(AL,'in')-sum(AL,'out'),gp=S.goal.a>0?Math.max(0,Math.min(100,net/S.goal.a*100)):0;
+const KB=kh(),kc=`<section class="card wide kh"><h2>📒 খাতা <a class="lk" href="invoice.html">খাতা খুলুন →</a></h2>${KB.tot?`<div class="chips kt"><div class="chip i">আমি পাব<b class="nm">${fm(KB.G)}</b></div><div class="chip o">আমি দেব<b class="nm">${fm(KB.O)}</b></div><div class="chip">ধার মিটলে মোট সঞ্চয়<b class="nm">${fm(net+KB.Hn)}</b></div></div>${KB.L.filter(x=>x.b!==0).sort((a,b)=>Math.abs(b.b)-Math.abs(a.b)).slice(0,4).map(x=>`<div class="kp" data-lk="${ex(x.n)}"><div class="kav" style="--h:${hue(x.n)}">${ex(Array.from(x.n)[0])}</div><div class="rt"><div>${ex(x.n)}</div><div class="m">${bn(x.c)}টি লেনদেন</div></div><b class="nm" style="color:var(--${x.b>0?'ok':'er'})">${fm(Math.abs(x.b))} <span class="m">${x.b>0?'পাব':'দেব'}</span></b></div>`).join('')||'<div class="empty">সব হিসাব মিটে গেছে ✓</div>'}<div class="m" style="margin-top:10px">${bn(KB.hc)}/${bn(KB.tot)}টি খাতার লেনদেন আয়-ব্যয়ের হিসাবে যুক্ত</div><div class="acts"><button class="g" data-a="hsall">💰 সব হিসাবে তুলুন</button><button class="g" data-a="hsnone">সব সরান</button></div>`:'<div class="empty">খাতায় এখনো কোনো লেনদেন নেই। কে কত পাবে বা দেবে — খাতায় লিখলে এখানে আয়-ব্যয়ের সাথে মিলে দেখা যাবে।</div>'}</section>`;
+$.innerHTML=`<header><h1>💰 হিসাব</h1><div class="tools"><div class="mn"><button class="ic" data-nav="-1" aria-label="আগের মাস">‹</button><span>${MON[V.getMonth()]} ${bn(V.getFullYear())}</span><button class="ic" data-nav="1" aria-label="পরের মাস">›</button></div><a class="ic" href="invoice.html" aria-label="খাতা" title="খাতা">📒</a><button class="ic" data-a="hide" aria-label="অঙ্ক লুকান">${S.hide?'🙈':'👁️'}</button></div></header>
 <div class="grid">
 <section class="card hero wide"><div class="hl">এ মাসে অবশিষ্ট</div><div class="big nm" id="cu" data-v="${bal}">${fm(bal)}</div>
 <div class="chips"><div class="chip i">আয়<b class="nm">${fm(inc)}</b></div><div class="chip o">ব্যয়<b class="nm">${fm(exp)}</b></div><div class="chip">সঞ্চয়ের হার<b class="nm">${bn(sr)}%</b></div></div></section>
-<section class="card" id="nf"><h2>${ef?'হিসাব এডিট':'নতুন হিসাব'}${ef?' <span class="pill">'+bn(ef.d.slice(8))+' '+MON[+ef.d.slice(5,7)-1]+'</span>':''}</h2><form data-f="fin"><div class="seg f2"><button type="button" class="${T=='out'?'on':''}" data-ty="out">ব্যয়</button><button type="button" class="${T=='in'?'on':''}" data-ty="in">আয়</button></div>
-<select name="c" class="f2">${Object.entries(C).filter(([k,v])=>v[3]==T).map(([k,v])=>`<option value="${k}"${ef&&ef.t==T&&ck(ef)==k?' selected':''}>${v[0]} ${v[1]}</option>`).join('')}</select>
+${kc}<section class="card" id="nf"><h2>${ef?'হিসাব এডিট':'নতুন হিসাব'}${ef?' <span class="pill">'+bn(ef.d.slice(8))+' '+MON[+ef.d.slice(5,7)-1]+'</span>':''}</h2><form data-f="fin"><div class="seg f2"><button type="button" class="${T=='out'?'on':''}" data-ty="out">ব্যয়</button><button type="button" class="${T=='in'?'on':''}" data-ty="in">আয়</button></div>
+<select name="c" class="f2">${Object.entries(C).filter(([k,v])=>v[3]==T&&!v[4]).map(([k,v])=>`<option value="${k}"${ef&&ef.t==T&&ck(ef)==k?' selected':''}>${v[0]} ${v[1]}</option>`).join('')}</select>
 <input name="a" type="number" min="1" step="any" placeholder="টাকা" value="${ef?ef.a:''}" required><input name="d" type="date" value="${ef?ef.d:isNow?key(now):mk+'-01'}" required><input class="f2" name="n" placeholder="বিবরণ (ঐচ্ছিক)" value="${ef?ex(ef.n):''}"><button class="f2">${ef?'আপডেট করুন':'যোগ করুন'}</button>${ef?'<button type="button" class="g f2" data-a="cancel">বাতিল</button>':''}</form></section>
-<section class="card"><h2>মাসিক বাজেট ${S.bud>0?`<span class="pill nm">${bn(Math.round(pc))}%</span>`:''}</h2><div class="inl"><input id="bud" type="number" min="0" placeholder="বাজেট (৳)" value="${S.bud||''}"><button class="g" data-a="bud">সেট</button></div>
+${ac}<section class="card"><h2>মাসিক বাজেট ${S.bud>0?`<span class="pill nm">${bn(Math.round(pc))}%</span>`:''}</h2><div class="inl"><input id="bud" type="number" min="0" placeholder="বাজেট (৳)" value="${S.bud||''}"><button class="g" data-a="bud">সেট</button></div>
 ${S.bud>0?`<div class="bar"><i class="${pc>=80?'hot':''}" style="width:${Math.min(100,pc)}%"></i></div><div class="m nm">${fm(exp)} / ${fm(S.bud)}</div>`:'<div class="m" style="margin-top:12px">বাজেট দিলে খরচের সীমা ও সতর্কবার্তা দেখাবে।</div>'}${bm}</section>
 <section class="card"><h2>সঞ্চয় লক্ষ্য ${S.goal.a>0?`<span class="pill nm">${bn(Math.round(gp))}%</span>`:''}</h2><div class="inl"><input id="gn" placeholder="লক্ষ্য (যেমন: বাইক)" value="${S.goal.n||''}"><input id="ga" type="number" min="0" placeholder="৳" value="${S.goal.a||''}"></div><div class="acts" style="margin-top:8px"><button class="g" data-a="goal">সেভ</button></div>
 ${S.goal.a>0?`<div class="bar"><i style="width:${gp}%"></i></div><div class="m nm">${S.goal.n||'লক্ষ্য'} · মোট সঞ্চিত ${fm(net)} / ${fm(S.goal.a)}</div>`:''}</section>
@@ -170,37 +209,45 @@ ${S.goal.a>0?`<div class="bar"><i style="width:${gp}%"></i></div><div class="m n
 list();cu(bal);}
 function list(){
 const mk=key(V).slice(0,7),q=Q.trim().toLowerCase();
-const l=S.fin.map((f,i)=>({...f,i})).filter(f=>f.d.startsWith(mk)&&(F=='all'||f.t==F)&&(!q||(f.n||'').toLowerCase().includes(q)||C[ck(f)][1].includes(q)||L(C[ck(f)][1]).toLowerCase().includes(q))).sort((a,b)=>b.d.localeCompare(a.d)||b.i-a.i);
+const l=S.fin.map((f,i)=>({...f,i})).concat(virt()).filter(f=>f.d.startsWith(mk)&&(F=='all'||f.t==F)&&(!q||(f.n||'').toLowerCase().includes(q)||C[ck(f)][1].includes(q)||L(C[ck(f)][1]).toLowerCase().includes(q))).sort((a,b)=>b.d.localeCompare(a.d)||b.i-a.i);
 document.getElementById('cnt').textContent=bn(l.length)+' টি';
-document.getElementById('lst').innerHTML=l.length?l.map(f=>{const c=C[ck(f)];return`<div class="row"><div class="ei" style="background:color-mix(in srgb,${c[2]} 18%,transparent)">${c[0]}</div><div class="rt"><div>${f.n||c[1]}</div><div class="m">${c[1]} · ${bn(f.d.slice(8))} ${MON[+f.d.slice(5,7)-1]}</div></div><b class="nm" style="color:var(--${f.t=='in'?'ok':'er'})">${f.t=='in'?'+':'−'} ${fm(f.a)}</b><button class="x ed" data-ed="${f.i}" aria-label="এডিট">✎</button><button class="x" data-del="${f.i}" aria-label="মুছুন">✕</button></div>`}).join(''):'<div class="empty">কোনো হিসাব পাওয়া যায়নি। উপরের ফর্ম থেকে প্রথমটি যোগ করুন।</div>';}
+document.getElementById('lst').innerHTML=l.length?l.map(f=>{const c=C[ck(f)];return`<div class="row"><div class="ei" style="background:color-mix(in srgb,${c[2]} 18%,transparent)">${c[0]}</div><div class="rt"><div>${ex(f.n)||c[1]}</div><div class="m">${c[1]} · ${bn(f.d.slice(8))} ${MON[+f.d.slice(5,7)-1]}</div></div><b class="nm" style="color:var(--${f.t=='in'?'ok':'er'})">${f.t=='in'?'+':'−'} ${fm(f.a)}</b>${f.v?`<button class="x ed" data-lk="${ex(f.p)}" aria-label="খাতায় দেখুন" title="খাতায় দেখুন">📒</button><button class="x" data-unhs="${ex(f.lid)}" aria-label="হিসাব থেকে সরান" title="হিসাব থেকে সরান">✕</button>`:`<button class="x ed" data-ed="${f.i}" aria-label="এডিট">✎</button><button class="x" data-del="${f.i}" aria-label="মুছুন">✕</button>`}</div>`}).join(''):'<div class="empty">কোনো হিসাব পাওয়া যায়নি। উপরের ফর্ম থেকে প্রথমটি যোগ করুন।</div>';}
 function cu(v){const e=document.getElementById('cu');if(!e||matchMedia('(prefers-reduced-motion:reduce)').matches)return;const t0=performance.now();(function s(t){const p=Math.min(1,(t-t0)/800),k=1-Math.pow(1-p,3);e.textContent=fm(v*k);if(p<1)requestAnimationFrame(s)})(t0)}
 function dl(name,type,data){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 $.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);if(e.target.dataset.f!='fin')return;const it={t:T,c:f.get('c'),a:+f.get('a'),n:f.get('n').trim(),d:f.get('d')};if(E!=null&&S.fin[E])S.fin[E]=it;else S.fin.push(it);E=null;save();render()});
 $.addEventListener('input',e=>{if(e.target.id=='q'){Q=e.target.value;list()}});
 $.addEventListener('change',e=>{if(e.target.id=='ft'){F=e.target.value;list()}});
-$.addEventListener('click',e=>{const t=e.target.closest('[data-nav],[data-a],[data-del],[data-ty],[data-ed]');if(!t)return;const D=t.dataset;
+$.addEventListener('click',e=>{const t=e.target.closest('[data-nav],[data-a],[data-del],[data-ty],[data-ed],[data-lk],[data-unhs]');if(!t)return;const D=t.dataset;
 if(D.nav){V=new Date(V.getFullYear(),V.getMonth()+ +D.nav,1);return render()}
 if(D.ty){T=D.ty;return render()}
+if(D.lk!=null){location.href='invoice.html'+(D.lk?'?p='+encodeURIComponent(D.lk):'');return}
+if(D.unhs!=null){if(confirm('এটি আয়-ব্যয়ের হিসাব থেকে সরাবেন? খাতায় লেনদেনটি থেকে যাবে।')){ledSet(e=>{if(String(e.id)===D.unhs)e.hs=0});render()}return}
 if(D.ed!=null){E=+D.ed;T=S.fin[E].t;render();const nf=document.getElementById('nf');if(nf)nf.scrollIntoView({behavior:'smooth',block:'center'});return}
 if(D.del!=null){if(confirm('এই হিসাবটি মুছবেন?')){S.fin.splice(+D.del,1);E=null;save();render()}return}
 const a=D.a;
+if(a=='hsall'||a=='hsnone'){const v=a=='hsall'?1:0;ledSet(e=>{if(e.t in LS)e.hs=v});return render()}
 if(a=='cancel'){E=null;return render()}
+if(a=='auto'){const am=+document.getElementById('aa').value||0,tm=document.getElementById('at').value;if(!(am>0)||!tm){alert('দানের টাকা ও সময় দুটোই দিন');return}
+ const now=new Date(),hm=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+ if(!S.auto.on||!S.auto.last){const y=new Date();if(hm<tm)y.setDate(y.getDate()-1);S.auto.last=key(y)}
+ S.auto.on=1;S.auto.a=am;S.auto.t=tm;save();autoRun();return render()}
+if(a=='autooff'){S.auto.on=0;save();return render()}
 if(a=='hide'){S.hide=S.hide?0:1}
 else if(a=='bud'){S.bud=+document.getElementById('bud').value||0}
 else if(a=='goal'){S.goal={n:document.getElementById('gn').value.trim(),a:+document.getElementById('ga').value||0}}
-else if(a=='csv'){dl('hisab.csv','text/csv','\ufeff'+['তারিখ','ধরন','ক্যাটাগরি','টাকা','বিবরণ'].map(x=>L(x)).join(',')+'\n'+S.fin.map(f=>[f.d,L(f.t=='in'?'আয়':'ব্যয়'),L(C[ck(f)][1]),f.a,'"'+(f.n||'').replace(/"/g,'""')+'"'].join(',')).join('\n'));return}
+else if(a=='csv'){dl('hisab.csv','text/csv','\ufeff'+['তারিখ','ধরন','ক্যাটাগরি','টাকা','বিবরণ'].map(x=>L(x)).join(',')+'\n'+S.fin.concat(virt()).map(f=>[f.d,L(f.t=='in'?'আয়':'ব্যয়'),L(C[ck(f)][1]),f.a,'"'+(f.n||'').replace(/"/g,'""')+'"'].join(',')).join('\n'));return}
 save();render()});
 /* সেটিং বা অন্য ট্যাব/সিঙ্ক থেকে কিছু বদলালে এই পেজেও সঙ্গে সঙ্গে প্রয়োগ হবে */
 function pull(){const c=rd();
 if((c.lang==='en'?'en':'bn')!==(window.LANG||'bn')){location.reload();return}
 const th=c.theme||0,dk=c.dark||0;
 if(th!=(S.theme||0)||dk!=(S.dark||0)){S.theme=th;S.dark=dk;root.dataset.t=th;root.dataset.d=dk}
-const nw=JSON.stringify([c.hide||0,c.bud||0,c.goal||{n:'',a:0},Array.isArray(c.fin)?c.fin:[]]),od=JSON.stringify([S.hide||0,S.bud||0,S.goal,S.fin]);
+const ca=c.auto&&typeof c.auto==='object'?c.auto:S.auto,nw=JSON.stringify([c.hide||0,c.bud||0,c.goal||{n:'',a:0},Array.isArray(c.fin)?c.fin:[],Array.isArray(c.led)?c.led:[],ca]),od=JSON.stringify([S.hide||0,S.bud||0,S.goal,S.fin,S.led,S.auto]);
 if(nw!==od){const a=document.activeElement;if(a&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)&&$.contains(a))return;
-S.hide=c.hide||0;S.bud=c.bud||0;S.goal=c.goal||{n:'',a:0};S.fin=Array.isArray(c.fin)?c.fin:[];render()}}
+S.hide=c.hide||0;S.bud=c.bud||0;S.goal=c.goal||{n:'',a:0};S.fin=Array.isArray(c.fin)?c.fin:[];S.led=Array.isArray(c.led)?c.led:[];S.auto=ca;render()}}
 addEventListener('pageshow',e=>{if(e.persisted)pull()});
 addEventListener('storage',e=>{if(!e.key||e.key=='dl')pull()});
 addEventListener('hsync',pull);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)pull()});
-render();
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){pull();tick()}});
+autoRun();render();setInterval(tick,15000);
 </script><script src="suggest.js"></script><script src="pwa.js"></script></body></html>
