@@ -184,10 +184,22 @@ button.bpill,button.bpill:hover,button.bpill:active,button.bpill:focus{backgroun
 .bl em{font-style:normal;font-size:11.5px;font-weight:700;background:linear-gradient(90deg,#2A1E0F 34%,#B58524 50%,#2A1E0F 66%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:btx 4.4s linear infinite}
 @keyframes btx{from{background-position:100% 0}to{background-position:-100% 0}}
 .bv b{font-size:15px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;background:linear-gradient(180deg,#4A3414,#8A6420 85%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.bv b.lg{font-size:12px}
 .bv b.neg{background:linear-gradient(180deg,#A8261A,#D8483B);-webkit-background-clip:text;background-clip:text}
 .bpill.open .bl{opacity:0;transform:translateY(-8px);filter:blur(4px)}
 .bpill.open .bv{opacity:1;transform:none;filter:none;transition-delay:.25s}
 @keyframes bsh{0%,55%{transform:translateX(-130%)}100%{transform:translateX(130%)}}
+/* মোবাইলে শুভেচ্ছা দুই লাইনে ভাঙলে "আসসালামু আলাইকুম" আগে, "শুভ রাত্রি" নিচে */
+@media(max-width:699px){#app>header h1{display:flex;flex-direction:column}#app>header h1 .g2{order:-1}#app>header h1 .gc{display:none}}
+/* পিসিতে ক্যাপসুল বড় */
+@media(min-width:700px){
+.hbal{gap:10px;margin-top:4px}
+.hbtn{width:42px;height:42px;font-size:18px}
+.bpill{width:184px;height:46px;border-radius:15px}
+.bcoin{top:6px;left:6px;width:32px;height:32px;border-radius:10px;font-size:19px}
+.bpill.open .bcoin{left:calc(100% - 38px)}
+.bl{left:44px;right:6px}.bv{left:6px;right:44px}
+.bl em{font-size:14.5px}.bv b{font-size:21px}.bv b.lg{font-size:15px}}
 @media(prefers-reduced-motion:reduce){.bpill::before,.bl em,.bcoin{animation:none}.bl,.bv,.bcoin{transition:opacity .2s!important}.bpill.open .bcoin{animation:none}.brp.go{animation:none}}
 </style></head><body><script src="header.js"></script><main id="app"></main>
 <script>
@@ -207,7 +219,7 @@ const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
 /* ব্যালেন্স কার্ড: ট্যাপ করলে আনুমানিক ২ সেকেন্ড (স্লাইড শেষ হওয়ার পর) দেখা যায়, তারপর নিজে ঢেকে যায় */
 let BRU=0,BRX=0;const BRT=2800;
 const bfmt=n=>'৳'+bn((Math.round(n*100)/100).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}));
-function bcount(el,to){if(el){el.textContent=bfmt(to);el.style.fontSize=el.textContent.length>10?'12px':''}}
+function bcount(el,to){if(el){el.textContent=bfmt(to);el.classList.toggle('lg',el.textContent.length>10)}}
 function bset(o,ev){document.querySelectorAll('.bpill').forEach(x=>{x.classList.toggle('open',!!o);x.setAttribute('aria-pressed',o?'true':'false');const p=x.querySelector('.bp');if(p){p.style.animationDelay='';if(o){p.style.animation='none';void p.getBoundingClientRect();p.style.animation=''}}
  if(o){const bb=x.querySelector('.bv b');if(bb)bcount(bb,+bb.dataset.v||0);const r=x.querySelector('.brp');if(r&&ev){const q=x.getBoundingClientRect();r.style.setProperty('--rx',(ev.clientX-q.left)+'px');r.style.setProperty('--ry',(ev.clientY-q.top)+'px');r.classList.remove('go');void r.offsetWidth;r.classList.add('go')}}})}
 document.addEventListener('click',e=>{if(!e.target.closest('[data-bal]'))return;clearTimeout(BRX);if(BRU>Date.now()){BRU=0;bset(0);return}BRU=Date.now()+BRT;bset(1,e);BRX=setTimeout(()=>{BRU=0;bset(0)},BRT)});
@@ -280,13 +292,13 @@ const rozaCard=(h.m!=9&&!fi[1]&&fi[0].startsWith('নফল রোজার দ�
 const wxCard=wxCardHTML();
 const g=cur<12?'সুপ্রভাত':cur<16?'শুভ অপরাহ্ন':cur<19?'শুভ সন্ধ্যা':'শুভ রাত্রি';
 const HC={cd:`${cdCard}`,wx:`${wxCard}`,pr:`<section class="card"><h2>আজকের নামাজ <span class="pill">${bn(pc)}/৫</span></h2>${P.map((p,i)=>`<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="pr" data-i="${i}" style="${pcs(i)}" ${pd['f'+i]?'checked':''}><span style="color:${PC[i][0]};font-weight:600">${p}</span></label><span class="m">${T(tm[i])}</span></div>`).join('')}<div class="bar"><i style="width:${pc*20}%"></i></div></section>
-${actN.length?`<section class="card"><h2>নফল নামাজ <span class="pill">এখন চলছে</span></h2>${actN.map(([w,r])=>{const i=nafl.findIndex(n=>n[0]==w[0]);return `<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="pr" data-i="n${i}" ${pd['n'+i]?'checked':''}>${w[0]}</label><span class="m">${nafl[i][1]} · ${dur(r.left)} বাকি</span></div>`}).join('')}</section>`:''}`,rz:`${rozaCard}`,bal:`<div class="hbal">${(()=>{const v=hand(),rem=BRU-Date.now(),op=rem>0;return `<button type="button" class="bpill${op?' open':''}" data-bal="1" aria-pressed="${op}" aria-label="ব্যালেন্স দেখতে ট্যাপ করুন"><span class="brp"></span><span class="bcoin">৳</span><span class="bl"><em>ব্যালেন্স দেখুন</em></span><span class="bv"><b data-v="${v}"${v<0?' class="neg"':''}>${bfmt(v)}</b></span></button>`})()}<button type="button" class="hbtn" data-a="hs" aria-label="হিসাব">→</button></div>`,tk:`<section class="card wide"><h2>আজকের কাজ <span class="pill">${bn(td)}/${bn(tt.length)}</span></h2>
+${actN.length?`<section class="card"><h2>নফল নামাজ <span class="pill">এখন চলছে</span></h2>${actN.map(([w,r])=>{const i=nafl.findIndex(n=>n[0]==w[0]);return `<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="pr" data-i="n${i}" ${pd['n'+i]?'checked':''}>${w[0]}</label><span class="m">${nafl[i][1]} · ${dur(r.left)} বাকি</span></div>`}).join('')}</section>`:''}`,rz:`${rozaCard}`,bal:`<div class="hbal">${(()=>{const v=hand(),rem=BRU-Date.now(),op=rem>0;return `<button type="button" class="bpill${op?' open':''}" data-bal="1" aria-pressed="${op}" aria-label="ব্যালেন্স দেখতে ট্যাপ করুন"><span class="brp"></span><span class="bcoin">৳</span><span class="bl"><em>ব্যালেন্স দেখুন</em></span><span class="bv"><b data-v="${v}" class="${v<0?'neg ':''}${bfmt(v).length>10?'lg':''}">${bfmt(v)}</b></span></button>`})()}<button type="button" class="hbtn" data-a="hs" aria-label="হিসাব">→</button></div>`,tk:`<section class="card wide"><h2>আজকের কাজ <span class="pill">${bn(td)}/${bn(tt.length)}</span></h2>
 ${tt.length?tt.map(t=>`<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="task" data-i="${t.id}" ${(S.done[K]||{})[t.id]?'checked':''}>${t.title}</label><span class="m">${t.time?bn(t.time)+' · ':''}${TYL(t)} <button class="x" data-a="del" data-i="${t.id}">✕</button></span></div>`).join(''):'<div class="m">আজ কোনো কাজ নেই।</div>'}
 <div style="margin-top:10px"><button class="g lk" data-a="tk">কাজ যোগ করুন<span class="ar">→</span></button></div>
 </section>`};
 const HD=['cd','wx','pr','rz','bal','tk'],HO=(Array.isArray(S.home&&S.home.order)?S.home.order.filter(k=>HD.includes(k)):[]);HD.forEach(k=>{if(!HO.includes(k))HO.push(k)});
 const HH=(S.home&&S.home.hide)||{};
-$.innerHTML=`<header><div><h1>${g}, আসসালামু আলাইকুম</h1><div class="sub">${DAYS[now.getDay()]}, ${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())} · ${bn(h.d)} ${HM[h.m]} ${bn(h.y)} হি.</div></div>${HH.bal?'':HC.bal}</header>
+$.innerHTML=`<header><div><h1><span class="g1">${g}</span><span class="gc">, </span><span class="g2">আসসালামু আলাইকুম</span></h1><div class="sub">${DAYS[now.getDay()]}, ${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())} · ${bn(h.d)} ${HM[h.m]} ${bn(h.y)} হি.</div></div>${HH.bal?'':HC.bal}</header>
 <div class="grid">
 ${S.tp?`<section class="card wide"><h2>রঙের সেট · ${TH[S.theme][0]}</h2><div class="sw">${TH.map((t,i)=>`<b title="${t[0]}" data-a="th" data-i="${i}" class="${i==S.theme?'on':''}" style="background:linear-gradient(135deg,${t[1]} 50%,#E0B84F 50%)"></b>`).join('')}</div></section>`:''}${ram?ramCard:''}${HO.filter(k=>!HH[k]&&k!='bal').map(k=>HC[k]).join('')}
 </div>`}
