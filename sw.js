@@ -1,7 +1,9 @@
 /* Hayat — Service Worker
-   অফলাইন সাপোর্ট: পেজ/স্ক্রিপ্ট আগে ক্যাশ থেকে দেখায়, পেছনে নতুন সংস্করণ এনে রাখে।
-   কোড বদলালে নিচের VER সংখ্যা বাড়িয়ে দিন — পুরনো ক্যাশ নিজে মুছে যাবে। */
-const VER='hayat-v17';
+   অ্যাপের নিজের পেজ/স্ক্রিপ্ট: আগে নেটওয়ার্ক থেকে নতুন সংস্করণ আনে (ব্রাউজারের HTTP ক্যাশ এড়িয়ে),
+   নেট না থাকলে বা ৩ সেকেন্ডে সাড়া না পেলে ক্যাশ থেকে দেখায় — তাই আপলোডের পর হার্ড রিফ্রেশ লাগে না।
+   ফন্ট ইত্যাদি বাইরের ফাইল আগের মতো ক্যাশ-আগে। VER বাড়ালে পুরনো ক্যাশ নিজে মুছে যায়। */
+const VER='hayat-v18';
+const NET_WAIT=3000;
 const PRE=['./','index.html','tasks.html','namaz.html','roza.html','study.html','hisab.html','invoice.html','bags.html','settings.html','lang.js','trip.js','sync.js','header.js','suggest.js','pwa.js','digest.js','digest-core.js','dialog.js','push.js','manifest.json','offline.html',
   'icon-192.png','icon-512.png','icon-maskable-512.png','badge-96.png'];
 
@@ -40,7 +42,7 @@ self.addEventListener('periodicsync',e=>{if(e.tag==='namaz-rem'||e.tag==='hayat-
 self.addEventListener('message',e=>{if(e.data&&(e.data.type==='namaz-check'||e.data.type==='digest-check'))e.waitUntil(checkAll())});
 
 self.addEventListener('install',e=>{
-  e.waitUntil(caches.open(VER).then(c=>Promise.all(PRE.map(u=>c.add(u).catch(()=>{})))).then(()=>self.skipWaiting()));
+  e.waitUntil(caches.open(VER).then(c=>Promise.all(PRE.map(u=>c.add(new Request(u,{cache:'reload'})).catch(()=>{})))).then(()=>self.skipWaiting()));
 });
 
 self.addEventListener('activate',e=>{
@@ -56,11 +58,27 @@ self.addEventListener('fetch',e=>{
   const font=u.hostname==='fonts.googleapis.com'||u.hostname==='fonts.gstatic.com';
   if(u.origin!==location.origin&&!font)return;           // আবহাওয়া/নামাজের API ইত্যাদি সরাসরি নেটওয়ার্কে যাবে
 
+  if(font){   // বাইরের ফন্ট: ক্যাশে থাকলে সাথে সাথে, পেছনে হালনাগাদ
+    e.respondWith(caches.open(VER).then(async c=>{
+      const hit=await c.match(r);
+      const net=fetch(r).then(res=>{if(res&&(res.ok||res.type==='opaque'))c.put(r,res.clone());return res}).catch(()=>null);
+      if(hit){e.waitUntil(net);return hit}
+      return (await net)||new Response('',{status:504});
+    }));
+    return;
+  }
+
+  /* অ্যাপের নিজের ফাইল: নেটওয়ার্ক আগে (HTTP ক্যাশ এড়িয়ে), ব্যর্থ বা ধীর হলে ক্যাশ */
   e.respondWith(caches.open(VER).then(async c=>{
-    const hit=await c.match(r,{ignoreSearch:r.mode==='navigate'});
-    const net=fetch(r).then(res=>{if(res&&(res.ok||res.type==='opaque'))c.put(r,res.clone());return res}).catch(()=>null);
-    if(hit){e.waitUntil(net);return hit}                  // ক্যাশে থাকলে সাথে সাথে দেখাও, পেছনে হালনাগাদ
-    const res=await net;
+    const find=()=>c.match(r,{ignoreSearch:r.mode==='navigate'});
+    const net=fetch(r,{cache:'no-cache'}).then(res=>{if(res&&res.ok)c.put(r,res.clone());return res});
+    e.waitUntil(net.catch(()=>{}));
+    let res=null;
+    try{res=await Promise.race([net,new Promise((_,rj)=>setTimeout(rj,NET_WAIT))])}catch(x){}
+    if(res&&(res.ok||res.type==='opaqueredirect'||res.status<500&&res.status!==404))return res;
+    const hit=await find();
+    if(hit)return hit;
+    if(!res){try{res=await net}catch(x){}}   // ধীর ছিল কিন্তু ক্যাশে কিছু নেই: নেটওয়ার্কের জন্যই অপেক্ষা
     if(res)return res;
     if(r.mode==='navigate')return (await c.match('offline.html'))||new Response('Offline',{status:503});
     return new Response('',{status:504});
