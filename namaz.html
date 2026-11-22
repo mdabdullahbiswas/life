@@ -654,12 +654,11 @@ const idb=()=>new Promise((res,rej)=>{const q=indexedDB.open('hayat-n',1);q.onup
 const idbSet=(k,v)=>idb().then(d=>new Promise((res,rej)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=()=>res();t.onerror=()=>rej(t.error)}));
 const idbGet=k=>idb().then(d=>new Promise(res=>{const r=d.transaction('kv').objectStore('kv').get(k);r.onsuccess=()=>res(r.result);r.onerror=()=>res(null)}));
 async function markFired(id){FIRED[id]=Date.now();try{const f=(await idbGet('fired'))||{};f[id]=Date.now();await idbSet('fired',f)}catch(e){}}
-let lastSched='',lastUp='',FIRED={};
+let lastSched='',FIRED={};
 async function syncSched(){try{if(!window.indexedDB)return;try{FIRED=(await idbGet('fired'))||{}}catch(e){}const L=S.loc,items=[],now=new Date(),n=now.getTime();
- if(L.on)for(let dI=0;dI<6;dI++){const d=new Date(now.getFullYear(),now.getMonth(),now.getDate()+dI),K=key(d),c=calc(d),E=effS(c),pd=S.pr[K]||{},mid=d.getTime(),nm=['ফজর',d.getDay()==5?'জুম্মা':'যোহর','আসর','মাগরিব','এশা'];
+ if(L.on)for(let dI=0;dI<3;dI++){const d=new Date(now.getFullYear(),now.getMonth(),now.getDate()+dI),K=key(d),c=calc(d),E=effS(c),pd=S.pr[K]||{},mid=d.getTime(),nm=['ফজর',d.getDay()==5?'জুম্মা':'যোহর','আসর','মাগরিব','এশা'];
   for(let i=0;i<5;i++){const r=+L.rm[i];if(!(r>0)||pd['f'+i])continue;const j=effJ(i,d),tg=j!=null?j:E[i],tm=mid+Math.round(tg*60)*6e4;if(tm<=n)continue;items.push({id:K+'-'+i,f:tm-r*6e4,tm,t:nm[i]+(j!=null?' · জামাত':' · ওয়াক্ত'),tg:T(tg)})}}
  const js=JSON.stringify(items);
- if(window.hayatPush&&window.hayatPush.sched&&js!==lastUp){lastUp=js;window.hayatPush.sched(items).then(ok=>{if(!ok)lastUp=''}).catch(()=>{lastUp=''})}
  if(js===lastSched)return;lastSched=js;await idbSet('sched',items);
  const reg=navigator.serviceWorker&&navigator.serviceWorker.getRegistration?await navigator.serviceWorker.getRegistration():null;if(!reg||!window.Notification||Notification.permission!='granted')return;
  if(L.on&&reg.periodicSync)try{await reg.periodicSync.register('namaz-rem',{minInterval:15*60*1000})}catch(e){}
