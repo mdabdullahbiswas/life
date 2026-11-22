@@ -56,5 +56,8 @@ function refresh(){
   getTok().then(t=>{if(t&&(t!==s.token||Date.now()-(s.at||0)>6*864e5))return call({a:'fcm',fcm:t}).then(()=>setSt({token:t,at:Date.now()}))}).catch(()=>{})}
 setTimeout(refresh,6000);
 
-window.hayatPush={enable,disable,test,on:()=>!!st().token};
+/* নামাজের রিমাইন্ডারের সময়সূচি সার্ভারে পাঠানো (সার্ভার সময় হলে পুশ দেয়) — পুশ চালু না থাকলে false */
+async function sched(items){if(!st().token)return false;const c=sync();if(!c.url||!c.token)return false;await call({a:'nsched',items});return true}
+
+window.hayatPush={enable,disable,test,sched,on:()=>!!st().token};
 })();
