@@ -190,7 +190,20 @@ button.bpill,button.bpill:hover,button.bpill:active,button.bpill:focus{backgroun
 .bpill.open .bv{opacity:1;transform:none;filter:none;transition-delay:.25s}
 @keyframes bsh{0%,55%{transform:translateX(-130%)}100%{transform:translateX(130%)}}
 /* মোবাইলে শুভেচ্ছা দুই লাইনে ভাঙলে "আসসালামু আলাইকুম" আগে, "শুভ রাত্রি" নিচে */
-@media(max-width:699px){#app>header h1{display:flex;flex-direction:column}#app>header h1 .g2{order:-1}#app>header h1 .gc{display:none}}
+@media(max-width:699px){
+#app>header{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:8px;row-gap:10px;align-items:start}
+#app>header>div:first-child{display:contents}
+#app>header h1{grid-column:1;grid-row:1;display:flex;flex-direction:column;font-size:20px;line-height:1.3;white-space:nowrap}
+#app>header h1 .g2{order:-1}#app>header h1 .gc{display:none}
+#app>header h1 .g1{font-size:15px;font-weight:600;opacity:.9}
+#app>header .sub{grid-column:1/-1;grid-row:2;justify-self:start;margin:0;font-size:13px}
+#app>header .hbal{grid-column:2;grid-row:1;gap:5px;margin-top:0}
+.hbtn{width:26px;height:26px;font-size:12px}
+.bpill{width:112px;height:32px;border-radius:10px}
+.bcoin{top:4px;left:4px;width:22px;height:22px;border-radius:7px;font-size:14px}
+.bpill.open .bcoin{left:calc(100% - 26px)}
+.bl{left:30px;right:3px}.bv{left:3px;right:30px}
+.bl em{font-size:11px}.bv b{font-size:14px}.bv b.lg{font-size:11.5px}}
 /* পিসিতে ক্যাপসুল বড় */
 @media(min-width:700px){
 .hbal{gap:10px;margin-top:4px}
