@@ -195,11 +195,12 @@ function cat(f){const n=cname(f.cn)||C[ck(f)][1],k=n.toLowerCase();return{k,n,co
 const ini=n=>Array.from(n)[0]||'•';
 function grp(l){const m={};l.forEach(f=>{if(f.t!='out')return;const c=cat(f),o=m[c.k]||(m[c.k]={k:c.k,n:c.n,col:c.col,a:0});o.a+=f.a});return Object.values(m).sort((a,b)=>b.a-a.a)}
 function backfillA(){['out','in'].forEach(t=>{const m=S.cats[t];for(const k in m){if(m[k]&&m[k].a==null){const lk=k.toLowerCase();for(let i=S.fin.length-1;i>=0;i--){const f=S.fin[i];if(f&&!f.au&&(f.t=='in'?'in':'out')==t&&catTxt(f).toLowerCase()==lk){m[k].a=f.a;break}}}}})}
-function getCat(t,n){const m=(S.cats&&S.cats[t])||{},lk=String(n||'').toLowerCase();for(const k in m)if(k.toLowerCase()==lk)return m[k];return null}
+function allCats(){const m={};['out','in'].forEach(t=>{const o=(S.cats&&S.cats[t])||{};for(const n in o){const e=o[n],k=n.toLowerCase(),x=m[k];if(!x)m[k]={n,c:e.c,l:e.l,a:e.a};else{x.c+=e.c;if(e.l>x.l){x.l=e.l;x.n=n;if(e.a!=null)x.a=e.a}}}});return Object.values(m)}
+function getCat(t,n){const lk=String(n||'').toLowerCase();return allCats().find(x=>x.n.toLowerCase()==lk)||null}
 function seedCats(){if(S.cats&&typeof S.cats==='object'&&S.cats.out&&S.cats.in){backfillA();return}const o={out:{},in:{}};S.fin.forEach((f,i)=>{if(!f||f.au)return;const n=catTxt(f);if(!n)return;const m=o[f.t=='in'?'in':'out'],e=m[n]||(m[n]={c:0,l:0});e.c++;if(i>=e.l){e.l=i;e.a=f.a}});S.cats=o}
 function bump(t,n,a){const m=S.cats[t],lk=n.toLowerCase();let e={c:0,l:0};for(const k in m)if(k.toLowerCase()==lk){e=m[k];delete m[k]}e.c++;e.l=Date.now();if(a>0)e.a=a;m[n]=e}
 function sg(){const f=$.querySelector('form[data-f=fin]');if(!f||!S.cats)return;const box=f.querySelector('.sg'),inp=f.elements.c;if(!box||!inp)return;
- const q=cname(inp.value).toLowerCase();let l=Object.entries(S.cats[T]||{}).map(([n,e])=>({n,c:e.c,l:e.l}));
+ const q=cname(inp.value).toLowerCase();let l=allCats();
  if(q)l=l.filter(x=>x.n.toLowerCase().includes(q));
  l.sort((a,b)=>(q?(b.n.toLowerCase().startsWith(q)-a.n.toLowerCase().startsWith(q)):0)||b.c-a.c||b.l-a.l);
  box.innerHTML=l.slice(0,5).map(x=>`<span class="sgc${x.n.toLowerCase()==q?' on':''}"><button type="button" data-sg="${ex(x.n)}">${ex(x.n)}</button><button type="button" class="sgx" data-sgx="${ex(x.n)}" aria-label="${L('সাজেশন সরান')}" title="${L('সাজেশন সরান')}">×</button></span>`).join('')}
@@ -295,7 +296,7 @@ if(D.ty){kf(()=>{T=D.ty;render()});return}
 if(D.pp!=null){kf(()=>{PP=D.pp;render()},1);return}
 if(D.pv){const q=D.pv.split(':');kf(()=>{PV[q[0]]=q[1];render()},1);return}
 if(D.sg!=null){const i=$.querySelector('form[data-f=fin] [name=c]');if(i){i.value=D.sg;const am=i.form.elements.a,x=getCat(T,D.sg);if(am&&!am.value&&x&&x.a)am.value=x.a;sg();(am||i).focus()}return}
-if(D.sgx!=null){const m=S.cats&&S.cats[T];if(m){for(const k in m)if(k.toLowerCase()==D.sgx.toLowerCase())delete m[k];save();sg()}return}
+if(D.sgx!=null){if(S.cats){['out','in'].forEach(t=>{const m=S.cats[t];for(const k in m)if(k.toLowerCase()==D.sgx.toLowerCase())delete m[k]});save();sg()}return}
 if(D.lk!=null){location.href='invoice.html'+(D.lk?'?p='+encodeURIComponent(D.lk):'');return}
 if(D.unhs!=null){if(confirm('এটি আয়-ব্যয়ের হিসাব থেকে সরাবেন? খাতায় লেনদেনটি থেকে যাবে।')){ledSet(e=>{if(String(e.id)===D.unhs)e.hs=0});render()}return}
 if(D.ed!=null){E=+D.ed;T=S.fin[E].t;PP=S.fin[E].p||'';render();const nf=document.getElementById('nf');if(nf)nf.scrollIntoView({behavior:'smooth',block:'center'});return}
