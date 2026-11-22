@@ -173,28 +173,10 @@ form .f2{grid-column:1/-1}
 @keyframes dbd{from{opacity:0}to{opacity:1}}
 @keyframes dbo{to{opacity:0}}
 @keyframes dpop{from{opacity:0;transform:translateY(12px) scale(.94)}to{opacity:1;transform:none}}
-/* ── পুরোনো হিসাব আনা ── */
-.dlg.imp{max-width:460px;max-height:90vh;overflow:auto;text-align:left;padding:22px 20px 16px}
-.imp-h{display:flex;gap:12px;align-items:center;margin-bottom:14px}
-.imp-h .dlg-ic{margin:0;flex:none;width:46px;height:46px}.imp-h .dlg-ic svg{width:22px;height:22px}
-.imp-h h3{margin:0 0 2px;font-size:17px}.imp-h p{font-size:12.5px;line-height:1.45}
-.imp-ta{width:100%;min-height:130px;border:1px solid var(--ln);border-radius:14px;background:color-mix(in srgb,var(--a) 5%,transparent);color:var(--t);padding:12px;font:inherit;font-size:13px;line-height:1.6;resize:vertical;box-sizing:border-box}
-.imp-ta:focus{outline:0;border-color:var(--a);box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 18%,transparent)}
-.imp-t{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0 4px;font-size:12.5px;color:var(--m)}
-.imp-t .seg{margin:0;flex:none}
-.imp-t .seg button{padding:7px 14px;font-size:12.5px}
-.imp-t>button.fl{padding:8px 12px;font-size:12.5px;border-radius:12px;margin-right:auto}
-.imp-p{margin-top:10px}
-.imp-s{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
-.imp-s span{font-size:12px;font-weight:600;padding:5px 11px;border-radius:99px;border:1px solid var(--ln);color:var(--m)}
-.imp-s .g1{color:#1f9d6b;border-color:color-mix(in srgb,#1f9d6b 40%,transparent);background:color-mix(in srgb,#1f9d6b 9%,transparent)}
-.imp-s .g2{color:var(--er);border-color:color-mix(in srgb,var(--er) 40%,transparent)}
-.imp-r{display:flex;justify-content:space-between;gap:10px;padding:8px 2px;border-bottom:1px dashed var(--ln);font-size:13px;color:var(--t)}
-.imp-r small{display:block;color:var(--m);font-size:11.5px}
-.imp-r b{white-space:nowrap}.imp-r b.i{color:#1f9d6b}
-.imp-e{font-size:12px;color:var(--er);padding:3px 2px}
-.imp-f{margin-top:10px;font-size:12.5px;color:var(--m)}.imp-f summary{cursor:pointer;font-weight:600;color:var(--t)}.imp-f ul{margin:6px 0 0;padding-left:18px;line-height:1.6}
-.dlg-b .ok[disabled]{opacity:.45;cursor:not-allowed;filter:grayscale(.4)}
+.cashl{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:12px 0 2px;padding:10px 14px;border-radius:14px;border:1px solid var(--ln);background:color-mix(in srgb,var(--a) 9%,transparent);font-size:13px;color:var(--m)}
+.cashl b{font-size:17px;color:var(--t);font-weight:700}
+.ol{display:block;font-size:12.5px;font-weight:600;color:var(--m)}
+.ol input{display:block;width:100%;margin-top:6px;box-sizing:border-box}
 .ei{font-size:17px;font-weight:700;font-family:"Noto Serif Bengali",Inter,serif}
 .pr>.dt{width:10px;height:10px;border-radius:50%;margin:0 8px 0 4px;flex:none}
 </style></head><body><script src="header.js"></script><main id="app"></main>
@@ -214,67 +196,6 @@ function ask(o){return new Promise(res=>{
  ok.onclick=()=>end(true);if(no)no.onclick=()=>end(false);
  bd.addEventListener('click',e=>{if(e.target===bd)end(false)});
  document.body.appendChild(bd);(o.danger&&no?no:ok).focus()})}
-/* ===== পুরোনো হিসাব আনা: পেস্ট/ফাইল → যাচাই ও প্রিভিউ → যোগ। ধরন/তারিখ/ক্যাটাগরি/টাকা/বিবরণ যেকোনো ক্রমে; শুধু টাকা আবশ্যক। একই হিসাব দুবার ঢোকে না ===== */
-const d2e=s=>String(s).replace(/[০-৯]/g,c=>'০১২৩৪৫৬৭৮৯'.indexOf(c));
-const IMT={'আয়':'in','income':'in','in':'in','জমা':'in','+':'in','পেলাম':'in','ব্যয়':'out','খরচ':'out','expense':'out','out':'out','-':'out','দিলাম':'out'};
-const IMP={'সাধারণ':'','general':'','পড়াশোনা':'edu','পড়াশোনার':'edu','চাকরি':'job','চাকরির':'job'};
-function impSplit(line){const dl=line.includes('\t')?'\t':line.includes('|')?'|':(line.includes(';')&&!line.includes(','))?';':',';let t=[],c='',q=0;
- for(let i=0;i<line.length;i++){const ch=line[i];if(ch=='"'){if(q&&line[i+1]=='"'){c+='"';i++}else q=!q}else if(ch==dl&&!q){t.push(c);c=''}else c+=ch}
- t.push(c);t=t.map(x=>x.trim()).filter(x=>x!=='');
- if(dl==','){const o=[],N=x=>d2e(x);for(let i=0;i<t.length;i++){let cur=t[i];if(/^\d{1,3}$/.test(N(cur))){let e=N(cur),j=i+1;while(j<t.length&&(/^\d{3}$/.test(N(t[j]))||(/^\d{2}$/.test(N(t[j]))&&j+1<t.length&&/^\d{3}$/.test(N(t[j+1]))))){e+=N(t[j]);j++}if(j>i+1){cur=e;i=j-1}}o.push(cur)}t=o}
- if(t.length==1&&dl==','&&!/"/.test(line))t=line.split(/\s+/).filter(Boolean);return t}
-function impDate(s){let m=s.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})$/),y,mo,d;
- if(m){y=+m[1];mo=+m[2];d=+m[3]}else if(m=s.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{2,4})$/)){d=+m[1];mo=+m[2];y=+m[3];if(y<100)y+=2000}else return null;
- const t=new Date(y,mo-1,d);return t.getFullYear()==y&&t.getMonth()==mo-1&&t.getDate()==d?key(t):null}
-const ikey=(t,d,a,c,n)=>[t,d,+a,String(c||'').toLowerCase(),String(n||'').trim().toLowerCase()].join('|');
-function impParse(txt,def){const ok=[],bad=[];let dup=0,nodate=0;const today=key(new Date());
- const seen=new Set(S.fin.filter(f=>f&&!f.au).map(f=>ikey(f.t,f.d,f.a,catTxt(f),f.n)));
- String(txt||'').replace(/^\ufeff/,'').split(/\r?\n/).forEach((raw,ix)=>{const line=raw.trim();if(!line)return;
-  const tk=impSplit(line);if(tk.some(x=>/^(তারিখ|টাকা|date|amount)$/i.test(x)))return;
-  let d=null,ty=null,am=null,pu=null,sg=0,bd=0;const rest=[];
-  tk.forEach(x=>{const e=d2e(x),lw=e.toLowerCase();let v;
-   if(d==null&&(v=impDate(e))){d=v}
-   else if(/^\d{1,4}[-\/.]\d{1,2}[-\/.]\d{1,4}$/.test(e)){bd=1}
-   else if(!ty&&IMT[lw]){ty=IMT[lw]}
-   else if(am==null&&/^[-+]?\d+(\.\d+)?$/.test(e.replace(/[৳,\s]/g,'').replace(/(টাকা|tk|taka|bdt)$/i,''))){const z=e.replace(/[৳,\s]/g,'').replace(/(টাকা|tk|taka|bdt)$/i,'');am=Math.abs(+z);sg=z[0]=='-'?-1:z[0]=='+'?1:0}
-   else if(pu==null&&Object.prototype.hasOwnProperty.call(IMP,x)){pu=IMP[x]}
-   else rest.push(x)});
-  if(bd){bad.push({n:ix+1,m:'তারিখ ঠিক নয়',s:line});return}
-  if(!(am>0)){bad.push({n:ix+1,m:'টাকা পাওয়া যায়নি',s:line});return}
-  const t=ty||(sg<0?'out':sg>0?'in':def);if(d==null){d=today;nodate++}
-  const cn=cname(rest[0]||''),n=rest.slice(1).join(' ').trim(),k=ikey(t,d,am,cn,n);
-  if(seen.has(k)){dup++;return}seen.add(k);
-  const it={t,c:t=='in'?'oi':'o',a:am,n,d};if(cn)it.cn=cn;if(t=='out'&&pu)it.p=pu;ok.push(it)});
- return{ok,bad,dup,nodate}}
-function openImp(){
- document.querySelectorAll('.dlg-bd').forEach(x=>x.remove());
- const pf=document.activeElement,bd=document.createElement('div');bd.className='dlg-bd';let def='out',R={ok:[]};
- bd.innerHTML=`<div class="dlg imp" role="dialog" aria-modal="true" aria-labelledby="imt"><div class="imp-h"><div class="dlg-ic"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg></div><div><h3 id="imt">পুরোনো হিসাব আনুন</h3><p>প্রতি লাইনে একটি হিসাব লিখুন, বা Excel/খাতা থেকে কপি করে পেস্ট করুন।</p></div></div>
-<textarea class="imp-ta" spellcheck="false"></textarea>
-<div class="imp-t"><button type="button" class="g fl">📄 ফাইল বাছুন</button><span>ধরন না থাকলে:</span><div class="seg"><button type="button" data-d="out" class="on">ব্যয়</button><button type="button" data-d="in">আয়</button></div></div>
-<input type="file" accept=".csv,.txt,.tsv,text/csv,text/plain" hidden>
-<div class="imp-p"></div>
-<details class="imp-f"><summary>কোন ফর্ম্যাট চলবে?</summary><ul><li>কমা, ট্যাব বা | দিয়ে আলাদা করুন। Excel থেকে ঘর কপি করে সরাসরি পেস্ট চলে।</li><li>তারিখ (২০২৫-০৮-১২ বা ১২/০৮/২০২৫), ধরন (আয়/ব্যয়), ক্যাটাগরি, টাকা, বিবরণ — যেকোনো ক্রমে। শুধু টাকা আবশ্যক।</li><li>তারিখ না থাকলে আজকের তারিখ বসবে। আগে থেকে থাকা একই হিসাব বাদ যাবে।</li><li>এই পাতার CSV ফাইল সরাসরি চলে। Excel (.xlsx) হলে CSV হিসেবে সেভ করুন।</li></ul></details>
-<div class="dlg-b"><button type="button" class="no">বাতিল</button><button type="button" class="ok" disabled>যোগ করুন</button></div></div>`;
- const ta=bd.querySelector('textarea'),pv=bd.querySelector('.imp-p'),ok=bd.querySelector('.ok'),fi=bd.querySelector('input[type=file]');
- ta.placeholder='২০২৫-০৮-১২, খাবার, ১২০, দুপুরের ভাত\n১৫/০৮/২০২৫, ব্যয়, যাতায়াত, ৫০\n২০২৫-০৯-০১, আয়, বেতন, ২৫০০০';
- const paint=()=>{R=impParse(ta.value,def);const o=R.ok;
-  if(!ta.value.trim()){pv.innerHTML='';ok.disabled=true;ok.textContent='যোগ করুন';return}
-  pv.innerHTML=`<div class="imp-s"><span class="g1">✓ ${bn(o.length)} টি যোগ হবে</span>${R.dup?`<span>${bn(R.dup)} টি আগে থেকেই আছে</span>`:''}${R.bad.length?`<span class="g2">${bn(R.bad.length)} টি বাদ</span>`:''}${R.nodate?`<span>${bn(R.nodate)} টিতে আজকের তারিখ</span>`:''}</div>`
-  +o.slice(0,5).map(f=>`<div class="imp-r"><div>${ex(f.n||f.cn||(f.t=='in'?'অন্য আয়':'অন্যান্য'))}<small>${ex(f.cn||(f.t=='in'?'অন্য আয়':'অন্যান্য'))} · ${bn(f.d.slice(8))}/${bn(f.d.slice(5,7))}/${bn(f.d.slice(0,4))}</small></div><b class="${f.t=='in'?'i':''}">${f.t=='in'?'+':'−'}${fm(f.a)}</b></div>`).join('')
-  +(o.length>5?`<div class="imp-e" style="color:var(--m)">… আরও ${bn(o.length-5)} টি</div>`:'')
-  +R.bad.slice(0,3).map(b=>`<div class="imp-e">লাইন ${bn(b.n)}: ${b.m}</div>`).join('');
-  ok.disabled=!o.length;ok.textContent=o.length?bn(o.length)+' টি হিসাব যোগ করুন':'যোগ করুন'};
- ta.addEventListener('input',paint);
- bd.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{def=b.dataset.d;bd.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x===b));paint()});
- bd.querySelector('.fl').onclick=()=>fi.click();
- fi.onchange=()=>{const f=fi.files&&fi.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{ta.value=String(r.result||'');paint();ta.focus()};r.readAsText(f,'UTF-8')};
- let done=0;const end=()=>{if(done)return;done=1;document.removeEventListener('keydown',kd,true);bd.classList.add('out');setTimeout(()=>{bd.remove();try{pf&&pf.focus&&pf.focus()}catch(e){}},140)};
- const kd=e=>{if(e.key=='Escape'){e.preventDefault();end()}};document.addEventListener('keydown',kd,true);
- bd.querySelector('.no').onclick=end;
- ok.onclick=()=>{const o=R.ok;if(!o.length)return;o.forEach(e=>{S.fin.push(e);if(e.cn)bump(e.t,e.cn,e.a)});E=null;save();render();end();
-  ask({t:bn(o.length)+' টি হিসাব যোগ হয়েছে',m:'পুরোনো মাসগুলো দেখতে ওপরের মাস-তীর দিয়ে পেছনে যান।',no:null})};
- document.body.appendChild(bd);ta.focus()}
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
 const IC={plus:'<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>',pen:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',pie:'<path d="M21 12a9 9 0 1 1-9-9v9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/>',chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',book:'<path d="M4 5a2 2 0 0 1 2-2h14v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/>',heart:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/>',cap:'<path d="M22 10 12 5 2 10l10 5z"/><path d="M6 12v5c3 2 9 2 12 0v-5M22 10v6"/>',bag:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/>',eye:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',eyeoff:'<path d="M3 3l18 18"/><path d="M10.6 6.1A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4M6.3 6.3C3.6 8.1 2 12 2 12s3.5 7 10 7a9.7 9.7 0 0 0 4.3-1"/>'};
 const I=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]}</svg>`;
@@ -282,12 +203,13 @@ const H=(n,t)=>`<span class="ht"><span class="hi">${I(n)}</span>${t}</span>`;
 const fmn=n=>bn(Math.round(n).toLocaleString('en-IN'));
 const fm=n=>'৳ '+bn(Math.round(n).toLocaleString('en-IN'));
 const $=document.getElementById('app'),root=document.documentElement;
-let S={theme:0,dark:0,hide:0,bud:0,goal:{n:'',a:0},fin:[],led:[],cats:null,auto:{on:0,a:0,t:'06:00',last:''}};
+let S={theme:0,dark:0,hide:0,bud:0,goal:{n:'',a:0},fin:[],led:[],cats:null,open:{job:0,edu:0,cash:0,set:0},auto:{on:0,a:0,t:'06:00',last:''}};
 try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
 if(!Array.isArray(S.led))S.led=[];
+if(!S.open||typeof S.open!=='object'||Array.isArray(S.open))S.open={job:0,edu:0,cash:0,set:0};
 if(!S.auto||typeof S.auto!=='object'||Array.isArray(S.auto))S.auto={on:0,a:0,t:'06:00',last:''};
 /* শুধু এই পেজের নিজের কী (OWN) লিখি; থিম, রাতের মোড, ভাষা ইত্যাদি সেটিং সর্বশেষ সংরক্ষিত অবস্থা থেকেই থাকে — নইলে পুরোনো মান ফিরে এসে সেটিং মুছে দিত */
-const OWN=['hide','bud','goal','fin','auto','cats'];
+const OWN=['hide','bud','goal','fin','auto','cats','open'];
 const rd=()=>{let c={};try{c=JSON.parse(localStorage.getItem('dl')||'{}')}catch(e){}return c&&typeof c==='object'&&!Array.isArray(c)?c:{}};
 const save=()=>{try{const c=rd();OWN.forEach(k=>{c[k]=S[k]});localStorage.setItem('dl',JSON.stringify(c))}catch(e){}};
 const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
@@ -316,8 +238,10 @@ let V=new Date();V.setDate(1);let Q='',F='all',T='out',E=null,PP='',FP='',PV={ed
 const PU={edu:['🎓','পড়াশোনার খরচ','পড়াশোনা','cap'],job:['💼','চাকরির খরচ','চাকরি','bag']};
 /* খাত/ধরন বদলালে ফর্ম নতুন করে আঁকা হয় — তাই আগে টাইপ করা টাকা, তারিখ, বিবরণ ধরে রেখে ফেরত দিই */
 function kf(fn,kc){const f=$.querySelector('form[data-f=fin]'),v=f?{a:f.elements.a.value,d:f.elements.d.value,n:f.elements.n.value,c:f.elements.c.value}:null;fn();const g=v&&$.querySelector('form[data-f=fin]');if(g){g.elements.a.value=v.a;g.elements.d.value=v.d;g.elements.n.value=v.n;if(kc){g.elements.c.value=v.c;sg()}}}
-function pcard(p,mk,exp){const u=PU[p],all=S.fin.filter(f=>f.t=='out'&&f.p==p),mo=all.filter(f=>f.d.startsWith(mk)),tm=sum(mo,'out'),ta=sum(all,'out'),v=PV[p]||'m',src=v=='a'?all:mo,tv=v=='a'?ta:tm;
- const es=grp(src);
+const netNow=()=>{const A=S.fin.concat(virt());return sum(A,'in')-sum(A,'out')};
+const cashNow=()=>(+S.open.cash||0)+netNow();
+function pcard(p,mk,exp){const u=PU[p],all=S.fin.filter(f=>f.t=='out'&&f.p==p),mo=all.filter(f=>f.d.startsWith(mk)),tm=sum(mo,'out'),ta=sum(all,'out')+(+S.open[p]||0),v=PV[p]||'m',src=v=='a'?all:mo,tv=v=='a'?ta:tm;
+ const es=grp(src),ob=v=='a'?(+S.open[p]||0):0;if(ob>0){es.push({k:'~open',n:'আগের হিসাব',col:'#8C8576',a:ob});es.sort((a,b)=>b.a-a.a)}
  return `<section class="card k-${p}"><h2>${H(u[3],u[1])}${tm>0&&exp>0?`<span class="pill nm">মাসের ${bn(Math.round(tm/exp*100))}%</span>`:''}</h2>
 <div class="chips"><div class="chip o">এ মাসে<b class="nm">${fm(tm)}</b></div><div class="chip">এ পর্যন্ত মোট<b class="nm">${fm(ta)}</b></div></div>
 <div class="seg" style="margin:12px 0 4px"><button type="button" class="${v=='m'?'on':''}" data-pv="${p}:m">এ মাস</button><button type="button" class="${v=='a'?'on':''}" data-pv="${p}:a">সব সময়</button></div>
@@ -360,6 +284,7 @@ const mx=Math.max(1,...tr.flatMap(x=>[x.i,x.e]));
 // budget
 const pc=S.bud>0?exp/S.bud*100:0,dim=new Date(V.getFullYear(),V.getMonth()+1,0).getDate(),left=dim-now.getDate()+1;
 const bm=S.bud>0?(pc>=100?`<div class="warn nm">বাজেট ${fm(exp-S.bud)} ছাড়িয়েছে</div>`:pc>=80?`<div class="warn nm">বাজেটের ${bn(Math.round(pc))}% শেষ</div>`:isNow?`<div class="okb nm">দৈনিক খরচের সীমা ${fm((S.bud-exp)/left)}</div>`:''):'';
+const OPn=S.open,oc=`<section class="card k-open"><h2>${H('flag','শুরুর হিসাব')}</h2><div class="m" style="margin:-4px 0 12px;font-size:12.5px;line-height:1.5">আগের হিসাব একবার বসিয়ে দিন, আর কিছু যোগ করতে হবে না।</div><form data-f="open"><label class="ol f2">💼 চাকরির জন্য এ পর্যন্ত খরচ<input name="j" type="number" min="0" step="any" inputmode="decimal" placeholder="টাকা" value="${OPn.job>0?OPn.job:''}"></label><label class="ol f2">🎓 লেখাপড়ায় এ পর্যন্ত খরচ<input name="e" type="number" min="0" step="any" inputmode="decimal" placeholder="টাকা" value="${OPn.edu>0?OPn.edu:''}"></label><label class="ol f2">💰 এখন আমার কাছে আছে<input name="m" type="number" step="any" inputmode="decimal" placeholder="টাকা" value="${OPn.set?Math.round(cashNow()*100)/100:''}"></label><button class="f2">সেভ করুন</button></form></section>`;
 const pseg=`<div class="seg f2" title="কোন খাতের খরচ?"><button type="button" class="${PP?'':'on'}" data-pp="">সাধারণ</button><button type="button" class="${PP=='edu'?'on':''}" data-pp="edu">🎓 পড়াশোনা</button><button type="button" class="${PP=='job'?'on':''}" data-pp="job">💼 চাকরি</button></div>`,pcs=pcard('edu',mk,exp)+pcard('job',mk,exp);
 // auto donation
 const A=S.auto,ay=(()=>{const d=new Date();d.setDate(d.getDate()+1);return key(d)})();
@@ -370,19 +295,19 @@ const net=sum(AL,'in')-sum(AL,'out'),gp=S.goal.a>0?Math.max(0,Math.min(100,net/S
 const KB=kh(),kc=`<section class="card wide kh k-kh"><h2>${H('book','খাতা')}<a class="lk" href="invoice.html">খাতা খুলুন →</a></h2>${KB.tot?`<div class="chips kt"><div class="chip i">আমি পাব<b class="nm">${fm(KB.G)}</b></div><div class="chip o">আমি দেব<b class="nm">${fm(KB.O)}</b></div><div class="chip">ধার মিটলে মোট সঞ্চয়<b class="nm">${fm(net+KB.Hn)}</b></div></div>${KB.L.filter(x=>x.b!==0).sort((a,b)=>Math.abs(b.b)-Math.abs(a.b)).slice(0,4).map(x=>`<div class="kp" data-lk="${ex(x.n)}"><div class="kav" style="--h:${hue(x.n)}">${ex(Array.from(x.n)[0])}</div><div class="rt"><div>${ex(x.n)}</div><div class="m">${bn(x.c)}টি লেনদেন</div></div><b class="nm" style="color:var(--${x.b>0?'ok':'er'})">${fm(Math.abs(x.b))} <span class="m">${x.b>0?'পাব':'দেব'}</span></b></div>`).join('')||'<div class="empty">সব হিসাব মিটে গেছে ✓</div>'}<div class="acts"><button class="g" data-a="hsall">সব হিসাবে তুলুন</button><button class="g" data-a="hsnone">সব সরান</button></div>`:'<div class="empty">খাতায় এখনো কোনো লেনদেন নেই</div>'}</section>`;
 $.innerHTML=`<header><h1>হিসাব</h1><div class="tools"><div class="mn"><button class="ic" data-nav="-1" aria-label="আগের মাস">‹</button><span>${MON[V.getMonth()]} ${bn(V.getFullYear())}</span><button class="ic" data-nav="1" aria-label="পরের মাস">›</button></div><a class="ic" href="invoice.html" aria-label="খাতা" title="খাতা">${I('book')}</a><button class="ic" data-a="hide" aria-label="অঙ্ক লুকান">${I(S.hide?'eyeoff':'eye')}</button></div></header>
 <div class="grid">
-<section class="card hero wide"><div class="hl">এ মাসে অবশিষ্ট</div><div class="big nm"><span class="cur">৳</span><span id="cu" data-v="${bal}">${fmn(bal)}</span></div>${inc>0?`<div class="split nm"><i style="width:${Math.min(100,exp/inc*100)}%"></i></div>`:''}
+<section class="card hero wide"><div class="hl">এ মাসে অবশিষ্ট</div><div class="big nm"><span class="cur">৳</span><span id="cu" data-v="${bal}">${fmn(bal)}</span></div>${S.open.set?`<div class="cashl nm"><span>এখন আমার কাছে মোট</span><b>${fm(cashNow())}</b></div>`:''}${inc>0?`<div class="split nm"><i style="width:${Math.min(100,exp/inc*100)}%"></i></div>`:''}
 <div class="chips"><div class="chip i">আয়<b class="nm">${fm(inc)}</b></div><div class="chip o">ব্যয়<b class="nm">${fm(exp)}</b></div><div class="chip">সঞ্চয়ের হার<b class="nm">${bn(sr)}%</b></div></div></section>
 <section class="card" id="nf"><h2>${ef?H('pen','হিসাব এডিট'):H('plus','নতুন হিসাব')}${ef?' <span class="pill">'+bn(ef.d.slice(8))+' '+MON[+ef.d.slice(5,7)-1]+'</span>':''}</h2><form data-f="fin"><div class="seg f2"><button type="button" class="${T=='out'?'on':''}" data-ty="out">ব্যয়</button><button type="button" class="${T=='in'?'on':''}" data-ty="in">আয়</button></div>
 ${T=='out'?pseg:''}<div class="f2"><input name="c" list="cl" placeholder="ক্যাটাগরি" aria-label="ক্যাটাগরি" maxlength="30" autocomplete="off" enterkeyhint="next" value="${ef&&ef.t==T?ex(catTxt(ef)):''}"><datalist id="cl"></datalist></div>
 <input name="a" type="number" min="1" enterkeyhint="next" step="any" placeholder="টাকা" value="${ef?ef.a:''}" required><input name="d" type="date" aria-label="তারিখ (ঐচ্ছিক)" title="তারিখ (ঐচ্ছিক) — ফাঁকা রাখলে আজকের তারিখ" value="${ef?ef.d:isNow?key(now):mk+'-01'}"><input class="f2" name="n" enterkeyhint="done" placeholder="বিবরণ (ঐচ্ছিক)" value="${ef?ex(ef.n):''}"><button class="f2">${ef?'আপডেট করুন':'যোগ করুন'}</button>${ef?'<button type="button" class="g f2" data-a="cancel">বাতিল</button>':''}</form></section>
-${pcs}${ac}<section class="card k-bud"><h2>${H('target','মাসিক বাজেট')}${S.bud>0?`<span class="pill nm">${bn(Math.round(pc))}%</span>`:''}</h2><div class="inl"><input id="bud" type="number" min="0" placeholder="বাজেট (৳)" value="${S.bud||''}"><button class="g" data-a="bud">সেট</button></div>
+${oc}${pcs}${ac}<section class="card k-bud"><h2>${H('target','মাসিক বাজেট')}${S.bud>0?`<span class="pill nm">${bn(Math.round(pc))}%</span>`:''}</h2><div class="inl"><input id="bud" type="number" min="0" placeholder="বাজেট (৳)" value="${S.bud||''}"><button class="g" data-a="bud">সেট</button></div>
 ${S.bud>0?`<div class="bar"><i class="${pc>=80?'hot':''}" style="width:${Math.min(100,pc)}%"></i></div><div class="m nm">${fm(exp)} / ${fm(S.bud)}</div>`:''}${bm}</section>
 <section class="card k-goal"><h2>${H('flag','সঞ্চয় লক্ষ্য')}${S.goal.a>0?`<span class="pill nm">${bn(Math.round(gp))}%</span>`:''}</h2><div class="inl"><input id="gn" placeholder="লক্ষ্য (যেমন: বাইক)" value="${S.goal.n||''}"><input id="ga" type="number" min="0" placeholder="৳" value="${S.goal.a||''}"></div><div class="acts" style="margin-top:8px"><button class="g" data-a="goal">সেভ</button></div>
 ${S.goal.a>0?`<div class="bar"><i style="width:${gp}%"></i></div><div class="m nm">${S.goal.n||'লক্ষ্য'} · মোট সঞ্চিত ${fm(net)} / ${fm(S.goal.a)}</div>`:''}</section>
 <section class="card k-pie"><h2>${H('pie','ব্যয়ের ধরন')}</h2>${exp?`<div class="don"><div class="dw nm"><svg viewBox="0 0 100 100">${segs}</svg><div class="dc"><span>ব্যয়</span><b>${fm(exp)}</b></div></div><div class="lg nm">${ents.map(x=>`<div><span><i style="background:${x.col}"></i>${ex(x.n)}</span><b>${bn(Math.round(x.a/exp*100))}%</b></div>`).join('')}</div></div>`:'<div class="empty">এ মাসে কোনো ব্যয় নেই।</div>'}</section>
 <section class="card w2 k-tr"><h2>${H('chart','৬ মাসের ধারা')}<span class="m"><span style="color:var(--ok)">●</span> আয় <span style="color:var(--a)">●</span> ব্যয়</span></h2><div class="tr nm">${tr.map(x=>`<div><div class="bs"><i style="height:${x.i/mx*100}%"></i><i style="height:${x.e/mx*100}%"></i></div><small>${x.n}</small></div>`).join('')}</div></section>
 <section class="card wide k-ls"><h2>${H('list','এ মাসের তালিকা')}<span class="pill" id="cnt"></span></h2><div class="flt"><input id="q" type="search" placeholder="🔎 খুঁজুন" value="${Q}"><select id="ft"><option value="all">সব</option><option value="in"${F=='in'?' selected':''}>আয়</option><option value="out"${F=='out'?' selected':''}>ব্যয়</option></select><select id="fp"><option value="">সব খাত</option><option value="edu"${FP=='edu'?' selected':''}>🎓 পড়াশোনা</option><option value="job"${FP=='job'?' selected':''}>💼 চাকরি</option></select></div><div id="lst"></div>
-<div class="acts"><button class="g" data-a="imp">⬆️ পুরোনো হিসাব আনুন</button><button class="g" data-a="csv">⬇️ CSV</button></div></section>
+<div class="acts"><button class="g" data-a="csv">⬇️ CSV</button></div></section>
 ${kc}</div>`;
 list();cu(bal);sg();}
 function list(){
@@ -392,7 +317,9 @@ document.getElementById('cnt').textContent=bn(l.length)+' টি';
 document.getElementById('lst').innerHTML=l.length?l.map(f=>{const c=cat(f);return`<div class="row"><div class="ei" style="background:color-mix(in srgb,${c.col} 16%,transparent);color:${c.col}">${ex(ini(c.n))}</div><div class="rt"><div>${ex(f.n)||ex(c.n)}</div><div class="m">${ex(c.n)} · ${bn(f.d.slice(8))} ${MON[+f.d.slice(5,7)-1]}${f.p&&PU[f.p]?' · '+PU[f.p][0]+' '+PU[f.p][2]:''}</div></div><b class="nm" style="color:var(--${f.t=='in'?'ok':'er'})">${f.t=='in'?'+':'−'} ${fm(f.a)}</b>${f.v?`<button class="x ed" data-lk="${ex(f.p)}" aria-label="খাতায় দেখুন" title="খাতায় দেখুন">📒</button><button class="x" data-unhs="${ex(f.lid)}" aria-label="হিসাব থেকে সরান" title="হিসাব থেকে সরান">✕</button>`:`<button class="x ed" data-ed="${f.i}" aria-label="এডিট">✎</button><button class="x" data-del="${f.i}" aria-label="মুছুন">✕</button>`}</div>`}).join(''):'<div class="empty">কোনো হিসাব নেই</div>';}
 function cu(v){const e=document.getElementById('cu');if(!e||matchMedia('(prefers-reduced-motion:reduce)').matches)return;const t0=performance.now();(function s(t){const p=Math.min(1,(t-t0)/800),k=1-Math.pow(1-p,3);e.textContent=fmn(v*k);if(p<1)requestAnimationFrame(s)})(t0)}
 function dl(name,type,data){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
-$.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);if(e.target.dataset.f!='fin')return;const nmv=cname(f.get('c')),eo=E!=null?S.fin[E]:null,it={t:T,c:T=='in'?'oi':'o',a:+f.get('a'),n:f.get('n').trim(),d:f.get('d')||(eo&&eo.d)||((mk0)=>mk0==key(new Date()).slice(0,7)?key(new Date()):mk0+'-01')(key(V).slice(0,7))};if(nmv){if(eo&&!eo.cn&&eo.t==T&&C[eo.c]&&C[eo.c][1]==nmv)it.c=eo.c;else it.cn=nmv;bump(T,nmv,it.a)}if(T=='out'&&PP)it.p=PP;if(E!=null&&S.fin[E])S.fin[E]=it;else S.fin.push(it);E=null;save();render()});
+$.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);
+if(e.target.dataset.f=='open'){const ms=String(f.get('m')||'').trim(),net=netNow();S.open={job:Math.max(0,+f.get('j')||0),edu:Math.max(0,+f.get('e')||0),cash:ms===''?0:(+ms||0)-net,set:ms===''?0:1};save();render();ask({t:'শুরুর হিসাব সেভ হয়েছে',m:'চাকরি ও লেখাপড়ার কার্ডে "এ পর্যন্ত মোট" আর ওপরে "এখন আমার কাছে মোট" দেখুন।',no:null});return}
+if(e.target.dataset.f!='fin')return;const nmv=cname(f.get('c')),eo=E!=null?S.fin[E]:null,it={t:T,c:T=='in'?'oi':'o',a:+f.get('a'),n:f.get('n').trim(),d:f.get('d')||(eo&&eo.d)||((mk0)=>mk0==key(new Date()).slice(0,7)?key(new Date()):mk0+'-01')(key(V).slice(0,7))};if(nmv){if(eo&&!eo.cn&&eo.t==T&&C[eo.c]&&C[eo.c][1]==nmv)it.c=eo.c;else it.cn=nmv;bump(T,nmv,it.a)}if(T=='out'&&PP)it.p=PP;if(E!=null&&S.fin[E])S.fin[E]=it;else S.fin.push(it);E=null;save();render()});
 $.addEventListener('input',e=>{if(e.target.id=='q'){Q=e.target.value;list()}if(e.target.name=='c')sg()});
 $.addEventListener('change',e=>{if(e.target.name=='c'&&e.target.form&&e.target.form.dataset.f=='fin'){const am=e.target.form.elements.a,x=getCat(T,cname(e.target.value));if(am&&x&&x.a&&!am.value)am.value=x.a}if(e.target.id=='ft'){F=e.target.value;list()}if(e.target.id=='fp'){FP=e.target.value;list()}});
 $.addEventListener('focusin',e=>{const t=e.target;if(t.name=='a'&&t.form&&t.form.dataset.f=='fin')try{t.select()}catch(x){}});
@@ -407,7 +334,6 @@ if(D.unhs!=null){const uid=D.unhs;ask({t:'আয়-ব্যয় থেকে
 if(D.ed!=null){E=+D.ed;T=S.fin[E].t;PP=S.fin[E].p||'';render();const nf=document.getElementById('nf');if(nf)nf.scrollIntoView({behavior:'smooth',block:'center'});return}
 if(D.del!=null){const ent=S.fin[+D.del];ask({t:'হিসাবটি মুছবেন?',m:'মুছে ফেললে এটি আর ফেরানো যাবে না।',ok:'হ্যাঁ, মুছুন',danger:1}).then(y=>{if(!y)return;const ix=S.fin.indexOf(ent);if(ix>=0){S.fin.splice(ix,1);E=null;save();render()}});return}
 const a=D.a;
-if(a=='imp'){openImp();return}
 if(a=='hsall'||a=='hsnone'){const v=a=='hsall'?1:0;ledSet(e=>{if(e.t in LS)e.hs=v});return render()}
 if(a=='cancel'){E=null;return render()}
 if(a=='auto'){const am=+document.getElementById('aa').value||0,tm=document.getElementById('at').value;if(!(am>0)||!tm){ask({t:'তথ্য অসম্পূর্ণ',m:'দানের টাকা ও সময় দুটোই দিন',no:null});return}
@@ -425,9 +351,9 @@ function pull(){const c=rd();
 if((c.lang==='en'?'en':'bn')!==(window.LANG||'bn')){location.reload();return}
 const th=c.theme||0,dk=c.dark||0;
 if(th!=(S.theme||0)||dk!=(S.dark||0)){S.theme=th;S.dark=dk;root.dataset.t=th;root.dataset.d=dk}
-const ca=c.auto&&typeof c.auto==='object'?c.auto:S.auto,nw=JSON.stringify([c.hide||0,c.bud||0,c.goal||{n:'',a:0},Array.isArray(c.fin)?c.fin:[],Array.isArray(c.led)?c.led:[],ca,c.cats||S.cats]),od=JSON.stringify([S.hide||0,S.bud||0,S.goal,S.fin,S.led,S.auto,S.cats]);
+const ca=c.auto&&typeof c.auto==='object'?c.auto:S.auto,nw=JSON.stringify([c.hide||0,c.bud||0,c.goal||{n:'',a:0},Array.isArray(c.fin)?c.fin:[],Array.isArray(c.led)?c.led:[],ca,c.cats||S.cats,c.open||S.open]),od=JSON.stringify([S.hide||0,S.bud||0,S.goal,S.fin,S.led,S.auto,S.cats,S.open]);
 if(nw!==od){const a=document.activeElement;if(a&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)&&$.contains(a))return;
-S.hide=c.hide||0;S.bud=c.bud||0;S.goal=c.goal||{n:'',a:0};S.fin=Array.isArray(c.fin)?c.fin:[];S.led=Array.isArray(c.led)?c.led:[];S.auto=ca;if(c.cats&&c.cats.out&&c.cats.in)S.cats=c.cats;seedCats();render()}}
+S.hide=c.hide||0;S.bud=c.bud||0;S.goal=c.goal||{n:'',a:0};S.fin=Array.isArray(c.fin)?c.fin:[];S.led=Array.isArray(c.led)?c.led:[];S.auto=ca;if(c.open&&typeof c.open==='object'&&!Array.isArray(c.open))S.open=c.open;if(c.cats&&c.cats.out&&c.cats.in)S.cats=c.cats;seedCats();render()}}
 addEventListener('pageshow',e=>{if(e.persisted)pull()});
 addEventListener('storage',e=>{if(!e.key||e.key=='dl')pull()});
 addEventListener('hsync',pull);
