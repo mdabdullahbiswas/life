@@ -7,6 +7,8 @@ window.LANG=LANG;
 if(LANG!=='en'){window.L=s=>s;return}
 
 const D={
+'ব্যালেন্স দেখতে ট্যাপ করুন':'Tap to reveal balance',
+'হাতে আছে':'In hand',
 'শুরুর হিসাব বদলান':'Edit starting balances',
 'এখন আমার হাতে আছে':'Cash in hand right now',
 'আমার টাকা কোথায়':'Where my money is',
