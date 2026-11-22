@@ -153,6 +153,18 @@ form .f2{grid-column:1/-1}
 .kp:hover{background:color-mix(in srgb,var(--a) 9%,transparent)}
 .kav{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;font-weight:700;font-size:17px;color:#fff;flex:none;background:linear-gradient(135deg,hsl(var(--h) 45% 38%),hsl(var(--h) 55% 56%))}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ── ক্যাটাগরি: নিজে লেখা + সাজেশন চিপ ── */
+.sg{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
+.sg:empty{display:none}
+.sgc{display:inline-flex;align-items:center;border:1px solid var(--ln);border-radius:99px;background:color-mix(in srgb,var(--a) 7%,transparent);transition:background .2s,border-color .2s}
+.sgc:hover{background:color-mix(in srgb,var(--a) 14%,transparent);border-color:var(--cb)}
+.sgc.on{background:color-mix(in srgb,var(--a) 20%,transparent);border-color:var(--a)}
+.sgc button{background:none;border:0;box-shadow:none;filter:none;color:var(--t);font-size:13px;font-weight:500;line-height:1.2;padding:7px 4px 7px 13px;border-radius:99px 0 0 99px;transform:none}
+.sgc button.sgx{padding:7px 11px 7px 3px;border-radius:0 99px 99px 0;color:var(--m);font-size:15px;opacity:.55}
+.sgc button.sgx:hover{color:var(--er);opacity:1}
+.ei{font-size:17px;font-weight:700;font-family:"Noto Serif Bengali",Inter,serif}
+.pr>.dt{width:10px;height:10px;border-radius:50%;margin:0 8px 0 4px;flex:none}
 </style></head><body><script src="header.js"></script><main id="app"></main>
 <script>
 if(!window.L)window.L=s=>s;
@@ -163,33 +175,43 @@ const H=(n,t)=>`<span class="ht"><span class="hi">${I(n)}</span>${t}</span>`;
 const fmn=n=>bn(Math.round(n).toLocaleString('en-IN'));
 const fm=n=>'৳ '+bn(Math.round(n).toLocaleString('en-IN'));
 const $=document.getElementById('app'),root=document.documentElement;
-let S={theme:0,dark:0,hide:0,bud:0,goal:{n:'',a:0},fin:[],led:[],auto:{on:0,a:0,t:'06:00',last:''}};
+let S={theme:0,dark:0,hide:0,bud:0,goal:{n:'',a:0},fin:[],led:[],cats:null,auto:{on:0,a:0,t:'06:00',last:''}};
 try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
 if(!Array.isArray(S.led))S.led=[];
 if(!S.auto||typeof S.auto!=='object'||Array.isArray(S.auto))S.auto={on:0,a:0,t:'06:00',last:''};
 /* শুধু এই পেজের নিজের কী (OWN) লিখি; থিম, রাতের মোড, ভাষা ইত্যাদি সেটিং সর্বশেষ সংরক্ষিত অবস্থা থেকেই থাকে — নইলে পুরোনো মান ফিরে এসে সেটিং মুছে দিত */
-const OWN=['hide','bud','goal','fin','auto'];
+const OWN=['hide','bud','goal','fin','auto','cats'];
 const rd=()=>{let c={};try{c=JSON.parse(localStorage.getItem('dl')||'{}')}catch(e){}return c&&typeof c==='object'&&!Array.isArray(c)?c:{}};
 const save=()=>{try{const c=rd();OWN.forEach(k=>{c[k]=S[k]});localStorage.setItem('dl',JSON.stringify(c))}catch(e){}};
 const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const MON=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
 const C={food:['🍽️','খাবার','#E0A63A','out'],trans:['🚌','যাতায়াত','#4C8BD6','out'],bill:['💡','বিল','#9B6BD6','out'],shop:['🛍️','কেনাকাটা','#D6609B','out'],health:['💊','স্বাস্থ্য','#2FB38A','out'],fun:['🎬','বিনোদন','#E0743A','out'],edu:['📚','শিক্ষা','#3AA7C9','out'],don:['💝','দান','#C9732E','out'],pvt:['📖','প্রাইভেট / কোচিং','#5B7FD6','out'],trn:['🎯','ট্রেনিং','#B07A3A','out'],cl:['👕','পোশাক','#C46B8F','out'],apply:['📝','আবেদন ফি','#2E9E9E','out'],o:['📦','অন্যান্য','#8C8576','out'],sal:['💼','বেতন','#1f9d6b','in'],biz:['📈','ব্যবসা','#2FB38A','in'],gift:['🎁','উপহার','#C9A23A','in'],oi:['💰','অন্য আয়','#6FB36F','in'],kd:['🤝','খাতা · দিলাম','#7C8FD9','out',1],kr:['🤲','খাতা · পেলাম','#4FB3A6','in',1]};
 const ck=f=>C[f.c]?f.c:(f.t=='in'?'oi':'o');
+/* ===== নিজের লেখা ক্যাটাগরি: আগে থেকে কোনো তালিকা নেই। যা লেখা হয় তা মনে রাখা হয় (S.cats) এবং পরের বার সাজেশন হিসেবে আসে। নতুন এন্ট্রিতে c = 'o'/'oi' (নিরাপদ ডিফল্ট), আসল নাম cn-এ ===== */
+const cname=s=>String(s==null?'':s).trim().replace(/\s+/g,' ').slice(0,30);
+const PN={};Object.values(C).forEach(c=>{PN[c[1].toLowerCase()]=c[2]});
+const catTxt=f=>f&&f.cn?cname(f.cn):(f&&C[f.c]&&f.c!='o'&&f.c!='oi'?C[f.c][1]:'');
+function cat(f){const n=cname(f.cn)||C[ck(f)][1],k=n.toLowerCase();return{k,n,col:PN[k]||'hsl('+hue(k)+' 52% 50%)'}}
+const ini=n=>Array.from(n)[0]||'•';
+function grp(l){const m={};l.forEach(f=>{if(f.t!='out')return;const c=cat(f),o=m[c.k]||(m[c.k]={k:c.k,n:c.n,col:c.col,a:0});o.a+=f.a});return Object.values(m).sort((a,b)=>b.a-a.a)}
+function seedCats(){if(S.cats&&typeof S.cats==='object'&&S.cats.out&&S.cats.in)return;const o={out:{},in:{}};S.fin.forEach((f,i)=>{if(!f||f.au)return;const n=catTxt(f);if(!n)return;const m=o[f.t=='in'?'in':'out'],e=m[n]||(m[n]={c:0,l:0});e.c++;e.l=Math.max(e.l,i)});S.cats=o}
+function bump(t,n){const m=S.cats[t],lk=n.toLowerCase();let e={c:0,l:0};for(const k in m)if(k.toLowerCase()==lk){e=m[k];delete m[k]}e.c++;e.l=Date.now();m[n]=e}
+function sg(){const f=$.querySelector('form[data-f=fin]');if(!f||!S.cats)return;const box=f.querySelector('.sg'),inp=f.elements.c;if(!box||!inp)return;
+ const q=cname(inp.value).toLowerCase();let l=Object.entries(S.cats[T]||{}).map(([n,e])=>({n,c:e.c,l:e.l}));
+ if(q)l=l.filter(x=>x.n.toLowerCase().includes(q));
+ l.sort((a,b)=>(q?(b.n.toLowerCase().startsWith(q)-a.n.toLowerCase().startsWith(q)):0)||b.c-a.c||b.l-a.l);
+ box.innerHTML=l.slice(0,8).map(x=>`<span class="sgc${x.n.toLowerCase()==q?' on':''}"><button type="button" data-sg="${ex(x.n)}">${ex(x.n)}</button><button type="button" class="sgx" data-sgx="${ex(x.n)}" aria-label="${L('সাজেশন সরান')}" title="${L('সাজেশন সরান')}">×</button></span>`).join('')}
 let V=new Date();V.setDate(1);let Q='',F='all',T='out',E=null,PP='',FP='',PV={edu:'m',job:'a'};
 /* ===== খাত: প্রতিটি ব্যয়ে ঐচ্ছিক ট্যাগ p ('edu' পড়াশোনা / 'job' চাকরি)। ব্যয় একটাই থাকে, তাই দৈনিক হিসাব ও বাজেটেও গোনা হয়; আলাদা কার্ডে শুধু ওই খাতের হিসাব দেখায় ===== */
 const PU={edu:['🎓','পড়াশোনার খরচ','পড়াশোনা','cap'],job:['💼','চাকরির খরচ','চাকরি','bag']};
-const PC={edu:['food','trans','pvt','trn','cl','edu','o'],job:['apply','trans','food','o']};
-function catKeys(ef){if(T=='in')return Object.keys(C).filter(k=>C[k][3]=='in'&&!C[k][4]);
- let ks=PP&&PC[PP]?PC[PP].slice():Object.keys(C).filter(k=>C[k][3]=='out'&&!C[k][4]&&k!='apply');
- const c=ef&&ef.t==T?ck(ef):null;if(c&&C[c]&&!C[c][4]&&!ks.includes(c))ks.push(c);return ks}
 /* খাত/ধরন বদলালে ফর্ম নতুন করে আঁকা হয় — তাই আগে টাইপ করা টাকা, তারিখ, বিবরণ ধরে রেখে ফেরত দিই */
-function kf(fn){const f=$.querySelector('form[data-f=fin]'),v=f?{a:f.elements.a.value,d:f.elements.d.value,n:f.elements.n.value}:null;fn();const g=v&&$.querySelector('form[data-f=fin]');if(g){g.elements.a.value=v.a;g.elements.d.value=v.d;g.elements.n.value=v.n}}
+function kf(fn,kc){const f=$.querySelector('form[data-f=fin]'),v=f?{a:f.elements.a.value,d:f.elements.d.value,n:f.elements.n.value,c:f.elements.c.value}:null;fn();const g=v&&$.querySelector('form[data-f=fin]');if(g){g.elements.a.value=v.a;g.elements.d.value=v.d;g.elements.n.value=v.n;if(kc){g.elements.c.value=v.c;sg()}}}
 function pcard(p,mk,exp){const u=PU[p],all=S.fin.filter(f=>f.t=='out'&&f.p==p),mo=all.filter(f=>f.d.startsWith(mk)),tm=sum(mo,'out'),ta=sum(all,'out'),v=PV[p]||'m',src=v=='a'?all:mo,tv=v=='a'?ta:tm;
- const by={};src.forEach(f=>{const k=ck(f);by[k]=(by[k]||0)+f.a});const es=Object.entries(by).sort((a,b)=>b[1]-a[1]);
+ const es=grp(src);
  return `<section class="card k-${p}"><h2>${H(u[3],u[1])}${tm>0&&exp>0?`<span class="pill nm">মাসের ${bn(Math.round(tm/exp*100))}%</span>`:''}</h2>
 <div class="chips"><div class="chip o">এ মাসে<b class="nm">${fm(tm)}</b></div><div class="chip">এ পর্যন্ত মোট<b class="nm">${fm(ta)}</b></div></div>
 <div class="seg" style="margin:12px 0 4px"><button type="button" class="${v=='m'?'on':''}" data-pv="${p}:m">এ মাস</button><button type="button" class="${v=='a'?'on':''}" data-pv="${p}:a">সব সময়</button></div>
-${es.length?es.map(([k,a])=>`<div class="pr"><span>${C[k][0]}</span><div class="pn"><div><span>${C[k][1]}</span><b class="nm">${fm(a)}</b></div><div class="pb"><i style="width:${Math.max(2,a/tv*100)}%;background:${C[k][2]}"></i></div></div></div>`).join(''):`<div class="empty">${v=='a'?'এখনো':'এ মাসে'} কোনো খরচ নেই</div>`}</section>`}
+${es.length?es.map(x=>`<div class="pr"><span class="dt" style="background:${x.col}"></span><div class="pn"><div><span>${ex(x.n)}</span><b class="nm">${fm(x.a)}</b></div><div class="pb"><i style="width:${Math.max(2,x.a/tv*100)}%;background:${x.col}"></i></div></div></div>`).join(''):`<div class="empty">${v=='a'?'এখনো':'এ মাসে'} কোনো খরচ নেই</div>`}</section>`}
 const ex=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const sum=(l,t)=>l.filter(f=>f.t==t).reduce((a,f)=>a+f.a,0);
 /* ===== খাতার সাথে সংযোগ: খাতার (invoice) যে লেনদেনে hs=1, সেগুলো এখানে আয়-ব্যয়ে মিশে দেখা যায়। ডাটা একটাই (S.led), কপি নেই — তাই দুই পেজ সবসময় মিলে থাকে ===== */
@@ -220,9 +242,8 @@ const mk=key(V).slice(0,7),now=new Date(),isNow=mk==key(now).slice(0,7);
 const AL=S.fin.concat(virt()),mf=AL.filter(f=>f.d.startsWith(mk)),inc=sum(mf,'in'),exp=sum(mf,'out'),bal=inc-exp;
 const sr=inc>0?Math.round(bal/inc*100):0;
 // donut
-const by={};mf.filter(f=>f.t=='out').forEach(f=>by[ck(f)]=(by[ck(f)]||0)+f.a);
-const ents=Object.entries(by).sort((a,b)=>b[1]-a[1]);let off=0;
-const segs=ents.map(([k,v])=>{const l=v/exp*251.3,s=`<circle r="40" cx="50" cy="50" fill="none" stroke="${C[k][2]}" stroke-width="12" stroke-dasharray="${Math.max(.5,l-(ents.length>1?1.6:0))} 251.3" stroke-dashoffset="${-off}"/>`;off+=l;return s}).join('');
+let ents=grp(mf);if(ents.length>7){const tl=ents.slice(6);ents=ents.slice(0,6).concat([{k:'~',n:'অন্যান্য',col:'#8C8576',a:tl.reduce((s,x)=>s+x.a,0)}])}let off=0;
+const segs=ents.map(x=>{const l=x.a/exp*251.3,s=`<circle r="40" cx="50" cy="50" fill="none" stroke="${x.col}" stroke-width="12" stroke-dasharray="${Math.max(.5,l-(ents.length>1?1.6:0))} 251.3" stroke-dashoffset="${-off}"/>`;off+=l;return s}).join('');
 // trend
 const tr=[];for(let i=5;i>=0;i--){const d=new Date(V.getFullYear(),V.getMonth()-i,1),m=key(d).slice(0,7),l=AL.filter(f=>f.d.startsWith(m));tr.push({n:L(MON[d.getMonth()]).slice(0,3),i:sum(l,'in'),e:sum(l,'out')})}
 const mx=Math.max(1,...tr.flatMap(x=>[x.i,x.e]));
@@ -242,33 +263,35 @@ $.innerHTML=`<header><h1>হিসাব</h1><div class="tools"><div class="mn">
 <section class="card hero wide"><div class="hl">এ মাসে অবশিষ্ট</div><div class="big nm"><span class="cur">৳</span><span id="cu" data-v="${bal}">${fmn(bal)}</span></div>${inc>0?`<div class="split nm"><i style="width:${Math.min(100,exp/inc*100)}%"></i></div>`:''}
 <div class="chips"><div class="chip i">আয়<b class="nm">${fm(inc)}</b></div><div class="chip o">ব্যয়<b class="nm">${fm(exp)}</b></div><div class="chip">সঞ্চয়ের হার<b class="nm">${bn(sr)}%</b></div></div></section>
 <section class="card" id="nf"><h2>${ef?H('pen','হিসাব এডিট'):H('plus','নতুন হিসাব')}${ef?' <span class="pill">'+bn(ef.d.slice(8))+' '+MON[+ef.d.slice(5,7)-1]+'</span>':''}</h2><form data-f="fin"><div class="seg f2"><button type="button" class="${T=='out'?'on':''}" data-ty="out">ব্যয়</button><button type="button" class="${T=='in'?'on':''}" data-ty="in">আয়</button></div>
-${T=='out'?pseg:''}<select name="c" class="f2">${catKeys(ef).map(k=>`<option value="${k}"${ef&&ef.t==T&&ck(ef)==k?' selected':''}>${C[k][0]} ${C[k][1]}</option>`).join('')}</select>
+${T=='out'?pseg:''}<div class="f2"><input name="c" placeholder="ক্যাটাগরি" aria-label="ক্যাটাগরি" maxlength="30" autocomplete="off" enterkeyhint="next" value="${ef&&ef.t==T?ex(catTxt(ef)):''}"><div class="sg"></div></div>
 <input name="a" type="number" min="1" step="any" placeholder="টাকা" value="${ef?ef.a:''}" required><input name="d" type="date" value="${ef?ef.d:isNow?key(now):mk+'-01'}" required><input class="f2" name="n" placeholder="বিবরণ (ঐচ্ছিক)" value="${ef?ex(ef.n):''}"><button class="f2">${ef?'আপডেট করুন':'যোগ করুন'}</button>${ef?'<button type="button" class="g f2" data-a="cancel">বাতিল</button>':''}</form></section>
 ${pcs}${ac}<section class="card k-bud"><h2>${H('target','মাসিক বাজেট')}${S.bud>0?`<span class="pill nm">${bn(Math.round(pc))}%</span>`:''}</h2><div class="inl"><input id="bud" type="number" min="0" placeholder="বাজেট (৳)" value="${S.bud||''}"><button class="g" data-a="bud">সেট</button></div>
 ${S.bud>0?`<div class="bar"><i class="${pc>=80?'hot':''}" style="width:${Math.min(100,pc)}%"></i></div><div class="m nm">${fm(exp)} / ${fm(S.bud)}</div>`:''}${bm}</section>
 <section class="card k-goal"><h2>${H('flag','সঞ্চয় লক্ষ্য')}${S.goal.a>0?`<span class="pill nm">${bn(Math.round(gp))}%</span>`:''}</h2><div class="inl"><input id="gn" placeholder="লক্ষ্য (যেমন: বাইক)" value="${S.goal.n||''}"><input id="ga" type="number" min="0" placeholder="৳" value="${S.goal.a||''}"></div><div class="acts" style="margin-top:8px"><button class="g" data-a="goal">সেভ</button></div>
 ${S.goal.a>0?`<div class="bar"><i style="width:${gp}%"></i></div><div class="m nm">${S.goal.n||'লক্ষ্য'} · মোট সঞ্চিত ${fm(net)} / ${fm(S.goal.a)}</div>`:''}</section>
-<section class="card k-pie"><h2>${H('pie','ব্যয়ের ধরন')}</h2>${exp?`<div class="don"><div class="dw nm"><svg viewBox="0 0 100 100">${segs}</svg><div class="dc"><span>ব্যয়</span><b>${fm(exp)}</b></div></div><div class="lg nm">${ents.map(([k,v])=>`<div><span><i style="background:${C[k][2]}"></i>${C[k][1]}</span><b>${bn(Math.round(v/exp*100))}%</b></div>`).join('')}</div></div>`:'<div class="empty">এ মাসে কোনো ব্যয় নেই।</div>'}</section>
+<section class="card k-pie"><h2>${H('pie','ব্যয়ের ধরন')}</h2>${exp?`<div class="don"><div class="dw nm"><svg viewBox="0 0 100 100">${segs}</svg><div class="dc"><span>ব্যয়</span><b>${fm(exp)}</b></div></div><div class="lg nm">${ents.map(x=>`<div><span><i style="background:${x.col}"></i>${ex(x.n)}</span><b>${bn(Math.round(x.a/exp*100))}%</b></div>`).join('')}</div></div>`:'<div class="empty">এ মাসে কোনো ব্যয় নেই।</div>'}</section>
 <section class="card w2 k-tr"><h2>${H('chart','৬ মাসের ধারা')}<span class="m"><span style="color:var(--ok)">●</span> আয় <span style="color:var(--a)">●</span> ব্যয়</span></h2><div class="tr nm">${tr.map(x=>`<div><div class="bs"><i style="height:${x.i/mx*100}%"></i><i style="height:${x.e/mx*100}%"></i></div><small>${x.n}</small></div>`).join('')}</div></section>
 <section class="card wide k-ls"><h2>${H('list','এ মাসের তালিকা')}<span class="pill" id="cnt"></span></h2><div class="flt"><input id="q" type="search" placeholder="🔎 খুঁজুন" value="${Q}"><select id="ft"><option value="all">সব</option><option value="in"${F=='in'?' selected':''}>আয়</option><option value="out"${F=='out'?' selected':''}>ব্যয়</option></select><select id="fp"><option value="">সব খাত</option><option value="edu"${FP=='edu'?' selected':''}>🎓 পড়াশোনা</option><option value="job"${FP=='job'?' selected':''}>💼 চাকরি</option></select></div><div id="lst"></div>
 <div class="acts"><button class="g" data-a="csv">⬇️ CSV</button></div></section>
 ${kc}</div>`;
-list();cu(bal);}
+list();cu(bal);sg();}
 function list(){
 const mk=key(V).slice(0,7),q=Q.trim().toLowerCase();
-const l=S.fin.map((f,i)=>({...f,i})).concat(virt()).filter(f=>f.d.startsWith(mk)&&(F=='all'||f.t==F)&&(!FP||f.p==FP)&&(!q||(f.n||'').toLowerCase().includes(q)||C[ck(f)][1].includes(q)||L(C[ck(f)][1]).toLowerCase().includes(q))).sort((a,b)=>b.d.localeCompare(a.d)||b.i-a.i);
+const l=S.fin.map((f,i)=>({...f,i})).concat(virt()).filter(f=>f.d.startsWith(mk)&&(F=='all'||f.t==F)&&(!FP||f.p==FP)&&(!q||(f.n||'').toLowerCase().includes(q)||cat(f).n.toLowerCase().includes(q)||L(cat(f).n).toLowerCase().includes(q))).sort((a,b)=>b.d.localeCompare(a.d)||b.i-a.i);
 document.getElementById('cnt').textContent=bn(l.length)+' টি';
-document.getElementById('lst').innerHTML=l.length?l.map(f=>{const c=C[ck(f)];return`<div class="row"><div class="ei" style="background:color-mix(in srgb,${c[2]} 18%,transparent)">${c[0]}</div><div class="rt"><div>${ex(f.n)||c[1]}</div><div class="m">${c[1]} · ${bn(f.d.slice(8))} ${MON[+f.d.slice(5,7)-1]}${f.p&&PU[f.p]?' · '+PU[f.p][0]+' '+PU[f.p][2]:''}</div></div><b class="nm" style="color:var(--${f.t=='in'?'ok':'er'})">${f.t=='in'?'+':'−'} ${fm(f.a)}</b>${f.v?`<button class="x ed" data-lk="${ex(f.p)}" aria-label="খাতায় দেখুন" title="খাতায় দেখুন">📒</button><button class="x" data-unhs="${ex(f.lid)}" aria-label="হিসাব থেকে সরান" title="হিসাব থেকে সরান">✕</button>`:`<button class="x ed" data-ed="${f.i}" aria-label="এডিট">✎</button><button class="x" data-del="${f.i}" aria-label="মুছুন">✕</button>`}</div>`}).join(''):'<div class="empty">কোনো হিসাব নেই</div>';}
+document.getElementById('lst').innerHTML=l.length?l.map(f=>{const c=cat(f);return`<div class="row"><div class="ei" style="background:color-mix(in srgb,${c.col} 16%,transparent);color:${c.col}">${ex(ini(c.n))}</div><div class="rt"><div>${ex(f.n)||ex(c.n)}</div><div class="m">${ex(c.n)} · ${bn(f.d.slice(8))} ${MON[+f.d.slice(5,7)-1]}${f.p&&PU[f.p]?' · '+PU[f.p][0]+' '+PU[f.p][2]:''}</div></div><b class="nm" style="color:var(--${f.t=='in'?'ok':'er'})">${f.t=='in'?'+':'−'} ${fm(f.a)}</b>${f.v?`<button class="x ed" data-lk="${ex(f.p)}" aria-label="খাতায় দেখুন" title="খাতায় দেখুন">📒</button><button class="x" data-unhs="${ex(f.lid)}" aria-label="হিসাব থেকে সরান" title="হিসাব থেকে সরান">✕</button>`:`<button class="x ed" data-ed="${f.i}" aria-label="এডিট">✎</button><button class="x" data-del="${f.i}" aria-label="মুছুন">✕</button>`}</div>`}).join(''):'<div class="empty">কোনো হিসাব নেই</div>';}
 function cu(v){const e=document.getElementById('cu');if(!e||matchMedia('(prefers-reduced-motion:reduce)').matches)return;const t0=performance.now();(function s(t){const p=Math.min(1,(t-t0)/800),k=1-Math.pow(1-p,3);e.textContent=fmn(v*k);if(p<1)requestAnimationFrame(s)})(t0)}
 function dl(name,type,data){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
-$.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);if(e.target.dataset.f!='fin')return;const it={t:T,c:f.get('c'),a:+f.get('a'),n:f.get('n').trim(),d:f.get('d')};if(T=='out'&&PP)it.p=PP;if(E!=null&&S.fin[E])S.fin[E]=it;else S.fin.push(it);E=null;save();render()});
-$.addEventListener('input',e=>{if(e.target.id=='q'){Q=e.target.value;list()}});
+$.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);if(e.target.dataset.f!='fin')return;const nmv=cname(f.get('c')),eo=E!=null?S.fin[E]:null,it={t:T,c:T=='in'?'oi':'o',a:+f.get('a'),n:f.get('n').trim(),d:f.get('d')};if(nmv){if(eo&&!eo.cn&&eo.t==T&&C[eo.c]&&C[eo.c][1]==nmv)it.c=eo.c;else it.cn=nmv;bump(T,nmv)}if(T=='out'&&PP)it.p=PP;if(E!=null&&S.fin[E])S.fin[E]=it;else S.fin.push(it);E=null;save();render()});
+$.addEventListener('input',e=>{if(e.target.id=='q'){Q=e.target.value;list()}if(e.target.name=='c')sg()});
 $.addEventListener('change',e=>{if(e.target.id=='ft'){F=e.target.value;list()}if(e.target.id=='fp'){FP=e.target.value;list()}});
-$.addEventListener('click',e=>{const t=e.target.closest('[data-nav],[data-a],[data-del],[data-ty],[data-ed],[data-lk],[data-unhs],[data-pp],[data-pv]');if(!t)return;const D=t.dataset;
+$.addEventListener('click',e=>{const t=e.target.closest('[data-nav],[data-a],[data-del],[data-ty],[data-ed],[data-lk],[data-unhs],[data-pp],[data-pv],[data-sg],[data-sgx]');if(!t)return;const D=t.dataset;
 if(D.nav){V=new Date(V.getFullYear(),V.getMonth()+ +D.nav,1);return render()}
 if(D.ty){kf(()=>{T=D.ty;render()});return}
-if(D.pp!=null){kf(()=>{PP=D.pp;render()});return}
-if(D.pv){const q=D.pv.split(':');kf(()=>{PV[q[0]]=q[1];render()});return}
+if(D.pp!=null){kf(()=>{PP=D.pp;render()},1);return}
+if(D.pv){const q=D.pv.split(':');kf(()=>{PV[q[0]]=q[1];render()},1);return}
+if(D.sg!=null){const i=$.querySelector('form[data-f=fin] [name=c]');if(i){i.value=D.sg;sg();i.focus()}return}
+if(D.sgx!=null){const m=S.cats&&S.cats[T];if(m){for(const k in m)if(k.toLowerCase()==D.sgx.toLowerCase())delete m[k];save();sg()}return}
 if(D.lk!=null){location.href='invoice.html'+(D.lk?'?p='+encodeURIComponent(D.lk):'');return}
 if(D.unhs!=null){if(confirm('এটি আয়-ব্যয়ের হিসাব থেকে সরাবেন? খাতায় লেনদেনটি থেকে যাবে।')){ledSet(e=>{if(String(e.id)===D.unhs)e.hs=0});render()}return}
 if(D.ed!=null){E=+D.ed;T=S.fin[E].t;PP=S.fin[E].p||'';render();const nf=document.getElementById('nf');if(nf)nf.scrollIntoView({behavior:'smooth',block:'center'});return}
@@ -284,19 +307,19 @@ if(a=='autooff'){S.auto.on=0;save();return render()}
 if(a=='hide'){S.hide=S.hide?0:1}
 else if(a=='bud'){S.bud=+document.getElementById('bud').value||0}
 else if(a=='goal'){S.goal={n:document.getElementById('gn').value.trim(),a:+document.getElementById('ga').value||0}}
-else if(a=='csv'){dl('hisab.csv','text/csv','\ufeff'+['তারিখ','ধরন','ক্যাটাগরি','টাকা','বিবরণ','খাত'].map(x=>L(x)).join(',')+'\n'+S.fin.concat(virt()).map(f=>[f.d,L(f.t=='in'?'আয়':'ব্যয়'),L(C[ck(f)][1]),f.a,'"'+(f.n||'').replace(/"/g,'""')+'"',L(f.p&&PU[f.p]?PU[f.p][2]:'সাধারণ')].join(',')).join('\n'));return}
+else if(a=='csv'){dl('hisab.csv','text/csv','\ufeff'+['তারিখ','ধরন','ক্যাটাগরি','টাকা','বিবরণ','খাত'].map(x=>L(x)).join(',')+'\n'+S.fin.concat(virt()).map(f=>[f.d,L(f.t=='in'?'আয়':'ব্যয়'),L(cat(f).n),f.a,'"'+(f.n||'').replace(/"/g,'""')+'"',L(f.p&&PU[f.p]?PU[f.p][2]:'সাধারণ')].join(',')).join('\n'));return}
 save();render()});
 /* সেটিং বা অন্য ট্যাব/সিঙ্ক থেকে কিছু বদলালে এই পেজেও সঙ্গে সঙ্গে প্রয়োগ হবে */
 function pull(){const c=rd();
 if((c.lang==='en'?'en':'bn')!==(window.LANG||'bn')){location.reload();return}
 const th=c.theme||0,dk=c.dark||0;
 if(th!=(S.theme||0)||dk!=(S.dark||0)){S.theme=th;S.dark=dk;root.dataset.t=th;root.dataset.d=dk}
-const ca=c.auto&&typeof c.auto==='object'?c.auto:S.auto,nw=JSON.stringify([c.hide||0,c.bud||0,c.goal||{n:'',a:0},Array.isArray(c.fin)?c.fin:[],Array.isArray(c.led)?c.led:[],ca]),od=JSON.stringify([S.hide||0,S.bud||0,S.goal,S.fin,S.led,S.auto]);
+const ca=c.auto&&typeof c.auto==='object'?c.auto:S.auto,nw=JSON.stringify([c.hide||0,c.bud||0,c.goal||{n:'',a:0},Array.isArray(c.fin)?c.fin:[],Array.isArray(c.led)?c.led:[],ca,c.cats||S.cats]),od=JSON.stringify([S.hide||0,S.bud||0,S.goal,S.fin,S.led,S.auto,S.cats]);
 if(nw!==od){const a=document.activeElement;if(a&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)&&$.contains(a))return;
-S.hide=c.hide||0;S.bud=c.bud||0;S.goal=c.goal||{n:'',a:0};S.fin=Array.isArray(c.fin)?c.fin:[];S.led=Array.isArray(c.led)?c.led:[];S.auto=ca;render()}}
+S.hide=c.hide||0;S.bud=c.bud||0;S.goal=c.goal||{n:'',a:0};S.fin=Array.isArray(c.fin)?c.fin:[];S.led=Array.isArray(c.led)?c.led:[];S.auto=ca;if(c.cats&&c.cats.out&&c.cats.in)S.cats=c.cats;seedCats();render()}}
 addEventListener('pageshow',e=>{if(e.persisted)pull()});
 addEventListener('storage',e=>{if(!e.key||e.key=='dl')pull()});
 addEventListener('hsync',pull);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){pull();tick()}});
-autoRun();render();setInterval(tick,15000);
+seedCats();autoRun();render();setInterval(tick,15000);
 </script><script src="suggest.js"></script><script src="pwa.js"></script></body></html>
