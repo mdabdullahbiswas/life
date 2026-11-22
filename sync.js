@@ -13,7 +13,7 @@ const LOCAL={notif:1,url:1,lastBak:1,tn:1,tp:1};
 const SKIP={'st/run':1,'st/sel':1,'st/mode':1,'ts/ed':1}; /* ts/ed = তাসবিহ এডিটের সাময়িক অবস্থা, সিঙ্ক হবে না */
 /* কোন কী শিটের কোন ট্যাবে যাবে (বাকি সব settings-এ) */
 const TABS={tasks:'tasks',done:'tasks',fin:'hisab',goal:'hisab',bud:'hisab',hide:'hisab',pr:'namaz',qaza:'namaz',ts:'namaz',
-  fast:'roza',rf:'roza',rq:'roza',ho:'roza',loc:'roza',fn:'roza',ram:'roza',bags:'bags',st:'study',led:'invoice',ppl:'invoice',inv:'invoice',open:'hisab'};
+  fast:'roza',rf:'roza',rq:'roza',ho:'roza',loc:'roza',fn:'roza',ram:'roza',bags:'bags',st:'study',led:'invoice',ppl:'invoice',inv:'invoice',open:'hisab',wal:'hisab',tf:'hisab'};
 const tabOf=k=>TABS[k.split(/[\/#]/)[0]]||'settings';
 /* সারির পরিচয় = বিষয়বস্তুর হ্যাশ + ট্যাব। আগে ভুল ট্যাবে (যেমন settings) গেছে এমন সারি নতুন ট্যাবে আবার যাবে */
 const sig=(k,v)=>hs(v)+'@'+tabOf(k);
