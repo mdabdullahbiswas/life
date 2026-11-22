@@ -157,11 +157,24 @@ details.cy>summary{cursor:pointer;padding:10px 0;font-size:13px;font-weight:600;
 details.cy>summary::-webkit-details-marker{display:none}
 details.cy[open]>summary{color:var(--t)}
 #cyn{margin:-4px 0 12px;padding:8px 12px;border-radius:10px;background:color-mix(in srgb,var(--ok) 12%,transparent);color:var(--ok);font-size:12.5px;line-height:1.6}
+
+/* ===== হিসাব ↔ খাতা সংযোগ ===== */
+.lk{color:var(--p);font-weight:700;font-size:13px;text-decoration:none;border-bottom:1px dashed var(--a);white-space:nowrap}
+.lk:hover{color:var(--a)}
+.hs{display:flex;gap:12px;align-items:center;padding:11px 14px;margin:10px 0 0;border-radius:14px;cursor:pointer;border:1px solid var(--cb);background:linear-gradient(135deg,color-mix(in srgb,var(--a) 11%,transparent),transparent)}
+.hs input{width:19px;height:19px;flex:none;accent-color:var(--a);cursor:pointer}
+.hs span{display:grid;gap:1px;font-size:13.5px}
+.hs small{color:var(--m);font-size:11.5px;font-weight:400}
+button.g.hsb{padding:5px 9px;opacity:.5;filter:grayscale(1)}
+button.g.hsb.on{opacity:1;filter:none;background:linear-gradient(135deg,var(--a),var(--a2));border-color:transparent}
+.hero .hf{align-items:center}
 </style></head><body><script src="header.js"></script>
 <script>if(window.LANG===undefined)document.write('<script src="lang.js"><\/script>')</script>
 <main id="app">
 <header class="ph"><h1>📒 লেনদেনের খাতা</h1><div class="sub">কে কত পাবে, কাকে কত দেব — মানুষ ধরে হিসাব, আর যে কাউকে বিবরণী পাঠানো যায়</div></header>
 
+
+<section class="card hero" id="hero"><div class="tiles"><div class="tile"><div class="hl">মোট আমি পাব</div><div class="big nm" id="hg">৳ ০</div></div><div class="tile give"><div class="hl">মোট আমি দেব</div><div class="big nm" id="ho">৳ ০</div></div></div><div class="sp"><i class="g" id="sg" style="width:0"></i><i class="o" id="so" style="width:0"></i></div><div class="hf"><span class="m" id="hn"></span><a class="lk" href="hisab.html">💰 আয়-ব্যয়ের হিসাবে দেখুন →</a></div></section>
 
 <div class="wrap">
  <div class="col">
@@ -179,10 +192,11 @@ details.cy[open]>summary{color:var(--t)}
    <div id="items"></div><datalist id="sugs"></datalist>
    <div class="itot"><button class="g sm" type="button" data-a="addi">+ আরেকটা জিনিস</button><span>মোট <b id="itot">৳ ০</b></span></div>
    
+   <label class="hs" for="hs"><input type="checkbox" id="hs"><span><b>💰 আয়-ব্যয়ের হিসাবেও দেখান</b><small>দিলে খরচ, পেলে আয় হিসেবে হিসাব পেজে যুক্ত হবে — এক জায়গায় লিখলেই দুই জায়গায়</small></span></label>
    <div class="acts"><button type="button" data-a="save" id="save">লেনদেন সেভ করুন</button><button class="g" type="button" data-a="cancel" id="cancel" hidden>বাতিল</button></div>
   </section>
 
-  <section class="card hidden" id="ents"><h2 id="ents-t">লেনদেনসমূহ</h2><div class="list" id="el"></div><div class="acts"><button class="x sm" style="padding:6px 12px" data-a="delp">এই মানুষের পুরো খাতা মুছুন</button></div></section>
+  <section class="card hidden" id="ents"><h2 id="ents-t">লেনদেনসমূহ</h2><div class="list" id="el"></div><div class="acts"><button class="g sm" data-a="hsall">💰 সব হিসাবে তুলুন / সরান</button><button class="x sm" style="padding:6px 12px" data-a="delp">এই মানুষের পুরো খাতা মুছুন</button></div></section>
 
   <section class="card">
    <h2>মানুষের খাতা <span class="pill" id="cnt"></span></h2>
@@ -240,18 +254,20 @@ const ACC=[['সোনালি','#B8892B','#E2C275'],['এমারেল্ড
 const $=id=>document.getElementById(id),root=document.documentElement;
 
 /* ডাটা: অন্য সব পেজের মতো localStorage 'dl'-এ থাকে, sync.js নিজে শিটে পাঠায়/আনে */
-let S={theme:0,dark:0,hide:0,led:[],ppl:{},myName:'',invAcc:0};
+let S={theme:0,dark:0,hide:0,led:[],ppl:{},myName:'',invAcc:0,hsAuto:1};
 try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
 if(!Array.isArray(S.led))S.led=[];
 if(!S.ppl||typeof S.ppl!=='object'||Array.isArray(S.ppl))S.ppl={};
 /* শুধু এই পেজের নিজের ডাটা (OWN) লিখি; ভাষা/থিম/রাতের মোডসহ বাকি সব সর্বশেষ সংরক্ষিত অবস্থা থেকে আসে — নইলে সেটিং থেকে বদলানো মান পুরনো কপি দিয়ে মুছে যেত */
-const OWN=['led','ppl','myName','invAcc'];
+const OWN=['led','ppl','myName','invAcc','hsAuto'];
 const save=()=>{try{let c={};try{c=JSON.parse(localStorage.getItem('dl')||'{}')}catch(e){}if(!c||typeof c!=='object'||Array.isArray(c))c={};OWN.forEach(k=>{c[k]=S[k]});localStorage.setItem('dl',JSON.stringify(c))}catch(e){toast('সেভ করা যায়নি, জায়গা ভরে গেছে?')}};
 /* সেটিং অন্য ট্যাবে/পেজে বদলালে এখানেও সাথে সাথে প্রযোজ্য: থিম ও রাতের মোড নিজে বদলায়, ভাষা বদলালে পেজ নতুন করে লোড হয় */
 function applyPrefs(){try{const c=JSON.parse(localStorage.getItem('dl')||'{}')||{};
  if((c.lang==='en'?'en':'bn')!==(window.LANG==='en'?'en':'bn')){location.reload();return}
  S.theme=c.theme||0;S.dark=c.dark||0;S.hide=c.hide||0;
- root.dataset.t=S.theme;root.dataset.d=S.dark;root.classList.toggle('hide',!!S.hide)}catch(e){}}
+ root.dataset.t=S.theme;root.dataset.d=S.dark;root.classList.toggle('hide',!!S.hide);
+ /* হিসাব পেজ বা অন্য ট্যাব থেকে খাতার ডাটা বদলালে এখানেও সাথে সাথে মিলে যায় */
+ const nl=Array.isArray(c.led)?c.led:[];if(JSON.stringify(nl)!==JSON.stringify(S.led)){S.led=nl;if(c.ppl&&typeof c.ppl==='object'&&!Array.isArray(c.ppl))S.ppl=c.ppl;render()}}catch(e){}}
 addEventListener('storage',e=>{if(e.key==='dl'||e.key===null)applyPrefs()});
 addEventListener('pageshow',e=>{if(e.persisted)applyPrefs()});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)applyPrefs()});
@@ -306,7 +322,7 @@ function addRow(n='',a='',focus=true){
 function resetForm(keepP){
  editId=null;if(!keepP){$('p').value='';$('ph').value=''}
  $('items').innerHTML='';addRow('','',false);$('d').value=key(new Date());
- $('save').textContent='লেনদেন সেভ করুন';$('cancel').hidden=true;$('ed-t').textContent='নতুন লেনদেন';paintTy()}
+ $('hs').checked=!!S.hsAuto;$('save').textContent='লেনদেন সেভ করুন';$('cancel').hidden=true;$('ed-t').textContent='নতুন লেনদেন';paintTy()}
 function selectP(n,scroll){
  SEL=n;$('p').value=n;$('ph').value=phoneOf(n);render();
  if(scroll&&matchMedia('(max-width:860px)').matches)$('pvt').scrollIntoView({behavior:'smooth',block:'start'})}
@@ -319,13 +335,13 @@ function saveEntry(){
  if(!L.length){toast('অন্তত একটি জিনিসের টাকা লিখুন');rows()[0].children[1].focus();return}
  const bad=L.findIndex(x=>!(x.a>0));if(bad>=0){toast('প্রতিটি জিনিসের টাকা লিখুন');const r=rows().filter(r=>r.children[0].value.trim()||r.children[1].value.trim())[bad];if(r)r.children[1].focus();return}
  if(!d){toast('তারিখ দিন');return}
- const was=editId!=null,t0=Date.now();
- L.forEach((x,i)=>{const id=was&&i===0?editId:t0+i,rec={id,p,t:TYP,a:x.a,d,n:x.n},ix=S.led.findIndex(e=>String(e.id)===String(id));if(ix>=0)S.led[ix]=rec;else S.led.push(rec)});
+ const was=editId!=null,t0=Date.now(),hsv=$('hs').checked?1:0;S.hsAuto=hsv;
+ L.forEach((x,i)=>{const id=was&&i===0?editId:t0+i,rec={id,p,t:TYP,a:x.a,d,n:x.n,hs:hsv},ix=S.led.findIndex(e=>String(e.id)===String(id));if(ix>=0)S.led[ix]=rec;else S.led.push(rec)});
  const ph=$('ph').value.trim();if(ph)S.ppl[p]=Object.assign({},S.ppl[p],{ph});
  SEL=p;CY=null;save();resetForm(true);render();toast(was&&L.length===1?'আপডেট হয়েছে ✓':L.length>1?bn(L.length)+'টি জিনিস সেভ হয়েছে ✓':'সেভ হয়েছে ✓')}
 function editEntry(id){
  const e=S.led.find(x=>String(x.id)===String(id));if(!e)return;
- editId=e.id;TYP=tyOf(e.t);$('p').value=e.p;$('ph').value=phoneOf(e.p);$('d').value=e.d;
+ editId=e.id;TYP=tyOf(e.t);$('hs').checked=!!e.hs;$('p').value=e.p;$('ph').value=phoneOf(e.p);$('d').value=e.d;
  $('items').innerHTML='';addRow(e.n||'',e.a,false);
  $('save').textContent='আপডেট করুন';$('cancel').hidden=false;$('ed-t').textContent='লেনদেন এডিট';paintTy();$('ed').scrollIntoView({behavior:'smooth',block:'start'})}
 
@@ -351,6 +367,7 @@ function render(){
  const get=list.filter(x=>x.bal>0),owe=list.filter(x=>x.bal<0),G=r2(get.reduce((s,x)=>s+x.bal,0)),O=r2(owe.reduce((s,x)=>s-x.bal,0));
  $('names').innerHTML=list.map(x=>`<option value="${ex(x.n)}">`).join('');paintSug();
  {const nm=$('p').value.trim(),pp=P[nm],cn=$('cyn'),st=!!pp&&pp.bal===0&&editId==null;cn.classList.toggle('hidden',!st);if(st)cn.textContent='✓ '+nm+'-এর আগের হিসাব মিটে গেছে। এখন লেনদেন করলে নতুন পর্ব শুরু হবে — আগের হিসাব “লেনদেনসমূহ”-এ আর বিবরণীর পর্ব-বোতামে থেকে যাবে।'}
+ {const tt=G+O;cu($('hg'),G,fm);cu($('ho'),O,fm);$('sg').style.width=(tt?G/tt*100:0)+'%';$('so').style.width=(tt?O/tt*100:0)+'%';const hc=S.led.filter(e=>e.hs&&T[e.t]).length;$('hn').textContent=hc?bn(hc)+'টি লেনদেন আয়-ব্যয়ের হিসাবে যুক্ত':'কোনো লেনদেন হিসাবে যুক্ত নয়'}
  const rc=list.slice().sort((a,b)=>(b.last||'').localeCompare(a.last||'')||b.cnt-a.cnt).slice(0,6);
  $('rpw').classList.toggle('hidden',!rc.length);
  $('rp').innerHTML=rc.map(x=>`<button type="button" class="cp" data-pc="${ex(x.n)}"${x.n===SEL?' style="border-color:var(--a);color:var(--t)"':''}>${ex(x.n)}</button>`).join('');
@@ -387,7 +404,7 @@ function paper(P){
  if(done){$('p-sd').textContent='হিসাব মিটে গেছে · '+bd(cdate(K.c).z||key(new Date()));$('p-ty').textContent='জাযাকাল্লাহু খাইরান 🤍 — হিসাব পরিষ্কার, সম্পর্ক আরও পরিষ্কার'}
  else $('p-ty').textContent=K.i>0?'আগের হিসাব মিটে গেছে — এটি নতুন পর্বের বিবরণী। ভুল থাকলে জানাবেন':'হিসাবে কোনো ভুল থাকলে জানাবেন — ধন্যবাদ';
  $('ents-t').textContent=SEL+'-এর লেনদেন';
- const rowH=e=>{const t=T[e.t];return`<div class="row"><div class="rt"><div>${ex(e.n)||'—'}</div><div class="m">${bd(e.d)} · <span class="pill ${t.s>0?'ok':'er'}">${t.l}</span></div></div><b class="nm">${fm(e.a)}</b><div style="display:flex;gap:6px;flex:none"><button class="g sm" data-a="edit" data-i="${ex(e.id)}" aria-label="এডিট">✎</button><button class="x sm" style="padding:5px 10px" data-a="del" data-i="${ex(e.id)}" aria-label="মুছুন">✕</button></div></div>`};
+ const rowH=e=>{const t=T[e.t];return`<div class="row"><div class="rt"><div>${ex(e.n)||'—'}</div><div class="m">${bd(e.d)} · <span class="pill ${t.s>0?'ok':'er'}">${t.l}</span></div></div><b class="nm">${fm(e.a)}</b><div style="display:flex;gap:6px;flex:none"><button class="g sm hsb${e.hs?' on':''}" data-a="hs" data-i="${ex(e.id)}" aria-label="হিসাবে দেখান" title="${e.hs?'হিসাব থেকে সরান':'আয়-ব্যয়ের হিসাবেও দেখান'}">💰</button><button class="g sm" data-a="edit" data-i="${ex(e.id)}" aria-label="এডিট">✎</button><button class="x sm" style="padding:5px 10px" data-a="del" data-i="${ex(e.id)}" aria-label="মুছুন">✕</button></div></div>`};
  const C=K.C,lastC=C[C.length-1],openNow=lastC&&!lastC.closed;let h='';
  if(openNow)h+=`<div class="cyh"><span>চলমান হিসাব</span><span class="m">${bn(lastC.es.length)}টি লেনদেন · ${fm(Math.abs(cbal(lastC)))} ${cbal(lastC)>0?'পাব':'দেব'}</span></div>`+lastC.es.slice().reverse().map(rowH).join('');
  else h+=`<div class="cyh"><span>✓ সব হিসাব মিটে গেছে</span><span class="m">নতুন লেনদেন যোগ করলে নতুন পর্ব শুরু হবে</span></div>`;
@@ -435,9 +452,11 @@ document.addEventListener('click',e=>{
  else if(a==='edit')editEntry(id);
  else if(a==='del'){const x=S.led.find(v=>String(v.id)===String(id));if(!x||!confirm('এই লেনদেনটি ('+fm(x.a)+') মুছে ফেলবেন?'))return;S.led=S.led.filter(v=>String(v.id)!==String(id));if(String(editId)===String(id))resetForm(true);if(!people()[SEL])SEL='';save();render();toast('মুছে ফেলা হয়েছে')}
  else if(a==='delp'){if(!confirm(SEL+'-এর সব লেনদেন মুছে ফেলবেন? এটা ফেরানো যাবে না।'))return;S.led=S.led.filter(v=>(v.p||'').trim()!==SEL);delete S.ppl[SEL];SEL='';save();resetForm(false);render();toast('খাতা মুছে ফেলা হয়েছে')}
+ else if(a==='hs'){const x=S.led.find(v=>String(v.id)===String(id));if(!x)return;x.hs=x.hs?0:1;save();render();toast(x.hs?'আয়-ব্যয়ের হিসাবে যুক্ত হয়েছে 💰':'হিসাব থেকে সরানো হয়েছে')}
+ else if(a==='hsall'){const es=entsOf(SEL),all=es.length&&es.every(v=>v.hs);es.forEach(v=>{v.hs=all?0:1});save();render();toast(all?'সব হিসাব থেকে সরানো হয়েছে':'সব লেনদেন হিসাবে যুক্ত হয়েছে 💰')}
  else if(a==='settle'){const es=entsOf(SEL),bal=r2(es.reduce((s,v)=>s+T[v.t].s*v.a,0));if(!bal)return;
   if(!confirm(bal>0?SEL+' পুরো '+fm(bal)+' ফেরত দিয়েছে — মিটিয়ে দেবেন?':'আপনি '+SEL+'-কে পুরো '+fm(-bal)+' ফেরত দিয়েছেন — মিটিয়ে দেবেন?'))return;
-  S.led.push({id:Date.now(),p:SEL,t:bal>0?'recv':'give',a:Math.abs(bal),d:key(new Date()),n:'হিসাব মিটল'});CY=null;save();render();toast('হিসাব মিটে গেছে ✓ — আগের হিসাব “পর্ব” হিসেবে জমা থাকল')}
+  S.led.push({id:Date.now(),p:SEL,t:bal>0?'recv':'give',a:Math.abs(bal),d:key(new Date()),n:'হিসাব মিটল',hs:(es.length&&es[es.length-1].hs)?1:0});CY=null;save();render();toast('হিসাব মিটে গেছে ✓ — আগের হিসাব “পর্ব” হিসেবে জমা থাকল')}
  else if(a==='wa'){const ph=phoneOf(SEL),msg=waMsg(),mob=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent),
    url=(ph?'https://wa.me/'+waNum(ph):'https://api.whatsapp.com/send')+(ph?'?':'?')+'text='+encodeURIComponent(msg);
   /* কম্পিউটারে: ছবি আগেই কপি হয়, চ্যাট খুলে Ctrl+V করলেই ছবি যায়। ট্যাব আগেই খুলে রাখি যাতে পপআপ ব্লক না হয় */
@@ -498,5 +517,7 @@ ${sp(22,28,11)}${sp(180,24,8)}${sp(20,204,7)}${sp(182,206,10)}
 /* inline SVG নয়, ছবি (img) হিসেবে বসাই — html2canvas তাতে নির্ভুলভাবে আঁকতে পারে */
 $('sealg').innerHTML='<img alt="হিসাব মিটে গেছে" width="92" height="115" src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(sealSVG())+'">';
 resetForm(false);render();
+/* হিসাব পেজ থেকে ?p=নাম দিয়ে এলে সরাসরি সেই মানুষের খাতা খোলে */
+try{const q=(new URLSearchParams(location.search).get('p')||'').trim();if(q&&people()[q])selectP(q,false)}catch(e){}
 /* অন্য ডিভাইস থেকে সিঙ্কে ডাটা এলে sync.js নিজেই পেজ রিফ্রেশ করে */
 </script><script src="suggest.js"></script><script src="pwa.js"></script></body></html>
