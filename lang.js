@@ -394,7 +394,41 @@ const D={
 'নিশ্চিত করুন':'Please confirm','বার্তা':'Notice','ঠিক আছে':'OK','হ্যাঁ, নিশ্চিত':'Yes, confirm','হ্যাঁ, মুছুন':'Yes, delete','হ্যাঁ, বাদ দিন':'Yes, dismiss',
 'কাজটি মুছে ফেলবেন?':'Delete this task?','সব বাকি কাজ বাদ দেবেন?':'Dismiss all pending tasks?','এগুলো বাকি কাজ খাতা থেকে মুছে যাবে।':'These will be removed from the pending log.',
 '📲 অ্যাপ বন্ধ থাকলেও (পুশ)':'📲 Even when the app is closed (push)','পুশ চালু আছে':'Push is on','পুশ চালু নেই':'Push is off','এই ডিভাইসে পুশ চালু করুন':'Enable push on this device','পুশ পরীক্ষা':'Test push','পুশ বন্ধ করুন':'Turn off push','⏰ কাজের নিজস্ব সময়ে রিমাইন্ডার':'⏰ Reminder at each task\u2019s own time','কাজে সময় দেওয়া থাকলে ঠিক সেই সময়ে নোটিফিকেশন (পুশ চালু থাকতে হবে)':'A notification at the exact time set on a task (push must be on)','ঠিক সময়ে':'On time','৫ মিনিট আগে':'5 min before','১০ মিনিট আগে':'10 min before','১৫ মিনিট আগে':'15 min before','৩০ মিনিট আগে':'30 min before',
-'সময় (ঐচ্ছিক)':'Time (optional)','সময় নেই':'No time','নির্দিষ্ট মাস পর পর (যেমন ২ মাসে একবার)':'Every N months (e.g. every 2 months)','মাস পর পর':'months apart'
+'সময় (ঐচ্ছিক)':'Time (optional)','সময় নেই':'No time','নির্দিষ্ট মাস পর পর (যেমন ২ মাসে একবার)':'Every N months (e.g. every 2 months)','মাস পর পর':'months apart',
+/* হিসাব পেজ: খাত (পড়াশোনা/চাকরি), অটো-দান, খাতা সংযোগ */
+'খাত':'Purpose',
+'সব খাত':'All purposes',
+'কোন খাতের খরচ?':'Which purpose is this expense for?',
+'চাকরি':'Job',
+'পড়াশোনার খরচ':'Study expenses',
+'চাকরির খরচ':'Job expenses',
+'এ পর্যন্ত মোট':'Total so far',
+'এ মাস':'This month',
+'সব সময়':'All time',
+'প্রাইভেট / কোচিং':'Tutoring / coaching',
+'আবেদন ফি':'Application fee',
+'ট্রেনিং':'Training',
+'পোশাক':'Clothing',
+'দান':'Donation',
+'স্বয়ংক্রিয় দান':'Auto donation',
+'স্বয়ংক্রিয় দৈনিক দান':'Automatic daily donation',
+'চালু করুন':'Turn on',
+'পরের কাটা':'Next deduction',
+'দানের টাকা ও সময় দুটোই দিন':'Enter both the donation amount and the time',
+'খাতা · দিলাম':'Ledger · I gave',
+'খাতা · পেলাম':'Ledger · I received',
+'খাতা খুলুন →':'Open ledger →',
+'খাতায় দেখুন':'View in ledger',
+'ধার মিটলে মোট সঞ্চয়':'Total savings once loans are settled',
+'সব হিসাবে তুলুন':'Add all to accounts',
+'এ মাসে কোনো খরচ নেই':'No expenses this month',
+'এখনো কোনো খরচ নেই':'No expenses yet',
+'খাতায় এখনো কোনো লেনদেন নেই':'No ledger transactions yet',
+'কোনো হিসাব নেই':'No entries',
+'সব সরান':'Remove all',
+'হিসাব থেকে সরান':'Remove from accounts',
+'দান বন্ধ করুন':'Turn off',
+'এটি আয়-ব্যয়ের হিসাব থেকে সরাবেন? খাতায় লেনদেনটি থেকে যাবে।':'Remove this from income & expenses? The transaction will stay in the ledger.'
 };
 /* অক্ষরের বদলে শব্দ — গণনার পরে প্রযোজ্য */
 const U={'ঘণ্টা':'Hours','মিনিট':'Minutes','সেকেন্ড':'Seconds','থেকে':'from','পর্যন্ত':'until','ভোর':'Dawn','সকাল':'Morning','দুপুর':'Noon','বিকাল':'Afternoon','সন্ধ্যা':'Evening','রাত':'Night','টি':'items','মোট':'Total'};
@@ -443,9 +477,10 @@ function tr(s){
  s=s.replace(new RegExp('(কাল|যাত্রার সময়) সর্বোচ্চ ('+BD+'+)° — গরম থাকবে, পানির বোতল ও টুপি যোগ করুন।','g'),(_,w,n)=>wd(w)+': up to '+n+'° — hot, add a water bottle and a cap.');
  s=s.replace(new RegExp('(কাল|যাত্রার সময়) সর্বনিম্ন ('+BD+'+)° — ঠান্ডা থাকবে, চাদর/সোয়েটার ও মাফলার যোগ করুন।','g'),(_,w,n)=>wd(w)+': down to '+n+'° — cold, add a shawl/sweater and a scarf.');
  s=s.replace(/^লক্ষ্যে পৌঁছাতে আর (.+) বাকি।$/,'$1 left to reach your goal.');
- s=s.replace(new RegExp('^⚠️ বাজেট (৳ [০-৯,.]+) ছাড়িয়েছে$'),'\u26a0\ufe0f Over budget by $1');
- s=s.replace(new RegExp('^⚠️ বাজেটের ('+BD+'+)% শেষ$'),'\u26a0\ufe0f $1% of budget used');
- s=s.replace(new RegExp('^✅ দৈনিক খরচের সীমা (৳ [০-৯,.]+)$'),'\u2705 Daily spending limit: $1');
+ s=s.replace(new RegExp('^(?:⚠️ )?বাজেট (৳ [০-৯,.]+) ছাড়িয়েছে$'),'Over budget by $1');
+ s=s.replace(new RegExp('^(?:⚠️ )?বাজেটের ('+BD+'+)% শেষ$'),'$1% of budget used');
+ s=s.replace(new RegExp('^মাসের ('+BD+'+)%$'),'$1% of this month\u2019s spending');
+ s=s.replace(new RegExp('^(?:✅ )?দৈনিক খরচের সীমা (৳ [০-৯,.]+)$'),'Daily spending limit: $1');
  s=s.replace(RD,m=>D[m]);
  s=s.replace(new RegExp('(ভোর|সকাল|দুপুর|বিকাল|সন্ধ্যা|রাত) ('+BD+'+):('+BD+'+)','g'),(_,p,h,m)=>tm(h,m,p));
  s=s.replace(/(\d+:\d\d [AP]M) থেকে Isha পর্যন্ত/g,'from $1 until Isha');
