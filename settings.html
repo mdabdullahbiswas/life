@@ -35,12 +35,16 @@ border:1px solid rgba(226,194,117,.5);box-shadow:0 28px 48px -30px rgba(31,22,8,
 .vault .vs i{width:8px;height:8px;border-radius:50%;background:#4fd7a0;box-shadow:0 0 0 4px rgba(79,215,160,.2)}
 .vault .vs.warn i{background:#ff9a8a;box-shadow:0 0 0 4px rgba(255,138,138,.22)}
 
+/* হোম পেজের সাথে মেলানো সাজ */
+.sec>h2::before{content:"";width:8px;height:8px;border-radius:2px;transform:rotate(45deg);background:linear-gradient(135deg,var(--a2),var(--a));box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 18%,transparent);flex:none}
+.top{padding-bottom:16px;border-bottom:1px solid transparent;border-image:linear-gradient(90deg,color-mix(in srgb,var(--a) 55%,transparent),transparent 78%) 1}
+@media(min-width:700px){main{padding:32px 28px 96px}.cols{gap:0 26px}}
 /* ভাগ ও কার্ড */
 .cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 22px;align-items:start}
 .col{min-width:0}
 .sec{margin-bottom:24px}
 .sec>h2{display:flex;align-items:center;gap:8px;margin:0 4px 10px;font-size:14.5px;font-weight:700;color:var(--p);letter-spacing:.2px}
-.card{background:var(--c);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--b);border-radius:18px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.03),0 20px 36px -26px var(--sh)}
+.card{background:var(--c);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid color-mix(in srgb,var(--a) 30%,transparent);border-radius:20px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.03),0 20px 36px -26px var(--sh)}
 .pad{padding:16px 18px}.pad>*+*{margin-top:12px}
 .row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 18px;border-bottom:1px solid var(--b)}
 .card>.row:last-child{border-bottom:0}
@@ -155,7 +159,9 @@ ${tg('dgtk','কাজের সময়ে রিমাইন্ডার','�
 const app=`<section class="sec"><h2>অ্যাপ</h2><div class="card pad">${standalone?'<div class="okb">ইনস্টল করা আছে</div>':DP?'<div class="acts"><button data-a="inst">অ্যাপ ইনস্টল করুন</button></div>':'<div class="m">ব্রাউজারের মেনু থেকে “হোম স্ক্রিনে যোগ করুন” বা “ইনস্টল” বেছে নিন।</div>'}<div class="acts"><button class="g" data-a="ref">আপডেট ও ক্যাশ পরিষ্কার</button></div></div></section>`;
 const HO=homeOrder();
 const HH=(S.home&&S.home.hide)||{};
-const home=`<section class="sec"><h2>হোম পেজ</h2><div class="card">${HO.map((k,i)=>`<div class="row hr"><div><b>${HN[k][0]}</b>${HN[k][1]?`<div class="m">${HN[k][1]}</div>`:''}</div><div class="hb"><button class="g sm" data-a="hu" data-i="${k}" aria-label="উপরে" ${i?'':'disabled'}>↑</button><button class="g sm" data-a="hd" data-i="${k}" aria-label="নিচে" ${i<HO.length-1?'':'disabled'}>↓</button><input type="checkbox" class="tgl" data-a="hv" data-i="${k}" aria-label="${HN[k][0]} দেখান" ${HH[k]?'':'checked'}></div></div>`).join('')}<div class="pad"><div class="acts"><button class="g" data-a="hr">আগের মতো করুন</button></div></div></div></section>`;
+const HOM=HO.filter(k=>k!='bal');
+const balRow=`<div class="row hr"><div><b>${HN.bal[0]}</b></div><div class="hb"><input type="checkbox" class="tgl" data-a="hv" data-i="bal" aria-label="${HN.bal[0]} দেখান" ${HH.bal?'':'checked'}></div></div>`;
+const home=`<section class="sec"><h2>হোম পেজ</h2><div class="card">${balRow}${HOM.map((k,i)=>`<div class="row hr"><div><b>${HN[k][0]}</b>${HN[k][1]?`<div class="m">${HN[k][1]}</div>`:''}</div><div class="hb"><button class="g sm" data-a="hu" data-i="${k}" aria-label="উপরে" ${i?'':'disabled'}>↑</button><button class="g sm" data-a="hd" data-i="${k}" aria-label="নিচে" ${i<HOM.length-1?'':'disabled'}>↓</button><input type="checkbox" class="tgl" data-a="hv" data-i="${k}" aria-label="${HN[k][0]} দেখান" ${HH[k]?'':'checked'}></div></div>`).join('')}<div class="pad"><div class="acts"><button class="g" data-a="hr">আগের মতো করুন</button></div></div></div></section>`;
 const sy=window.hayatSync?hayatSync.status():{on:0,url:'',token:'',pending:0};
 const ago=t=>{const m=Math.floor((Date.now()-t)/6e4);return m<1?'এইমাত্র':m<60?bn(m)+' মিনিট আগে':m<1440?bn(Math.floor(m/60))+' ঘণ্টা আগে':bn(Math.floor(m/1440))+' দিন আগে'};
 const syst=!sy.on?'':sy.err?`<div class="warn" style="margin-top:12px">${esc(sy.err)}</div>`:sy.lastOk?`<div class="okb" style="margin-top:12px">শেষ সিঙ্ক: ${ago(sy.lastOk)}${sy.pending?' · '+bn(sy.pending)+'টি বদল পাঠানো বাকি':''}</div>`:'<div class="m" style="margin-top:12px">এখনো সিঙ্ক হয়নি</div>';
@@ -186,7 +192,7 @@ if(a=='sy'){if(!window.hayatSync){toast('sync.js লোড হয়নি — �
 if(a=='syx'){if(confirm('এই ডিভাইসে সিঙ্ক বন্ধ হবে। শিটের তথ্য ও এই ডিভাইসের তথ্য থেকে যাবে।'))hayatSync.clear();render();return}
 if(a=='inst'){if(DP){DP.prompt();DP.userChoice.then(()=>{DP=null;render()})}return}
 if(a=='lg'){S.lang=i=='en'?'en':'bn';save();location.reload();return}
-if(a=='hu'||a=='hd'){const o=homeOrder(),x=o.indexOf(i),y=a=='hu'?x-1:x+1;if(x<0||y<0||y>=o.length)return;[o[x],o[y]]=[o[y],o[x]];S.home=Object.assign(S.home||{},{order:o})}
+if(a=='hu'||a=='hd'){const o=homeOrder().filter(k=>k!='bal'),x=o.indexOf(i),y=a=='hu'?x-1:x+1;if(x<0||y<0||y>=o.length)return;[o[x],o[y]]=[o[y],o[x]];S.home=Object.assign(S.home||{},{order:o})}
 if(a=='hv'){S.home=S.home||{};S.home.hide=Object.assign({},S.home.hide);if(t.checked)delete S.home.hide[i];else S.home.hide[i]=1}
 if(a=='hr'){S.home={order:HD.slice(),hide:{}}}
 if(a=='dark')S.dark=t.checked?1:0;
