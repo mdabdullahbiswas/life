@@ -214,7 +214,7 @@ const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
 /* ব্যালেন্স কার্ড: ট্যাপ করলে আনুমানিক ২ সেকেন্ড (স্লাইড শেষ হওয়ার পর) দেখা যায়, তারপর নিজে ঢেকে যায় */
 let BRU=0,BRX=0;const BRT=2800;
 const bfmt=n=>'৳'+bn((Math.round(n*100)/100).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}));
-function bcount(el,to){if(!el)return;if(matchMedia('(prefers-reduced-motion:reduce)').matches){el.textContent=bfmt(to);return}const t0=performance.now(),D=900;(function st(t){const p=Math.min(1,(t-t0)/D),k=1-Math.pow(1-p,3);el.textContent=bfmt(to*k);if(p<1)requestAnimationFrame(st)})(t0)}
+function bcount(el,to){if(el)el.textContent=bfmt(to)}
 function bset(o,ev){document.querySelectorAll('.bpill').forEach(x=>{x.classList.toggle('open',!!o);x.setAttribute('aria-pressed',o?'true':'false');const p=x.querySelector('.bp');if(p){p.style.animationDelay='';if(o){p.style.animation='none';void p.getBoundingClientRect();p.style.animation=''}}
  if(o){const bb=x.querySelector('.bv b');if(bb)bcount(bb,+bb.dataset.v||0);const r=x.querySelector('.brp');if(r&&ev){const q=x.getBoundingClientRect();r.style.setProperty('--rx',(ev.clientX-q.left)+'px');r.style.setProperty('--ry',(ev.clientY-q.top)+'px');r.classList.remove('go');void r.offsetWidth;r.classList.add('go')}}})}
 document.addEventListener('click',e=>{if(!e.target.closest('[data-bal]'))return;clearTimeout(BRX);if(BRU>Date.now()){BRU=0;bset(0);return}BRU=Date.now()+BRT;bset(1,e);BRX=setTimeout(()=>{BRU=0;bset(0)},BRT)});
