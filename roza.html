@@ -161,6 +161,25 @@ e.textContent=pd(s/3600|0)+':'+pd(s/60%60|0)+':'+pd(s%60);L.textContent=lb;
 document.getElementById('pg').style.strokeDashoffset=377*(1-p);
 tm.textContent='সেহরি শেষ '+h12(T.f)+' · ইফতার '+h12(T.m)+' (আনুমানিক)'}
 
+/* ===== রোজার রিমাইন্ডার (সার্ভার থেকে পুশ — অ্যাপ বন্ধ থাকলেও) =====
+   সেটিং থাকে 'dl'-এর rz-এ; হিজরি মাসের শুরুর তারিখের তালিকা hc-তে (সার্ভার এটা দিয়ে নিজেই হিজরি তারিখ বের করে, তাই অ্যাপ খোলা লাগে না) */
+const ldl=()=>{try{const o=JSON.parse(localStorage.getItem('dl')||'{}');return o&&typeof o==='object'&&!Array.isArray(o)?o:{}}catch(e){return{}}};
+const RZV=()=>{const z=ldl().rz||{};return{on:+z.on===1,sh:z.sh==null?30:+z.sh,ift:z.ift==null?1:+z.ift,ni:z.ni===''?'':(/^\d\d:\d\d$/.test(z.ni)?z.ni:'21:00'),wk:+z.wk===1}};
+const setRZ=fn=>{const o=ldl();o.rz=Object.assign({},o.rz);fn(o.rz);try{localStorage.setItem('dl',JSON.stringify(o))}catch(e){}};
+function ensureHC(){try{const o=ldl(),hc=o.hc,t=new Date();t.setHours(12,0,0,0);const far=new Date(t);far.setDate(far.getDate()+500);
+if(Array.isArray(hc)&&hc.length>20&&String(hc[hc.length-1][0])>=key(far))return;
+const out=[],d=new Date(t);d.setDate(d.getDate()-45);
+for(let i=0;i<1150;i++){const f=HF.formatToParts(d),g=q=>+f.find(p=>p.type===q).value;if(g('day')==1)out.push([key(d),g('month')]);d.setDate(d.getDate()+1)}
+if(out.length>20){o.hc=out;localStorage.setItem('dl',JSON.stringify(o))}}catch(e){}}
+function rzCard(){const z=RZV(),ok=!!(window.Notification&&Notification.permission==='granted'&&window.hayatPush&&window.hayatPush.on());
+const sel=(v,a)=>a.map(([x,y])=>`<option value="${x}"${String(x)===String(v)?' selected':''}>${y}</option>`).join('');
+return `<section class="card wide"><h2>🔔 রোজার রিমাইন্ডার <span class="pill">${z.on&&ok?'চালু':'বন্ধ'}</span></h2>
+<div class="m" style="margin-bottom:8px">${ok?'পুশ চালু আছে — অ্যাপ বন্ধ থাকলেও নোটিফিকেশন আসবে।':'অ্যাপ বন্ধ থাকলেও পেতে নিচের "পুশ চালু করুন" চাপুন (গুগল শিট সিঙ্ক চালু থাকতে হবে)।'}</div>
+<div class="row"><div>সেহরি শেষের আগে সতর্কতা<div class="m">রোজার দিনে, সেহরি শেষ হওয়ার আগে</div></div><select data-rz="sh">${sel(z.sh,[[0,'বন্ধ'],[10,'১০ মিনিট আগে'],[20,'২০ মিনিট আগে'],[30,'৩০ মিনিট আগে'],[45,'৪৫ মিনিট আগে'],[60,'১ ঘণ্টা আগে']])}</select></div>
+<div class="row"><div>ইফতারের সময় নোটিফিকেশন<div class="m">ঠিক ইফতারের সময়ে</div></div><button class="g" data-a="rzift">${z.ift?'চালু':'বন্ধ'}</button></div>
+<div class="row"><div>আগের রাতের মনে করানো<div class="m">কাল রোজার দিন হলে নিয়ত ও সেহরির কথা</div></div><span class="act"><input type="time" data-rz="ni" value="${z.ni||'21:00'}"${z.ni?'':' disabled'}><button class="g" data-a="rzni">${z.ni?'চালু':'বন্ধ'}</button></span></div>
+<div class="row"><div>সোম–বৃহস্পতিবারও ধরুন<div class="m">বন্ধ থাকলে শুধু রমজান ও বিশেষ নফল দিন</div></div><button class="g" data-a="rzwk">${z.wk?'চালু':'বন্ধ'}</button></div>
+<div class="act" style="margin-top:12px">${ok?'':'<button data-a="rzpush">🔔 পুশ চালু করুন</button>'}<button class="${z.on?'g':''}" data-a="rzon">${z.on?'রিমাইন্ডার বন্ধ করুন':'রিমাইন্ডার চালু করুন'}</button>${ok?'<button class="g" data-a="rztest">পরীক্ষা</button>':''}</div></section>`}
 function render(){const now=new Date();now.setHours(12,0,0,0);const K=key(now),f=fi(now),h=f.h,st=f.f?'rf':'fast',on=!!S[st][K],s=stats(),u=upcoming();
 root.dataset.t=S.theme||0;root.dataset.d=S.dark||0;
 const vd=new Date(now.getFullYear(),now.getMonth()+vm,1),vy=vd.getFullYear(),mo=vd.getMonth(),dim=new Date(vy,mo+1,0).getDate(),lead=vd.getDay();
@@ -206,6 +225,7 @@ ${u.o.filter(x=>x.n!='রমজান শুরু').map(x=>`<div class="ev"><di
 <details><summary>সেহরির নিয়ত</summary><div class="ar">نَوَيْتُ أَنْ أَصُومَ غَدًا لِلَّهِ تَعَالَى</div>
 <div class="m">অর্থ: আমি আগামীকাল আল্লাহর জন্য রোজা রাখার নিয়ত করলাম। নিয়ত মূলত মনের সংকল্প, মুখে বলা জরুরি নয়।</div></details></section>
 
+${rzCard()}
 <section class="card"><h2>সমন্বয়</h2>
 <div class="row"><div>হিজরি তারিখ<div class="m">চাঁদ দেখা অনুযায়ী মিলিয়ে নিন (${S.ho>0?'+':''}${bn(S.ho||0)} দিন)</div></div><div class="act"><button class="g" data-a="hd">−</button><button class="g" data-a="hu">+</button></div></div>
 <div class="row"><div>সেহরি-ইফতারের অবস্থান<div class="m">${S.loc&&S.loc.lat?'আপনার অবস্থান ব্যবহার হচ্ছে':'এখন ঢাকার সময় দেখাচ্ছে'}</div></div><button class="g" data-a="loc">📍 আপডেট</button></div></section>
@@ -224,6 +244,14 @@ if(navigator.canShare&&navigator.canShare({files:[fl]})){try{await navigator.sha
 const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='roza.png';a.click()})}
 
 $.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!el||el.disabled)return;const a=el.dataset.a,now=new Date(),K=key(now);
+if(a.slice(0,2)=='rz'){
+if(a=='rzon')setRZ(z=>{z.on=+z.on===1?0:1});
+else if(a=='rzift')setRZ(z=>{z.ift=(z.ift==null?1:+z.ift)?0:1});
+else if(a=='rzni')setRZ(z=>{z.ni=z.ni===''?'21:00':''});
+else if(a=='rzwk')setRZ(z=>{z.wk=+z.wk===1?0:1});
+else if(a=='rzpush'){el.disabled=true;(window.hayatPush?window.hayatPush.enable():Promise.reject(new Error('push.js লোড হয়নি — পেজ রিফ্রেশ করুন'))).then(()=>{setRZ(z=>{z.on=1});render();alert('✓ পুশ চালু হয়েছে। রোজার রিমাইন্ডারও চালু করা হলো।')}).catch(x=>{alert(String(x&&x.message||x));render()});return}
+else if(a=='rztest'){el.disabled=true;window.hayatPush.test('rz').then(r=>{el.disabled=false;alert('পরীক্ষার পুশ পাঠানো হয়েছে — কয়েক সেকেন্ডে আসবে।'+(r&&r.info?'\n\n'+r.info:''))}).catch(x=>{el.disabled=false;alert(String(x&&x.message||x))});return}
+render();return}
 if(a=='ft'){const f=fi(now);if(f.x)return;const st=f.f?'rf':'fast';S[st][K]?delete S[st][K]:S[st][K]=1}
 else if(a=='tg'){const k=el.dataset.k,c=el.dataset.s;if(el.classList.contains('ban')||el.classList.contains('fu'))return;S[c][k]?delete S[c][k]:S[c][k]=1}
 else if(a=='pm')vm--;else if(a=='nm')vm++;
@@ -232,7 +260,11 @@ else if(a=='hd')S.ho=Math.max(-2,(S.ho||0)-1);else if(a=='hu')S.ho=Math.min(2,(S
 else if(a=='sh'){share();return}
 else if(a=='rt'){times().then(t=>{T=t;tick()});return}
 else if(a=='loc'){if(!navigator.geolocation){alert('এই ব্রাউজারে অবস্থান সমর্থিত নয়');return}
-navigator.geolocation.getCurrentPosition(p=>{S.loc={lat:+p.coords.latitude.toFixed(3),lng:+p.coords.longitude.toFixed(3)};try{localStorage.removeItem('rz_t')}catch(_){}save();times().then(t=>{T=t;render()})},()=>alert('অবস্থানের অনুমতি পাওয়া যায়নি'));return}
+navigator.geolocation.getCurrentPosition(p=>{S.loc=Object.assign({},S.loc||{},{lat:+p.coords.latitude.toFixed(3),lng:+p.coords.longitude.toFixed(3)});try{localStorage.removeItem('rz_t')}catch(_){}save();times().then(t=>{T=t;render()})},()=>alert('অবস্থানের অনুমতি পাওয়া যায়নি'));return}
 save();render()});
-render();times().then(t=>{T=t;tick()});setInterval(tick,1000);
+$.addEventListener('change',e=>{const el=e.target;if(!el.dataset||!el.dataset.rz)return;
+if(el.dataset.rz=='sh')setRZ(z=>{z.sh=+el.value||0});
+else if(el.dataset.rz=='ni'&&/^\d\d:\d\d$/.test(el.value))setRZ(z=>{z.ni=el.value})});
+ensureHC();render();times().then(t=>{T=t;tick()});setInterval(tick,1000);
+window.addEventListener('load',()=>setTimeout(render,1500));
 </script><script src="pwa.js"></script></body></html>
