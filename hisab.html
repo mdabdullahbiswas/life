@@ -3,133 +3,164 @@
 <script src="lang.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>হিসাব · Hayat</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Hind+Siliguri:wght@400;500;600&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--a:#B8892B;--a2:#E2C275;--g:#8A6420;--p:#7A5614;--on:#1F1608;--bg:#FBF7EE;--c:rgba(255,252,244,.82);--t:#2B2118;--m:#7A6A55;--b:rgba(120,90,30,.15);--cb:rgba(184,137,43,.4);--sh:rgba(184,137,43,.38);--ok:#1f9d6b;--er:#d33;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-:root[data-d="1"]{--bg:#0C0A07;--c:rgba(32,25,14,.74);--t:#F6EDD8;--m:#B3A68B;--b:rgba(224,184,79,.2);--cb:rgba(224,184,79,.34);--a:#E0B84F;--a2:#F2D88A;--g:#A47A20;--p:#F2D88A;--sh:rgba(224,184,79,.22);--ok:#4fd7a0;--er:#ff8a8a}
-:root[data-t="1"]:not([data-d="1"]){--g:#0D4C3C;--p:#0D4C3C;--t:#10241D;--m:#5E6F66;--bg:#F8F6EC}
-:root[data-t="1"][data-d="1"]{--bg:#07100D;--c:rgba(14,59,46,.45);--g:#1F8A68}
-:root[data-t="2"]:not([data-d="1"]){--g:#16213E;--p:#16213E;--t:#0F172A;--m:#5F6878;--bg:#F7F6F1}
-:root[data-t="2"][data-d="1"]{--bg:#0A0F1E;--c:rgba(22,33,62,.6);--g:#2A3B6B}
-:root[data-t="3"]:not([data-d="1"]){--g:#5B1A2B;--p:#5B1A2B;--t:#2A0F16;--m:#76616A;--bg:#FAF5EF}
-:root[data-t="3"][data-d="1"]{--bg:#0E0709;--c:rgba(91,26,43,.42);--g:#8A2D45}
+:root{--a:#B8892B;--a2:#E2C275;--g:#8A6420;--p:#7A5614;--on:#1F1608;--bg:#FBF7EE;--c:rgba(255,252,244,.88);--t:#2B2118;--m:#7A6A55;--b:rgba(120,90,30,.15);--cb:rgba(184,137,43,.4);--sh:rgba(184,137,43,.38);--ok:#1f9d6b;--er:#d33;
+--hk:#2A1E0F;--hk2:#4A3516;--ln:rgba(120,90,30,.15);--bb:var(--hk);--bf:#F2D88A;
+--sd:0 1px 2px rgba(60,40,10,.06),0 14px 30px -18px var(--sh);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-d="1"]{--bg:#0C0A07;--c:rgba(32,25,14,.8);--t:#F6EDD8;--m:#B3A68B;--b:rgba(224,184,79,.2);--cb:rgba(224,184,79,.34);--a:#E0B84F;--a2:#F2D88A;--g:#A47A20;--p:#F2D88A;--sh:rgba(224,184,79,.22);--ok:#4fd7a0;--er:#ff8a8a;
+--hk:#1C150A;--hk2:#33260F;--ln:rgba(224,184,79,.16);--bb:linear-gradient(180deg,#F2D88A,#D2A63E);--bf:#1F1608;--sd:0 1px 2px rgba(0,0,0,.5),0 16px 34px -20px rgba(0,0,0,.9)}
+:root[data-t="1"]:not([data-d="1"]){--g:#0D4C3C;--p:#0D4C3C;--t:#10241D;--m:#5E6F66;--bg:#F8F6EC;--hk:#0B3B2E;--hk2:#14604B}
+:root[data-t="1"][data-d="1"]{--bg:#07100D;--c:rgba(14,59,46,.45);--g:#1F8A68;--hk:#0B2A21;--hk2:#124536}
+:root[data-t="2"]:not([data-d="1"]){--g:#16213E;--p:#16213E;--t:#0F172A;--m:#5F6878;--bg:#F7F6F1;--hk:#111A33;--hk2:#1F2F5C}
+:root[data-t="2"][data-d="1"]{--bg:#0A0F1E;--c:rgba(22,33,62,.6);--g:#2A3B6B;--hk:#0E1630;--hk2:#1A2750}
+:root[data-t="3"]:not([data-d="1"]){--g:#5B1A2B;--p:#5B1A2B;--t:#2A0F16;--m:#76616A;--bg:#FAF5EF;--hk:#4A1424;--hk2:#7A2339}
+:root[data-t="3"][data-d="1"]{--bg:#0E0709;--c:rgba(91,26,43,.42);--g:#8A2D45;--hk:#3A0F1B;--hk2:#5C1C2E}
 html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,"Noto Serif Bengali",serif;color:var(--t);background:var(--bg);min-height:100vh;transition:background .4s;line-height:1.55}
-body::before{content:"";position:fixed;inset:-20% -10% auto;height:70vh;background:radial-gradient(60% 60% at 30% 30%,color-mix(in srgb,var(--g) 24%,transparent),transparent),radial-gradient(50% 50% at 80% 20%,color-mix(in srgb,var(--a) 16%,transparent),transparent);z-index:-1}
-button,input,select,h1,h2{font-family:"Noto Serif Bengali",Inter,serif}
-main{max-width:1080px;margin:auto;padding:18px 16px 70px}
-header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
-h1{font-size:clamp(24px,5vw,32px);margin:0;font-weight:700}
-.tools{display:flex;gap:8px;align-items:center}
-.ic{width:40px;height:40px;padding:0;border-radius:12px;display:grid;place-items:center;font-size:16px;background:var(--c);color:var(--t);border:1px solid var(--cb);box-shadow:none}
-.ic:hover{border-color:var(--a);background:color-mix(in srgb,var(--a) 14%,var(--c))}
-.mn{display:flex;align-items:center;gap:6px;background:var(--c);border:1px solid var(--cb);border-radius:14px;padding:3px}
-.mn span{min-width:128px;text-align:center;font-weight:600;font-size:14px}
-.mn .ic{border:0;width:34px;height:34px;background:transparent}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+body{margin:0;font-family:Inter,"Hind Siliguri","Noto Serif Bengali",sans-serif;font-size:15px;color:var(--t);background:var(--bg);min-height:100vh;transition:background .4s;line-height:1.6;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:440px;background:radial-gradient(75% 100% at 50% 0,color-mix(in srgb,var(--a) 14%,transparent),transparent 72%);z-index:-1;pointer-events:none}
+button,input,select{font-family:inherit}
+h1,h2{font-family:"Noto Serif Bengali",Inter,serif}
+main{max-width:1120px;margin:auto;padding:22px 18px 84px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+h1{font-size:clamp(26px,5vw,32px);margin:0;font-weight:700;letter-spacing:-.3px}
+.tools{display:flex;gap:10px;align-items:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:16px}
 .wide{grid-column:1/-1}
-.card{background:var(--c);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--cb);border-radius:20px;padding:18px;box-shadow:0 12px 32px -16px var(--sh);position:relative;overflow:hidden}
-h2{font-size:16px;margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
-.hero{padding:26px 22px;background:linear-gradient(135deg,color-mix(in srgb,var(--a) 26%,var(--c)),var(--c) 55%,color-mix(in srgb,var(--g) 22%,var(--c)));border-color:var(--a);animation:rise .7s both}
-@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-.hero::before{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;border:1px solid var(--cb);box-shadow:0 0 0 24px color-mix(in srgb,var(--a) 7%,transparent),0 0 0 52px color-mix(in srgb,var(--a) 4%,transparent)}
-.hl{color:var(--m);font-size:14px}
-.big{font-size:clamp(40px,10vw,64px);font-weight:700;letter-spacing:-1.5px;line-height:1.2;background:linear-gradient(90deg,var(--a),var(--a2) 50%,var(--g));-webkit-background-clip:text;background-clip:text;color:transparent;margin:2px 0 14px}
-.chips{display:flex;gap:10px;flex-wrap:wrap;position:relative}
-.chip{padding:8px 14px;border-radius:14px;background:var(--b);font-size:13px;color:var(--m)}
-.chip b{display:block;font-size:17px;color:var(--t)}
-.chip.i b{color:var(--ok)}.chip.o b{color:var(--er)}
-.hd .nm{filter:blur(9px);user-select:none}
+@media(min-width:960px){.w2{grid-column:span 2}}
+.card{background:var(--c);border:1px solid var(--ln);border-radius:20px;padding:20px;box-shadow:var(--sd);position:relative;overflow:hidden}
+h2{font-size:15.5px;font-weight:700;margin:0 0 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;letter-spacing:.1px}
+.ht{display:flex;align-items:center;gap:10px;min-width:0}
+.hi{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;flex:none;color:var(--k,var(--p));background:color-mix(in srgb,var(--k,var(--a)) 15%,transparent)}
+.hi svg,.ic svg{width:17px;height:17px}
+/* সেকশনের নিজস্ব সূক্ষ্ম রং: শুধু আইকন-টাইল, কার্ডের মাথার সরু রেখা ও বার — কার্ডের পটভূমি একই থাকে */
+:root{--k-edu:#4F6FD8;--k-job:#1B9A8C;--k-don:#CB5C7E;--k-bud:#E07B39;--k-goal:#3FA066;--k-pie:#8B6AD4;--k-tr:#3C95C9;--k-kh:#A8754A;--k-ls:#6B7A8F}
+:root[data-d="1"]{--k-edu:#8AA2F5;--k-job:#4FD1C0;--k-don:#F08AA8;--k-bud:#F5A262;--k-goal:#6FD39A;--k-pie:#B79CF5;--k-tr:#6CC0EA;--k-kh:#D9A573;--k-ls:#A9B4C4}
+.k-edu{--k:var(--k-edu)}.k-job{--k:var(--k-job)}.k-don{--k:var(--k-don)}.k-bud{--k:var(--k-bud)}.k-goal{--k:var(--k-goal)}.k-pie{--k:var(--k-pie)}.k-tr{--k:var(--k-tr)}.k-kh{--k:var(--k-kh)}.k-ls{--k:var(--k-ls)}
+.card:not(.hero)::before{content:"";position:absolute;left:20px;top:0;width:40px;height:3px;border-radius:0 0 4px 4px;background:var(--k,var(--a))}
+.ic svg{width:19px;height:19px}
 .m{color:var(--m);font-size:13px}
-button{border:1px solid var(--a2);border-radius:10px;padding:10px 20px;background:var(--t);color:var(--a2);font-weight:600;cursor:pointer;font-size:14px;transition:.2s}
-button:hover{box-shadow:0 4px 14px -6px var(--sh);background:color-mix(in srgb,var(--t) 88%,var(--a2))}
+.nm{transition:filter .2s}
+.hd .nm{filter:blur(9px);user-select:none}
+
+/* ===== হিরো: ব্যালান্স কার্ড ===== */
+.hero{padding:30px 30px 26px;border-radius:26px;color:#F6EDD8;border:1px solid color-mix(in srgb,var(--a2) 42%,transparent);background:linear-gradient(135deg,var(--hk2),var(--hk) 64%);box-shadow:0 34px 60px -34px color-mix(in srgb,var(--hk) 75%,transparent),0 1px 0 rgba(255,255,255,.09) inset;animation:rise .7s both}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'><g fill='none' stroke='%23E2C275' stroke-opacity='.17'><rect x='14' y='14' width='28' height='28'/><rect x='14' y='14' width='28' height='28' transform='rotate(45 28 28)'/><circle cx='28' cy='28' r='3'/></g></svg>");-webkit-mask-image:linear-gradient(105deg,transparent 38%,#000 100%);mask-image:linear-gradient(105deg,transparent 38%,#000 100%)}
+.hero>*{position:relative}
+.hero .hl{color:rgba(246,237,216,.7);font-size:13.5px}
+.big{display:flex;align-items:baseline;gap:8px;font-family:"Noto Serif Bengali",serif;font-size:clamp(42px,10vw,64px);font-weight:700;letter-spacing:-1px;line-height:1.15;margin:4px 0 18px;color:#FBF1D6}
+.big .cur{font-size:.46em;color:var(--a2);font-weight:600;letter-spacing:0}
+.split{height:6px;border-radius:6px;background:rgba(127,227,184,.38);overflow:hidden;margin:0 0 20px}
+.split i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#FFC2B3,#FF8F8F);transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.sp{font-size:12.5px;color:rgba(246,237,216,.62);margin-bottom:18px}
+
+/* ===== চিপ ===== */
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{padding:10px 15px;border-radius:14px;background:color-mix(in srgb,var(--a) 8%,transparent);border:1px solid var(--ln);font-size:12.5px;color:var(--m);line-height:1.5}
+.chip b{display:block;font-size:17px;font-weight:600;color:var(--t);font-family:"Noto Serif Bengali",serif}
+.chip.i b{color:var(--ok)}.chip.o b{color:var(--er)}
+.hero .chips{gap:0;flex-wrap:wrap;row-gap:10px}
+.hero .chip{background:none;border:0;border-radius:0;border-left:1px solid rgba(246,237,216,.18);padding:0 24px;color:rgba(246,237,216,.62)}
+.hero .chip:first-child{padding-left:0;border-left:0}
+.hero .chip b{font-size:19px;color:#FBF1D6}
+.hero .chip.i b{color:#7FE3B8}.hero .chip.o b{color:#FFA3A3}
+@media(max-width:480px){.hero{padding:24px 20px 22px}.hero .chip{padding:0 14px}}
+
+/* ===== বাটন ===== */
+button{border:1px solid transparent;border-radius:12px;padding:11px 20px;background:var(--bb);color:var(--bf);font-weight:600;font-size:14px;cursor:pointer;transition:transform .15s,box-shadow .2s,filter .2s,background .2s,border-color .2s,color .2s;box-shadow:0 10px 20px -12px color-mix(in srgb,var(--hk) 85%,transparent)}
+button:hover{filter:brightness(1.08)}
 button:active{transform:translateY(1px)}
-button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--g);outline-offset:2px}
-button.g{background:transparent;color:var(--t);border-color:var(--cb);font-weight:500;padding:7px 14px;font-size:13px}
-button.g:hover{border-color:var(--a);background:color-mix(in srgb,var(--a) 12%,transparent)}
-input,select{border:1px solid var(--b);background:var(--c);color:var(--t);border-radius:12px;padding:10px 12px;font-size:14px;min-width:0;width:100%}
-form{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--a);outline-offset:2px}
+button.g{background:transparent;color:var(--t);border-color:var(--cb);box-shadow:none;padding:8px 15px;font-size:13px}
+button.g:hover{filter:none;background:color-mix(in srgb,var(--a) 11%,transparent)}
+.ic{width:42px;height:42px;padding:0;border-radius:13px;display:grid;place-items:center;background:var(--c);color:var(--t);border:1px solid var(--ln);box-shadow:var(--sd);text-decoration:none}
+.ic:hover{filter:none;border-color:var(--cb);background:color-mix(in srgb,var(--a) 10%,var(--c))}
+.mn{display:flex;align-items:center;gap:4px;background:var(--c);border:1px solid var(--ln);border-radius:14px;padding:3px;box-shadow:var(--sd)}
+.mn span{min-width:132px;text-align:center;font-weight:600;font-size:14px}
+.mn .ic{border:0;width:36px;height:36px;background:transparent;box-shadow:none;font-size:20px;line-height:1}
+.x{background:none;border:0;color:var(--m);padding:4px 8px;box-shadow:none;font-size:15px}
+.x:hover{background:none;color:var(--er);filter:none}
+.x.ed:hover{color:var(--a)}
+.seg{display:flex;gap:4px;padding:4px;border-radius:14px;background:color-mix(in srgb,var(--t) 5%,transparent);border:1px solid var(--ln)}
+.seg button{flex:1;background:transparent;color:var(--m);box-shadow:none;border-radius:10px;padding:8px 10px;font-size:13px}
+.seg button:hover:not(.on){filter:none;color:var(--t)}
+.seg button.on{background:var(--bb);color:var(--bf);box-shadow:0 8px 16px -10px color-mix(in srgb,var(--hk) 85%,transparent)}
+
+/* ===== ফর্ম ===== */
+input,select{width:100%;min-width:0;border:1px solid var(--ln);background-color:color-mix(in srgb,var(--t) 3%,var(--c));color:var(--t);border-radius:12px;padding:11px 13px;font-size:14.5px;transition:border-color .2s,box-shadow .2s}
+input::placeholder{color:var(--m);opacity:.75}
+input:focus,select:focus{outline:none;border-color:var(--a);box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 22%,transparent)}
+select{appearance:none;-webkit-appearance:none;padding-right:34px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1.5l5 5 5-5' fill='none' stroke='%238A7A60' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");background-repeat:no-repeat;background-position:right 13px center}
+form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 form .f2{grid-column:1/-1}
-.seg{display:flex;gap:6px}
-.seg button{flex:1;background:transparent;color:var(--m);border-color:var(--b)}
-.seg button.on{background:var(--t);color:var(--a2);border-color:var(--a2)}
-.bar{height:10px;border-radius:9px;background:var(--b);overflow:hidden;margin:12px 0 8px}
-.bar i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--a),var(--a2));transition:width .8s cubic-bezier(.2,.8,.2,1)}
-.bar i.hot{background:linear-gradient(90deg,#e08a3a,var(--er))}
-.warn{padding:9px 13px;border-radius:12px;background:rgba(220,60,60,.12);border:1px solid rgba(220,60,60,.4);color:var(--er);font-size:13px;font-weight:600;margin-top:8px}
-.okb{padding:9px 13px;border-radius:12px;background:rgba(31,157,107,.13);border:1px solid rgba(31,157,107,.4);color:var(--ok);font-size:13px;font-weight:600;margin-top:8px}
 .inl{display:flex;gap:8px;align-items:center}
-.don{display:flex;gap:18px;align-items:center;flex-wrap:wrap;justify-content:center}
-.don svg{width:150px;height:150px;transform:rotate(-90deg);flex:none}
-.lg{flex:1 1 150px;display:grid;gap:6px;font-size:13px}
-.lg div{display:flex;justify-content:space-between;gap:8px}
-.lg i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px}
-.tr{display:flex;align-items:flex-end;justify-content:space-around;gap:6px;height:150px;padding-top:8px}
-.tr div{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}
-.tr .bs{display:flex;gap:3px;align-items:flex-end;height:100%;width:100%;justify-content:center}
-.tr .bs i{width:42%;max-width:18px;border-radius:6px 6px 2px 2px;min-height:2px;transition:height .8s}
-.tr .bs i:first-child{background:var(--ok)}.tr .bs i:last-child{background:var(--a)}
-.tr small{font-size:11px;color:var(--m)}
-.row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px dashed var(--b)}
-.row:last-child{border:0}
-.ei{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:19px;flex:none}
-.rt{flex:1;min-width:0}
-.rt div:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}
-.x{background:none;border:0;color:var(--m);padding:4px 8px;box-shadow:none}
-.x:hover{background:none;color:var(--er);box-shadow:none}
-.pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;background:color-mix(in srgb,var(--a) 20%,transparent);color:var(--p);font-weight:600}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
 .flt{display:grid;grid-template-columns:1fr auto auto;gap:8px;margin-bottom:6px}
 .flt select{width:auto}
-.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+
+/* ===== বার, সতর্কবার্তা, পিল ===== */
+.bar{height:8px;border-radius:9px;background:var(--b);overflow:hidden;margin:14px 0 8px}
+.bar i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--k,var(--a)),color-mix(in srgb,var(--k,var(--a2)) 55%,#fff));transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.bar i.hot{background:linear-gradient(90deg,#e08a3a,var(--er))}
+.warn,.okb{padding:10px 14px;border-radius:12px;font-size:13px;font-weight:600;margin-top:10px}
+.warn{background:rgba(220,60,60,.1);border:1px solid rgba(220,60,60,.32);color:var(--er)}
+.okb{background:rgba(31,157,107,.1);border:1px solid rgba(31,157,107,.32);color:var(--ok)}
+.pill{display:inline-block;padding:3px 11px;border-radius:99px;font-size:12px;background:color-mix(in srgb,var(--a) 16%,transparent);color:var(--p);font-weight:600;white-space:nowrap}
+
+/* ===== চার্ট ===== */
+.don{display:flex;gap:22px;align-items:center;flex-wrap:wrap;justify-content:center}
+.dw{position:relative;width:156px;height:156px;flex:none}
+.dw svg{width:100%;height:100%;transform:rotate(-90deg);display:block}
+.dc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px;color:var(--m);line-height:1.3}
+.dc b{font-size:15px;color:var(--t);font-family:"Noto Serif Bengali",serif}
+.lg{flex:1 1 150px;display:grid;gap:8px;font-size:13px}
+.lg div{display:flex;justify-content:space-between;gap:8px}
+.lg i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px}
+.tr{display:flex;align-items:flex-end;justify-content:space-around;gap:8px;height:158px;padding-top:8px}
+.tr>div{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end}
+.tr .bs{display:flex;gap:4px;align-items:flex-end;height:100%;width:100%;justify-content:center}
+.tr .bs i{width:38%;max-width:18px;border-radius:6px 6px 2px 2px;min-height:2px;transition:height .8s}
+.tr .bs i:first-child{background:var(--ok)}.tr .bs i:last-child{background:var(--a)}
+.tr small{font-size:11.5px;color:var(--m)}
+
+/* ===== তালিকা ===== */
+.row{display:flex;align-items:center;gap:13px;padding:12px 2px;border-bottom:1px solid var(--ln)}
+.row:last-child{border:0}
+.ei{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-size:19px;flex:none}
+.rt{flex:1;min-width:0}
+.rt div:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14.5px;font-weight:600}
+.row>b{font-family:"Noto Serif Bengali",serif;font-weight:600;font-size:15px;white-space:nowrap}
+.empty{text-align:center;padding:24px 14px;color:var(--m);font-size:14px;border:1px dashed var(--ln);border-radius:14px}
+.pr{display:flex;align-items:center;gap:11px;padding:7px 0;font-size:13.5px}
+.pr>span{font-size:18px;width:26px;text-align:center;flex:none}
+.pr .pn{flex:1;min-width:0}
+.pr .pn>div:first-child{display:flex;justify-content:space-between;gap:8px}
+.pr .pb{height:6px;border-radius:6px;background:var(--b);overflow:hidden;margin-top:5px}
+.pr .pb i{display:block;height:100%;border-radius:6px}
 .th{display:flex;gap:8px}
 .th b{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid transparent}
 .th b.on{border-color:var(--t)}
-.pr{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:13.5px}.pr>span{font-size:18px;width:24px;text-align:center;flex:none}.pr .pn{flex:1;min-width:0}.pr .pn>div:first-child{display:flex;justify-content:space-between;gap:8px}.pr .pb{height:6px;border-radius:6px;background:var(--b);overflow:hidden;margin-top:4px}.pr .pb i{display:block;height:100%;border-radius:6px}
-.empty{text-align:center;padding:26px 8px;color:var(--m);font-size:14px}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-
-/* ===== প্রিমিয়াম বাটন ===== */
-button:not(.x):not(.ic){position:relative;overflow:hidden;isolation:isolate;border:1px solid transparent;border-radius:14px;padding:11px 22px;letter-spacing:.2px;
-background:linear-gradient(#3A2D20,#1F1710) padding-box,linear-gradient(135deg,#F2D88A,#B8892B 55%,#E2C275) border-box;color:#F2D88A;
-box-shadow:0 10px 22px -12px rgba(31,22,8,.7),0 1px 0 rgba(255,255,255,.18) inset,0 -2px 6px rgba(0,0,0,.25) inset;
-transition:transform .18s ease,box-shadow .25s ease,filter .25s ease,background .25s}
-button:not(.x):not(.ic)::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(115deg,transparent 35%,rgba(255,236,170,.38) 50%,transparent 65%);transform:translateX(-120%);transition:transform .7s ease}
-button:not(.x):not(.ic):hover{transform:translateY(-1px);box-shadow:0 14px 26px -12px rgba(184,137,43,.65),0 1px 0 rgba(255,255,255,.22) inset,0 -2px 6px rgba(0,0,0,.25) inset;filter:brightness(1.06)}
-button:not(.x):not(.ic):hover::before{transform:translateX(120%)}
-button:not(.x):not(.ic):active{transform:translateY(1px) scale(.985);box-shadow:0 4px 10px -6px rgba(31,22,8,.7),0 2px 6px rgba(0,0,0,.3) inset}
-:root[data-d="1"] button:not(.x):not(.ic){background:linear-gradient(180deg,#F7E3A0,#D9AE45 60%,#B8892B) padding-box,linear-gradient(135deg,#FFF1C2,#B8892B) border-box;color:#1F1608;font-weight:700;box-shadow:0 10px 24px -12px rgba(224,184,79,.55),0 1px 0 rgba(255,255,255,.5) inset,0 -2px 5px rgba(120,80,10,.35) inset}
-button.g{padding:8px 16px;font-weight:600;color:var(--t);background:linear-gradient(var(--c),var(--c)) padding-box,linear-gradient(135deg,color-mix(in srgb,var(--a2) 80%,transparent),color-mix(in srgb,var(--a) 45%,transparent)) border-box;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 6px 16px -12px var(--sh),0 1px 0 rgba(255,255,255,.5) inset}
-button.g:hover{background:linear-gradient(color-mix(in srgb,var(--a) 14%,var(--c)),color-mix(in srgb,var(--a) 14%,var(--c))) padding-box,linear-gradient(135deg,var(--a2),var(--a)) border-box;box-shadow:0 10px 22px -12px var(--sh),0 1px 0 rgba(255,255,255,.5) inset}
-:root[data-d="1"] button.g{background:linear-gradient(var(--c),var(--c)) padding-box,linear-gradient(135deg,rgba(242,216,138,.7),rgba(224,184,79,.25)) border-box;color:var(--t);font-weight:600;box-shadow:0 6px 16px -12px rgba(0,0,0,.8),0 1px 0 rgba(255,255,255,.08) inset}
-:root[data-d="1"] button.g:hover{background:linear-gradient(rgba(224,184,79,.16),rgba(224,184,79,.16)) padding-box,linear-gradient(135deg,#F2D88A,#E0B84F) border-box}
-button.g::before{background:linear-gradient(115deg,transparent 35%,rgba(226,194,117,.3) 50%,transparent 65%)}
-.seg{padding:4px;border-radius:16px;background:color-mix(in srgb,var(--a) 9%,transparent);border:1px solid var(--b)}
-.seg button:not(.on),:root[data-d="1"] .seg button:not(.on){background:transparent;color:var(--m);box-shadow:none;border-color:transparent;font-weight:600;filter:none}
-.seg button::before{display:none}
-.seg button.on{box-shadow:0 8px 16px -10px rgba(31,22,8,.7),0 1px 0 rgba(255,255,255,.18) inset}
-.ic{border:1px solid transparent;background:linear-gradient(var(--c),var(--c)) padding-box,linear-gradient(135deg,color-mix(in srgb,var(--a2) 80%,transparent),color-mix(in srgb,var(--a) 40%,transparent)) border-box;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 6px 16px -12px var(--sh),0 1px 0 rgba(255,255,255,.5) inset;transition:transform .18s,box-shadow .25s}
-.ic:hover{transform:translateY(-1px);background:linear-gradient(color-mix(in srgb,var(--a) 14%,var(--c)),color-mix(in srgb,var(--a) 14%,var(--c))) padding-box,linear-gradient(135deg,var(--a2),var(--a)) border-box}
-.ic:active{transform:scale(.95)}
-.mn .ic,.mn .ic:hover{background:transparent;box-shadow:none;border:0}
-.x.ed{padding:4px 8px;color:var(--m)}.x.ed:hover{color:var(--a)}
-.x::before{display:none}
-@media(prefers-reduced-motion:reduce){button,button::before{transition:none!important}}
 
 /* ===== খাতা সংযোগ ===== */
-a.ic{text-decoration:none;color:var(--t)}
 .lk{color:var(--p);font-weight:700;font-size:13px;text-decoration:none;border-bottom:1px dashed var(--a);white-space:nowrap}
 .lk:hover{color:var(--a)}
-.kh{border-color:var(--a)}
 .kh .kt{margin-bottom:8px}
-.kp{display:flex;align-items:center;gap:12px;padding:10px 8px;border-bottom:1px dashed var(--b);cursor:pointer;border-radius:12px;transition:background .2s}
+.kp{display:flex;align-items:center;gap:12px;padding:10px 8px;border-bottom:1px solid var(--ln);cursor:pointer;border-radius:12px;transition:background .2s}
 .kp:last-of-type{border-bottom:0}
 .kp:hover{background:color-mix(in srgb,var(--a) 9%,transparent)}
 .kav{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;font-weight:700;font-size:17px;color:#fff;flex:none;background:linear-gradient(135deg,hsl(var(--h) 45% 38%),hsl(var(--h) 55% 56%))}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body><script src="header.js"></script><main id="app"></main>
 <script>
 if(!window.L)window.L=s=>s;
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
+const IC={plus:'<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>',pen:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',pie:'<path d="M21 12a9 9 0 1 1-9-9v9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/>',chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',book:'<path d="M4 5a2 2 0 0 1 2-2h14v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/>',heart:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/>',cap:'<path d="M22 10 12 5 2 10l10 5z"/><path d="M6 12v5c3 2 9 2 12 0v-5M22 10v6"/>',bag:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/>',eye:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',eyeoff:'<path d="M3 3l18 18"/><path d="M10.6 6.1A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4M6.3 6.3C3.6 8.1 2 12 2 12s3.5 7 10 7a9.7 9.7 0 0 0 4.3-1"/>'};
+const I=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]}</svg>`;
+const H=(n,t)=>`<span class="ht"><span class="hi">${I(n)}</span>${t}</span>`;
+const fmn=n=>bn(Math.round(n).toLocaleString('en-IN'));
 const fm=n=>'৳ '+bn(Math.round(n).toLocaleString('en-IN'));
 const $=document.getElementById('app'),root=document.documentElement;
 let S={theme:0,dark:0,hide:0,bud:0,goal:{n:'',a:0},fin:[],led:[],auto:{on:0,a:0,t:'06:00',last:''}};
@@ -146,7 +177,7 @@ const C={food:['🍽️','খাবার','#E0A63A','out'],trans:['🚌','য�
 const ck=f=>C[f.c]?f.c:(f.t=='in'?'oi':'o');
 let V=new Date();V.setDate(1);let Q='',F='all',T='out',E=null,PP='',FP='',PV={edu:'m',job:'a'};
 /* ===== খাত: প্রতিটি ব্যয়ে ঐচ্ছিক ট্যাগ p ('edu' পড়াশোনা / 'job' চাকরি)। ব্যয় একটাই থাকে, তাই দৈনিক হিসাব ও বাজেটেও গোনা হয়; আলাদা কার্ডে শুধু ওই খাতের হিসাব দেখায় ===== */
-const PU={edu:['🎓','পড়াশোনার খরচ','পড়াশোনা'],job:['💼','চাকরির খরচ','চাকরি']};
+const PU={edu:['🎓','পড়াশোনার খরচ','পড়াশোনা','cap'],job:['💼','চাকরির খরচ','চাকরি','bag']};
 const PC={edu:['food','trans','pvt','trn','cl','edu','o'],job:['apply','trans','food','o']};
 function catKeys(ef){if(T=='in')return Object.keys(C).filter(k=>C[k][3]=='in'&&!C[k][4]);
  let ks=PP&&PC[PP]?PC[PP].slice():Object.keys(C).filter(k=>C[k][3]=='out'&&!C[k][4]&&k!='apply');
@@ -155,10 +186,10 @@ function catKeys(ef){if(T=='in')return Object.keys(C).filter(k=>C[k][3]=='in'&&!
 function kf(fn){const f=$.querySelector('form[data-f=fin]'),v=f?{a:f.elements.a.value,d:f.elements.d.value,n:f.elements.n.value}:null;fn();const g=v&&$.querySelector('form[data-f=fin]');if(g){g.elements.a.value=v.a;g.elements.d.value=v.d;g.elements.n.value=v.n}}
 function pcard(p,mk,exp){const u=PU[p],all=S.fin.filter(f=>f.t=='out'&&f.p==p),mo=all.filter(f=>f.d.startsWith(mk)),tm=sum(mo,'out'),ta=sum(all,'out'),v=PV[p]||'m',src=v=='a'?all:mo,tv=v=='a'?ta:tm;
  const by={};src.forEach(f=>{const k=ck(f);by[k]=(by[k]||0)+f.a});const es=Object.entries(by).sort((a,b)=>b[1]-a[1]);
- return `<section class="card"><h2>${u[0]} ${u[1]}${tm>0&&exp>0?` <span class="pill nm">মাসের ${bn(Math.round(tm/exp*100))}%</span>`:''}</h2>
+ return `<section class="card k-${p}"><h2>${H(u[3],u[1])}${tm>0&&exp>0?`<span class="pill nm">মাসের ${bn(Math.round(tm/exp*100))}%</span>`:''}</h2>
 <div class="chips"><div class="chip o">এ মাসে<b class="nm">${fm(tm)}</b></div><div class="chip">এ পর্যন্ত মোট<b class="nm">${fm(ta)}</b></div></div>
 <div class="seg" style="margin:12px 0 4px"><button type="button" class="${v=='m'?'on':''}" data-pv="${p}:m">এ মাস</button><button type="button" class="${v=='a'?'on':''}" data-pv="${p}:a">সব সময়</button></div>
-${es.length?es.map(([k,a])=>`<div class="pr"><span>${C[k][0]}</span><div class="pn"><div><span>${C[k][1]}</span><b class="nm">${fm(a)}</b></div><div class="pb"><i style="width:${Math.max(2,a/tv*100)}%;background:${C[k][2]}"></i></div></div></div>`).join('')+`<div class="m" style="margin-top:6px">${bn(src.length)}টি খরচ</div>`:`<div class="empty">${v=='a'?'এখনো':'এ মাসে'} কোনো খরচ নেই। ‘নতুন হিসাব’ ফর্মে খাত বেছে যোগ করুন।</div>`}</section>`}
+${es.length?es.map(([k,a])=>`<div class="pr"><span>${C[k][0]}</span><div class="pn"><div><span>${C[k][1]}</span><b class="nm">${fm(a)}</b></div><div class="pb"><i style="width:${Math.max(2,a/tv*100)}%;background:${C[k][2]}"></i></div></div></div>`).join(''):`<div class="empty">${v=='a'?'এখনো':'এ মাসে'} কোনো খরচ নেই</div>`}</section>`}
 const ex=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const sum=(l,t)=>l.filter(f=>f.t==t).reduce((a,f)=>a+f.a,0);
 /* ===== খাতার সাথে সংযোগ: খাতার (invoice) যে লেনদেনে hs=1, সেগুলো এখানে আয়-ব্যয়ে মিশে দেখা যায়। ডাটা একটাই (S.led), কপি নেই — তাই দুই পেজ সবসময় মিলে থাকে ===== */
@@ -191,35 +222,35 @@ const sr=inc>0?Math.round(bal/inc*100):0;
 // donut
 const by={};mf.filter(f=>f.t=='out').forEach(f=>by[ck(f)]=(by[ck(f)]||0)+f.a);
 const ents=Object.entries(by).sort((a,b)=>b[1]-a[1]);let off=0;
-const segs=ents.map(([k,v])=>{const l=v/exp*251.3,s=`<circle r="40" cx="50" cy="50" fill="none" stroke="${C[k][2]}" stroke-width="13" stroke-dasharray="${l} ${251.3-l}" stroke-dashoffset="${-off}"/>`;off+=l;return s}).join('');
+const segs=ents.map(([k,v])=>{const l=v/exp*251.3,s=`<circle r="40" cx="50" cy="50" fill="none" stroke="${C[k][2]}" stroke-width="12" stroke-dasharray="${Math.max(.5,l-(ents.length>1?1.6:0))} 251.3" stroke-dashoffset="${-off}"/>`;off+=l;return s}).join('');
 // trend
 const tr=[];for(let i=5;i>=0;i--){const d=new Date(V.getFullYear(),V.getMonth()-i,1),m=key(d).slice(0,7),l=AL.filter(f=>f.d.startsWith(m));tr.push({n:L(MON[d.getMonth()]).slice(0,3),i:sum(l,'in'),e:sum(l,'out')})}
 const mx=Math.max(1,...tr.flatMap(x=>[x.i,x.e]));
 // budget
 const pc=S.bud>0?exp/S.bud*100:0,dim=new Date(V.getFullYear(),V.getMonth()+1,0).getDate(),left=dim-now.getDate()+1;
-const bm=S.bud>0?(pc>=100?`<div class="warn nm">⚠️ বাজেট ${fm(exp-S.bud)} ছাড়িয়েছে</div>`:pc>=80?`<div class="warn nm">⚠️ বাজেটের ${bn(Math.round(pc))}% শেষ</div>`:isNow?`<div class="okb nm">✅ দৈনিক খরচের সীমা ${fm((S.bud-exp)/left)}</div>`:''):'';
+const bm=S.bud>0?(pc>=100?`<div class="warn nm">বাজেট ${fm(exp-S.bud)} ছাড়িয়েছে</div>`:pc>=80?`<div class="warn nm">বাজেটের ${bn(Math.round(pc))}% শেষ</div>`:isNow?`<div class="okb nm">দৈনিক খরচের সীমা ${fm((S.bud-exp)/left)}</div>`:''):'';
 const pseg=`<div class="seg f2" title="কোন খাতের খরচ?"><button type="button" class="${PP?'':'on'}" data-pp="">সাধারণ</button><button type="button" class="${PP=='edu'?'on':''}" data-pp="edu">🎓 পড়াশোনা</button><button type="button" class="${PP=='job'?'on':''}" data-pp="job">💼 চাকরি</button></div>`,pcs=pcard('edu',mk,exp)+pcard('job',mk,exp);
 // auto donation
 const A=S.auto,ay=(()=>{const d=new Date();d.setDate(d.getDate()+1);return key(d)})();
-let as='';if(A.on&&A.a>0&&A.last){const nd=new Date(A.last+'T12:00:00');nd.setDate(nd.getDate()+1);const nk=key(nd);as=`<div class="okb nm">✅ চালু আছে · পরের কাটা: ${nk==key(now)?'আজ':nk==ay?'কাল':bn(nk.slice(8))+' '+MON[+nk.slice(5,7)-1]} ${tmf(A.t)} · ${fm(A.a)}</div>`}
-const ac=`<section class="card"><h2>💝 স্বয়ংক্রিয় দৈনিক দান ${A.on?'<span class="pill">চালু</span>':''}</h2><div class="inl"><input id="aa" type="number" min="1" step="any" placeholder="টাকা" value="${A.a||''}"><input id="at" type="time" value="${A.t||'06:00'}"></div><div class="acts" style="margin-top:8px"><button class="g" data-a="auto">${A.on?'আপডেট করুন':'চালু করুন'}</button>${A.on?'<button class="g" data-a="autooff">বন্ধ করুন</button>':''}</div>${as}<div class="m" style="margin-top:10px">প্রতিদিন ঠিক এই সময়ে এই পরিমাণ টাকা ‘দান’ ব্যয় হিসেবে হিসাব থেকে কাটা যাবে। পেজ বন্ধ থাকলে পরের বার খোলার সাথে সাথে মিস হওয়া দিনগুলোর দান কেটে নেওয়া হবে।</div></section>`;
+let as='';if(A.on&&A.a>0&&A.last){const nd=new Date(A.last+'T12:00:00');nd.setDate(nd.getDate()+1);const nk=key(nd);as=`<div class="okb nm">পরের কাটা: ${nk==key(now)?'আজ':nk==ay?'কাল':bn(nk.slice(8))+' '+MON[+nk.slice(5,7)-1]} ${tmf(A.t)} · ${fm(A.a)}</div>`}
+const ac=`<section class="card k-don"><h2>${H('heart','স্বয়ংক্রিয় দৈনিক দান')}${A.on?'<span class="pill">চালু</span>':''}</h2><div class="inl"><input id="aa" type="number" min="1" step="any" placeholder="টাকা" value="${A.a||''}"><input id="at" type="time" value="${A.t||'06:00'}"></div><div class="acts" style="margin-top:8px"><button class="g" data-a="auto">${A.on?'আপডেট করুন':'চালু করুন'}</button>${A.on?'<button class="g" data-a="autooff">বন্ধ করুন</button>':''}</div>${as}</section>`;
 // goal
 const net=sum(AL,'in')-sum(AL,'out'),gp=S.goal.a>0?Math.max(0,Math.min(100,net/S.goal.a*100)):0;
-const KB=kh(),kc=`<section class="card wide kh"><h2>📒 খাতা <a class="lk" href="invoice.html">খাতা খুলুন →</a></h2>${KB.tot?`<div class="chips kt"><div class="chip i">আমি পাব<b class="nm">${fm(KB.G)}</b></div><div class="chip o">আমি দেব<b class="nm">${fm(KB.O)}</b></div><div class="chip">ধার মিটলে মোট সঞ্চয়<b class="nm">${fm(net+KB.Hn)}</b></div></div>${KB.L.filter(x=>x.b!==0).sort((a,b)=>Math.abs(b.b)-Math.abs(a.b)).slice(0,4).map(x=>`<div class="kp" data-lk="${ex(x.n)}"><div class="kav" style="--h:${hue(x.n)}">${ex(Array.from(x.n)[0])}</div><div class="rt"><div>${ex(x.n)}</div><div class="m">${bn(x.c)}টি লেনদেন</div></div><b class="nm" style="color:var(--${x.b>0?'ok':'er'})">${fm(Math.abs(x.b))} <span class="m">${x.b>0?'পাব':'দেব'}</span></b></div>`).join('')||'<div class="empty">সব হিসাব মিটে গেছে ✓</div>'}<div class="m" style="margin-top:10px">${bn(KB.hc)}/${bn(KB.tot)}টি খাতার লেনদেন আয়-ব্যয়ের হিসাবে যুক্ত</div><div class="acts"><button class="g" data-a="hsall">💰 সব হিসাবে তুলুন</button><button class="g" data-a="hsnone">সব সরান</button></div>`:'<div class="empty">খাতায় এখনো কোনো লেনদেন নেই। কে কত পাবে বা দেবে — খাতায় লিখলে এখানে আয়-ব্যয়ের সাথে মিলে দেখা যাবে।</div>'}</section>`;
-$.innerHTML=`<header><h1>💰 হিসাব</h1><div class="tools"><div class="mn"><button class="ic" data-nav="-1" aria-label="আগের মাস">‹</button><span>${MON[V.getMonth()]} ${bn(V.getFullYear())}</span><button class="ic" data-nav="1" aria-label="পরের মাস">›</button></div><a class="ic" href="invoice.html" aria-label="খাতা" title="খাতা">📒</a><button class="ic" data-a="hide" aria-label="অঙ্ক লুকান">${S.hide?'🙈':'👁️'}</button></div></header>
+const KB=kh(),kc=`<section class="card wide kh k-kh"><h2>${H('book','খাতা')}<a class="lk" href="invoice.html">খাতা খুলুন →</a></h2>${KB.tot?`<div class="chips kt"><div class="chip i">আমি পাব<b class="nm">${fm(KB.G)}</b></div><div class="chip o">আমি দেব<b class="nm">${fm(KB.O)}</b></div><div class="chip">ধার মিটলে মোট সঞ্চয়<b class="nm">${fm(net+KB.Hn)}</b></div></div>${KB.L.filter(x=>x.b!==0).sort((a,b)=>Math.abs(b.b)-Math.abs(a.b)).slice(0,4).map(x=>`<div class="kp" data-lk="${ex(x.n)}"><div class="kav" style="--h:${hue(x.n)}">${ex(Array.from(x.n)[0])}</div><div class="rt"><div>${ex(x.n)}</div><div class="m">${bn(x.c)}টি লেনদেন</div></div><b class="nm" style="color:var(--${x.b>0?'ok':'er'})">${fm(Math.abs(x.b))} <span class="m">${x.b>0?'পাব':'দেব'}</span></b></div>`).join('')||'<div class="empty">সব হিসাব মিটে গেছে ✓</div>'}<div class="acts"><button class="g" data-a="hsall">সব হিসাবে তুলুন</button><button class="g" data-a="hsnone">সব সরান</button></div>`:'<div class="empty">খাতায় এখনো কোনো লেনদেন নেই</div>'}</section>`;
+$.innerHTML=`<header><h1>হিসাব</h1><div class="tools"><div class="mn"><button class="ic" data-nav="-1" aria-label="আগের মাস">‹</button><span>${MON[V.getMonth()]} ${bn(V.getFullYear())}</span><button class="ic" data-nav="1" aria-label="পরের মাস">›</button></div><a class="ic" href="invoice.html" aria-label="খাতা" title="খাতা">${I('book')}</a><button class="ic" data-a="hide" aria-label="অঙ্ক লুকান">${I(S.hide?'eyeoff':'eye')}</button></div></header>
 <div class="grid">
-<section class="card hero wide"><div class="hl">এ মাসে অবশিষ্ট</div><div class="big nm" id="cu" data-v="${bal}">${fm(bal)}</div>
+<section class="card hero wide"><div class="hl">এ মাসে অবশিষ্ট</div><div class="big nm"><span class="cur">৳</span><span id="cu" data-v="${bal}">${fmn(bal)}</span></div>${inc>0?`<div class="split nm"><i style="width:${Math.min(100,exp/inc*100)}%"></i></div>`:''}
 <div class="chips"><div class="chip i">আয়<b class="nm">${fm(inc)}</b></div><div class="chip o">ব্যয়<b class="nm">${fm(exp)}</b></div><div class="chip">সঞ্চয়ের হার<b class="nm">${bn(sr)}%</b></div></div></section>
-${kc}<section class="card" id="nf"><h2>${ef?'হিসাব এডিট':'নতুন হিসাব'}${ef?' <span class="pill">'+bn(ef.d.slice(8))+' '+MON[+ef.d.slice(5,7)-1]+'</span>':''}</h2><form data-f="fin"><div class="seg f2"><button type="button" class="${T=='out'?'on':''}" data-ty="out">ব্যয়</button><button type="button" class="${T=='in'?'on':''}" data-ty="in">আয়</button></div>
+${kc}<section class="card" id="nf"><h2>${ef?H('pen','হিসাব এডিট'):H('plus','নতুন হিসাব')}${ef?' <span class="pill">'+bn(ef.d.slice(8))+' '+MON[+ef.d.slice(5,7)-1]+'</span>':''}</h2><form data-f="fin"><div class="seg f2"><button type="button" class="${T=='out'?'on':''}" data-ty="out">ব্যয়</button><button type="button" class="${T=='in'?'on':''}" data-ty="in">আয়</button></div>
 ${T=='out'?pseg:''}<select name="c" class="f2">${catKeys(ef).map(k=>`<option value="${k}"${ef&&ef.t==T&&ck(ef)==k?' selected':''}>${C[k][0]} ${C[k][1]}</option>`).join('')}</select>
 <input name="a" type="number" min="1" step="any" placeholder="টাকা" value="${ef?ef.a:''}" required><input name="d" type="date" value="${ef?ef.d:isNow?key(now):mk+'-01'}" required><input class="f2" name="n" placeholder="বিবরণ (ঐচ্ছিক)" value="${ef?ex(ef.n):''}"><button class="f2">${ef?'আপডেট করুন':'যোগ করুন'}</button>${ef?'<button type="button" class="g f2" data-a="cancel">বাতিল</button>':''}</form></section>
-${pcs}${ac}<section class="card"><h2>মাসিক বাজেট ${S.bud>0?`<span class="pill nm">${bn(Math.round(pc))}%</span>`:''}</h2><div class="inl"><input id="bud" type="number" min="0" placeholder="বাজেট (৳)" value="${S.bud||''}"><button class="g" data-a="bud">সেট</button></div>
-${S.bud>0?`<div class="bar"><i class="${pc>=80?'hot':''}" style="width:${Math.min(100,pc)}%"></i></div><div class="m nm">${fm(exp)} / ${fm(S.bud)}</div>`:'<div class="m" style="margin-top:12px">বাজেট দিলে খরচের সীমা ও সতর্কবার্তা দেখাবে।</div>'}${bm}</section>
-<section class="card"><h2>সঞ্চয় লক্ষ্য ${S.goal.a>0?`<span class="pill nm">${bn(Math.round(gp))}%</span>`:''}</h2><div class="inl"><input id="gn" placeholder="লক্ষ্য (যেমন: বাইক)" value="${S.goal.n||''}"><input id="ga" type="number" min="0" placeholder="৳" value="${S.goal.a||''}"></div><div class="acts" style="margin-top:8px"><button class="g" data-a="goal">সেভ</button></div>
+${pcs}${ac}<section class="card k-bud"><h2>${H('target','মাসিক বাজেট')}${S.bud>0?`<span class="pill nm">${bn(Math.round(pc))}%</span>`:''}</h2><div class="inl"><input id="bud" type="number" min="0" placeholder="বাজেট (৳)" value="${S.bud||''}"><button class="g" data-a="bud">সেট</button></div>
+${S.bud>0?`<div class="bar"><i class="${pc>=80?'hot':''}" style="width:${Math.min(100,pc)}%"></i></div><div class="m nm">${fm(exp)} / ${fm(S.bud)}</div>`:''}${bm}</section>
+<section class="card k-goal"><h2>${H('flag','সঞ্চয় লক্ষ্য')}${S.goal.a>0?`<span class="pill nm">${bn(Math.round(gp))}%</span>`:''}</h2><div class="inl"><input id="gn" placeholder="লক্ষ্য (যেমন: বাইক)" value="${S.goal.n||''}"><input id="ga" type="number" min="0" placeholder="৳" value="${S.goal.a||''}"></div><div class="acts" style="margin-top:8px"><button class="g" data-a="goal">সেভ</button></div>
 ${S.goal.a>0?`<div class="bar"><i style="width:${gp}%"></i></div><div class="m nm">${S.goal.n||'লক্ষ্য'} · মোট সঞ্চিত ${fm(net)} / ${fm(S.goal.a)}</div>`:''}</section>
-<section class="card"><h2>ব্যয়ের ধরন</h2>${exp?`<div class="don"><svg viewBox="0 0 100 100" class="nm">${segs}</svg><div class="lg nm">${ents.map(([k,v])=>`<div><span><i style="background:${C[k][2]}"></i>${C[k][1]}</span><b>${bn(Math.round(v/exp*100))}%</b></div>`).join('')}</div></div>`:'<div class="empty">এ মাসে কোনো ব্যয় নেই।</div>'}</section>
-<section class="card"><h2>৬ মাসের ধারা <span class="m"><span style="color:var(--ok)">●</span> আয় <span style="color:var(--a)">●</span> ব্যয়</span></h2><div class="tr nm">${tr.map(x=>`<div><div class="bs"><i style="height:${x.i/mx*100}%"></i><i style="height:${x.e/mx*100}%"></i></div><small>${x.n}</small></div>`).join('')}</div></section>
-<section class="card wide"><h2>এ মাসের তালিকা <span class="pill" id="cnt"></span></h2><div class="flt"><input id="q" type="search" placeholder="🔎 খুঁজুন" value="${Q}"><select id="ft"><option value="all">সব</option><option value="in"${F=='in'?' selected':''}>আয়</option><option value="out"${F=='out'?' selected':''}>ব্যয়</option></select><select id="fp"><option value="">সব খাত</option><option value="edu"${FP=='edu'?' selected':''}>🎓 পড়াশোনা</option><option value="job"${FP=='job'?' selected':''}>💼 চাকরি</option></select></div><div id="lst"></div>
+<section class="card k-pie"><h2>${H('pie','ব্যয়ের ধরন')}</h2>${exp?`<div class="don"><div class="dw nm"><svg viewBox="0 0 100 100">${segs}</svg><div class="dc"><span>ব্যয়</span><b>${fm(exp)}</b></div></div><div class="lg nm">${ents.map(([k,v])=>`<div><span><i style="background:${C[k][2]}"></i>${C[k][1]}</span><b>${bn(Math.round(v/exp*100))}%</b></div>`).join('')}</div></div>`:'<div class="empty">এ মাসে কোনো ব্যয় নেই।</div>'}</section>
+<section class="card w2 k-tr"><h2>${H('chart','৬ মাসের ধারা')}<span class="m"><span style="color:var(--ok)">●</span> আয় <span style="color:var(--a)">●</span> ব্যয়</span></h2><div class="tr nm">${tr.map(x=>`<div><div class="bs"><i style="height:${x.i/mx*100}%"></i><i style="height:${x.e/mx*100}%"></i></div><small>${x.n}</small></div>`).join('')}</div></section>
+<section class="card wide k-ls"><h2>${H('list','এ মাসের তালিকা')}<span class="pill" id="cnt"></span></h2><div class="flt"><input id="q" type="search" placeholder="🔎 খুঁজুন" value="${Q}"><select id="ft"><option value="all">সব</option><option value="in"${F=='in'?' selected':''}>আয়</option><option value="out"${F=='out'?' selected':''}>ব্যয়</option></select><select id="fp"><option value="">সব খাত</option><option value="edu"${FP=='edu'?' selected':''}>🎓 পড়াশোনা</option><option value="job"${FP=='job'?' selected':''}>💼 চাকরি</option></select></div><div id="lst"></div>
 <div class="acts"><button class="g" data-a="csv">⬇️ CSV</button></div></section>
 </div>`;
 list();cu(bal);}
@@ -227,8 +258,8 @@ function list(){
 const mk=key(V).slice(0,7),q=Q.trim().toLowerCase();
 const l=S.fin.map((f,i)=>({...f,i})).concat(virt()).filter(f=>f.d.startsWith(mk)&&(F=='all'||f.t==F)&&(!FP||f.p==FP)&&(!q||(f.n||'').toLowerCase().includes(q)||C[ck(f)][1].includes(q)||L(C[ck(f)][1]).toLowerCase().includes(q))).sort((a,b)=>b.d.localeCompare(a.d)||b.i-a.i);
 document.getElementById('cnt').textContent=bn(l.length)+' টি';
-document.getElementById('lst').innerHTML=l.length?l.map(f=>{const c=C[ck(f)];return`<div class="row"><div class="ei" style="background:color-mix(in srgb,${c[2]} 18%,transparent)">${c[0]}</div><div class="rt"><div>${ex(f.n)||c[1]}</div><div class="m">${c[1]} · ${bn(f.d.slice(8))} ${MON[+f.d.slice(5,7)-1]}${f.p&&PU[f.p]?' · '+PU[f.p][0]+' '+PU[f.p][2]:''}</div></div><b class="nm" style="color:var(--${f.t=='in'?'ok':'er'})">${f.t=='in'?'+':'−'} ${fm(f.a)}</b>${f.v?`<button class="x ed" data-lk="${ex(f.p)}" aria-label="খাতায় দেখুন" title="খাতায় দেখুন">📒</button><button class="x" data-unhs="${ex(f.lid)}" aria-label="হিসাব থেকে সরান" title="হিসাব থেকে সরান">✕</button>`:`<button class="x ed" data-ed="${f.i}" aria-label="এডিট">✎</button><button class="x" data-del="${f.i}" aria-label="মুছুন">✕</button>`}</div>`}).join(''):'<div class="empty">কোনো হিসাব পাওয়া যায়নি। উপরের ফর্ম থেকে প্রথমটি যোগ করুন।</div>';}
-function cu(v){const e=document.getElementById('cu');if(!e||matchMedia('(prefers-reduced-motion:reduce)').matches)return;const t0=performance.now();(function s(t){const p=Math.min(1,(t-t0)/800),k=1-Math.pow(1-p,3);e.textContent=fm(v*k);if(p<1)requestAnimationFrame(s)})(t0)}
+document.getElementById('lst').innerHTML=l.length?l.map(f=>{const c=C[ck(f)];return`<div class="row"><div class="ei" style="background:color-mix(in srgb,${c[2]} 18%,transparent)">${c[0]}</div><div class="rt"><div>${ex(f.n)||c[1]}</div><div class="m">${c[1]} · ${bn(f.d.slice(8))} ${MON[+f.d.slice(5,7)-1]}${f.p&&PU[f.p]?' · '+PU[f.p][0]+' '+PU[f.p][2]:''}</div></div><b class="nm" style="color:var(--${f.t=='in'?'ok':'er'})">${f.t=='in'?'+':'−'} ${fm(f.a)}</b>${f.v?`<button class="x ed" data-lk="${ex(f.p)}" aria-label="খাতায় দেখুন" title="খাতায় দেখুন">📒</button><button class="x" data-unhs="${ex(f.lid)}" aria-label="হিসাব থেকে সরান" title="হিসাব থেকে সরান">✕</button>`:`<button class="x ed" data-ed="${f.i}" aria-label="এডিট">✎</button><button class="x" data-del="${f.i}" aria-label="মুছুন">✕</button>`}</div>`}).join(''):'<div class="empty">কোনো হিসাব নেই</div>';}
+function cu(v){const e=document.getElementById('cu');if(!e||matchMedia('(prefers-reduced-motion:reduce)').matches)return;const t0=performance.now();(function s(t){const p=Math.min(1,(t-t0)/800),k=1-Math.pow(1-p,3);e.textContent=fmn(v*k);if(p<1)requestAnimationFrame(s)})(t0)}
 function dl(name,type,data){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 $.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);if(e.target.dataset.f!='fin')return;const it={t:T,c:f.get('c'),a:+f.get('a'),n:f.get('n').trim(),d:f.get('d')};if(T=='out'&&PP)it.p=PP;if(E!=null&&S.fin[E])S.fin[E]=it;else S.fin.push(it);E=null;save();render()});
 $.addEventListener('input',e=>{if(e.target.id=='q'){Q=e.target.value;list()}});
