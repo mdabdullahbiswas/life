@@ -227,6 +227,48 @@ input,select,.card input:not([type=checkbox]):not([type=hidden]),.card select{bo
 .card .bar i{box-shadow:none}
 .okb{border-radius:10px}
 @media (max-width:560px){main{padding:22px 14px 64px}.card{padding:18px}}
+
+/* ── Premium layer 2: হিরো কার্ড, টাইপোগ্রাফি, সূক্ষ্ম বিবরণ ── */
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--a) 50%,transparent) transparent}
+::selection{background:var(--a2);color:#1F1608}
+.card{animation:none}
+/* আজকের কাজ — পেজের একমাত্র গাঢ় অংশ */
+.c1{--t:#F6EDD8;--m:rgba(246,237,216,.64);--b:rgba(255,255,255,.14);--a:#E0B84F;--a2:#F2D88A;--p:#F2D88A;--on:#1A1304;color:var(--t);padding:28px 30px;border:1px solid rgba(224,184,79,.32)!important;box-shadow:0 30px 60px -34px rgba(20,12,0,.6)!important;background:radial-gradient(60% 130% at 100% 0,rgba(224,184,79,.18),transparent 62%),linear-gradient(135deg,color-mix(in srgb,var(--g) 40%,#17110a),#120d08 72%)!important}
+.c1::after{display:block;height:2px;opacity:1;background:linear-gradient(90deg,var(--a),var(--a2))}
+.c1 h2{font-size:18px;color:var(--a2);margin-bottom:12px}
+.c1 .pill{background:rgba(224,184,79,.12);border-color:rgba(224,184,79,.4);color:var(--a2);font-size:13px;padding:4px 13px}
+.c1 .bar{height:6px;margin-top:18px;background:rgba(255,255,255,.14)}
+.c1 .bar i{background:linear-gradient(90deg,var(--a),var(--a2))}
+.card.c1 .okb{background:rgba(224,184,79,.12);border-color:rgba(224,184,79,.4);color:var(--a2)}
+.c1 .tk{padding:12px 0}
+/* তালিকার টাইপোগ্রাফি */
+.tk label span{font-size:15px;font-weight:500}
+.tk .m,.row .m{font-size:12.5px}
+.tk .row>.m{letter-spacing:.1px}
+.card .row>span:first-child{font-size:15px;font-weight:500}
+.card .row>span:first-child>.m{font-size:12.5px;font-weight:400}
+.tk{padding:12px 0}
+.sb{margin-left:36px}
+.sb label{font-size:13.5px}
+/* বাকি কাজ: অর্থবহ লাল ধার (শুধু বাকি থাকলে) */
+.c3:has(.pill.bad)::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:#B8323F}
+/* ৭ দিনের তালিকা */
+.sr{padding:8px 4px;font-size:13.5px;border-radius:8px}
+.sr span:last-child{font-variant-numeric:tabular-nums}
+.card .sr span:first-child::before{background:var(--a);width:6px;height:6px}
+.spt,.card .spt{font-size:12px;color:var(--m);font-weight:600;padding-bottom:6px}
+.card .spt{color:var(--m)}
+/* ফর্ম */
+.card form{gap:10px;margin-top:6px}
+.tbx .m,.sbx .m{font-size:12.5px;font-weight:600;letter-spacing:.2px}
+.sba button{width:42px;height:42px}
+.dga{gap:10px}
+.dgr{padding:14px 0}
+.dgr .dl b{font-size:14.5px;font-weight:600}
+.dgr .dl .m{font-size:12.5px;margin-top:2px;display:block}
+.card .st b{font-size:24px;font-weight:700;display:block;margin-top:2px}
+.card .st .m{font-size:12.5px}
+@media (max-width:560px){.c1{padding:22px 20px}}
 </style></head><body><script src="header.js"></script><main id="app"></main>
 <script>
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
