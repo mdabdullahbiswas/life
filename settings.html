@@ -80,6 +80,9 @@ button.tc.on{border-color:var(--a);color:var(--t);background:color-mix(in srgb,v
 .tgl:checked{background:linear-gradient(135deg,var(--a),var(--a2));border-color:transparent}
 .tgl:checked::after{left:21px}
 input{border:1px solid var(--b);background:var(--c);color:var(--t);border-radius:12px;padding:11px 13px;font-size:14px;min-width:0;width:100%}
+select,.tin{border:1px solid var(--b);background:var(--c);color:var(--t);border-radius:12px;padding:10px 12px;font-size:14px;font-family:inherit;min-width:0}
+.tin{width:auto;flex:none}select:focus,.tin:focus{border-color:var(--a);box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 20%,transparent);outline:0}
+.row .acts{justify-content:flex-end}
 input:focus{border-color:var(--a);box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 20%,transparent);outline:0}
 form{display:flex;gap:8px;flex-wrap:wrap}
 .ts{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--t);color:var(--bg);padding:11px 20px;border-radius:99px;font-size:14px;font-weight:600;box-shadow:0 12px 30px -10px rgba(0,0,0,.5);z-index:99;animation:rise .3s both}
@@ -104,6 +107,12 @@ const $=document.getElementById('app'),root=document.documentElement;
 let DP=null;
 addEventListener('beforeinstallprompt',e=>{e.preventDefault();DP=e;render()});
 function toast(m){const e=document.createElement('div');e.className='ts';e.textContent=m;document.body.appendChild(e);setTimeout(()=>e.remove(),2400)}
+/* ===== নোটিফিকেশন ও সারাংশ: সেটিং থাকে 'dl'-এর dg={on,am,pm,tk,lead} ও notif-এ (digest.js ও সার্ভার এগুলোই পড়ে) ===== */
+const ldl=()=>{try{const o=JSON.parse(localStorage.getItem('dl')||'{}');return o&&typeof o==='object'&&!Array.isArray(o)?o:{}}catch(e){return{}}};
+const DGV=()=>{const o=ldl(),c=o.dg||{};return{on:c.on!==0,am:/^\d\d:\d\d$/.test(c.am)?c.am:'07:00',pm:/^\d\d:\d\d$/.test(c.pm)?c.pm:'22:00',tk:c.tk!==0,lead:(+c.lead>=0&&+c.lead<=120)?+c.lead:0,notif:!!o.notif}};
+const setDG=fn=>{const o=ldl();fn(o);try{localStorage.setItem('dl',JSON.stringify(o))}catch(e){}try{window.dispatchEvent(new Event('hdg'))}catch(e){}};
+const tin=(w,v)=>`<input type="time" class="tin" data-dgt="${w}" value="${v}" aria-label="সময়">`;
+const lsel=v=>`<select class="tin" data-lead="1" aria-label="কত মিনিট আগে">${[[0,'ঠিক সময়ে'],[5,'৫ মিনিট আগে'],[10,'১০ মিনিট আগে'],[15,'১৫ মিনিট আগে'],[30,'৩০ মিনিট আগে']].map(([x,y])=>`<option value="${x}"${+v===x?' selected':''}>${y}</option>`).join('')}</select>`;
 const tg=(a,t,d,on)=>`<div class="row"><div><b>${t}</b>${d?`<div class="m">${d}</div>`:''}</div><input type="checkbox" class="tgl" data-a="${a}" aria-label="${t}" ${on?'checked':''}></div>`;
 const HN={cd:['পরবর্তী নামাজের কাউন্টডাউন',''],wx:['আবহাওয়া',''],pr:['আজকের নামাজ',''],rz:['রোজা',''],bal:['ব্যালেন্স',''],tk:['আজকের কাজ','']};
 const HD=Object.keys(HN);
@@ -116,7 +125,16 @@ const standalone=matchMedia('(display-mode: standalone)').matches||navigator.sta
 const hero=`<section class="vault"><div class="hl">আপনার তথ্য</div><div class="big">${bs[0]}</div><div class="vs ${bs[1]}"><i></i>${bs[2]}</div></section>`;
 const look=`<section class="sec"><h2>চেহারা</h2><div class="card">${tg('dark','রাতের মোড','',S.dark)}<div class="pad"><div class="thm">${TH.map((t,i)=>`<button class="tc ${i==S.theme?'on':''}" data-a="th" data-i="${i}"><i style="background:linear-gradient(135deg,${t[1]} 50%,#E0B84F 50%)"></i>${t[0]}</button>`).join('')}</div></div></div></section>`;
 const lang=`<section class="sec"><h2>ভাষা</h2><div class="card pad"><div class="seg"><button class="${(S.lang||'bn')=='bn'?'on':''}" data-a="lg" data-i="bn">বাংলা</button><button class="${S.lang=='en'?'on':''}" data-a="lg" data-i="en">English</button></div></div></section>`;
-const mode=`<section class="sec"><h2>মোড ও নোটিফিকেশন</h2><div class="card">${tg('rm','রমজান মোড','',S.rm)}${tg('notif','নোটিফিকেশন','',S.notif)}${S.notif?'<div class="pad"><div class="acts"><button class="g" data-a="tn">পরীক্ষা করুন</button></div></div>':''}</div></section>`;
+const mode=`<section class="sec"><h2>মোড</h2><div class="card">${tg('rm','রমজান মোড','',S.rm)}</div></section>`;
+const dg=DGV(),perm=window.Notification?Notification.permission:'unsupported',nok=perm==='granted'&&dg.notif,pushOn=!!(window.hayatPush&&window.hayatPush.on());
+const nt=`<section class="sec"><h2>নোটিফিকেশন ${nok&&dg.on?'<span class="pill">চালু</span>':''}</h2><div class="card">${tg('notif','নোটিফিকেশন',perm==='denied'?'ব্রাউজারে বন্ধ আছে। সাইট সেটিং থেকে অনুমতি দিন।':'অনুমতি দিলে চালু হয়',S.notif)}
+${tg('dgon','দৈনিক সারাংশ','প্রতিদিন দুটি সময়ে কাজের সারাংশ',dg.on)}
+<div class="row"><div><b>প্রথম সময়</b><div class="m">আজকের কাজের তালিকা</div></div>${tin('am',dg.am)}</div>
+<div class="row"><div><b>দ্বিতীয় সময়</b><div class="m">আজ এখনো বাকি কাজ</div></div>${tin('pm',dg.pm)}</div>
+${tg('dgtk','কাজের সময়ে রিমাইন্ডার','কাজে সময় দেওয়া থাকলে ঠিক সেই সময়ে',dg.tk)}
+<div class="row"><div><b>কখন জানাবে</b><div class="m">কাজের সময়ের কত আগে</div></div>${lsel(dg.lead)}</div>
+<div class="row"><div><b>পুশ নোটিফিকেশন</b><div class="m">${pushOn?'চালু। অ্যাপ বন্ধ থাকলেও আসবে':'অ্যাপ বন্ধ থাকলেও পেতে চালু করুন'}</div></div><div class="acts">${pushOn?'<button class="g" data-a="pushtest">পরীক্ষা</button><button class="g" data-a="pushoff">বন্ধ করুন</button>':'<button data-a="pushon">চালু করুন</button>'}</div></div>
+<div class="pad"><div class="acts"><button class="g" data-a="tn">নোটিফিকেশন পরীক্ষা</button><button class="g" data-a="dgtest" data-k="am">প্রথম সারাংশ পরীক্ষা</button><button class="g" data-a="dgtest" data-k="pm">দ্বিতীয় সারাংশ পরীক্ষা</button></div><div class="m">ঠিক সময়ে পেতে অ্যাপটি Home Screen-এ ইনস্টল করুন। পুশ চালু করতে গুগল শিট সিঙ্ক চালু থাকতে হবে।</div></div></div></section>`;
 const app=`<section class="sec"><h2>অ্যাপ</h2><div class="card pad">${standalone?'<div class="okb">ইনস্টল করা আছে</div>':DP?'<div class="acts"><button data-a="inst">অ্যাপ ইনস্টল করুন</button></div>':'<div class="m">ব্রাউজারের মেনু থেকে “হোম স্ক্রিনে যোগ করুন” বা “ইনস্টল” বেছে নিন।</div>'}<div class="acts"><button class="g" data-a="ref">আপডেট ও ক্যাশ পরিষ্কার</button></div></div></section>`;
 const HO=homeOrder();
 const HH=(S.home&&S.home.hide)||{};
@@ -126,7 +144,7 @@ const ago=t=>{const m=Math.floor((Date.now()-t)/6e4);return m<1?'এইমাত
 const syst=!sy.on?'':sy.err?`<div class="warn" style="margin-top:12px">${esc(sy.err)}</div>`:sy.lastOk?`<div class="okb" style="margin-top:12px">শেষ সিঙ্ক: ${ago(sy.lastOk)}${sy.pending?' · '+bn(sy.pending)+'টি বদল পাঠানো বাকি':''}</div>`:'<div class="m" style="margin-top:12px">এখনো সিঙ্ক হয়নি</div>';
 const sheet=`<section class="sec"><h2>গুগল শিট সিঙ্ক ${sy.on?'<span class="pill">চালু</span>':''}</h2><div class="card pad"><form data-f="sync"><input name="u" style="flex:1 1 260px" value="${esc(sy.url)}" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off" required><input name="t" type="password" style="flex:1 1 160px" value="${esc(sy.token)}" placeholder="গোপন টোকেন" autocomplete="off" required><button>সংরক্ষণ ও সংযোগ</button></form>${syst}<div class="acts"><button class="g" data-a="sy">এখনই সিঙ্ক</button>${sy.on?'<button class="g" data-a="syx">সংযোগ বিচ্ছিন্ন করুন</button>':''}</div></div></section>`;
 const data=`<section class="sec"><h2>ডেটা ব্যবস্থাপনা</h2><div class="card pad"><div class="acts"><button data-a="exp">ব্যাকআপ নামান</button><button class="g" data-a="imp">ব্যাকআপ আনুন</button><button class="dg" data-a="rst">সব মুছুন</button></div><input type="file" id="imp" accept=".json,application/json" hidden></div></section>`;
-$.innerHTML=`<header class="top"><h1>সেটিং</h1></header>${hero}<div class="cols"><div class="col">${look}${lang}${mode}${app}</div><div class="col">${home}${sheet}${data}</div></div>`}
+$.innerHTML=`<header class="top"><h1>সেটিং</h1></header>${hero}<div class="cols"><div class="col">${look}${lang}${mode}${app}</div><div class="col">${home}${sheet}${nt}${data}</div></div>`}
 function exportData(){S.lastBak=Date.now();save();let all=S;try{all=JSON.parse(localStorage.getItem('dl')||'{}')}catch(e){}const b=new Blob([JSON.stringify(all,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),l=document.createElement('a');l.href=u;l.download='hayat-backup-'+key(new Date())+'.json';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);render();toast('ব্যাকআপ নামানো হয়েছে ✓')}
 async function refreshApp(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()));const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.reload()}
 async function testNotif(){const o={body:L('নোটিফিকেশন ঠিকমতো কাজ করছে ✓'),icon:'icon-192.png',data:{url:'index.html'}};try{const r=navigator.serviceWorker&&await navigator.serviceWorker.getRegistration();r?await r.showNotification('Hayat',o):new Notification('Hayat',o)}catch(e){toast('পাঠানো যায়নি')}}
@@ -136,6 +154,12 @@ if(a=='imp'){const f=document.getElementById('imp');if(f)f.click();return}
 if(a=='rst'){if(confirm('সব তথ্য (নামাজ, কাজ, হিসাব, কাযা, সেটিং) এই ডিভাইস থেকে মুছে যাবে।'+(window.hayatSync&&hayatSync.status().on?' সিঙ্ক চালু থাকলে শিটের তথ্য থেকে যাবে এবং আবার নেমে আসবে।':' ')+' নিশ্চিত?')){try{localStorage.removeItem('dl')}catch(_){}location.reload()}return}
 if(a=='ref'){if(confirm('ক্যাশ মুছে অ্যাপ নতুন করে লোড হবে। তথ্য মুছবে না। চালিয়ে যাবেন?'))refreshApp();return}
 if(a=='tn'){testNotif();return}
+if(a=='dgon'){setDG(o=>{o.dg=Object.assign({},o.dg,{on:t.checked?1:0})});render();return}
+if(a=='dgtk'){setDG(o=>{o.dg=Object.assign({},o.dg,{tk:t.checked?1:0})});render();return}
+if(a=='dgtest'){if(!(window.hayatDigest&&window.hayatDigest(t.dataset.k,true)))toast('আগে নোটিফিকেশন চালু করুন');return}
+if(a=='pushon'){t.disabled=true;t.textContent='…';(window.hayatPush?window.hayatPush.enable():Promise.reject(new Error('push.js লোড হয়নি। পেজ রিফ্রেশ করুন'))).then(()=>{render();toast('এই ডিভাইসে পুশ চালু হয়েছে ✓')}).catch(x=>{alert(String(x&&x.message||x));render()});return}
+if(a=='pushoff'){(window.hayatPush?window.hayatPush.disable():Promise.resolve()).then(()=>{render();toast('পুশ বন্ধ হয়েছে')});return}
+if(a=='pushtest'){t.disabled=true;window.hayatPush.test('am').then(r=>{t.disabled=false;alert('পরীক্ষার পুশ পাঠানো হয়েছে। কয়েক সেকেন্ডে আসবে।'+(r&&r.info?'\n\n'+r.info:'')+(r&&r.warn?'\n⚠ '+r.warn:''))}).catch(x=>{t.disabled=false;alert(String(x&&x.message||x))});return}
 if(a=='sy'){if(!window.hayatSync){toast('sync.js লোড হয়নি — ফাইলটি আপলোড করেছেন?');return}toast('সিঙ্ক হচ্ছে…');hayatSync.sync(1).then(r=>{toast(r.ok?'সিঙ্ক হয়েছে ✓':'সিঙ্ক হয়নি: '+r.err);render()});return}
 if(a=='syx'){if(confirm('এই ডিভাইসে সিঙ্ক বন্ধ হবে। শিটের তথ্য ও এই ডিভাইসের তথ্য থেকে যাবে।'))hayatSync.clear();render();return}
 if(a=='inst'){if(DP){DP.prompt();DP.userChoice.then(()=>{DP=null;render()})}return}
@@ -149,13 +173,17 @@ if(a=='th')S.theme=+i;
 if(a=='notif'){if(t.checked){if(!window.Notification){toast('এই ব্রাউজারে নোটিফিকেশন সমর্থিত নয়');render();return}
 Notification.requestPermission().then(p=>{S.notif=p=='granted'?1:0;save();render();if(p!='granted')toast('অনুমতি দেওয়া হয়নি')});return}S.notif=0}
 save();render()});
-document.addEventListener('change',e=>{if(e.target.id!='imp')return;const f=e.target.files[0];if(!f)return;const r=new FileReader();
+document.addEventListener('change',e=>{const el=e.target;
+if(el.dataset&&el.dataset.dgt){if(/^\d\d:\d\d$/.test(el.value))setDG(o=>{o.dg=Object.assign({},o.dg,{[el.dataset.dgt]:el.value})});return}
+if(el.dataset&&el.dataset.lead){setDG(o=>{o.dg=Object.assign({},o.dg,{lead:+el.value||0})});return}
+if(e.target.id!='imp')return;const f=e.target.files[0];if(!f)return;const r=new FileReader();
 r.onload=()=>{try{const o=JSON.parse(r.result);if(!o||typeof o!='object'||Array.isArray(o))throw 0;Object.assign(S,o);
 if(!Array.isArray(S.qaza)||S.qaza.length!=6)S.qaza=[0,0,0,0,0,0];if(!Array.isArray(S.tasks))S.tasks=[];if(!Array.isArray(S.fin))S.fin=[];if(!TH[S.theme])S.theme=0;
 save(true);render();toast('ব্যাকআপ আনা হয়েছে ✓')}catch(_){toast('ফাইলটি সঠিক ব্যাকআপ নয়')}};r.readAsText(f)});
 $.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target),k=e.target.dataset.f;
 if(k=='sync'){if(!window.hayatSync){toast('sync.js লোড হয়নি — ফাইলটি আপলোড করেছেন? তারপর "আপডেট ও ক্যাশ পরিষ্কার" চাপুন');return}const r=hayatSync.setup(f.get('u'),f.get('t'));if(!r.ok){toast(r.err);return}toast('সংযোগ হচ্ছে…');render();hayatSync.sync(1).then(r=>{toast(r.ok?'সংযোগ সফল ✓':'সংযোগ হয়নি: '+r.err);render()});return}
 save();render()});
+addEventListener('load',()=>setTimeout(()=>{const a=document.activeElement;if(!(a&&/^(INPUT|SELECT)$/.test(a.tagName)))render()},1500));
 addEventListener('hsync',()=>{const a=document.activeElement;if(a&&a.tagName=='INPUT')return;render()});
 render();
 </script><script src="pwa.js"></script></body></html>
