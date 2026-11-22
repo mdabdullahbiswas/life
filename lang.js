@@ -7,6 +7,9 @@ window.LANG=LANG;
 if(LANG!=='en'){window.L=s=>s;return}
 
 const D={
+'সাজেশন সরান':'Remove suggestion',
+'উপকাজের নাম':'Subtask name','নির্দিষ্ট মাস পর পর':'Every N months','ব্রাউজারে নোটিফিকেশন বন্ধ আছে। সাইট সেটিং থেকে অনুমতি দিন।':'Notifications are blocked in this browser. Allow them in site settings.','নোটিফিকেশন চালু নেই':'Notifications are off','আজকের কাজের তালিকা':'Today\u2019s task list','আজ এখনো বাকি':'What is still pending today','কাজের সময়ে রিমাইন্ডার':'Reminder at task time','নির্ধারিত সময়ে নোটিফিকেশন':'Notification at the set time','নোটিফিকেশন চালু করুন':'Turn on notifications','পুশ নোটিফিকেশন':'Push notifications','ঠিক সময়ে পেতে অ্যাপটি Home Screen-এ ইনস্টল করুন।':'For on-time alerts, install the app to your Home Screen.','এই ডিভাইসে পুশ চালু হয়েছে।':'Push is on for this device.','পরীক্ষার পুশ পাঠানো হয়েছে।':'Test push sent.',
+'আজকের লক্ষ্য পূরণ হয়েছে।':'Today\u2019s goal is reached.','আজকের প্রথম সেশন শুরু করুন।':'Start today\u2019s first session.','ফোকাস সেশন সম্পন্ন। বিরতি নিন।':'Focus session complete. Take a break.','বিরতি শেষ। ফোকাসে ফিরুন।':'Break over. Back to focus.','প্রতিদিনের পড়া ঠিক করুন। টিক দিলে সময় যোগ হবে।':'Set your daily study. Ticking adds the time.','রুটিনের নাম':'Routine name',
 'পরের বার':'Next time','এই কাজের বাকি পড়া সব দিন বাদ দিয়ে পরের বারে যান':'Skip all missed days of this task and go to the next time',
 'বাকি কাজ খাতা':'Pending tasks log','বাকি কাজ':'Pending tasks','উপকাজ':'Subtasks','উপকাজ লিখে ＋ চাপুন (ঐচ্ছিক)':'Type a subtask and press ＋ (optional)','উপকাজ যোগ':'Add subtask','আজকের কাজে নিন':'Move to today','বাদ দিন':'Dismiss','সব বাদ দিন':'Dismiss all','কোনো বাকি কাজ নেই':'No pending tasks','সব বাকি কাজ বাদ দেবেন? (খাতা থেকে মুছে যাবে)':'Dismiss all pending tasks? (They will be removed from the log.)',
 'মাস':'Month','বছর':'Year',
@@ -155,6 +158,13 @@ const D={
 'আমাদের হিসাব বিবরণী পাঠালাম':'I\u2019ve sent our account statement',
 'আমাদের লেনদেনের হিসাব':'Our transaction summary',
 'আলহামদুলিল্লাহ, হিসাব মিটে গেছে ✓':'Alhamdulillah, the account is settled ✓',
+'মোট আমি পাব':'Total to receive','মোট আমি দেব':'Total to pay','আয়-ব্যয়ের হিসাব →':'Income & expenses →','আয়-ব্যয়ের হিসাব':'Income & expenses',
+'সাম্প্রতিক':'Recent','আমার নাম':'My name','আয়-ব্যয়ের হিসাবেও রাখুন':'Also keep in income & expenses','হিসাব থেকে সরান':'Remove from accounts',
+'সব হিসাবে তুলুন / সরান':'Add / remove all to accounts','হিসাব মিটিয়ে দিন':'Mark as settled','এখনো কোনো লেনদেন নেই':'No transactions yet',
+'তালিকা থেকে কাউকে বেছে নিন, অথবা নতুন লেনদেন যোগ করুন।':'Pick someone from the list, or add a transaction.',
+'আয়-ব্যয়ের হিসাবে যুক্ত হয়েছে':'Added to income & expenses','হিসাব থেকে সরানো হয়েছে':'Removed from accounts','সব হিসাব থেকে সরানো হয়েছে':'All removed from accounts','সব লেনদেন হিসাবে যুক্ত হয়েছে':'All transactions added to accounts',
+'শেষ সিঙ্ক:':'Last sync:','শেষ ব্যাকআপ:':'Last backup:','ব্যাকআপ নেওয়া হয়নি':'No backup yet','এখনো ব্যাকআপ নেওয়া হয়নি':'No backup yet','পরীক্ষা করুন':'Send a test','ইনস্টল করা আছে':'Installed','অ্যাপ ইনস্টল করুন':'Install app','ব্রাউজারের মেনু থেকে “হোম স্ক্রিনে যোগ করুন” বা “ইনস্টল” বেছে নিন।':'From the browser menu, choose \u201cAdd to Home Screen\u201d or \u201cInstall\u201d.','আগের মতো করুন':'Reset to default','এখনই সিঙ্ক':'Sync now',
+'আজকের পড়া শুরু করুন':'Start today\u2019s study',
 /* সেটিং পেজ */
 'পরবর্তী নামাজের কাউন্টডাউন':'Next prayer countdown','নফল নামাজসহ':'Including voluntary prayers','শুধু নফল রোজার দিনে আসে':'Shows only on voluntary fast days','হিসাবের সারাংশ':'Account summary',
 'শিটে সংরক্ষিত':'Saved to Sheet','✅ তথ্য গুগল শিটে সিঙ্ক হচ্ছে। শেষ সিঙ্ক:':'✅ Data is syncing to Google Sheet. Last sync:','এইমাত্র':'just now','এছাড়া ব্যাকআপ ফাইলও নিয়ে রাখতে পারেন।':'You can also keep a backup file.',
@@ -393,8 +403,42 @@ const D={
 /* পপআপ */
 'নিশ্চিত করুন':'Please confirm','বার্তা':'Notice','ঠিক আছে':'OK','হ্যাঁ, নিশ্চিত':'Yes, confirm','হ্যাঁ, মুছুন':'Yes, delete','হ্যাঁ, বাদ দিন':'Yes, dismiss',
 'কাজটি মুছে ফেলবেন?':'Delete this task?','সব বাকি কাজ বাদ দেবেন?':'Dismiss all pending tasks?','এগুলো বাকি কাজ খাতা থেকে মুছে যাবে।':'These will be removed from the pending log.',
-'📲 অ্যাপ বন্ধ থাকলেও (পুশ)':'📲 Even when the app is closed (push)','পুশ চালু আছে':'Push is on','পুশ চালু নেই':'Push is off','এই ডিভাইসে পুশ চালু করুন':'Enable push on this device','পুশ পরীক্ষা':'Test push','পুশ বন্ধ করুন':'Turn off push','⏰ কাজের নিজস্ব সময়ে রিমাইন্ডার':'⏰ Reminder at each task\u2019s own time','কাজে সময় দেওয়া থাকলে ঠিক সেই সময়ে নোটিফিকেশন (পুশ চালু থাকতে হবে)':'A notification at the exact time set on a task (push must be on)','ঠিক সময়ে':'On time','রোজার রিমাইন্ডার':'Roza reminders','আগে নোটিফিকেশনের পুশ চালু করুন':'Turn on push notifications first','সেহরি, ইফতার ও আগের রাতের মনে করানো':'Suhoor, iftar and the night-before reminder','সেহরি শেষের আগে সতর্কতা':'Warning before suhoor ends','রোজার দিনে, সেহরি শেষ হওয়ার আগে':'On fasting days, before suhoor ends','ইফতারের সময় নোটিফিকেশন':'Notification at iftar time','ঠিক ইফতারের সময়ে':'At iftar time','আগের রাতের মনে করানো':'Night-before reminder','কাল রোজার দিন হলে নিয়ত ও সেহরির কথা':'Niyyah and suhoor note if tomorrow is a fasting day','মনে করানোর সময়':'Reminder time','আগের রাতে কখন জানাবে':'When to notify the night before','সোম–বৃহস্পতিবারও ধরুন':'Include Mondays and Thursdays','বন্ধ থাকলে শুধু রমজান ও বিশেষ নফল দিন':'If off, only Ramadan and special nafl days','পরীক্ষা করুন':'Test','দৈনিক সারাংশ':'Daily summary','প্রতিদিন দুটি সময়ে কাজের সারাংশ':'A task summary at two times each day','আজকের কাজের তালিকা':'Today\u2019s task list','আজ এখনো বাকি কাজ':'Tasks still pending today','কাজের সময়ে রিমাইন্ডার':'Reminder at task time','কাজে সময় দেওয়া থাকলে ঠিক সেই সময়ে':'At the exact time set on a task','কখন জানাবে':'When to notify','কাজের সময়ের কত আগে':'How long before the task time','অ্যাপ বন্ধ থাকলেও পেতে চালু করুন':'Turn on to get it even when the app is closed','চালু। অ্যাপ বন্ধ থাকলেও আসবে':'On. Works even when the app is closed','নোটিফিকেশন পরীক্ষা':'Test notification','প্রথম সারাংশ পরীক্ষা':'Test first summary','দ্বিতীয় সারাংশ পরীক্ষা':'Test second summary','অনুমতি দিলে চালু হয়':'Turns on once permission is granted','ঠিক সময়ে পেতে অ্যাপটি Home Screen-এ ইনস্টল করুন। পুশ চালু করতে গুগল শিট সিঙ্ক চালু থাকতে হবে।':'For on-time delivery, install the app to your Home Screen. Google Sheet sync must be on to enable push.','মোড':'Mode','৫ মিনিট আগে':'5 min before','১০ মিনিট আগে':'10 min before','১৫ মিনিট আগে':'15 min before','৩০ মিনিট আগে':'30 min before',
-'সময় (ঐচ্ছিক)':'Time (optional)','সময় নেই':'No time','নির্দিষ্ট মাস পর পর (যেমন ২ মাসে একবার)':'Every N months (e.g. every 2 months)','মাস পর পর':'months apart'
+'📲 অ্যাপ বন্ধ থাকলেও (পুশ)':'📲 Even when the app is closed (push)','পুশ চালু আছে':'Push is on','পুশ চালু নেই':'Push is off','এই ডিভাইসে পুশ চালু করুন':'Enable push on this device','পুশ পরীক্ষা':'Test push','পুশ বন্ধ করুন':'Turn off push','⏰ কাজের নিজস্ব সময়ে রিমাইন্ডার':'⏰ Reminder at each task\u2019s own time','কাজে সময় দেওয়া থাকলে ঠিক সেই সময়ে নোটিফিকেশন (পুশ চালু থাকতে হবে)':'A notification at the exact time set on a task (push must be on)','ঠিক সময়ে':'On time','৫ মিনিট আগে':'5 min before','১০ মিনিট আগে':'10 min before','১৫ মিনিট আগে':'15 min before','৩০ মিনিট আগে':'30 min before',
+'সময় (ঐচ্ছিক)':'Time (optional)','সময় নেই':'No time','নির্দিষ্ট মাস পর পর (যেমন ২ মাসে একবার)':'Every N months (e.g. every 2 months)','মাস পর পর':'months apart',
+/* হিসাব পেজ: খাত (পড়াশোনা/চাকরি), অটো-দান, খাতা সংযোগ */
+'খাত':'Purpose',
+'সব খাত':'All purposes',
+'কোন খাতের খরচ?':'Which purpose is this expense for?',
+'চাকরি':'Job',
+'পড়াশোনার খরচ':'Study expenses',
+'চাকরির খরচ':'Job expenses',
+'এ পর্যন্ত মোট':'Total so far',
+'এ মাস':'This month',
+'সব সময়':'All time',
+'প্রাইভেট / কোচিং':'Tutoring / coaching',
+'আবেদন ফি':'Application fee',
+'ট্রেনিং':'Training',
+'পোশাক':'Clothing',
+'দান':'Donation',
+'স্বয়ংক্রিয় দান':'Auto donation',
+'স্বয়ংক্রিয় দৈনিক দান':'Automatic daily donation',
+'চালু করুন':'Turn on',
+'পরের কাটা':'Next deduction',
+'দানের টাকা ও সময় দুটোই দিন':'Enter both the donation amount and the time',
+'খাতা · দিলাম':'Ledger · I gave',
+'খাতা · পেলাম':'Ledger · I received',
+'খাতা খুলুন →':'Open ledger →',
+'খাতায় দেখুন':'View in ledger',
+'ধার মিটলে মোট সঞ্চয়':'Total savings once loans are settled',
+'সব হিসাবে তুলুন':'Add all to accounts',
+'এ মাসে কোনো খরচ নেই':'No expenses this month',
+'এখনো কোনো খরচ নেই':'No expenses yet',
+'খাতায় এখনো কোনো লেনদেন নেই':'No ledger transactions yet',
+'কোনো হিসাব নেই':'No entries',
+'সব সরান':'Remove all',
+'হিসাব থেকে সরান':'Remove from accounts',
+'দান বন্ধ করুন':'Turn off',
+'এটি আয়-ব্যয়ের হিসাব থেকে সরাবেন? খাতায় লেনদেনটি থেকে যাবে।':'Remove this from income & expenses? The transaction will stay in the ledger.'
 };
 /* অক্ষরের বদলে শব্দ — গণনার পরে প্রযোজ্য */
 const U={'ঘণ্টা':'Hours','মিনিট':'Minutes','সেকেন্ড':'Seconds','থেকে':'from','পর্যন্ত':'until','ভোর':'Dawn','সকাল':'Morning','দুপুর':'Noon','বিকাল':'Afternoon','সন্ধ্যা':'Evening','রাত':'Night','টি':'items','মোট':'Total'};
@@ -426,6 +470,7 @@ function tr(s){
  /* লেনদেনের খাতা: নাম/সংখ্যা বসানো বাক্য */
  const Nn=(n,one,many)=>(+num(n)===1?'1 '+one:num(n)+' '+many);
  s=s.replace(new RegExp('^✓ (.+?)-এর আগের হিসাব মিটে গেছে। এখন লেনদেন করলে নতুন পর্ব শুরু হবে — আগের হিসাব “লেনদেনসমূহ”-এ আর বিবরণীর পর্ব-বোতামে থেকে যাবে।$'),'\u2713 $1\u2019s earlier account is settled. A new transaction now starts a new cycle \u2014 the earlier account stays under \u201cTransactions\u201d and in the statement\u2019s cycle buttons.');
+ s=s.replace(new RegExp('^✓ (.+?)-এর আগের হিসাব মিটে গেছে — নতুন লেনদেনে নতুন পর্ব শুরু হবে।$'),'\\u2713 $1\\u2019s earlier account is settled \\u2014 a new transaction starts a new cycle.');
  s=s.replace(new RegExp('^(.+)-এর সব লেনদেন মুছে ফেলবেন\\? এটা ফেরানো যাবে না।$'),'Delete all of $1\u2019s transactions? This cannot be undone.');
  s=s.replace(new RegExp('^(.+)-এর লেনদেন$'),'$1\u2019s transactions');
  s=s.replace(new RegExp('^এই লেনদেনটি \\((.+?)\\) মুছে ফেলবেন\\?$'),'Delete this transaction ($1)?');
@@ -443,9 +488,10 @@ function tr(s){
  s=s.replace(new RegExp('(কাল|যাত্রার সময়) সর্বোচ্চ ('+BD+'+)° — গরম থাকবে, পানির বোতল ও টুপি যোগ করুন।','g'),(_,w,n)=>wd(w)+': up to '+n+'° — hot, add a water bottle and a cap.');
  s=s.replace(new RegExp('(কাল|যাত্রার সময়) সর্বনিম্ন ('+BD+'+)° — ঠান্ডা থাকবে, চাদর/সোয়েটার ও মাফলার যোগ করুন।','g'),(_,w,n)=>wd(w)+': down to '+n+'° — cold, add a shawl/sweater and a scarf.');
  s=s.replace(/^লক্ষ্যে পৌঁছাতে আর (.+) বাকি।$/,'$1 left to reach your goal.');
- s=s.replace(new RegExp('^⚠️ বাজেট (৳ [০-৯,.]+) ছাড়িয়েছে$'),'\u26a0\ufe0f Over budget by $1');
- s=s.replace(new RegExp('^⚠️ বাজেটের ('+BD+'+)% শেষ$'),'\u26a0\ufe0f $1% of budget used');
- s=s.replace(new RegExp('^✅ দৈনিক খরচের সীমা (৳ [০-৯,.]+)$'),'\u2705 Daily spending limit: $1');
+ s=s.replace(new RegExp('^(?:⚠️ )?বাজেট (৳ [০-৯,.]+) ছাড়িয়েছে$'),'Over budget by $1');
+ s=s.replace(new RegExp('^(?:⚠️ )?বাজেটের ('+BD+'+)% শেষ$'),'$1% of budget used');
+ s=s.replace(new RegExp('^মাসের ('+BD+'+)%$'),'$1% of this month\u2019s spending');
+ s=s.replace(new RegExp('^(?:✅ )?দৈনিক খরচের সীমা (৳ [০-৯,.]+)$'),'Daily spending limit: $1');
  s=s.replace(RD,m=>D[m]);
  s=s.replace(new RegExp('(ভোর|সকাল|দুপুর|বিকাল|সন্ধ্যা|রাত) ('+BD+'+):('+BD+'+)','g'),(_,p,h,m)=>tm(h,m,p));
  s=s.replace(/(\d+:\d\d [AP]M) থেকে Isha পর্যন্ত/g,'from $1 until Isha');
