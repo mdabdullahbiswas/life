@@ -214,6 +214,51 @@ button.bpill,button.bpill:hover,button.bpill:active,button.bpill:focus{backgroun
 .bl{left:44px;right:6px}.bv{left:6px;right:44px}
 .bl em{font-size:14.5px}.bv b{font-size:21px}.bv b.lg{font-size:15px}}
 @media(prefers-reduced-motion:reduce){.bpill::before,.bl em,.bcoin{animation:none}.bl,.bv,.bcoin{transition:opacity .2s!important}.bpill.open .bcoin{animation:none}.brp.go{animation:none}}
+
+/* ===== Premium v2: হোম পেজের সাজ (মোবাইল + পিসি) ===== */
+:root{--r:22px;--pat:%23B8892B}
+:root[data-d="1"]{--pat:%23E0B84F}
+main{max-width:1180px;padding:20px 16px 72px}
+@media(min-width:700px){main{padding:34px 28px 96px}}
+/* পেছনের হালকা ইসলামিক নকশা, নিচের দিকে মিলিয়ে যায় */
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.55;
+ background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 56 56'><g fill='none' stroke='var(--pat)' stroke-opacity='.10'><rect x='14' y='14' width='28' height='28'/><rect x='14' y='14' width='28' height='28' transform='rotate(45 28 28)'/><circle cx='28' cy='28' r='3'/></g></svg>");
+ -webkit-mask-image:linear-gradient(180deg,#000 0,transparent 62%);mask-image:linear-gradient(180deg,#000 0,transparent 62%)}
+/* হেডার */
+#app>header{position:relative;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid transparent;border-image:linear-gradient(90deg,color-mix(in srgb,var(--a) 55%,transparent),transparent 78%) 1}
+#app>header::before{content:"";position:absolute;inset:-40px -16px auto;height:170px;z-index:-1;pointer-events:none;background:radial-gradient(55% 100% at 18% 0%,color-mix(in srgb,var(--a) 16%,transparent),transparent)}
+@media(min-width:700px){#app>header{margin-bottom:28px;padding-bottom:22px}#app>header h1{font-size:clamp(30px,3.3vw,42px);letter-spacing:-.6px}.sub{font-size:14px;padding:6px 16px}}
+/* গ্রিড: পিসিতে ২/৩ কলাম, ফাঁকা জায়গা ভরে যায় */
+.grid{gap:14px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;grid-auto-flow:dense}}
+@media(min-width:1040px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}}
+/* কার্ড */
+.grid>.card{border-radius:var(--r);padding:18px}
+@media(min-width:700px){.grid>.card{padding:22px}}
+.grid>.card:not(.cd):not(.wx):not(.ram){background:linear-gradient(180deg,color-mix(in srgb,var(--c) 100%,#fff 22%),var(--c))}
+:root[data-d="1"] .grid>.card:not(.cd):not(.wx):not(.ram){background:var(--c)}
+.grid>.card:hover{transform:translateY(-2px)}
+.card::after{height:3px;width:72px;left:22px;right:auto;border-radius:0 0 4px 4px;opacity:1}
+.wide::after{width:96px}
+/* শিরোনাম: সোনালি রম্বস */
+h2{font-size:16.5px;margin-bottom:14px;gap:10px}
+h2::before{width:8px;height:8px;border-radius:2px;transform:rotate(45deg);background:linear-gradient(135deg,var(--a2),var(--a));box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 18%,transparent)}
+.cd h2::before{background:linear-gradient(135deg,var(--pc2),var(--pc));box-shadow:0 0 0 3px color-mix(in srgb,var(--pc) 20%,transparent)}
+/* তালিকার সারি ও চেকবক্স */
+.row{padding:11px 0}
+.chk{width:26px;height:26px;border-radius:9px}
+.chk:checked{box-shadow:0 6px 14px -6px var(--pc,var(--sh))}
+.row .m{font-variant-numeric:tabular-nums}
+/* কাউন্টডাউন কার্ড: পিসিতে একটু বড় */
+.cd{padding-top:20px}
+@media(min-width:700px){.ring{width:158px;height:158px}.rc b{font-size:25px}.tl{min-width:66px}.tl b{font-size:32px}}
+.cdc{transition:.3s,transform .2s}.cdc:hover{transform:translateY(-1px)}
+/* আবহাওয়া কার্ড: একটু বেশি জায়গা */
+.wx{padding:18px 20px}
+/* পিল/বাটন */
+.pill{font-weight:700;letter-spacing:.2px}
+/* মোবাইলে আরও খোলামেলা */
+@media(max-width:699px){main{padding:16px 14px 80px}.grid>.card{padding:16px}h2{font-size:16px}}
 </style></head><body><script src="header.js"></script><main id="app"></main>
 <script>
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
