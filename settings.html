@@ -16,120 +16,75 @@
 :root[data-t="3"][data-d="1"]{--bg:#0E0709;--c:rgba(91,26,43,.42);--g:#8A2D45}
 html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,"Noto Serif Bengali",serif;color:var(--t);background:var(--bg);min-height:100vh;transition:background .4s;line-height:1.55}
-body::before{content:"";position:fixed;inset:-20% -10% auto;height:70vh;background:radial-gradient(60% 60% at 30% 30%,color-mix(in srgb,var(--g) 24%,transparent),transparent),radial-gradient(50% 50% at 80% 20%,color-mix(in srgb,var(--a) 16%,transparent),transparent);z-index:-1}
+body{margin:0;font-family:Inter,"Noto Serif Bengali",serif;color:var(--t);background:var(--bg);min-height:100vh;line-height:1.55;transition:background .4s}
+body::before{content:"";position:fixed;inset:-20% -10% auto;height:70vh;background:radial-gradient(60% 60% at 30% 30%,color-mix(in srgb,var(--g) 11%,transparent),transparent),radial-gradient(50% 50% at 80% 20%,color-mix(in srgb,var(--a) 7%,transparent),transparent);z-index:-1}
 button,input,select,h1,h2{font-family:"Noto Serif Bengali",Inter,serif}
-main{max-width:1080px;margin:auto;padding:18px 16px 70px}
-h1{font-size:clamp(24px,5vw,32px);margin:0 0 14px;font-weight:700}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
-.wide{grid-column:1/-1}
-.card{background:var(--c);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--cb);border-radius:20px;padding:18px;box-shadow:0 12px 32px -16px var(--sh);position:relative;overflow:hidden}
-h2{font-size:16px;margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
-.hero{padding:24px 22px;background:linear-gradient(135deg,color-mix(in srgb,var(--a) 26%,var(--c)),var(--c) 55%,color-mix(in srgb,var(--g) 22%,var(--c)));border-color:var(--a);animation:rise .7s both}
-@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-.hero::before{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;border:1px solid var(--cb);box-shadow:0 0 0 24px color-mix(in srgb,var(--a) 7%,transparent),0 0 0 52px color-mix(in srgb,var(--a) 4%,transparent)}
-.hl{color:var(--m);font-size:14px}
-.big{font-size:clamp(28px,7vw,42px);font-weight:700;line-height:1.3;background:linear-gradient(90deg,var(--a),var(--a2) 50%,var(--g));-webkit-background-clip:text;background-clip:text;color:transparent;margin:2px 0 12px}
-.chips{display:flex;gap:10px;flex-wrap:wrap;position:relative}
-.chip{padding:8px 14px;border-radius:14px;background:var(--b);font-size:13px;color:var(--m);min-width:76px}
-.chip b{display:block;font-size:17px;color:var(--t)}
+main{max-width:1040px;margin:auto;padding:22px 18px 80px}
+.top{margin-bottom:20px}
+h1{font-size:clamp(26px,5vw,34px);margin:0;font-weight:700;letter-spacing:-.3px}
 .m{color:var(--m);font-size:13px}
-.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px dashed var(--b)}
-.row:last-child{border:0}
-.row>div>b{font-weight:600}
-button{border:1px solid var(--a2);border-radius:10px;padding:10px 20px;background:var(--t);color:var(--a2);font-weight:600;cursor:pointer;font-size:14px;transition:.2s}
-button:hover{box-shadow:0 4px 14px -6px var(--sh);background:color-mix(in srgb,var(--t) 88%,var(--a2))}
+
+/* ডেটা-ভল্ট: পেজের একমাত্র গাঢ় অংশ — থিমের রঙে গাঢ়, সোনালি সূক্ষ্ম বৃত্ত-নকশা */
+.vault{position:relative;overflow:hidden;border-radius:22px;padding:26px 26px 24px;margin-bottom:28px;color:#FBF3DC;
+background:radial-gradient(120% 140% at 100% 0,rgba(226,194,117,.30),transparent 55%),repeating-radial-gradient(circle at 100% 0,rgba(226,194,117,.11) 0 1px,transparent 1px 24px),linear-gradient(135deg,color-mix(in srgb,var(--g) 60%,#120c05),color-mix(in srgb,var(--g) 38%,#0b0703));
+border:1px solid rgba(226,194,117,.5);box-shadow:0 28px 48px -30px rgba(31,22,8,.75),inset 0 1px 0 rgba(255,255,255,.14);animation:rise .6s both}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.vault .hl{font-size:13px;color:rgba(251,243,220,.72);letter-spacing:.3px}
+.vault .big{font-size:clamp(28px,6vw,40px);font-weight:700;line-height:1.25;margin:4px 0 16px;background:linear-gradient(90deg,#FFF1C2,#E2C275 60%,#C99A3A);-webkit-background-clip:text;background-clip:text;color:transparent}
+.vault .vs,.vault .vs.okb,.vault .vs.warn{display:inline-flex;align-items:center;gap:9px;margin:0;padding:7px 15px;border-radius:99px;font-size:14px;font-weight:500;color:rgba(251,243,220,.92);background:rgba(255,255,255,.08);border:1px solid rgba(226,194,117,.3)}
+.vault .vs i{width:8px;height:8px;border-radius:50%;background:#4fd7a0;box-shadow:0 0 0 4px rgba(79,215,160,.2)}
+.vault .vs.warn i{background:#ff9a8a;box-shadow:0 0 0 4px rgba(255,138,138,.22)}
+
+/* ভাগ ও কার্ড */
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 22px;align-items:start}
+.col{min-width:0}
+.sec{margin-bottom:24px}
+.sec>h2{display:flex;align-items:center;gap:8px;margin:0 4px 10px;font-size:14.5px;font-weight:700;color:var(--p);letter-spacing:.2px}
+.card{background:var(--c);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--b);border-radius:18px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.03),0 20px 36px -26px var(--sh)}
+.pad{padding:16px 18px}.pad>*+*{margin-top:12px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 18px;border-bottom:1px solid var(--b)}
+.card>.row:last-child{border-bottom:0}
+.row>div>b{font-weight:600;font-size:15px}
+.hr{gap:10px}.hb{display:flex;align-items:center;gap:8px;flex:none}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;background:color-mix(in srgb,var(--a) 20%,transparent);color:var(--p);font-weight:600}
+.warn,.okb{padding:10px 13px;border-radius:12px;font-size:13px;font-weight:600}
+.warn{background:color-mix(in srgb,var(--er) 12%,transparent);border:1px solid color-mix(in srgb,var(--er) 40%,transparent);color:var(--er)}
+.okb{background:color-mix(in srgb,var(--ok) 13%,transparent);border:1px solid color-mix(in srgb,var(--ok) 40%,transparent);color:var(--ok)}
+
+/* বাটন: সোনালি মূল বাটন, বাকিগুলো রেখার */
+button{border:1px solid color-mix(in srgb,var(--a) 65%,#5a3c08);border-radius:12px;padding:10px 18px;background:linear-gradient(135deg,var(--a2),var(--a));color:var(--on);font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 1px 0 rgba(255,255,255,.45) inset,0 10px 18px -12px var(--sh);transition:filter .2s,transform .12s,background .2s}
+button:hover{filter:brightness(1.05)}
 button:active{transform:translateY(1px)}
-button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--g);outline-offset:2px}
-button.g{background:transparent;color:var(--t);border-color:var(--cb);font-weight:500;padding:8px 14px;font-size:13px}
-button.g:hover{border-color:var(--a);background:color-mix(in srgb,var(--a) 12%,transparent)}
-button.dg{background:transparent;color:var(--er);border-color:rgba(220,60,60,.5);box-shadow:none}
-button.dg:hover{background:rgba(220,60,60,.12);border-color:var(--er)}
-.x{background:none;border:0;color:var(--m);padding:4px 8px;box-shadow:none}
-.x:hover{background:none;color:var(--er);box-shadow:none}
-input{border:1px solid var(--b);background:var(--c);color:var(--t);border-radius:12px;padding:10px 12px;font-size:14px;min-width:0;width:100%}
-form{display:flex;gap:8px;margin-top:12px}
-.tgl{appearance:none;-webkit-appearance:none;width:48px;height:28px;border-radius:99px;border:1px solid var(--cb);background:var(--b);position:relative;cursor:pointer;transition:.25s;flex:none;padding:0;margin:0}
-.tgl::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--t);transition:.25s}
+button:focus-visible,input:focus-visible{outline:2px solid var(--g);outline-offset:2px}
+button.g{background:transparent;color:var(--t);border-color:var(--cb);box-shadow:none;font-weight:600;padding:9px 16px;font-size:13px}
+button.g:hover{background:color-mix(in srgb,var(--a) 12%,transparent);filter:none}
+button.dg{background:transparent;color:var(--er);border-color:color-mix(in srgb,var(--er) 50%,transparent);box-shadow:none;font-weight:600}
+button.dg:hover{background:color-mix(in srgb,var(--er) 10%,transparent);filter:none}
+button.sm{padding:4px 11px;min-width:36px;font-size:15px;border-radius:10px}
+button:disabled{opacity:.35;pointer-events:none}
+.seg{display:flex;gap:4px;padding:4px;border-radius:14px;background:color-mix(in srgb,var(--a) 9%,transparent);border:1px solid var(--b)}
+.seg button{flex:1;background:transparent;color:var(--m);border-color:transparent;box-shadow:none;font-weight:600;padding:9px 12px}
+.seg button.on{background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on);box-shadow:0 6px 14px -8px var(--sh)}
+
+/* থিম বাছাই */
+.thm{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+button.tc{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 4px 10px;background:transparent;color:var(--m);border:1px solid var(--b);border-radius:14px;font-size:11.5px;font-weight:600;line-height:1.3;text-align:center;box-shadow:none}
+button.tc i{width:34px;height:34px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 2px rgba(255,255,255,.35),0 4px 10px -4px rgba(0,0,0,.4)}
+button.tc:hover{filter:none;border-color:var(--cb)}
+button.tc.on{border-color:var(--a);color:var(--t);background:color-mix(in srgb,var(--a) 12%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 22%,transparent)}
+
+/* টগল ও ফিল্ড */
+.tgl{appearance:none;-webkit-appearance:none;width:46px;height:27px;border-radius:99px;border:1px solid var(--cb);background:color-mix(in srgb,var(--t) 10%,transparent);position:relative;cursor:pointer;transition:.22s;flex:none;padding:0;margin:0}
+.tgl::after{content:"";position:absolute;top:2px;left:2px;width:21px;height:21px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.35);transition:.22s}
 .tgl:checked{background:linear-gradient(135deg,var(--a),var(--a2));border-color:transparent}
-.tgl:checked::after{left:23px;background:var(--on)}
-.tgl:focus-visible{outline:2px solid var(--g);outline-offset:2px}
-.thm{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-button.tc{display:flex;align-items:center;gap:10px;padding:10px;background:transparent;color:var(--t);border:1px solid var(--b);border-radius:14px;font-weight:500;font-size:13px;text-align:left}
-button.tc i{width:30px;height:30px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 2px rgba(255,255,255,.3)}
-button.tc.on{border-color:var(--a);background:color-mix(in srgb,var(--a) 14%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 22%,transparent)}
-.seg{display:flex;gap:6px}
-.seg button{flex:1;background:transparent;color:var(--m);border-color:var(--b)}
-.seg button.on{background:var(--t);color:var(--a2);border-color:var(--a2)}
-.pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;background:color-mix(in srgb,var(--a) 20%,transparent);color:var(--p);font-weight:600}
-.pill.bad{background:rgba(220,60,60,.14);color:var(--er)}
-.warn{padding:9px 13px;border-radius:12px;background:rgba(220,60,60,.12);border:1px solid rgba(220,60,60,.4);color:var(--er);font-size:13px;font-weight:600;margin-top:4px}
-.okb{padding:9px 13px;border-radius:12px;background:rgba(31,157,107,.13);border:1px solid rgba(31,157,107,.4);color:var(--ok);font-size:13px;font-weight:600;margin-top:4px}
-.qg{display:grid;grid-template-columns:repeat(auto-fit,minmax(88px,1fr));gap:8px}
-.qc{padding:10px 6px;border-radius:14px;background:var(--b);text-align:center}
-.qc b{display:block;font-size:22px;line-height:1.3}
-.qc div{display:flex;gap:4px;justify-content:center;margin-top:6px}
-.qc button{padding:2px 10px;font-size:15px;border-radius:8px}
-.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.tk{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px dashed var(--b)}
-.tk:last-child{border:0}
-.tk span:first-child{flex:1;min-width:0;overflow-wrap:anywhere}
-.ts{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--t);color:var(--a2);padding:11px 20px;border-radius:99px;font-size:14px;font-weight:600;box-shadow:0 12px 30px -10px rgba(0,0,0,.5);z-index:99;animation:rise .3s both}
+.tgl:checked::after{left:21px}
+input{border:1px solid var(--b);background:var(--c);color:var(--t);border-radius:12px;padding:11px 13px;font-size:14px;min-width:0;width:100%}
+input:focus{border-color:var(--a);box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 20%,transparent);outline:0}
+form{display:flex;gap:8px;flex-wrap:wrap}
+.ts{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--t);color:var(--bg);padding:11px 20px;border-radius:99px;font-size:14px;font-weight:600;box-shadow:0 12px 30px -10px rgba(0,0,0,.5);z-index:99;animation:rise .3s both}
+@media(max-width:820px){.cols{grid-template-columns:1fr}.vault{padding:22px 20px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-
-.hr{align-items:center;gap:10px}.hb{display:flex;align-items:center;gap:8px;flex:none}button.sm{padding:4px 11px;min-width:36px;font-size:15px;border-radius:10px}button:disabled{opacity:.35;pointer-events:none;filter:grayscale(.4)}
-/* ===== প্রিমিয়াম বাটন ===== */
-button{position:relative;overflow:hidden;isolation:isolate;border:1px solid transparent;border-radius:14px;padding:11px 22px;letter-spacing:.2px;
-background:linear-gradient(#3A2D20,#1F1710) padding-box,linear-gradient(135deg,#F2D88A,#B8892B 55%,#E2C275) border-box;color:#F2D88A;
-box-shadow:0 10px 22px -12px rgba(31,22,8,.7),0 1px 0 rgba(255,255,255,.18) inset,0 -2px 6px rgba(0,0,0,.25) inset;
-transition:transform .18s ease,box-shadow .25s ease,filter .25s ease,background .25s}
-button::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(115deg,transparent 35%,rgba(255,236,170,.38) 50%,transparent 65%);transform:translateX(-120%);transition:transform .7s ease}
-button:hover{transform:translateY(-1px);box-shadow:0 14px 26px -12px rgba(184,137,43,.65),0 1px 0 rgba(255,255,255,.22) inset,0 -2px 6px rgba(0,0,0,.25) inset;filter:brightness(1.06)}
-button:hover::before{transform:translateX(120%)}
-button:active{transform:translateY(1px) scale(.985);box-shadow:0 4px 10px -6px rgba(31,22,8,.7),0 2px 6px rgba(0,0,0,.3) inset}
-:root[data-d="1"] button{background:linear-gradient(180deg,#F7E3A0,#D9AE45 60%,#B8892B) padding-box,linear-gradient(135deg,#FFF1C2,#B8892B) border-box;color:#1F1608;font-weight:700;
-box-shadow:0 10px 24px -12px rgba(224,184,79,.55),0 1px 0 rgba(255,255,255,.5) inset,0 -2px 5px rgba(120,80,10,.35) inset}
-button.g{padding:9px 16px;font-weight:600;color:var(--t);
-background:linear-gradient(var(--c),var(--c)) padding-box,linear-gradient(135deg,color-mix(in srgb,var(--a2) 80%,transparent),color-mix(in srgb,var(--a) 45%,transparent)) border-box;
-backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-box-shadow:0 6px 16px -12px var(--sh),0 1px 0 rgba(255,255,255,.5) inset}
-button.g:hover{background:linear-gradient(color-mix(in srgb,var(--a) 14%,var(--c)),color-mix(in srgb,var(--a) 14%,var(--c))) padding-box,linear-gradient(135deg,var(--a2),var(--a)) border-box;box-shadow:0 10px 22px -12px var(--sh),0 1px 0 rgba(255,255,255,.5) inset}
-:root[data-d="1"] button.g{background:linear-gradient(var(--c),var(--c)) padding-box,linear-gradient(135deg,rgba(242,216,138,.7),rgba(224,184,79,.25)) border-box;color:var(--t);font-weight:600;box-shadow:0 6px 16px -12px rgba(0,0,0,.8),0 1px 0 rgba(255,255,255,.08) inset}
-button.g::before{background:linear-gradient(115deg,transparent 35%,rgba(226,194,117,.3) 50%,transparent 65%)}
-button.dg{color:var(--er);background:linear-gradient(var(--c),var(--c)) padding-box,linear-gradient(135deg,rgba(220,60,60,.65),rgba(220,60,60,.25)) border-box;box-shadow:0 6px 16px -12px rgba(220,60,60,.6)}
-button.dg:hover{background:linear-gradient(rgba(220,60,60,.12),rgba(220,60,60,.12)) padding-box,linear-gradient(135deg,#e05252,#a82424) border-box;box-shadow:0 10px 22px -12px rgba(220,60,60,.7)}
-:root[data-d="1"] button.dg{color:var(--er);font-weight:600}
-.x{background:none!important;border:0!important;box-shadow:none!important;color:var(--m)!important;padding:4px 8px;filter:none}
-.x::before{display:none}.x:hover{color:var(--er)!important;transform:none;filter:none}
-button.tc{background:linear-gradient(var(--c),var(--c)) padding-box,linear-gradient(135deg,var(--b),var(--b)) border-box;color:var(--t);box-shadow:0 6px 14px -12px var(--sh);font-weight:500;padding:10px}
-:root[data-d="1"] button.tc{background:linear-gradient(var(--c),var(--c)) padding-box,linear-gradient(135deg,var(--b),var(--b)) border-box;color:var(--t);font-weight:500}
-button.tc.on,:root[data-d="1"] button.tc.on{background:linear-gradient(color-mix(in srgb,var(--a) 16%,var(--c)),color-mix(in srgb,var(--a) 16%,var(--c))) padding-box,linear-gradient(135deg,var(--a2),var(--a)) border-box;box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 22%,transparent),0 10px 20px -12px var(--sh)}
-button.tc::before{display:none}
-.seg{padding:4px;border-radius:16px;background:color-mix(in srgb,var(--a) 9%,transparent);border:1px solid var(--b)}
-.seg button{box-shadow:none;background:transparent!important;color:var(--m);border-color:transparent;font-weight:600;filter:none}
-.seg button::before{display:none}
-.seg button.on,:root[data-d="1"] .seg button.on{background:linear-gradient(#3A2D20,#1F1710) padding-box,linear-gradient(135deg,#F2D88A,#B8892B) border-box!important;color:#F2D88A;box-shadow:0 8px 16px -10px rgba(31,22,8,.7),0 1px 0 rgba(255,255,255,.18) inset}
-:root[data-d="1"] .seg button.on{background:linear-gradient(180deg,#F7E3A0,#D9AE45 60%,#B8892B) padding-box,linear-gradient(135deg,#FFF1C2,#B8892B) border-box!important;color:#1F1608}
-.qc button{border-radius:10px;padding:3px 12px;min-width:36px}
-
-:root[data-d="1"] button.dg{background:linear-gradient(var(--c),var(--c)) padding-box,linear-gradient(135deg,rgba(255,138,138,.7),rgba(255,138,138,.25)) border-box;color:var(--er);box-shadow:0 6px 16px -12px rgba(0,0,0,.8)}
-:root[data-d="1"] button.dg:hover{background:linear-gradient(rgba(255,138,138,.14),rgba(255,138,138,.14)) padding-box,linear-gradient(135deg,#ff9a9a,#d55) border-box}
-:root[data-d="1"] .seg button{background:transparent!important;color:var(--m);box-shadow:none;border-color:transparent}
-:root[data-d="1"] .seg button.on{color:#1F1608}
-:root[data-d="1"] .x{color:var(--m)!important}
-@media(prefers-reduced-motion:reduce){button,button::before{transition:none!important}}
-
-/* ===== ক্লিন · প্রিমিয়াম ===== */
-body::before{background:radial-gradient(60% 60% at 30% 30%,color-mix(in srgb,var(--g) 11%,transparent),transparent),radial-gradient(50% 50% at 80% 20%,color-mix(in srgb,var(--a) 7%,transparent),transparent)}
-h1{letter-spacing:-.2px;margin-bottom:18px}
-.card{border-radius:18px;border:1px solid var(--b);box-shadow:0 1px 2px rgba(0,0,0,.03),0 18px 34px -24px var(--sh)}
-h2{font-size:15px;letter-spacing:.2px;margin-bottom:14px}
-.hero{border-color:var(--cb);padding:22px}
-.hero::before{box-shadow:none;opacity:.6}
-.hl{font-size:12.5px;letter-spacing:.3px}
-.big{font-size:clamp(26px,6vw,36px);margin:2px 0 10px}
-.row{padding:13px 0}
-.acts{margin-top:14px}
 </style></head>
 <body><script src="header.js"></script>
 <main id="app"></main>
@@ -158,20 +113,20 @@ const days=S.lastBak?Math.floor((Date.now()-S.lastBak)/864e5):-1;
 const hsy=window.hayatSync?hayatSync.status():{on:0};const synced=hsy.on&&!hsy.err&&hsy.lastOk&&Date.now()-hsy.lastOk<864e5;
 const bs=synced?['শিটে সংরক্ষিত','okb','শেষ সিঙ্ক: '+(Date.now()-hsy.lastOk<6e4?'এইমাত্র':bn(Math.floor((Date.now()-hsy.lastOk)/6e4))+' মিনিট আগে')]:days<0?['ব্যাকআপ নেই','warn','এখনো ব্যাকআপ নেওয়া হয়নি']:days>7?['ব্যাকআপ পুরোনো','warn','শেষ ব্যাকআপ: '+bn(days)+' দিন আগে']:['ব্যাকআপ নিরাপদ','okb','শেষ ব্যাকআপ: '+(days?bn(days)+' দিন আগে':'আজ')];
 const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
-const hero=`<section class="card hero wide"><div class="hl">আপনার তথ্য</div><div class="big">${bs[0]}</div><div class="${bs[1]}" style="position:relative">${bs[2]}</div></section>`;
-const look=`<section class="card"><h2>চেহারা</h2>${tg('dark','রাতের মোড','',S.dark)}<div class="thm">${TH.map((t,i)=>`<button class="tc ${i==S.theme?'on':''}" data-a="th" data-i="${i}"><i style="background:linear-gradient(135deg,${t[1]} 50%,#E0B84F 50%)"></i>${t[0]}</button>`).join('')}</div></section>`;
-const lang=`<section class="card"><h2>ভাষা</h2><div class="seg"><button class="${(S.lang||'bn')=='bn'?'on':''}" data-a="lg" data-i="bn">বাংলা</button><button class="${S.lang=='en'?'on':''}" data-a="lg" data-i="en">English</button></div></section>`;
-const mode=`<section class="card"><h2>মোড ও নোটিফিকেশন</h2>${tg('rm','রমজান মোড','',S.rm)}${tg('notif','নোটিফিকেশন','',S.notif)}${S.notif?'<div class="acts"><button class="g" data-a="tn">পরীক্ষা করুন</button></div>':''}</section>`;
-const app=`<section class="card"><h2>অ্যাপ</h2>${standalone?'<div class="okb">ইনস্টল করা আছে</div>':DP?'<div class="acts"><button data-a="inst">অ্যাপ ইনস্টল করুন</button></div>':'<div class="m">ব্রাউজারের মেনু থেকে “হোম স্ক্রিনে যোগ করুন” বা “ইনস্টল” বেছে নিন।</div>'}<div class="acts"><button class="g" data-a="ref">আপডেট ও ক্যাশ পরিষ্কার</button></div></section>`;
+const hero=`<section class="vault"><div class="hl">আপনার তথ্য</div><div class="big">${bs[0]}</div><div class="vs ${bs[1]}"><i></i>${bs[2]}</div></section>`;
+const look=`<section class="sec"><h2>চেহারা</h2><div class="card">${tg('dark','রাতের মোড','',S.dark)}<div class="pad"><div class="thm">${TH.map((t,i)=>`<button class="tc ${i==S.theme?'on':''}" data-a="th" data-i="${i}"><i style="background:linear-gradient(135deg,${t[1]} 50%,#E0B84F 50%)"></i>${t[0]}</button>`).join('')}</div></div></div></section>`;
+const lang=`<section class="sec"><h2>ভাষা</h2><div class="card pad"><div class="seg"><button class="${(S.lang||'bn')=='bn'?'on':''}" data-a="lg" data-i="bn">বাংলা</button><button class="${S.lang=='en'?'on':''}" data-a="lg" data-i="en">English</button></div></div></section>`;
+const mode=`<section class="sec"><h2>মোড ও নোটিফিকেশন</h2><div class="card">${tg('rm','রমজান মোড','',S.rm)}${tg('notif','নোটিফিকেশন','',S.notif)}${S.notif?'<div class="pad"><div class="acts"><button class="g" data-a="tn">পরীক্ষা করুন</button></div></div>':''}</div></section>`;
+const app=`<section class="sec"><h2>অ্যাপ</h2><div class="card pad">${standalone?'<div class="okb">ইনস্টল করা আছে</div>':DP?'<div class="acts"><button data-a="inst">অ্যাপ ইনস্টল করুন</button></div>':'<div class="m">ব্রাউজারের মেনু থেকে “হোম স্ক্রিনে যোগ করুন” বা “ইনস্টল” বেছে নিন।</div>'}<div class="acts"><button class="g" data-a="ref">আপডেট ও ক্যাশ পরিষ্কার</button></div></div></section>`;
 const HO=homeOrder();
 const HH=(S.home&&S.home.hide)||{};
-const home=`<section class="card wide"><h2>হোম পেজ</h2>${HO.map((k,i)=>`<div class="row hr"><div><b>${HN[k][0]}</b>${HN[k][1]?`<div class="m">${HN[k][1]}</div>`:''}</div><div class="hb"><button class="g sm" data-a="hu" data-i="${k}" aria-label="উপরে" ${i?'':'disabled'}>↑</button><button class="g sm" data-a="hd" data-i="${k}" aria-label="নিচে" ${i<HO.length-1?'':'disabled'}>↓</button><input type="checkbox" class="tgl" data-a="hv" data-i="${k}" aria-label="${HN[k][0]} দেখান" ${HH[k]?'':'checked'}></div></div>`).join('')}<div class="acts"><button class="g" data-a="hr">আগের মতো করুন</button></div></section>`;
+const home=`<section class="sec"><h2>হোম পেজ</h2><div class="card">${HO.map((k,i)=>`<div class="row hr"><div><b>${HN[k][0]}</b>${HN[k][1]?`<div class="m">${HN[k][1]}</div>`:''}</div><div class="hb"><button class="g sm" data-a="hu" data-i="${k}" aria-label="উপরে" ${i?'':'disabled'}>↑</button><button class="g sm" data-a="hd" data-i="${k}" aria-label="নিচে" ${i<HO.length-1?'':'disabled'}>↓</button><input type="checkbox" class="tgl" data-a="hv" data-i="${k}" aria-label="${HN[k][0]} দেখান" ${HH[k]?'':'checked'}></div></div>`).join('')}<div class="pad"><div class="acts"><button class="g" data-a="hr">আগের মতো করুন</button></div></div></div></section>`;
 const sy=window.hayatSync?hayatSync.status():{on:0,url:'',token:'',pending:0};
 const ago=t=>{const m=Math.floor((Date.now()-t)/6e4);return m<1?'এইমাত্র':m<60?bn(m)+' মিনিট আগে':m<1440?bn(Math.floor(m/60))+' ঘণ্টা আগে':bn(Math.floor(m/1440))+' দিন আগে'};
 const syst=!sy.on?'':sy.err?`<div class="warn" style="margin-top:12px">${esc(sy.err)}</div>`:sy.lastOk?`<div class="okb" style="margin-top:12px">শেষ সিঙ্ক: ${ago(sy.lastOk)}${sy.pending?' · '+bn(sy.pending)+'টি বদল পাঠানো বাকি':''}</div>`:'<div class="m" style="margin-top:12px">এখনো সিঙ্ক হয়নি</div>';
-const sheet=`<section class="card wide"><h2>গুগল শিট সিঙ্ক ${sy.on?'<span class="pill">চালু</span>':''}</h2><form data-f="sync" style="flex-wrap:wrap"><input name="u" style="flex:1 1 260px" value="${esc(sy.url)}" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off" required><input name="t" type="password" style="flex:1 1 160px" value="${esc(sy.token)}" placeholder="গোপন টোকেন" autocomplete="off" required><button>সংরক্ষণ ও সংযোগ</button></form>${syst}<div class="acts"><button class="g" data-a="sy">এখনই সিঙ্ক</button>${sy.on?'<button class="g" data-a="syx">সংযোগ বিচ্ছিন্ন করুন</button>':''}</div></section>`;
-const data=`<section class="card wide"><h2>ডেটা ব্যবস্থাপনা</h2><div class="acts" style="margin-top:0"><button data-a="exp">ব্যাকআপ নামান</button><button class="g" data-a="imp">ব্যাকআপ আনুন</button><button class="dg" data-a="rst">সব মুছুন</button></div><input type="file" id="imp" accept=".json,application/json" hidden></section>`;
-$.innerHTML=`<h1>সেটিং</h1><div class="grid">${hero}${look}${home}${lang}${mode}${app}${sheet}${data}</div>`}
+const sheet=`<section class="sec"><h2>গুগল শিট সিঙ্ক ${sy.on?'<span class="pill">চালু</span>':''}</h2><div class="card pad"><form data-f="sync"><input name="u" style="flex:1 1 260px" value="${esc(sy.url)}" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off" required><input name="t" type="password" style="flex:1 1 160px" value="${esc(sy.token)}" placeholder="গোপন টোকেন" autocomplete="off" required><button>সংরক্ষণ ও সংযোগ</button></form>${syst}<div class="acts"><button class="g" data-a="sy">এখনই সিঙ্ক</button>${sy.on?'<button class="g" data-a="syx">সংযোগ বিচ্ছিন্ন করুন</button>':''}</div></div></section>`;
+const data=`<section class="sec"><h2>ডেটা ব্যবস্থাপনা</h2><div class="card pad"><div class="acts"><button data-a="exp">ব্যাকআপ নামান</button><button class="g" data-a="imp">ব্যাকআপ আনুন</button><button class="dg" data-a="rst">সব মুছুন</button></div><input type="file" id="imp" accept=".json,application/json" hidden></div></section>`;
+$.innerHTML=`<header class="top"><h1>সেটিং</h1></header>${hero}<div class="cols"><div class="col">${look}${lang}${mode}${app}</div><div class="col">${home}${sheet}${data}</div></div>`}
 function exportData(){S.lastBak=Date.now();save();let all=S;try{all=JSON.parse(localStorage.getItem('dl')||'{}')}catch(e){}const b=new Blob([JSON.stringify(all,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),l=document.createElement('a');l.href=u;l.download='hayat-backup-'+key(new Date())+'.json';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);render();toast('ব্যাকআপ নামানো হয়েছে ✓')}
 async function refreshApp(){try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()));const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}location.reload()}
 async function testNotif(){const o={body:L('নোটিফিকেশন ঠিকমতো কাজ করছে ✓'),icon:'icon-192.png',data:{url:'index.html'}};try{const r=navigator.serviceWorker&&await navigator.serviceWorker.getRegistration();r?await r.showNotification('Hayat',o):new Notification('Hayat',o)}catch(e){toast('পাঠানো যায়নি')}}
