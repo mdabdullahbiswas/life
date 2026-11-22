@@ -160,6 +160,7 @@ const D={
 'সব হিসাবে তুলুন / সরান':'Add / remove all to accounts','হিসাব মিটিয়ে দিন':'Mark as settled','এখনো কোনো লেনদেন নেই':'No transactions yet',
 'তালিকা থেকে কাউকে বেছে নিন, অথবা নতুন লেনদেন যোগ করুন।':'Pick someone from the list, or add a transaction.',
 'আয়-ব্যয়ের হিসাবে যুক্ত হয়েছে':'Added to income & expenses','হিসাব থেকে সরানো হয়েছে':'Removed from accounts','সব হিসাব থেকে সরানো হয়েছে':'All removed from accounts','সব লেনদেন হিসাবে যুক্ত হয়েছে':'All transactions added to accounts',
+'শেষ সিঙ্ক:':'Last sync:','শেষ ব্যাকআপ:':'Last backup:','ব্যাকআপ নেওয়া হয়নি':'No backup yet','এখনো ব্যাকআপ নেওয়া হয়নি':'No backup yet','পরীক্ষা করুন':'Send a test','ইনস্টল করা আছে':'Installed','অ্যাপ ইনস্টল করুন':'Install app','ব্রাউজারের মেনু থেকে “হোম স্ক্রিনে যোগ করুন” বা “ইনস্টল” বেছে নিন।':'From the browser menu, choose \u201cAdd to Home Screen\u201d or \u201cInstall\u201d.','আগের মতো করুন':'Reset to default','এখনই সিঙ্ক':'Sync now',
 /* সেটিং পেজ */
 'পরবর্তী নামাজের কাউন্টডাউন':'Next prayer countdown','নফল নামাজসহ':'Including voluntary prayers','শুধু নফল রোজার দিনে আসে':'Shows only on voluntary fast days','হিসাবের সারাংশ':'Account summary',
 'শিটে সংরক্ষিত':'Saved to Sheet','✅ তথ্য গুগল শিটে সিঙ্ক হচ্ছে। শেষ সিঙ্ক:':'✅ Data is syncing to Google Sheet. Last sync:','এইমাত্র':'just now','এছাড়া ব্যাকআপ ফাইলও নিয়ে রাখতে পারেন।':'You can also keep a backup file.',
