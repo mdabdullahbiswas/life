@@ -642,28 +642,30 @@ setInterval(()=>{const els=document.querySelectorAll('#app [data-cd]');for(const
 const lt=document.createElement('div');lt.id='lt';lt.addEventListener('click',()=>lt.classList.remove('on'));document.body.appendChild(lt);
 function fire(t,b,tag){t=L(t);b=L(b);lt.textContent='🔔 '+t+' · '+b;lt.classList.add('on');clearTimeout(fire.h);fire.h=setTimeout(()=>lt.classList.remove('on'),30000);
  try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(x){}
- try{if(window.Notification&&Notification.permission=='granted'){const o={body:b,icon:'icon-192.png',badge:'badge-96.png',tag:tag||'namaz-rem',renotify:true,data:{url:'namaz.html'}};
+ try{if(window.Notification&&Notification.permission=='granted'){const o={body:b,icon:'icon-192.png',badge:'badge-96.png',tag:tag||'namaz-rem',renotify:!String(tag||'').startsWith('nr-'),data:{url:'namaz.html'}};
   if(navigator.serviceWorker&&navigator.serviceWorker.getRegistration)navigator.serviceWorker.getRegistration().then(r=>{try{r?r.showNotification(t,o):new Notification(t,o)}catch(x){}}).catch(()=>{});else new Notification(t,o)}}catch(x){}}
 function chk(){const L=S.loc;if(!L.on)return;const now=new Date(),K=key(now),c=calc(now),E=effS(c),pd=S.pr[K]||{},n=now.getTime(),mid=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime(),nm=['ফজর',now.getDay()==5?'জুম্মা':'যোহর','আসর','মাগরিব','এশা'];
  for(const k in L.lf)if(k.slice(0,10)!=K)delete L.lf[k];
  for(let i=0;i<5;i++){const r=+L.rm[i];if(!(r>0)||pd['f'+i])continue;const j=effJ(i,now),tg=j!=null?j:E[i],tm=mid+Math.round(tg*60)*6e4,f=tm-r*6e4;
-  if(n>=f&&n<tm&&n<f+18e4&&!L.lf[K+i]){L.lf[K+i]=1;save();const m=Math.max(1,Math.round((tm-n)/6e4));fire(nm[i]+(j!=null?' · জামাত':' · ওয়াক্ত'),bn(m)+' মিনিট পরে ('+T(tg)+')','nr-'+K+'-'+i);markFired(K+'-'+i)}}}
+  if(n>=f&&n<tm&&!L.lf[K+i]&&!FIRED[K+'-'+i]){L.lf[K+i]=1;save();const m=Math.max(1,Math.round((tm-n)/6e4));fire(nm[i]+(j!=null?' · জামাত':' · ওয়াক্ত'),bn(m)+' মিনিট পরে ('+T(tg)+')','nr-'+K+'-'+i);markFired(K+'-'+i)}}}
 
 /* অ্যাপ বন্ধ থাকলেও: সময়সূচি IndexedDB-তে রাখা হয়, service worker (sw.js) সেখান থেকে নোটিফিকেশন দেখায় */
 const idb=()=>new Promise((res,rej)=>{const q=indexedDB.open('hayat-n',1);q.onupgradeneeded=()=>q.result.createObjectStore('kv');q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)});
 const idbSet=(k,v)=>idb().then(d=>new Promise((res,rej)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=()=>res();t.onerror=()=>rej(t.error)}));
 const idbGet=k=>idb().then(d=>new Promise(res=>{const r=d.transaction('kv').objectStore('kv').get(k);r.onsuccess=()=>res(r.result);r.onerror=()=>res(null)}));
-async function markFired(id){try{const f=(await idbGet('fired'))||{};f[id]=Date.now();await idbSet('fired',f)}catch(e){}}
-let lastSched='';
-async function syncSched(){try{if(!window.indexedDB)return;const L=S.loc,items=[],now=new Date(),n=now.getTime();
- if(L.on)for(let dI=0;dI<3;dI++){const d=new Date(now.getFullYear(),now.getMonth(),now.getDate()+dI),K=key(d),c=calc(d),E=effS(c),pd=S.pr[K]||{},mid=d.getTime(),nm=['ফজর',d.getDay()==5?'জুম্মা':'যোহর','আসর','মাগরিব','এশা'];
+async function markFired(id){FIRED[id]=Date.now();try{const f=(await idbGet('fired'))||{};f[id]=Date.now();await idbSet('fired',f)}catch(e){}}
+let lastSched='',lastUp='',FIRED={};
+async function syncSched(){try{if(!window.indexedDB)return;try{FIRED=(await idbGet('fired'))||{}}catch(e){}const L=S.loc,items=[],now=new Date(),n=now.getTime();
+ if(L.on)for(let dI=0;dI<6;dI++){const d=new Date(now.getFullYear(),now.getMonth(),now.getDate()+dI),K=key(d),c=calc(d),E=effS(c),pd=S.pr[K]||{},mid=d.getTime(),nm=['ফজর',d.getDay()==5?'জুম্মা':'যোহর','আসর','মাগরিব','এশা'];
   for(let i=0;i<5;i++){const r=+L.rm[i];if(!(r>0)||pd['f'+i])continue;const j=effJ(i,d),tg=j!=null?j:E[i],tm=mid+Math.round(tg*60)*6e4;if(tm<=n)continue;items.push({id:K+'-'+i,f:tm-r*6e4,tm,t:nm[i]+(j!=null?' · জামাত':' · ওয়াক্ত'),tg:T(tg)})}}
- const js=JSON.stringify(items);if(js===lastSched)return;lastSched=js;await idbSet('sched',items);
+ const js=JSON.stringify(items);
+ if(window.hayatPush&&window.hayatPush.sched&&js!==lastUp){lastUp=js;window.hayatPush.sched(items).then(ok=>{if(!ok)lastUp=''}).catch(()=>{lastUp=''})}
+ if(js===lastSched)return;lastSched=js;await idbSet('sched',items);
  const reg=navigator.serviceWorker&&navigator.serviceWorker.getRegistration?await navigator.serviceWorker.getRegistration():null;if(!reg||!window.Notification||Notification.permission!='granted')return;
  if(L.on&&reg.periodicSync)try{await reg.periodicSync.register('namaz-rem',{minInterval:15*60*1000})}catch(e){}
  if(typeof TimestampTrigger!='undefined'){const ids=new Set(items.map(x=>'nr-'+x.id));
   try{(await reg.getNotifications({includeTriggered:true})).forEach(x=>{if(x.tag&&x.tag.indexOf('nr-')==0&&!ids.has(x.tag))x.close()})}catch(e){}
-  for(const x of items)if(x.f>n)try{await reg.showNotification(L('🔔 '+x.t),{body:L(bn(Math.round((x.tm-x.f)/6e4))+' মিনিট পরে ('+x.tg+')'),tag:'nr-'+x.id,icon:'icon-512.png',badge:'badge-96.png',data:{url:'namaz.html'},showTrigger:new TimestampTrigger(x.f)})}catch(e){}}
+  for(const x of items)if(x.f>n)try{await reg.showNotification((window.L||(q=>q))('🔔 '+x.t),{body:(window.L||(q=>q))(bn(Math.round((x.tm-x.f)/6e4))+' মিনিট পরে ('+x.tg+')'),tag:'nr-'+x.id,icon:'icon-512.png',badge:'badge-96.png',data:{url:'namaz.html'},showTrigger:new TimestampTrigger(x.f)})}catch(e){}}
  if(reg.active)reg.active.postMessage({type:'namaz-check'})}catch(e){}}
 syncSched();setInterval(syncSched,15000);
 setInterval(chk,15000);chk();document.addEventListener('visibilitychange',()=>{if(!document.hidden)chk()});
