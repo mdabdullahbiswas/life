@@ -16,7 +16,7 @@ async function checkSched(){
     if(n>=x.f&&n<x.tm&&!fr[x.id]){
       fr[x.id]=n;ch=true;
       const m=Math.max(1,Math.round((x.tm-n)/6e4));
-      await self.registration.showNotification('🔔 '+x.t,{body:bnum(m)+' মিনিট পরে ('+x.tg+')',icon:'icon-512.png',badge:'badge-96.png',tag:'nr-'+x.id,renotify:true,vibrate:[200,100,200],data:{url:'namaz.html'}});
+      await self.registration.showNotification('🔔 '+x.t,{body:bnum(m)+' মিনিট পরে ('+x.tg+')',icon:'icon-512.png',badge:'badge-96.png',tag:'nr-'+x.id,renotify:false,vibrate:[200,100,200],data:{url:'namaz.html'}});
     }
   }
   for(const k in fr)if(n-fr[k]>2*864e5){delete fr[k];ch=true}
