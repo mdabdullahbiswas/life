@@ -151,6 +151,51 @@ h2::before{width:4px;height:16px;background:linear-gradient(var(--a2),var(--a));
 .chk:checked{box-shadow:0 4px 12px -4px var(--pc,var(--sh))}
 .big{filter:drop-shadow(0 3px 10px color-mix(in srgb,var(--a) 28%,transparent))}
 .grid>.card:nth-child(1){animation-delay:0s}.grid>.card:nth-child(2){animation-delay:.06s}.grid>.card:nth-child(3){animation-delay:.12s}.grid>.card:nth-child(4){animation-delay:.18s}.grid>.card:nth-child(5){animation-delay:.24s}.grid>.card:nth-child(6){animation-delay:.3s}.grid>.card:nth-child(7){animation-delay:.36s}
+
+/* ===== ব্যালেন্স কার্ড: বিকাশ-ধাঁচের ট্যাপ-টু-রিভিল (আইকন ডানে সরে যায়, লেখা বদলে টাকার অঙ্ক আসে) ===== */
+.card.bal{align-self:start;padding:10px 12px;border-radius:18px;color:#F6EDD8;border-color:color-mix(in srgb,#E2C275 46%,transparent);
+ background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 56 56'><g fill='none' stroke='%23E2C275' stroke-opacity='.12'><rect x='14' y='14' width='28' height='28'/><rect x='14' y='14' width='28' height='28' transform='rotate(45 28 28)'/><circle cx='28' cy='28' r='3'/></g></svg>"),radial-gradient(90% 120% at 100% 0%,#6B4A1B 0%,transparent 58%),radial-gradient(70% 90% at 0% 100%,rgba(226,194,117,.16),transparent 60%),linear-gradient(135deg,#3A2A12,#1B1205 75%);
+ box-shadow:0 26px 46px -26px rgba(42,30,15,.85),inset 0 1px 0 rgba(255,244,210,.2)}
+.card.bal::before{opacity:.12}
+.card.bal::after{height:2px}
+.card.bal:hover{transform:none}
+.bal .bw{display:flex;align-items:center;gap:10px}
+.bal .bw{justify-content:space-between}
+.bal .bw .bpill{flex:none;width:184px;max-width:calc(100% - 90px)}
+.bal .lk{flex:none;padding:4px 4px 4px 12px;font-size:12px;gap:7px}
+.bal .lk .ar{width:18px;height:18px;font-size:10px}
+.bpill{--dur:4s;position:relative;display:block;width:100%;height:38px;padding:0;border-radius:12px;cursor:pointer;overflow:hidden;text-align:left;-webkit-tap-highlight-color:transparent;isolation:isolate;
+ border:1px solid rgba(255,236,176,.85);background:linear-gradient(180deg,#FFFFFF 0%,#FBF3DE 100%);color:#2A1E0F;
+ box-shadow:inset 0 1px 0 #fff,inset 0 -10px 16px -12px rgba(138,100,32,.4),0 16px 28px -14px rgba(0,0,0,.8),0 0 0 0 rgba(226,194,117,0);transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .5s}
+.bpill::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 36%,rgba(226,194,117,.2) 47%,rgba(255,255,255,.85) 50%,rgba(226,194,117,.2) 53%,transparent 64%);transform:translateX(-130%);animation:bsh 5.5s ease-in-out 1.6s infinite}
+.bpill.open::before{animation:none;opacity:0}
+button.bpill,button.bpill:hover,button.bpill:active,button.bpill:focus{background:linear-gradient(180deg,#FFFFFF 0%,#FBF3DE 100%);color:#2A1E0F}
+.bpill:hover{box-shadow:inset 0 1px 0 #fff,inset 0 -10px 16px -12px rgba(138,100,32,.4),0 18px 30px -14px rgba(0,0,0,.85),0 0 0 4px rgba(226,194,117,.22)}
+.bpill:active{transform:scale(.978)}
+.bpill:focus-visible{outline:2px solid var(--a2);outline-offset:3px}
+.brp{position:absolute;z-index:-1;left:var(--rx,50%);top:var(--ry,50%);width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;background:radial-gradient(circle,rgba(226,194,117,.65),rgba(226,194,117,0) 70%);transform:scale(0);opacity:0;pointer-events:none}
+.brp.go{animation:brr .9s cubic-bezier(.2,.7,.2,1)}
+@keyframes brr{0%{transform:scale(0);opacity:.9}100%{transform:scale(26);opacity:0}}
+/* আইকন: বন্ধ অবস্থায় বামে, খুললে ডানে স্লাইড; মাঝপথে আধা-স্বচ্ছ (বিকাশের মতো) */
+.bcoin{position:absolute;top:5px;left:5px;width:28px;height:28px;border-radius:9px;display:grid;place-items:center;font:700 17px/1 "Noto Serif Bengali",Inter,serif;color:#2A1E0F;
+ background:linear-gradient(145deg,#FDEBB0,#D0A038 60%,#B98826);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -3px 5px rgba(138,100,32,.35),0 7px 12px -6px rgba(138,100,32,.9);
+ transition:left .8s cubic-bezier(.6,0,.25,1);animation:bpu 3s ease-in-out infinite}
+.bcoin::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(160deg,rgba(255,255,255,.55),transparent 45%);pointer-events:none}
+.bpill.open .bcoin{left:calc(100% - 33px);animation:bfade .8s cubic-bezier(.6,0,.25,1)}
+@keyframes bfade{0%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.94)}100%{opacity:1;transform:scale(1)}}
+@keyframes bpu{0%,100%{box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -3px 5px rgba(138,100,32,.35),0 7px 12px -6px rgba(138,100,32,.9),0 0 0 0 rgba(201,151,47,.5)}55%{box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -3px 5px rgba(138,100,32,.35),0 7px 12px -6px rgba(138,100,32,.9),0 0 0 7px rgba(201,151,47,0)}}
+/* লেখা: "ব্যালেন্স দেখুন" ↔ টাকার অঙ্ক */
+.bl,.bv{position:absolute;top:0;bottom:0;display:flex;align-items:center;white-space:nowrap;transition:opacity .7s ease,transform .9s cubic-bezier(.25,.8,.25,1),filter .7s ease}
+.bl{left:40px;right:8px;justify-content:flex-start}
+.bv{left:8px;right:40px;justify-content:center;opacity:0;transform:translateY(10px);filter:blur(5px)}
+.bl em{font-style:normal;font-size:13px;font-weight:700;letter-spacing:.2px;background:linear-gradient(90deg,#2A1E0F 34%,#B58524 50%,#2A1E0F 66%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:btx 4.4s linear infinite}
+@keyframes btx{from{background-position:100% 0}to{background-position:-100% 0}}
+.bv b{font-size:18px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:.2px;background:linear-gradient(180deg,#4A3414,#8A6420 85%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.bv b.neg{background:linear-gradient(180deg,#A8261A,#D8483B);-webkit-background-clip:text;background-clip:text}
+.bpill.open .bl{opacity:0;transform:translateY(-10px);filter:blur(5px)}
+.bpill.open .bv{opacity:1;transform:none;filter:none;transition-delay:.25s}
+@keyframes bsh{0%,55%{transform:translateX(-130%)}100%{transform:translateX(130%)}}
+@media(prefers-reduced-motion:reduce){.bpill::before,.bl em,.bcoin{animation:none}.bl,.bv,.bcoin{transition:opacity .2s!important}.bpill.open .bcoin{animation:none}.brp.go{animation:none}}
 </style></head><body><script src="header.js"></script><main id="app"></main>
 <script>
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
@@ -166,6 +211,14 @@ try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
 if(!TH[S.theme])S.theme=0;S.tp=0;S.fn=S.fn||{};
 if(!S.pr||typeof S.pr!='object')S.pr={};(function(){for(const d in S.pr){const o=S.pr[d];if(!o||typeof o!='object')continue;for(let i=0;i<5;i++)if(i in o){if(o[i])o['f'+i]=true;delete o[i]}}})();   // আগের সংখ্যার কী (0–4) নামাজ পেজের f0–f4-এ এক করা
 const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
+/* ব্যালেন্স কার্ড: ট্যাপ করলে আনুমানিক ২ সেকেন্ড (স্লাইড শেষ হওয়ার পর) দেখা যায়, তারপর নিজে ঢেকে যায় */
+let BRU=0,BRX=0;const BRT=2800;
+const bfmt=n=>'৳'+bn((Math.round(n*100)/100).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}));
+function bcount(el,to){if(!el)return;if(matchMedia('(prefers-reduced-motion:reduce)').matches){el.textContent=bfmt(to);return}const t0=performance.now(),D=900;(function st(t){const p=Math.min(1,(t-t0)/D),k=1-Math.pow(1-p,3);el.textContent=bfmt(to*k);if(p<1)requestAnimationFrame(st)})(t0)}
+function bset(o,ev){document.querySelectorAll('.bpill').forEach(x=>{x.classList.toggle('open',!!o);x.setAttribute('aria-pressed',o?'true':'false');const p=x.querySelector('.bp');if(p){p.style.animationDelay='';if(o){p.style.animation='none';void p.getBoundingClientRect();p.style.animation=''}}
+ if(o){const bb=x.querySelector('.bv b');if(bb)bcount(bb,+bb.dataset.v||0);const r=x.querySelector('.brp');if(r&&ev){const q=x.getBoundingClientRect();r.style.setProperty('--rx',(ev.clientX-q.left)+'px');r.style.setProperty('--ry',(ev.clientY-q.top)+'px');r.classList.remove('go');void r.offsetWidth;r.classList.add('go')}}})}
+document.addEventListener('click',e=>{if(!e.target.closest('[data-bal]'))return;clearTimeout(BRX);if(BRU>Date.now()){BRU=0;bset(0);return}BRU=Date.now()+BRT;bset(1,e);BRX=setTimeout(()=>{BRU=0;bset(0)},BRT)});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){clearTimeout(BRX);BRU=0;bset(0)}});
 const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 // ঢাকার নামাজের সময় (কারাচি ১৮°/১৮°, হানাফি আসর) — আনুমানিক
 function calc(d){const r=Math.PI/180,lat=23.8103*r,lon=90.4125,N=Math.floor((d-new Date(d.getFullYear(),0,0))/864e5);
@@ -234,7 +287,7 @@ const rozaCard=(h.m!=9&&!fi[1]&&fi[0].startsWith('নফল রোজার দ�
 const wxCard=wxCardHTML();
 const g=cur<12?'সুপ্রভাত':cur<16?'শুভ অপরাহ্ন':cur<19?'শুভ সন্ধ্যা':'শুভ রাত্রি';
 const HC={cd:`${cdCard}`,wx:`${wxCard}`,pr:`<section class="card"><h2>আজকের নামাজ <span class="pill">${bn(pc)}/৫</span></h2>${P.map((p,i)=>`<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="pr" data-i="${i}" style="${pcs(i)}" ${pd['f'+i]?'checked':''}><span style="color:${PC[i][0]};font-weight:600">${p}</span></label><span class="m">${T(tm[i])}</span></div>`).join('')}<div class="bar"><i style="width:${pc*20}%"></i></div></section>
-${actN.length?`<section class="card"><h2>নফল নামাজ <span class="pill">এখন চলছে</span></h2>${actN.map(([w,r])=>{const i=nafl.findIndex(n=>n[0]==w[0]);return `<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="pr" data-i="n${i}" ${pd['n'+i]?'checked':''}>${w[0]}</label><span class="m">${nafl[i][1]} · ${dur(r.left)} বাকি</span></div>`}).join('')}</section>`:''}`,rz:`${rozaCard}`,bal:`<section class="card"><h2>ব্যালেন্স</h2><div class="row"><span class="m">এখন আমার হাতে আছে</span><b style="font-size:22px;${hand()<0?'color:#d33':''}">৳ ${bn(Math.round(hand()).toLocaleString('en-IN'))}</b></div><div style="margin-top:6px"><button class="g lk" data-a="hs">হিসাব<span class="ar">→</span></button></div></section>`,tk:`<section class="card wide"><h2>আজকের কাজ <span class="pill">${bn(td)}/${bn(tt.length)}</span></h2>
+${actN.length?`<section class="card"><h2>নফল নামাজ <span class="pill">এখন চলছে</span></h2>${actN.map(([w,r])=>{const i=nafl.findIndex(n=>n[0]==w[0]);return `<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="pr" data-i="n${i}" ${pd['n'+i]?'checked':''}>${w[0]}</label><span class="m">${nafl[i][1]} · ${dur(r.left)} বাকি</span></div>`}).join('')}</section>`:''}`,rz:`${rozaCard}`,bal:`<section class="card bal"><div class="bw">${(()=>{const v=hand(),rem=BRU-Date.now(),op=rem>0;return `<button type="button" class="bpill${op?' open':''}" data-bal="1" aria-pressed="${op}" aria-label="ব্যালেন্স দেখতে ট্যাপ করুন"><span class="brp"></span><span class="bcoin">৳</span><span class="bl"><em>ব্যালেন্স দেখুন</em></span><span class="bv"><b data-v="${v}"${v<0?' class="neg"':''}>${bfmt(v)}</b></span></button>`})()}<button class="g lk" data-a="hs">হিসাব<span class="ar">→</span></button></div></section>`,tk:`<section class="card wide"><h2>আজকের কাজ <span class="pill">${bn(td)}/${bn(tt.length)}</span></h2>
 ${tt.length?tt.map(t=>`<div class="row"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-a="task" data-i="${t.id}" ${(S.done[K]||{})[t.id]?'checked':''}>${t.title}</label><span class="m">${t.time?bn(t.time)+' · ':''}${TYL(t)} <button class="x" data-a="del" data-i="${t.id}">✕</button></span></div>`).join(''):'<div class="m">আজ কোনো কাজ নেই।</div>'}
 <div style="margin-top:10px"><button class="g lk" data-a="tk">কাজ যোগ করুন<span class="ar">→</span></button></div>
 </section>`};
