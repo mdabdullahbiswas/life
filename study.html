@@ -283,10 +283,11 @@ button.opt.on{box-shadow:none}
 .exd small{display:block;font-size:10px;line-height:1.5;opacity:.92;white-space:nowrap}
 .exd b{display:block;font-size:24px;line-height:1.15;font-weight:700;font-family:"Noto Serif Bengali",serif}
 .exb{flex:1;min-width:0}
-.exn{font-weight:700;font-size:15px;line-height:1.4;overflow-wrap:anywhere}
+.exn{font-weight:700;font-size:15px;line-height:1.4;overflow-wrap:break-word}
 .exm{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:7px}
 .chip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:99px;font-size:12px;color:var(--m);border:1px solid var(--b);background:var(--c);white-space:nowrap}
 .chip svg,.ib svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.exm .pill{white-space:nowrap}
 .pill.wn{background:rgba(224,150,30,.16);color:#a8650a}
 :root[data-d="1"] .pill.wn{color:#f0b95a}
 .exz{flex:none;display:flex;flex-direction:column;gap:2px}
@@ -324,7 +325,7 @@ button.opt.on{box-shadow:none}
 .exhn small{display:block;font-size:11px;opacity:.92}
 .exhb{position:relative;min-width:0}
 .exhl{font-size:11px;font-weight:600;letter-spacing:.5px;opacity:.85}
-.exht{font-size:19px;font-weight:700;line-height:1.35;margin-top:3px;overflow-wrap:anywhere}
+.exht{font-size:19px;font-weight:700;line-height:1.35;margin-top:3px;overflow-wrap:break-word}
 .exhm{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
 .exhm span{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;font-size:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26)}
 :root[data-d="1"] .exhm span{background:rgba(0,0,0,.09);border-color:rgba(0,0,0,.2)}
@@ -344,36 +345,41 @@ button.opt.on{box-shadow:none}
 .exre{display:flex;justify-content:space-between;font-size:11px;color:var(--m)}
 .exe0{padding:26px 12px;text-align:center;color:var(--m);font-size:14px;border:1px dashed var(--cb);border-radius:16px}
 .exp .spt{margin-top:16px}
-@media(min-width:680px){.exc{grid-column:span 2}}
-@media(min-width:760px){
- .exw{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:26px;align-items:start}
- .exp{position:sticky;top:14px;padding:16px;border-radius:18px;border:1px solid var(--cb);background:color-mix(in srgb,var(--a) 6%,transparent)}
- .exp .spt{margin:0 0 12px;padding-bottom:8px;font-size:13px;color:var(--t)}
- .exc{padding:22px 24px}
+@media(min-width:680px){
+ .exc{grid-column:span 2;padding:22px 24px}
  .exc h2{font-size:19px;margin-bottom:16px}
- .exl{gap:12px}
- .ex{padding:14px 12px 14px 14px;gap:16px;border-radius:18px}
- .ex.ed{padding:18px}
- .exd{min-width:68px;padding:9px 6px 10px;border-radius:16px}
- .exd b{font-size:30px}.exd small{font-size:11px}
- .exn{font-size:17px}
- .exm{gap:8px;margin-top:9px}
- .chip{font-size:13px;padding:4px 11px}
- .exz{flex-direction:row;gap:4px}
- .ib{width:34px;height:34px}
- .ex:hover{border-color:color-mix(in srgb,var(--a) 55%,transparent)}
- .exh{padding:20px 22px;gap:20px;border-radius:22px}
- .exhn{min-width:92px;padding:14px 10px}.exhn b{font-size:44px}
- .exht{font-size:23px}.exhl{font-size:12px}.exhm span{font-size:13px;padding:4px 12px}
- .exs{gap:12px;margin-bottom:8px}.exs>div{padding:14px 8px 12px}.exs b{font-size:28px}.exs small{font-size:12px}
- .exr{margin-bottom:20px}
- .exl{position:relative;padding-left:28px}
+ .extop{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:12px;margin-bottom:8px}
+ .extop .exh{margin:0;padding:20px 22px;gap:18px;border-radius:22px}
+ .exhn{min-width:84px;padding:13px 8px}.exhn b{font-size:40px}
+ .exht{font-size:21px}.exhm span{font-size:13px;padding:4px 12px}
+ .extop .exs{grid-template-columns:1fr;grid-auto-rows:1fr;margin:0;gap:8px}
+ .extop .exs>div{display:flex;flex-direction:row-reverse;align-items:center;justify-content:space-between;gap:10px;padding:8px 18px;text-align:left;border-radius:16px}
+ .extop .exs small{font-size:13px;color:var(--t);margin:0}
+ .extop .exs b{font-size:26px}
+ .exr{margin:6px 0 22px}
+ .exl{position:relative;padding-left:28px;gap:12px}
  .exl::before{content:"";position:absolute;left:8px;top:14px;bottom:14px;width:2px;border-radius:2px;background:linear-gradient(var(--a),color-mix(in srgb,var(--a) 14%,transparent))}
+ .ex{padding:13px 12px 13px 14px;gap:16px;border-radius:18px}
+ .ex.ed{padding:18px}
  .ex::after{content:"";position:absolute;left:-28px;top:50%;width:18px;height:18px;margin-top:-9px;box-sizing:border-box;border-radius:50%;background:var(--bg);border:3px solid var(--a)}
  .ex.ps::after{border-color:var(--m)}.ex.u1::after{border-color:#d33}.ex.u2::after{border-color:#e0961e}
  .ex.nx::after{background:var(--a);box-shadow:0 0 0 5px color-mix(in srgb,var(--a) 26%,transparent)}
  .ex.ed::after{display:none}
+ .ex:hover{border-color:color-mix(in srgb,var(--a) 55%,transparent)}
+ .exd{min-width:66px;padding:8px 6px 9px;border-radius:15px}
+ .exd b{font-size:28px}.exd small{font-size:11px}
+ .exn{font-size:17px}
+ .exm{gap:8px;margin-top:8px}
+ .chip{font-size:13px;padding:4px 11px}
+ .exz{flex-direction:row;gap:4px}
+ .ib{width:34px;height:34px}
  .exg{justify-content:flex-start}.exg::before,.exg::after{display:none}
+ .exp{margin-top:20px;padding:16px 18px 18px;border-radius:18px;border:1px solid var(--cb);background:color-mix(in srgb,var(--a) 6%,transparent)}
+ .exp .spt{margin:0 0 12px;padding-bottom:8px;font-size:13px;color:var(--t)}
+ .exp .exf{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .exp .fl.w{grid-column:auto}
+ .exp .fl.nm{grid-column:1/-1}
+ .exp .exa{grid-column:1/-1}
 }
 .exc{overflow:visible}
 .exc::after{border-radius:20px 20px 0 0}
@@ -418,7 +424,7 @@ const IC={clk:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="1
 const addExn=n=>{D.exc[n]=(D.exc[n]||0)+1;D.exn=D.exn.filter(x=>x!==n);D.exn.push(n);if(D.exn.length>40){D.exn.slice(0,D.exn.length-40).forEach(x=>delete D.exc[x]);D.exn=D.exn.slice(-40)}};
 const exForm=(k,e)=>{e=e||{};const ed=k=='exe',id=ed?'ed':'new';
 return `<form class="exf" data-f="${k}" autocomplete="off">${ed?`<input type="hidden" name="id" value="${e.id}">`:''}
-<div class="fl w"><label for="exn-${id}">পরীক্ষার নাম</label><input id="exn-${id}" name="n" data-sgi maxlength="40" placeholder="যেমন: অর্থনীতি" required value="${esc(e.n||'')}" autocomplete="off"><div class="sgs"></div></div>
+<div class="fl w nm"><label for="exn-${id}">পরীক্ষার নাম</label><input id="exn-${id}" name="n" data-sgi maxlength="40" placeholder="যেমন: অর্থনীতি" required value="${esc(e.n||'')}" autocomplete="off"><div class="sgs"></div></div>
 <label class="fl">তারিখ<input name="d" type="date" required value="${esc(e.d||'')}"></label>
 <label class="fl">সময় (ঐচ্ছিক)<input name="t" type="time" value="${esc(e.t||'')}"></label>
 <label class="fl w">রুম নং (ঐচ্ছিক)<input name="r" maxlength="20" placeholder="যেমন: ২০৩ বা ক-১২" value="${esc(e.r||'')}" autocomplete="off"></label>
@@ -484,11 +490,11 @@ ${wsTot?`<div class="stk">${ids.map((id,j)=>wsAll[j]?`<i style="flex:${wsAll[j]}
   return `<div class="ex ${n<0?'ps':''} ${uc} ${e.id==nxi?'nx':''}"><div class="exd"><small>${MON[dt.getMonth()]}</small><b>${bn(dt.getDate())}</b><small>${WSD[dt.getDay()]}</small></div><div class="exb"><div class="exn">${esc(e.n)}</div><div class="exm"><span class="pill ${cs}">${lb}</span>${tt?`<span class="chip">${IC.clk}${tt}</span>`:''}${e.r?`<span class="chip">${IC.door}রুম ${esc(e.r)}</span>`:''}</div></div><div class="exz"><button class="x ib" data-a="ee" data-i="${e.id}" aria-label="এডিট করুন">${IC.ed}</button><button class="x ib dl" data-a="ed" data-i="${e.id}" aria-label="মুছুন">${IC.del}</button></div></div>`};
  const upL=ex.filter(e=>e.d>=K),upc=upL.length,nxE=upL[0];
  const dd=(x,y)=>Math.round((new Date(y+'T00:00')-new Date(x+'T00:00'))/864e5),fd=d=>{const t=new Date(d+'T00:00');return bn(t.getDate())+' '+MON[t.getMonth()]};
- let top='';
+ let top='',tp='';
  if(nxE){const n=dd(K,nxE.d),dt=new Date(nxE.d+'T00:00'),tt=fmT(nxE.t);
-  top+=`<div class="exh"><div class="exhn"><b>${n==0?'আজ':bn(n)}</b>${n>0?'<small>দিন বাকি</small>':''}</div><div class="exhb"><div class="exhl">পরবর্তী পরীক্ষা</div><div class="exht">${esc(nxE.n)}</div><div class="exhm"><span>${WFD[dt.getDay()]}, ${fd(nxE.d)}</span>${tt?`<span>${IC.clk}${tt}</span>`:''}${nxE.r?`<span>${IC.door}রুম ${esc(nxE.r)}</span>`:''}</div></div></div>`;
+  tp+=`<div class="exh"><div class="exhn"><b>${n==0?'আজ':bn(n)}</b>${n>0?'<small>দিন বাকি</small>':''}</div><div class="exhb"><div class="exhl">পরবর্তী পরীক্ষা</div><div class="exht">${esc(nxE.n)}</div><div class="exhm"><span>${WFD[dt.getDay()]}, ${fd(nxE.d)}</span>${tt?`<span>${IC.clk}${tt}</span>`:''}${nxE.r?`<span>${IC.door}রুম ${esc(nxE.r)}</span>`:''}</div></div></div>`;
   const tg=upL.reduce((s,e,i)=>{if(!i)return s;const g=dd(upL[i-1].d,e.d)-1;return s+(g>0?g:0)},0),ln=dd(K,upL[upL.length-1].d);
-  top+=`<div class="exs"><div><b>${bn(upc)}</b><small>আসন্ন পরীক্ষা</small></div><div><b>${bn(tg)}<i>দিন</i></b><small>মোট ছুটি</small></div><div><b>${bn(ln)}<i>দিন</i></b><small>শেষ পরীক্ষা পর্যন্ত</small></div></div>`}
+  tp+=`<div class="exs"><div><b>${bn(upc)}</b><small>আসন্ন পরীক্ষা</small></div><div><b>${bn(tg)}<i>দিন</i></b><small>মোট ছুটি</small></div><div><b>${bn(ln)}<i>দিন</i></b><small>শেষ পরীক্ষা পর্যন্ত</small></div></div>`;top+=`<div class="extop">${tp}</div>`}
  if(ex.length>1){const s0=ex[0].d<K?ex[0].d:K,e0=ex[ex.length-1].d,sp=dd(s0,e0);
   if(sp>0){const ps=d=>Math.max(0,Math.min(100,dd(s0,d)/sp*100)),inR=K<=e0;
    top+=`<div class="exr"><div class="exrt"><span class="exrf" style="width:${inR?ps(K):100}%"></span>${ex.map(e=>`<i class="exrd ${e.d<K?'ps':''}" style="left:${ps(e.d)}%" title="${esc(e.n)}"></i>`).join('')}${inR?`<span class="exrn" style="left:${ps(K)}%"><em>আজ</em></span>`:''}</div><div class="exre"><span>${fd(s0)}</span><span>${fd(e0)}</span></div></div>`}}
