@@ -332,7 +332,7 @@ let S={theme:0,dark:0,tasks:[],done:{},pr:{},fin:[],url:'',notif:0,qaza:[0,0,0,0
 try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
 if(!TH[S.theme])S.theme=0;
 const D=S.st=Object.assign({subj:[],log:{},ses:{},goal:120,exams:[],pre:[25,5],mode:'f',sel:0,run:null,rt:[],rd:{}},S.st||{});
-if(!Array.isArray(D.subj))D.subj=[];if(!Array.isArray(D.exams))D.exams=[];if(!Array.isArray(D.exn))D.exn=[];if(!D.exm){D.exm=1;D.exams.forEach(e=>{if(e.n&&!D.exn.includes(e.n))D.exn.push(e.n)})}if(!Array.isArray(D.pre)||D.pre.length!=2)D.pre=[25,5];
+if(!Array.isArray(D.subj))D.subj=[];if(!Array.isArray(D.exams))D.exams=[];if(!Array.isArray(D.exn))D.exn=[];if(!D.exc||typeof D.exc!='object'||Array.isArray(D.exc))D.exc={};if(!D.exm){D.exm=1;D.exams.forEach(e=>{if(e.n&&!D.exn.includes(e.n))D.exn.push(e.n)})}D.exn.forEach(n=>{if(!D.exc[n])D.exc[n]=Math.max(1,D.exams.filter(e=>e.n===n).length)});if(!Array.isArray(D.pre)||D.pre.length!=2)D.pre=[25,5];
 if(!D.log||typeof D.log!='object')D.log={};if(!D.ses||typeof D.ses!='object')D.ses={};
 if(!Array.isArray(D.rt))D.rt=[];if(!D.rd||typeof D.rd!='object')D.rd={};
 const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
@@ -354,7 +354,7 @@ const dsum=d=>d.length==7?'প্রতিদিন':d.slice().sort((a,b)=>a-b).
 let EXED=null;
 const fmT=t=>{if(!/^\d\d:\d\d$/.test(t||''))return '';const h=+t.slice(0,2),m=t.slice(3),p=h<4?'রাত':h<6?'ভোর':h<12?'সকাল':h<15?'দুপুর':h<18?'বিকাল':h<20?'সন্ধ্যা':'রাত';return p+' '+bn(h%12||12)+':'+bn(m)};
 const IC={clk:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',door:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v17"/><path d="M3 21h18"/><path d="M12.5 12h.01"/></svg>',ed:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>',del:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'};
-const addExn=n=>{D.exn=D.exn.filter(x=>x!==n);D.exn.push(n);if(D.exn.length>40)D.exn=D.exn.slice(-40)};
+const addExn=n=>{D.exc[n]=(D.exc[n]||0)+1;D.exn=D.exn.filter(x=>x!==n);D.exn.push(n);if(D.exn.length>40){D.exn.slice(0,D.exn.length-40).forEach(x=>delete D.exc[x]);D.exn=D.exn.slice(-40)}};
 const exForm=(k,e)=>{e=e||{};const ed=k=='exe',id=ed?'ed':'new';
 return `<form class="exf" data-f="${k}" autocomplete="off">${ed?`<input type="hidden" name="id" value="${e.id}">`:''}
 <div class="fl w"><label for="exn-${id}">পরীক্ষার নাম</label><input id="exn-${id}" name="n" data-sgi maxlength="40" placeholder="যেমন: অর্থনীতি" required value="${esc(e.n||'')}" autocomplete="off"><div class="sgs"></div></div>
@@ -478,14 +478,15 @@ $.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target
  save();render()});
 /* পরীক্ষার নামের সাজেশন: আগে যা লিখেছেন তা মনে রাখে */
 function sgShow(inp){const box=inp.parentNode.querySelector('.sgs');if(!box)return;const q=inp.value.trim().toLowerCase();
- const a=q?D.exn.slice().reverse().filter(n=>n.toLowerCase()!==q&&n.toLowerCase().includes(q)).slice(0,6):[];
- box.innerHTML=a.map(n=>{const i=n.toLowerCase().indexOf(q);return `<div class="sg"><span class="sgt" data-sg="p" data-v="${esc(n)}" role="option">${esc(n.slice(0,i))}<mark>${esc(n.slice(i,i+q.length))}</mark>${esc(n.slice(i+q.length))}</span><span class="sgx" data-sg="x" data-v="${esc(n)}" role="button" aria-label="সাজেশন সরান">✕</span></div>`}).join('');box.classList.toggle('on',a.length>0)}
+ const a=D.exn.map((n,i)=>[n,i]).filter(([n])=>n.toLowerCase()!==q&&(!q||n.toLowerCase().includes(q))).sort((x,y)=>(D.exc[y[0]]||0)-(D.exc[x[0]]||0)||y[1]-x[1]).slice(0,6).map(x=>x[0]);
+ box.innerHTML=a.map(n=>{const i=q?n.toLowerCase().indexOf(q):-1;return `<div class="sg"><span class="sgt" data-sg="p" data-v="${esc(n)}" role="option">${i<0?esc(n):`${esc(n.slice(0,i))}<mark>${esc(n.slice(i,i+q.length))}</mark>${esc(n.slice(i+q.length))}`}</span><span class="sgx" data-sg="x" data-v="${esc(n)}" role="button" aria-label="সাজেশন সরান">✕</span></div>`}).join('');box.classList.toggle('on',a.length>0)}
+document.addEventListener('focusin',e=>{if(e.target.matches&&e.target.matches('input[data-sgi]'))sgShow(e.target)});
 document.addEventListener('input',e=>{if(e.target.matches&&e.target.matches('input[data-sgi]'))sgShow(e.target)});
 document.addEventListener('focusout',e=>{const t=e.target;if(t.matches&&t.matches('input[data-sgi]'))setTimeout(()=>{const b=t.parentNode&&t.parentNode.querySelector('.sgs');if(b&&!b.contains(document.activeElement))b.classList.remove('on')},200)});
 document.addEventListener('mousedown',e=>{if(e.target.closest&&e.target.closest('[data-sg]'))e.preventDefault()});
 document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('[data-sg]');if(!t)return;const f=t.closest('.fl'),inp=f&&f.querySelector('input');if(!inp)return;
  if(t.dataset.sg=='p'){inp.value=t.dataset.v;f.querySelector('.sgs').classList.remove('on')}
- else{D.exn=D.exn.filter(n=>n!==t.dataset.v);save();sgShow(inp)}});
+ else{D.exn=D.exn.filter(n=>n!==t.dataset.v);delete D.exc[t.dataset.v];save();sgShow(inp)}});
 let LK=key(new Date());
 setInterval(()=>{
  if(key(new Date())!==LK){LK=key(new Date());render();return}
