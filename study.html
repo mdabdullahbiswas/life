@@ -1,521 +1,564 @@
-<!DOCTYPE html>
-<html lang="bn"><head><meta charset="utf-8">
-<script src="lang.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>পড়াশোনা · Hayat</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
+/* Hayat — ভাষা (বাংলা / English)।
+   বাংলা হলে কিছুই বদলায় না। English হলে প্রতিটি পেজের লেখা এই ফাইলের অভিধান থেকে অনুবাদ হয়।
+   নতুন লেখা যোগ করলে নিচের D তালিকায় বাংলা → English লাইন যোগ করুন। */
+(function(){
+let LANG='bn';try{LANG=JSON.parse(localStorage.getItem('dl')||'{}').lang==='en'?'en':'bn'}catch(e){}
+window.LANG=LANG;
+if(LANG!=='en'){window.L=s=>s;return}
 
-/* প্যালেট: সোনালি মূল রঙ (#B8892B → #E2C275, ডার্কে #E0B84F → #F2D88A) · ব্রোঞ্জ #8A6420 · এসপ্রেসো #2B2118 · ক্রিম #FBF7EE · উষ্ণ কালো #0C0A07 */
-:root{--a:#B8892B;--a2:#E2C275;--g:#8A6420;--p:#7A5614;--on:#1F1608;--bb:var(--t);--bt:var(--a2);--bd:var(--a);--bg:#FBF7EE;--c:rgba(255,252,244,.8);--t:#2B2118;--m:#7A6A55;--b:rgba(120,90,30,.15);--cb:rgba(184,137,43,.42);--sh:rgba(184,137,43,.38);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-:root[data-d="1"]{--bg:#0C0A07;--c:rgba(32,25,14,.72);--t:#F6EDD8;--m:#B3A68B;--b:rgba(224,184,79,.2);--cb:rgba(224,184,79,.34);--a:#E0B84F;--a2:#F2D88A;--g:#A47A20;--p:#F2D88A;--on:#1A1304;--bb:var(--a);--bt:var(--on);--bd:var(--a2);--sh:rgba(224,184,79,.22)}
-/* থিম: গোল্ড + এমারেল্ড */
-:root[data-t="1"]:not([data-d="1"]){--g:#0D4C3C;--p:#0D4C3C;--t:#10241D;--m:#5E6F66;--bg:#F8F6EC}
-:root[data-t="1"][data-d="1"]{--bg:#07100D;--c:rgba(14,59,46,.45);--g:#1F8A68}
-/* থিম: গোল্ড + মিডনাইট নেভি */
-:root[data-t="2"]:not([data-d="1"]){--g:#16213E;--p:#16213E;--t:#0F172A;--m:#5F6878;--bg:#F7F6F1}
-:root[data-t="2"][data-d="1"]{--bg:#0A0F1E;--c:rgba(22,33,62,.6);--g:#2A3B6B}
-/* থিম: গোল্ড + বারগান্ডি */
-:root[data-t="3"]:not([data-d="1"]){--g:#5B1A2B;--p:#5B1A2B;--t:#2A0F16;--m:#76616A;--bg:#FAF5EF}
-:root[data-t="3"][data-d="1"]{--bg:#0E0709;--c:rgba(91,26,43,.42);--g:#8A2D45}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}
-body{margin:0;font-family:Inter,"Noto Serif Bengali",serif;color:var(--t);background:var(--bg);min-height:100vh;transition:background .4s}
-body::before{content:"";position:fixed;inset:-20% -10% auto;height:70vh;background:radial-gradient(60% 60% at 30% 30%,color-mix(in srgb,var(--g) 24%,transparent),transparent),radial-gradient(50% 50% at 80% 20%,color-mix(in srgb,var(--a) 16%,transparent),transparent);z-index:-1}
-@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.bn,button,input,select,h1,h2,h3,label{font-family:"Noto Serif Bengali",Inter,serif}
-main{max-width:1080px;margin:auto;padding:20px 16px 60px}
-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:18px}
-h1{font-size:clamp(24px,5vw,34px);margin:0;font-weight:700}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
-.card{background:var(--c);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--cb);border-radius:20px;padding:18px;box-shadow:0 12px 32px -14px var(--sh);position:relative;overflow:hidden}
-.card::after{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,var(--a),var(--g))}
-.wide{grid-column:1/-1}
-h2{font-size:17px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
-h2::before{content:"";width:6px;height:18px;border-radius:3px;background:linear-gradient(var(--g),var(--a))}
-.big{font-size:clamp(34px,8vw,52px);font-weight:700;letter-spacing:-1px;background:linear-gradient(90deg,var(--a),var(--g));-webkit-background-clip:text;background-clip:text;color:transparent;font-family:"Noto Serif Bengali"}
-.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px dashed var(--b)}
-.row:last-child{border:0}
-.m{color:var(--m);font-size:13px}
-button{border:1px solid var(--bd);border-radius:10px;padding:10px 22px;background:var(--bb);color:var(--bt);font-weight:600;letter-spacing:.3px;cursor:pointer;font-size:14px;box-shadow:0 1px 2px rgba(0,0,0,.12);transition:background .2s,color .2s,border-color .2s,box-shadow .2s}
-button:hover{background:color-mix(in srgb,var(--bb) 86%,var(--bt));box-shadow:0 4px 14px -6px var(--sh)}
-button:active{transform:translateY(1px)}
-button:focus-visible{outline:2px solid var(--g);outline-offset:2px}
-button.g{background:linear-gradient(180deg,color-mix(in srgb,var(--a) 11%,transparent),color-mix(in srgb,var(--a) 3%,transparent));color:var(--t);border:1px solid color-mix(in srgb,var(--a) 55%,transparent);font-weight:500;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 1px 2px rgba(0,0,0,.05)}
-button.g:hover{background:linear-gradient(180deg,color-mix(in srgb,var(--a) 22%,transparent),color-mix(in srgb,var(--a) 8%,transparent));border-color:var(--a);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 8px 18px -10px var(--sh)}
-:root[data-d="1"] button.g{box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
-button.lk{display:inline-flex;align-items:center;gap:10px;padding:8px 8px 8px 18px;border-radius:99px;font-size:13px;letter-spacing:.2px}
-button.lk .ar{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on);font-size:12px;line-height:1;box-shadow:0 2px 6px -2px var(--sh);transition:transform .25s}
-button.lk:hover .ar{transform:translateX(3px)}
-button.g.lk{background:linear-gradient(135deg,var(--g),color-mix(in srgb,var(--g) 62%,#000));color:#FFF6DC;border:1px solid color-mix(in srgb,var(--a2) 75%,transparent);font-weight:600;text-shadow:0 1px 1px rgba(0,0,0,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 8px 18px -10px var(--sh)}
-button.g.lk:hover{background:linear-gradient(135deg,color-mix(in srgb,var(--g) 85%,#fff),var(--g));border-color:var(--a2);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 12px 22px -10px var(--sh)}
-:root[data-d="1"] button.g.lk{background:linear-gradient(135deg,var(--a),var(--a2));color:#1A1304;border-color:var(--a2);text-shadow:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 8px 18px -10px var(--sh)}
-:root[data-d="1"] button.g.lk:hover{background:linear-gradient(135deg,var(--a2),#FFF0C2)}
-:root[data-d="1"] button.lk .ar{background:#1A1304;color:var(--a2)}
-.row button:not(.x){padding:6px 14px}
-input,select{border:1px solid var(--b);background:var(--c);color:var(--t);border-radius:12px;padding:9px 12px;font-size:14px;min-width:0}
-input:focus,select:focus{outline:2px solid var(--g)}
-.chk{appearance:none;width:24px;height:24px;border-radius:8px;border:2px solid var(--cb);cursor:pointer;display:grid;place-items:center;transition:.2s;padding:0;flex:none}
-.chk:checked{background:linear-gradient(135deg,var(--pc,var(--a)),var(--pc2,var(--a2)));border-color:transparent}
-.chk[style]{border-color:color-mix(in srgb,var(--pc) 55%,transparent)}
-.chk:checked::after{content:"✓";color:var(--on);font-size:14px}
-.chk:disabled{opacity:.4;cursor:not-allowed}
-.pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;background:color-mix(in srgb,var(--a) 20%,transparent);color:var(--p);font-weight:600}
-.bad{background:rgba(220,60,60,.14);color:#d33}
-.bar{height:8px;border-radius:9px;background:var(--b);overflow:hidden;margin-top:10px}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--a),var(--g));transition:width .6s}
-.sw{display:flex;gap:10px;flex-wrap:wrap}
-.sw b{width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .2s}
-.sw b:hover{transform:scale(1.2)}.sw b.on{border-color:var(--t)}
-form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}form input{flex:1 1 110px}
-.st{display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:center}
-.st div{padding:10px;border-radius:14px;background:var(--b)}
-.x{background:none;border:0;box-shadow:none;color:var(--m);padding:4px 8px}
-.x:hover{background:none;box-shadow:none;color:#d33}
-.dots{display:grid;grid-template-columns:repeat(auto-fill,minmax(32px,1fr));gap:6px;margin-top:10px}
-.dots b{display:grid;place-items:center;height:32px;border-radius:9px;background:var(--b);font-size:12px;font-weight:500;cursor:pointer;transition:.2s}
-.dots b:hover{transform:scale(1.1)}
-.dots b.on{background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on)}
+const D={
+'ব্যালেন্স দেখতে ট্যাপ করুন':'Tap to reveal balance',
+'হাতে আছে':'In hand',
+'শুরুর হিসাব বদলান':'Edit starting balances',
+'এখন আমার হাতে আছে':'Cash in hand right now',
+'আমার টাকা কোথায়':'Where my money is',
+'অঙ্ক দেখতে অ্যাকাউন্টে চাপ দিন — ৫ সেকেন্ড পর আবার ঝাপসা হয়ে যাবে।':'Tap an account to reveal the amount — it blurs again after 5 seconds.',
+'⇄ টাকা সরান':'⇄ Move money',
+'ব্যালান্স ঠিক করুন':'Set balances',
+'প্রথমে “ব্যালান্স ঠিক করুন” চেপে প্রতিটি অ্যাকাউন্টে এখন কত আছে বসিয়ে নিন।':'First tap “Set balances” and enter how much each account holds right now.',
+'প্রতিটি অ্যাকাউন্টে এখন যত টাকা আছে লিখুন।':'Enter how much each account holds right now.',
+'নতুন অ্যাকাউন্ট (ঐচ্ছিক)':'New account (optional)',
+'নাম (যেমন: ব্যাংক)':'Name (e.g. Bank)',
+'এখন কত আছে':'Current balance',
+'সেভ করুন':'Save',
+'অ্যাকাউন্ট মুছুন':'Delete account',
+'মোট ব্যালান্স দেখতে চাপুন':'Tap to show total balance',
+'ব্যালান্স দেখতে চাপুন':'tap to show balance',
+'ট্রান্সফার':'Transfer',
+'টাকা ট্রান্সফার':'Transfer money',
+'ট্রান্সফার করুন':'Transfer',
+'ট্রান্সফার চার্জ':'Transfer fee',
+'চার্জ':'Fee',
+'কোন অ্যাকাউন্টে যোগ হবে':'Add to which account',
+'কোন অ্যাকাউন্ট থেকে খরচ':'Spend from which account',
+'কোথা থেকে':'From',
+'কোথায়':'To',
+'চার্জ (ঐচ্ছিক — যেমন ক্যাশ-আউট ফি)':'Fee (optional — e.g. cash-out charge)',
+'যেমন বিকাশ থেকে তুলে হাতে রাখলে মোট টাকা একই থাকে — এটি আয়-ব্যয়ে গোনা হয় না। শুধু চার্জ ব্যয় হিসেবে কাটা হয়।':'For example, withdrawing from bKash to keep as cash leaves your total unchanged — it is not counted as income or expense. Only the fee is deducted as an expense.',
+'ট্রান্সফারটি মুছবেন?':'Delete this transfer?',
+'দুই অ্যাকাউন্টের ব্যালান্স আগের অবস্থায় ফিরে যাবে। এর চার্জ (থাকলে) সেটিও মুছে যাবে।':'Both account balances will return to how they were. Its fee (if any) will be removed too.',
+'হ্যাঁ, সরান':'Yes, move',
+'মুছা যাবে না':'Cannot delete',
+'এই অ্যাকাউন্টে লেনদেন আছে, মুছলে হিসাব এলোমেলো হয়ে যাবে।':'This account has transactions; deleting it would break your records.',
+'অ্যাকাউন্টটি মুছবেন?':'Delete this account?',
+'তালিকা থেকে সরে যাবে।':'will be removed from the list.',
+'দুটি অ্যাকাউন্ট আলাদা হতে হবে':'The two accounts must be different',
+'যেখান থেকে সরাবেন আর যেখানে রাখবেন — দুটি আলাদা বেছে নিন।':'Choose two different accounts: where the money leaves and where it goes.',
+'ব্যালান্স কম পড়ছে':'Insufficient balance',
+'-এ এখন যা আছে তার চেয়ে বেশি সরাচ্ছেন। তবুও সরাবেন?':' holds less than the amount you are moving. Move it anyway?',
+'নামটি আগে থেকেই আছে':'That name already exists',
+'নতুন অ্যাকাউন্টের জন্য অন্য একটি নাম দিন।':'Please choose a different name for the new account.',
+'পড়াশোনা ও চাকরিতে আগের খরচ একবার বসিয়ে দিন।':'Enter your earlier study and job spending once.',
+'পড়াশোনা ও চাকরির কার্ডে “এ পর্যন্ত মোট” দেখুন। হাতে, বিকাশ ইত্যাদির ব্যালান্স “আমার টাকা কোথায়” কার্ড থেকে বসান।':'See “Total so far” on the study and job cards. Set the balances of cash, bKash and so on from the “Where my money is” card.',
+'অ্যাকাউন্ট':'Account',
+'সাজেশন সরান':'Remove suggestion',
+'উপকাজের নাম':'Subtask name','নির্দিষ্ট মাস পর পর':'Every N months','ব্রাউজারে নোটিফিকেশন বন্ধ আছে। সাইট সেটিং থেকে অনুমতি দিন।':'Notifications are blocked in this browser. Allow them in site settings.','নোটিফিকেশন চালু নেই':'Notifications are off','আজকের কাজের তালিকা':'Today\u2019s task list','আজ এখনো বাকি':'What is still pending today','কাজের সময়ে রিমাইন্ডার':'Reminder at task time','নির্ধারিত সময়ে নোটিফিকেশন':'Notification at the set time','নোটিফিকেশন চালু করুন':'Turn on notifications','পুশ নোটিফিকেশন':'Push notifications','ঠিক সময়ে পেতে অ্যাপটি Home Screen-এ ইনস্টল করুন।':'For on-time alerts, install the app to your Home Screen.','এই ডিভাইসে পুশ চালু হয়েছে।':'Push is on for this device.','পরীক্ষার পুশ পাঠানো হয়েছে।':'Test push sent.',
+'আজকের লক্ষ্য পূরণ হয়েছে।':'Today\u2019s goal is reached.','আজকের প্রথম সেশন শুরু করুন।':'Start today\u2019s first session.','ফোকাস সেশন সম্পন্ন। বিরতি নিন।':'Focus session complete. Take a break.','বিরতি শেষ। ফোকাসে ফিরুন।':'Break over. Back to focus.','প্রতিদিনের পড়া ঠিক করুন। টিক দিলে সময় যোগ হবে।':'Set your daily study. Ticking adds the time.','রুটিনের নাম':'Routine name',
+'পরের বার':'Next time','এই কাজের বাকি পড়া সব দিন বাদ দিয়ে পরের বারে যান':'Skip all missed days of this task and go to the next time',
+'বাকি কাজ খাতা':'Pending tasks log','বাকি কাজ':'Pending tasks','উপকাজ':'Subtasks','উপকাজ লিখে ＋ চাপুন (ঐচ্ছিক)':'Type a subtask and press ＋ (optional)','উপকাজ যোগ':'Add subtask','আজকের কাজে নিন':'Move to today','বাদ দিন':'Dismiss','সব বাদ দিন':'Dismiss all','কোনো বাকি কাজ নেই':'No pending tasks','সব বাকি কাজ বাদ দেবেন? (খাতা থেকে মুছে যাবে)':'Dismiss all pending tasks? (They will be removed from the log.)',
+'মাস':'Month','বছর':'Year',
+/* তাসবিহ */
+'তাসবিহ':'Tasbih','কোনটা কতবার পড়েছেন, এখানে লিখে রাখুন':'Log what you recited and how many times','আজকের মোট':'Today\u2019s total','সুবহানাল্লাহ':'SubhanAllah','আল্লাহু আকবার':'Allahu Akbar','ইস্তিগফার':'Istighfar','দরূদ শরীফ':'Durood Sharif','লা ইলাহা ইল্লাল্লাহ':'La ilaha illallah',
+'তাসবিহ / যিকিরের নাম':'Tasbih / dhikr name','তাসবিহের নাম':'Tasbih name','কতবার':'How many times','তারিখ':'Date','বার':'times','এডিট':'Edit','বাতিল':'Cancel','সংরক্ষণ করুন':'Save','এখনও কোনো এন্ট্রি নেই':'No entries yet',
+/* PWA */
+'অ্যাপ হিসেবে ইনস্টল করুন':'Install as an app','ইনস্টল':'Install',
+/* মাস */
+'জানুয়ারি':'January','ফেব্রুয়ারি':'February','মার্চ':'March','এপ্রিল':'April','মে':'May','জুন':'June','জুলাই':'July','আগস্ট':'August','সেপ্টেম্বর':'September','অক্টোবর':'October','নভেম্বর':'November','ডিসেম্বর':'December',
+/* বার */
+'রবিবার':'Sunday','সোমবার':'Monday','মঙ্গলবার':'Tuesday','বুধবার':'Wednesday','বৃহস্পতিবার':'Thursday','শুক্রবার':'Friday','শনিবার':'Saturday',
+/* হিজরি মাস */
+'মুহাররম':'Muharram','সফর':'Safar','রবিউল আউয়াল':'Rabi\u2019 al-Awwal','রবিউস সানি':'Rabi\u2019 al-Thani','জমাদিউল আউয়াল':'Jumada al-Awwal','জমাদিউস সানি':'Jumada al-Thani','রজব':'Rajab','শা’বান':'Sha\u2019ban','রমজান':'Ramadan','শাওয়াল':'Shawwal','জিলকদ':'Dhul Qa\u2019dah','জিলহজ':'Dhul Hijjah','হি.':'AH',
+/* নামাজ */
+'ফজর':'Fajr','যোহর':'Dhuhr','আসর':'Asr','মাগরিব':'Maghrib','এশা':'Isha','বিতর':'Witr','তাহাজ্জুদ':'Tahajjud','ইশরাক':'Ishraq','চাশত':'Duha','আওয়াবিন':'Awwabin','তারাবিহ':'Taraweeh',
+'নফল নামাজ ও নিষিদ্ধ সময়':'Voluntary prayers & prohibited times','নফল নামাজের সময়':'Voluntary prayer times','নফল নামাজ':'Voluntary prayers','নিষিদ্ধ সময়':'Prohibited times','কাযা নামাজ':'Qaza prayers','আজকের নামাজ':'Today\u2019s prayers','পরবর্তী নামাজ':'Next prayer','নামাজের সময় হয়েছে':'prayer time has come','নামাজ':'Prayer',
+'ঢাকার সময় অনুযায়ী (আনুমানিক)':'Dhaka time (approximate)','ঢাকার সময় অনুযায়ী':'Dhaka time','ঢাকার নামাজের সময়':'Dhaka prayer times','আনুমানিক':'approximate',
+'ওয়াক্ত শেষ হতে বাকি':'prayer time left','শুরু হতে বাকি':'time left to start','এখন ফরজ নামাজের ওয়াক্ত নেই':'no obligatory prayer time right now','এখন নামাজ পড়া নিষিদ্ধ':'prayer is prohibited now',
+'সূর্যোদয়ের সময়':'Sunrise','দ্বিপ্রহর (যাওয়াল)':'Midday (Zawal)','সূর্যাস্তের সময়':'Sunset','সূর্যোদয়':'Sunrise','সূর্যাস্ত':'Sunset','দ্বিপ্রহর':'Midday','যাওয়াল':'Zawal',
+'ফজরের আগ পর্যন্ত':'until Fajr','এশার পর':'After Isha','এখন চলছে':'Now','চলছে':'Ongoing','পর':'later','শুরু':'Starts',
+'ফজর নীল ভোর':'Fajr blue dawn','যোহর সোনালি':'Dhuhr golden','আসর কমলা':'Asr orange','মাগরিব গোলাপি':'Maghrib pink','এশা বেগুনি':'Isha purple','হানাফি আসর':'Hanafi Asr','কারাচি ১৮':'Karachi 18',
+/* রোজা / রমজান */
+'ফরজ রোজা (রমজান)':'Fard fast (Ramadan)','রোজা নিষিদ্ধ (ঈদ/তাশরীকের দিন)':'Fasting prohibited (Eid / Tashreeq days)','আরাফার দিন':'Day of Arafah','আশুরা':'Ashura','আইয়ামে বীজ':'Ayyam al-Bid (white days)','শাওয়ালের ছয় রোজা':'Six fasts of Shawwal',
+'নফল রোজার দিন':'Voluntary fast day','আজ নফল রোজার বিশেষ দিন নয়':'Today is not a special day for a voluntary fast','আজ নফল রোজা রেখেছি':'I kept a voluntary fast today','নফল রোজা ট্র্যাকার':'Voluntary fast tracker','টি এ বছর':'this year','এ মাসে':'this month',
+'রমজান মোড':'Ramadan mode','প্রিভিউ':'Preview','আলহামদুলিল্লাহ':'Alhamdulillah','আজকের ইফতারের সময় হয়েছে':'It\u2019s iftar time','ইফতারের সময় হয়েছে':'It\u2019s time for iftar','সেহরি শেষ হতে বাকি':'Time left until suhoor ends','ইফতার হতে বাকি':'Time left until iftar','সেহরি শেষ হতে ১০ মিনিট বাকি':'10 minutes left until suhoor ends','সেহরির শেষ সময়':'Suhoor ends','সেহরি শেষ':'Suhoor ends','আজকের রোজা':'Today\u2019s fast','সেহরি':'Suhoor','ইফতার':'Iftar','রোজা':'Fasting','ঈদ':'Eid','তাশরীকের দিন':'Tashreeq days','ফরজ রোজা':'Fard fast','রোজা নিষিদ্ধ':'Fasting prohibited',
+/* শুভেচ্ছা */
+'সুপ্রভাত':'Good morning','শুভ অপরাহ্ন':'Good afternoon','শুভ সন্ধ্যা':'Good evening','শুভ রাত্রি':'Good night','আসসালামু আলাইকুম':'Assalamu Alaikum','মাশাআল্লাহ':'MashaAllah',
+/* কাজ */
+'আজকের কাজ':'Today\u2019s tasks','আজকের সব কাজ শেষ':'All of today\u2019s tasks are done','আজ কোনো কাজ নেই। নতুন কাজ যোগ করতে নিচের বাটনে চাপুন।':'No tasks today. Press the button below to add a new task.','আজ কোনো কাজ নেই। নিচে নতুন কাজ যোগ করুন।':'No tasks today. Add a new task below.','নতুন কাজ যোগ করুন':'Add a new task','কাজ যোগ করুন':'Add task','রোজা ট্র্যাকার':'Fast tracker','রেখেছি':'Fasted','রাখিনি':'Didn\u2019t fast','আজ কোনো কাজ নেই।':'No tasks today.','কাজের নাম':'Task name','কোন দিনের কাজ':'Which day','পুনরাবৃত্তি':'Repeat','শুধু এই দিন (পুনরাবৃত্তি নেই)':'This day only (no repeat)','নির্দিষ্ট দিন পর পর':'Every N days','কত দিন পর পর':'Every how many days',
+'একবার':'Once','প্রতিদিন':'Daily','প্রতি সপ্তাহে':'Weekly','প্রতি মাসে':'Monthly','প্রতি বছর':'Yearly','দিন পর পর':'days apart',
+'আজ সম্পন্ন':'Done today','টানা পূর্ণ দিন':'Full-day streak','পরিসংখ্যান':'Statistics','আগামী ৭ দিন':'Next 7 days','আগামীকাল':'Tomorrow','আজ':'Today','কোনো কাজ নেই':'No tasks','সব কাজ':'All tasks','মোট কাজ':'Total tasks','এখনো কোনো কাজ যোগ করা হয়নি':'No tasks added yet','কাজটি মুছে ফেলবেন?':'Delete this task?','কাজের সময়':'Task time','কাজের তালিকা':'Task list','এখনো কোনো কাজ নেই।':'No tasks yet.','কাজ':'Tasks',
+/* হিসাব */
+'এ মাসের হিসাব':'This month\u2019s accounts','এ মাসের তালিকা':'This month\u2019s list','এ মাসে এখনো কোনো হিসাব নেই':'No entries this month yet','হিসাব পেজ':'Accounts page','ব্যালেন্স':'Balance','মোট অবশিষ্ট':'Total remaining','অবশিষ্ট':'Remaining','আয়':'Income','ব্যয়':'Expense','টাকা':'Amount','বিবরণ':'Description','যোগ':'Add','হিসাব':'Accounts',
+/* সেটিং */
+'সব কিছু এক জায়গা থেকে নিয়ন্ত্রণ করুন':'Control everything from one place','চেহারা':'Appearance','রাতের মোড':'Night mode','অন্ধকার থিমে চোখের আরাম':'Easy on the eyes with the dark theme','রঙের সেট':'Colour theme','ওয়াক্ত অনুযায়ী রং':'Colour by prayer time','এমারেল্ড':'Emerald','গোল্ড':'Gold','নেভি':'Navy','বারগান্ডি':'Burgundy','শ্যাম্পেইন গোল্ড':'Champagne Gold','লাল':'Red',
+'মোড ও নোটিফিকেশন':'Mode & notifications','সেহরি-ইফতার কাউন্টডাউন ও তারাবিহ ট্র্যাকার; রমজান মাসে নিজে থেকেই চালু হয়':'Suhoor/iftar countdown and Taraweeh tracker; turns on automatically in Ramadan','নামাজ, সেহরি-ইফতার ও কাজের সময়ে জানাবে':'Notifies you at prayer, suhoor/iftar and task times','নোটিফিকেশন পেতে হোম পেজ ব্রাউজারে খোলা থাকতে হবে।':'The home page must stay open in the browser to receive notifications.','নোটিফিকেশন':'Notifications','ইফতার ও কাজের সময়ে জানাবে':'Notifies you at iftar and task times','রমজান মাসে নিজে থেকেই চালু হয়':'Turns on automatically in Ramadan','এই ব্রাউজারে নোটিফিকেশন সমর্থিত নয়':'Notifications are not supported in this browser',
+'প্রতি ওয়াক্তে কত':'How many per prayer','সবগুলোতে যোগ':'Add to all','আদায় করলে − চাপুন, বাকি থাকলে +।':'Press \u2212 when prayed, + when still owed.','কাযা':'Qaza','জুম্মা':'Jumu\u2019ah','বাকি ওয়াক্ত (কাযা)':'Missed prayers (Qaza)','গতকাল':'Yesterday','গণনা শুরু':'Counting from','কোনো কাযা নেই — মাশাআল্লাহ ✓':'No Qaza pending — mashaAllah ✓','ওয়াক্ত শেষ হয়েছে অথচ টিক দেওয়া হয়নি, সেগুলো এখানে দেখাবে · কাযা আদায় করলে ওয়াক্তের নামে ট্যাপ করুন — আদায় হিসেবে গণ্য ও রেকর্ড হবে, তালিকা থেকে সরে যাবে':'Prayers whose time ended without a tick appear here · tap a prayer once made up — it counts as prayed, is recorded, and leaves this list','কাযা আদায় হয়েছে (মোট)':'Qaza prayers made up (total)','কাযা আদায় ✓':'Qaza prayed ✓',
+'গুগল শিট সিঙ্ক':'Google Sheet sync','Apps Script ওয়েব অ্যাপের লিংক দিন (পরের ধাপে সংযোগ হবে)।':'Enter the Apps Script web app link (connection comes in the next step).','সংরক্ষণ':'Save',
+'ডেটা ব্যবস্থাপনা':'Data management','সব তথ্য শুধু এই ব্রাউজারে জমা থাকে। ব্যাকআপ নিয়ে রাখুন।':'All data is stored only in this browser. Keep a backup.','ব্যাকআপ নামান':'Download backup','ব্যাকআপ আনুন':'Import backup','সব মুছুন':'Delete all','ব্যাকআপ আনা হয়েছে':'Backup imported','ফাইলটি সঠিক ব্যাকআপ নয়':'This file is not a valid backup','সব তথ্য (নামাজ, কাজ, হিসাব, কাযা, সেটিং) চিরতরে মুছে যাবে। নিশ্চিত?':'All data (prayers, tasks, accounts, qaza, settings) will be erased permanently. Are you sure?','মুছুন':'Delete',
+'আবহাওয়া আনা যায়নি। ইন্টারনেট সংযোগ দেখুন।':'Couldn\u2019t load the weather. Check your connection.','আবহাওয়া':'Weather','ঢাকা':'Dhaka','অনুভূত':'Feels like','আর্দ্রতা':'Humidity','বাতাস':'Wind','কিমি/ঘ':'km/h','বৃষ্টির সম্ভাবনা':'Chance of rain','সর্বোচ্চ':'High','সর্বনিম্ন':'Low','পরিষ্কার আকাশ':'Clear sky','আংশিক মেঘলা':'Partly cloudy','মেঘলা':'Cloudy','কুয়াশা':'Foggy','গুঁড়ি বৃষ্টি':'Drizzle','ভারী বৃষ্টি':'Heavy rain','বজ্রসহ বৃষ্টি':'Thunderstorm','বৃষ্টি':'Rain','তুষার':'Snow','লোড হচ্ছে…':'Loading…','আবার চেষ্টা':'Retry','রবি':'Sun','সোম':'Mon','মঙ্গল':'Tue','বুধ':'Wed','বৃহ':'Thu','শুক্র':'Fri','শনি':'Sat',
+'ফোকাস করুন, ধারাবাহিকতা ধরে রাখুন':'Stay focused, keep the streak','ফোকাস সেশন সম্পন্ন! এবার একটু বিরতি নিন।':'Focus session complete! Take a short break.','বিরতি শেষ! আবার ফোকাসে ফিরুন।':'Break over! Back to focus.','কোনো বিষয় নেই। নতুন বিষয় যোগ করুন।':'No subjects yet. Add a new one.','পড়াশোনা':'Study','পড়া':'Study','ফোকাস টাইমার':'Focus timer','ফোকাস':'Focus','বিরতি':'Break','শুরু করুন':'Start','চালিয়ে যান':'Resume','থামান':'Pause','সেশন শেষ':'End session','রিসেট':'Reset','কোন বিষয়':'Subject','সাধারণ':'General','আজকের পড়া':'Today\u2019s study','লক্ষ্য পূরণ':'Goal reached','লক্ষ্য':'Goal','গড়':'Avg','দিনের ধারা':'day streak','সেশন':'Sessions','এ সপ্তাহ':'This week','সাপ্তাহিক পড়া':'Weekly study','বিষয়সমূহ':'Subjects','বিষয়ের নাম':'Subject name','ম্যানুয়াল যোগ':'Add manually','বিষয়টি মুছে ফেলবেন?':'Delete this subject?','পরীক্ষা':'Exams','পরীক্ষার নাম':'Exam name','কোনো পরীক্ষা নেই':'No exams yet','দিন বাকি':'days left','শেষ হয়েছে':'Ended',
+'ব্যাগ প্যাকিং':'Bag packing','সব ব্যাগ':'All bags','গ্রামে যাওয়ার ব্যাগ':'Village trip bag','ঢাকা ফেরার ব্যাগ':'Back-to-Dhaka bag','বাজারের ব্যাগ':'Market bag','ভ্রমণের ব্যাগ':'Travel bag','অফিস ব্যাগ':'Office bag','হাসপাতাল ব্যাগ':'Hospital bag','নতুন ব্যাগ':'New bag','নিজের মতো তালিকা বানান':'Build your own list','ব্যাগের নাম':'Bag name','জিনিস প্যাক হয়েছে':'items packed','প্যাক হয়েছে':'packed','প্যাক':'Packed','বাকি':'Left','সব':'All','জরুরি বাকি':'Must-haves left','জরুরি':'Must-have','প্যাকিং শুরু করুন':'Start packing','ভালো এগোচ্ছে':'Going well','প্রায় হয়ে এসেছে':'Almost there','সব প্রস্তুত — নিশ্চিন্তে বের হোন':'All set — you\u2019re good to go','শেয়ার':'Share','সব খুলুন':'Unpack all','স্মার্ট অপশন':'Smart options','দিন':'days','শীত':'Winter','বর্ষা':'Rainy season','বাচ্চা সাথে':'With kids','দিন বদলালে জামা-মোজার সংখ্যা নিজে ঠিক হবে; অপশন চাপলে দরকারি জিনিস যোগ হবে।':'Changing days updates clothes automatically; tapping an option adds the essentials.','তালিকা':'List','এখানে কিছু নেই':'Nothing here','নতুন জিনিসের নাম':'New item name','যোগ করুন':'Add','এই ব্যাগটি মুছে ফেলবেন?':'Delete this bag?','তালিকা কপি হয়েছে':'List copied','মোবাইল ও চার্জার':'Phone & charger','পাওয়ার ব্যাংক':'Power bank','টাকা ও কার্ড':'Cash & cards','NID ও জরুরি কাগজ':'NID & important papers','নিয়মিত ওষুধ':'Regular medicine','জামা':'Shirts','আন্ডারওয়্যার':'Underwear','মোজা':'Socks','পাঞ্জাবি ও টুপি':'Panjabi & cap','জায়নামাজ':'Prayer mat','টুথব্রাশ ও পেস্ট':'Toothbrush & paste','সাবান ও শ্যাম্পু':'Soap & shampoo','তোয়ালে':'Towel','স্যান্ডেল':'Sandals','বাড়ির জন্য উপহার/মিষ্টি':'Gifts/sweets for home','টর্চ':'Torch','টিকিট ও বাসের তথ্য':'Ticket & bus info','টাকা ও খুচরা ভাড়া':'Cash & fare change','ঢাকার ঘরের চাবি':'Dhaka home keys','বাড়ি থেকে আনা খাবার/পিঠা':'Food/pitha from home','ধোয়া জামাকাপড়':'Washed clothes','পানির বোতল':'Water bottle','অফিস/কাজের জিনিস':'Work items','ব্যাগে তালা ও চেইন চেক':'Check bag lock & zips','কাপড়ের ব্যাগ':'Cloth bags','নগদ টাকা':'Cash','বাজারের তালিকা':'Shopping list','মোবাইল ও বিকাশ':'Phone & bKash','ছোট খুচরা টাকা':'Small change','মাছ-মাংসের আলাদা ব্যাগ':'Separate bag for fish/meat','ফ্রিজ/কুলার ব্যাগ':'Cooler bag','ছাতা বা টুপি':'Umbrella or cap','পাসপোর্ট/NID':'Passport/NID','টিকিট ও বুকিং':'Tickets & bookings','ফোন ও চার্জার':'Phone & charger','জুতা ও স্যান্ডেল':'Shoes & sandals','টয়লেট্রিজ':'Toiletries','সানগ্লাস ও টুপি':'Sunglasses & cap','ক্যামেরা':'Camera','হেডফোন':'Headphones','ফার্স্ট এইড বক্স':'First aid kit','ল্যাপটপ/ট্যাব':'Laptop/tablet','চার্জার':'Charger','মোবাইল':'Phone','ওয়ালেট ও আইডি কার্ড':'Wallet & ID card','চাবি':'Keys','ডায়েরি ও কলম':'Diary & pen','টিফিন ও পানি':'Tiffin & water','ছাতা':'Umbrella','আগের রিপোর্ট ও প্রেসক্রিপশন':'Previous reports & prescriptions','ওষুধের তালিকা':'Medicine list','চাদর ও তোয়ালে':'Sheet & towel','জামাকাপড়':'Clothes','হালকা খাবার':'Light food','চাদর/সোয়েটার':'Shawl/sweater','মাফলার':'Scarf','লোশন':'Lotion','রেইনকোট':'Raincoat','পলিথিন ব্যাগ':'Polythene bags','ডায়াপার ও টিস্যু':'Diapers & tissues','বাচ্চার খাবার':'Baby food','খেলনা':'Toys',
+'ফেরার ব্যাগ বানান':'Build return bag','গ্রাম থেকে ফেরার মিলন':'Return check from village','নিয়ে গিয়েছিলেন':'You took','ফিরেছে':'Returned','ফেরেনি':'Not returned','এখনো ফেরেনি':'Not yet returned','সব জিনিস ফিরেছে':'Everything is back',
+'যাত্রার তারিখ':'Trip date','তারিখ মুছুন':'Clear date','যাত্রা':'Trip','আজই যাত্রা':'Trip is today','আগামীকাল যাত্রা':'Trip is tomorrow','যাত্রার দিন পেরিয়ে গেছে':'Trip date has passed','তারিখ দিলে কাউন্টডাউন দেখাবে ও কাজের তালিকায় যোগ হবে।':'Set a date to see a countdown and add the trip to your task list.',
+'গন্তব্যের আবহাওয়া':'Destination weather','খুঁজুন':'Search','জেলা/উপজেলা বা শহরের নাম':'District, upazila or city name','গন্তব্যের নাম দিলে সেখানকার আবহাওয়া দেখে দরকারি জিনিসের পরামর্শ দেওয়া হবে।':'Enter a destination to get packing suggestions based on its weather.','জায়গাটি খুঁজে পাওয়া যায়নি':'Place not found','তারিখটি ১৬ দিনের পূর্বাভাসের বাইরে — কাছাকাছি এলে পরামর্শ আসবে।':'The date is beyond the 16-day forecast — suggestions will appear closer to the date.','দরকারি জিনিস যোগ করা আছে ✓':'Needed items are already added ✓','আবহাওয়া স্বাভাবিক — বাড়তি কিছু লাগবে না।':'Weather looks normal — nothing extra needed.','কাল':'Tomorrow','যাত্রার সময়':'Trip time','টুপি':'Cap',
+/* শ্রুতিমধুর নতুন লেখা (namaz.html) — পুরোনো চাবি অন্য পেজের জন্য রাখা আছে */
+'কোন যিকির কতবার পড়লেন, এখানে যত্ন করে লিখে রাখুন':'Log what you recited and how many times','এখনও কিছু লেখা হয়নি':'No entries yet','যে ওয়াক্ত পেরিয়ে গেছে অথচ টিক পড়েনি, তা এখানে জমা থাকবে · কাযা আদায় করে ওয়াক্তের নামে ট্যাপ করুন — তা আদায় হিসেবে লেখা থাকবে আর তালিকা থেকে সরে যাবে':'Prayers whose time ended without a tick appear here · tap a prayer once made up — it counts as prayed, is recorded, and leaves this list',
+'ভাষা':'Language','সেটিং':'Settings','হোম':'Home',
+/* লেনদেনের খাতা (invoice.html) */
+'জানু':'Jan','ফেব্রু':'Feb','সেপ্টে':'Sep','অক্টো':'Oct','নভে':'Nov','ডিসে':'Dec',
+'লেনদেনের খাতা':'Transaction ledger',
+'কে কত পাবে, কাকে কত দেব — মানুষ ধরে হিসাব, আর যে কাউকে বিবরণী পাঠানো যায়':'Who owes me, whom I owe — tracked person by person, with a statement you can send to anyone',
+'নতুন লেনদেন':'New transaction',
+'লেনদেন এডিট':'Edit transaction',
+'লেনদেন সেভ করুন':'Save transaction',
+'আপডেট করুন':'Update',
+'আমি দিলাম':'I gave',
+'সে দিল':'They gave',
+'সে দিয়েছে':'They gave',
+'আমি দিয়েছি':'I gave',
+'আপনি দিয়েছেন':'You gave',
+'আপনি':'You',
+'ধার বা তার জন্য খরচ':'A loan, or an expense paid for them',
+'ধার, ফেরত বা আমার জন্য খরচ':'A loan, a repayment, or an expense paid for me',
+'সাম্প্রতিক — ট্যাপ করলেই নাম ও ফোন বসে যাবে':'Recent — tap to fill in name and phone',
+'নাম':'Name',
+'ফোন (ঐচ্ছিক)':'Phone (optional)',
+'ফোন':'Phone',
+'নাম লিখুন বা বেছে নিন':'Type or pick a name',
+'কিসের বাবদ ও কত টাকা':'What for, and how much',
+'একসাথে একাধিক জিনিস যোগ করা যায়':'you can add several items at once',
+'কিসের বাবদ (যেমন: ফর্ম ফি)':'What for (e.g. form fee)',
+'+ আরেকটা জিনিস':'+ Add another item',
+'জিনিসটি সরান':'Remove this item',
+'সরান':'Remove',
+'বাবদ':'For',
+'কাজের খরচ':'Work expense',
+'ধার':'Loan',
+'বাজার':'Groceries',
+'যাতায়াত':'Transport',
+'রিচার্জ / বিল':'Recharge / bill',
+'চিকিৎসা':'Medical',
+'উপহার':'Gift',
+'অন্যান্য':'Other',
+'লেনদেনসমূহ':'Transactions',
+'লেনদেন':'Transaction',
+'এই মানুষের পুরো খাতা মুছুন':'Delete this person\u2019s entire ledger',
+'চলমান হিসাব':'Open account',
+'চলমান':'Open',
+'পাব':'to receive',
+'দেব':'to pay',
+'✓ সব হিসাব মিটে গেছে':'✓ All accounts settled',
+'নতুন লেনদেন যোগ করলে নতুন পর্ব শুরু হবে':'Adding a transaction starts a new cycle',
+'মিটেছে':'Settled',
+'পর্ব:':'Cycle:',
+'পর্ব':'Cycle',
+'মানুষের খাতা':'People\u2019s ledgers',
+'নাম বা ফোন দিয়ে খুঁজুন':'Search by name or phone',
+'সবাই':'Everyone',
+'আমি পাব':'I\u2019ll receive',
+'আমি দেব':'I owe',
+'মিটে গেছে':'Settled',
+'এই ফিল্টারে কেউ নেই':'No one in this filter',
+'এখনো কোনো লেনদেন নেই — ওপরের ফর্ম থেকে শুরু করুন':'No transactions yet — start from the form above',
+'ব্যাকআপ':'Backup',
+'কার হিসাব দেখবেন?':'Whose account would you like to see?',
+'বাম পাশ থেকে কাউকে বেছে নিন, অথবা প্রথম লেনদেনটা যোগ করুন।':'Pick someone from the left, or add the first transaction.',
+'এখানে তার হিসাব বিবরণী তৈরি হবে — ছবি বা মেসেজ করে পাঠাতে পারবেন।':'Their account statement will appear here — you can send it as an image or a message.',
+'আমার নাম (বিবরণীর মাথায় থাকবে)':'My name (shown at the top of the statement)',
+'হিসাব বিবরণী':'Account statement',
+'লেনদেনের হিসাব বিবরণী':'Transaction statement',
+'আমি আপনাকে দেব':'I owe you',
+'আপনি আমাকে দেবেন':'You owe me',
+'বাকি আছে':'Due',
+'আমার দেনা':'I owe',
+'মিটে গেছে ✓':'Settled ✓',
+'হিসাব মিটে গেছে':'Account settled',
+'হিসাব মিটল':'Settled',
+'জাযাকাল্লাহু খাইরান':'Jazakallahu khayran',
+'হিসাব পরিষ্কার, সম্পর্ক আরও পরিষ্কার':'clear accounts, clearer relations',
+'হিসাবে কোনো ভুল থাকলে জানাবেন — ধন্যবাদ':'Please let me know if there is any mistake — thank you',
+'আগের হিসাব মিটে গেছে — এটি নতুন পর্বের বিবরণী। ভুল থাকলে জানাবেন':'The earlier account is settled — this is the statement for the new cycle. Please let me know of any mistakes',
+'📤 শেয়ার':'📤 Share',
+'প্রিন্ট / PDF':'Print / PDF',
+'✓ হিসাব মিটিয়ে দিন':'✓ Mark as settled',
+'সোনালি':'Gold',
+'নাম লিখুন':'Enter a name',
+'অন্তত একটি জিনিসের টাকা লিখুন':'Enter the amount for at least one item',
+'প্রতিটি জিনিসের টাকা লিখুন':'Enter an amount for each item',
+'তারিখ দিন':'Enter a date',
+'এই জিনিসের টাকা লিখুন':'Enter the amount for this item',
+'টাকা লিখুন':'Enter an amount',
+'আপডেট হয়েছে ✓':'Updated ✓',
+'সেভ হয়েছে ✓':'Saved ✓',
+'মুছে ফেলা হয়েছে':'Deleted',
+'খাতা মুছে ফেলা হয়েছে':'Ledger deleted',
+'হিসাব মিটে গেছে ✓ — আগের হিসাব “পর্ব” হিসেবে জমা থাকল':'Account settled ✓ — the earlier account is kept as a cycle',
+'সেভ করা যায়নি, জায়গা ভরে গেছে?':'Could not save — is storage full?',
+'ছবির টুল লোড হয়নি, ইন্টারনেট দেখুন':'Image tool did not load — check your internet',
+'ছবি বানানো হচ্ছে…':'Creating image…',
+'ছবি বানানো যায়নি':'Could not create the image',
+'ছবি কপি হয়েছে — চ্যাটে Ctrl+V করে পাঠান':'Image copied — paste it into the chat with Ctrl+V',
+'ছবি সেভ হয়েছে — চ্যাটে অ্যাটাচ করে পাঠান':'Image saved — attach it in the chat',
+'এই ব্রাউজারে শেয়ার নেই, ছবি সেভ হয়েছে':'Sharing is not available in this browser; image saved',
+'আমাদের হিসাব বিবরণী পাঠালাম':'I\u2019ve sent our account statement',
+'আমাদের লেনদেনের হিসাব':'Our transaction summary',
+'আলহামদুলিল্লাহ, হিসাব মিটে গেছে ✓':'Alhamdulillah, the account is settled ✓',
+'মোট আমি পাব':'Total to receive','মোট আমি দেব':'Total to pay','আয়-ব্যয়ের হিসাব →':'Income & expenses →','আয়-ব্যয়ের হিসাব':'Income & expenses',
+'সাম্প্রতিক':'Recent','আমার নাম':'My name','আয়-ব্যয়ের হিসাবেও রাখুন':'Also keep in income & expenses','হিসাব থেকে সরান':'Remove from accounts',
+'সব হিসাবে তুলুন / সরান':'Add / remove all to accounts','হিসাব মিটিয়ে দিন':'Mark as settled','এখনো কোনো লেনদেন নেই':'No transactions yet',
+'তালিকা থেকে কাউকে বেছে নিন, অথবা নতুন লেনদেন যোগ করুন।':'Pick someone from the list, or add a transaction.',
+'আয়-ব্যয়ের হিসাবে যুক্ত হয়েছে':'Added to income & expenses','হিসাব থেকে সরানো হয়েছে':'Removed from accounts','সব হিসাব থেকে সরানো হয়েছে':'All removed from accounts','সব লেনদেন হিসাবে যুক্ত হয়েছে':'All transactions added to accounts',
+'শেষ সিঙ্ক:':'Last sync:','শেষ ব্যাকআপ:':'Last backup:','ব্যাকআপ নেওয়া হয়নি':'No backup yet','এখনো ব্যাকআপ নেওয়া হয়নি':'No backup yet','পরীক্ষা করুন':'Send a test','ইনস্টল করা আছে':'Installed','অ্যাপ ইনস্টল করুন':'Install app','ব্রাউজারের মেনু থেকে “হোম স্ক্রিনে যোগ করুন” বা “ইনস্টল” বেছে নিন।':'From the browser menu, choose \u201cAdd to Home Screen\u201d or \u201cInstall\u201d.','আগের মতো করুন':'Reset to default','এখনই সিঙ্ক':'Sync now',
+'আজকের পড়া শুরু করুন':'Start today\u2019s study',
+/* সেটিং পেজ */
+'পরবর্তী নামাজের কাউন্টডাউন':'Next prayer countdown','নফল নামাজসহ':'Including voluntary prayers','শুধু নফল রোজার দিনে আসে':'Shows only on voluntary fast days','হিসাবের সারাংশ':'Account summary',
+'শিটে সংরক্ষিত':'Saved to Sheet','✅ তথ্য গুগল শিটে সিঙ্ক হচ্ছে। শেষ সিঙ্ক:':'✅ Data is syncing to Google Sheet. Last sync:','এইমাত্র':'just now','এছাড়া ব্যাকআপ ফাইলও নিয়ে রাখতে পারেন।':'You can also keep a backup file.',
+'ব্যাকআপ নেই':'No backup','ব্যাকআপ পুরোনো':'Backup is old','ব্যাকআপ নিরাপদ':'Backup is safe','⚠️ এখনো ব্যাকআপ নেওয়া হয়নি। ব্রাউজারের ডেটা মুছলে সব হারাবে।':'⚠️ No backup has been taken yet. If the browser data is cleared, everything will be lost.','✅ শেষ ব্যাকআপ আজ।':'✅ Last backup: today.',
+'আপনার তথ্য':'Your data','আকার':'Size','🔔 পরীক্ষা করুন':'🔔 Send a test','অ্যাপ':'App','✅ অ্যাপ হিসেবে ইনস্টল করা আছে':'✅ Installed as an app',
+'হোম স্ক্রিন থেকে এক ট্যাপে খুলুন, অফলাইনেও চলবে।':'Open it from your home screen in one tap; it works offline too.','📲 অ্যাপ ইনস্টল করুন':'📲 Install app',
+'iPhone-এ Safari-র শেয়ার বাটন থেকে "হোম স্ক্রিনে যোগ করুন" চাপুন। Android-এ Chrome-এর মেনু থেকে "ইনস্টল" করুন।':'On iPhone, tap Safari\u2019s Share button, then \u201cAdd to Home Screen\u201d. On Android, open Chrome\u2019s menu and choose \u201cInstall\u201d.',
+'🔄 আপডেট ও ক্যাশ পরিষ্কার':'🔄 Update & clear cache','আপডেট ও ক্যাশ পরিষ্কার':'Update & clear cache','নতুন সংস্করণ না এলে এটি চাপুন। আপনার তথ্য মুছবে না।':'If the new version doesn\u2019t appear, tap this. Your data won\u2019t be deleted.',
+'হোম পেজ':'Home page','কোন কার্ড দেখাবে আর কোন ক্রমে, তা ঠিক করুন।':'Choose which cards to show and in what order.','উপরে':'Up','নিচে':'Down','↺ আগের মতো করুন':'↺ Reset to default',
+'✅ শেষ সিঙ্ক:':'✅ Last sync:','এখনো সিঙ্ক হয়নি':'Not synced yet','চালু':'On',
+'ফোন ও কম্পিউটারের তথ্য গুগল শিটের মাধ্যমে মিলিয়ে রাখে। ইন্টারনেট না থাকলেও অ্যাপ চলবে, সংযোগ ফিরলে নিজে সিঙ্ক হবে। একই তথ্য দুই জায়গায় বদলালে সর্বশেষ বদলটি জেতে।':'Keeps your phone and computer data in step through Google Sheets. The app keeps working without internet and syncs by itself when the connection returns. If the same data is changed in two places, the latest change wins.',
+'গোপন টোকেন':'Secret token','সংরক্ষণ ও সংযোগ':'Save & connect','🔄 এখনই সিঙ্ক':'🔄 Sync now','সংযোগ বিচ্ছিন্ন করুন':'Disconnect',
+'সব তথ্য শুধু এই ব্রাউজারে জমা থাকে। নিয়মিত ব্যাকআপ নিয়ে রাখুন।':'All data is stored only in this browser. Please back up regularly.',
+'ব্যাকআপ নামানো হয়েছে ✓':'Backup downloaded ✓','নোটিফিকেশন ঠিকমতো কাজ করছে ✓':'Notifications are working ✓','পাঠানো যায়নি':'Could not send',
+'সব তথ্য (নামাজ, কাজ, হিসাব, কাযা, সেটিং) এই ডিভাইস থেকে মুছে যাবে।':'All data (prayers, tasks, accounts, qaza, settings) will be erased from this device.',
+'সিঙ্ক চালু থাকলে শিটের তথ্য থেকে যাবে এবং আবার নেমে আসবে।':'If sync is on, the Sheet data will remain and come back down again.','নিশ্চিত?':'Are you sure?',
+'ক্যাশ মুছে অ্যাপ নতুন করে লোড হবে। তথ্য মুছবে না। চালিয়ে যাবেন?':'The cache will be cleared and the app will reload. Your data won\u2019t be deleted. Continue?',
+'sync.js লোড হয়নি — ফাইলটি আপলোড করেছেন?':'sync.js did not load \u2014 did you upload the file?','sync.js লোড হয়নি — ফাইলটি আপলোড করেছেন? তারপর "আপডেট ও ক্যাশ পরিষ্কার" চাপুন':'sync.js did not load \u2014 did you upload the file? Then tap \u201cUpdate & clear cache\u201d',
+'সিঙ্ক হচ্ছে…':'Syncing…','সিঙ্ক হয়েছে ✓':'Synced ✓','সিঙ্ক হয়নি:':'Sync failed:',
+'এই ডিভাইসে সিঙ্ক বন্ধ হবে। শিটের তথ্য ও এই ডিভাইসের তথ্য থেকে যাবে।':'Sync will stop on this device. The Sheet data and this device\u2019s data will both remain.',
+'অনুমতি দেওয়া হয়নি':'Permission was not granted',
+/* হেডার মেনু */
+'খাতা':'Ledger','ব্যাগ':'Bags','প্রধান মেনু':'Main menu','মেনু':'Menu','সংযোগ হচ্ছে…':'Connecting…','সংযোগ সফল ✓':'Connected ✓','সংযোগ হয়নি:':'Connection failed:',
+/* নামাজ পেজ */
+'সুন্নতে মুয়াক্কাদা':'Sunnah Muakkadah',
+'রাসূল (সা.) নিয়মিত আদায় করতেন; বিনা কারণে ছেড়ে দেওয়া উচিত নয়।':'The Prophet (ﷺ) prayed it regularly; it should not be left without a reason.',
+'সুন্নতে গাইরে মুয়াক্কাদা':'Sunnah Ghayr Muakkadah',
+'পড়লে সওয়াব মেলে, না পড়লে গুনাহ হয় না।':'Praying it earns reward; not praying it is not a sin.',
+'ওয়াজিব':'Wajib',
+'ফরজের প্রায় কাছাকাছি গুরুত্বপূর্ণ; কখনো ছেড়ে দেওয়া যায় না।':'Almost as important as Fard; it must never be left.',
+'নফল':'Voluntary',
+'ঐচ্ছিক; যত বেশি পড়বেন, তত বেশি সওয়াব পাবেন।':'Optional; the more you pray, the more reward you earn.',
+'এখন':'Now',
+'নফল নামাজের ফজিলত ও গুরুত্ব':'Virtues and importance of voluntary prayers',
+'আল্লাহর নৈকট্য ও ফরজের ঘাটতি পূরণ':'Nearness to Allah and making up for shortfalls in Fard',
+'নফল নামাজ আল্লাহ তাআলার নৈকট্য লাভের এক শ্রেষ্ঠ উপায়। ফরজ ও ওয়াজিবের পাশাপাশি নফল ইবাদত বান্দার আমলনামা ভারী করে এবং কিয়ামতের দিন ফরজের ঘাটতি পূরণ করে দেয়।':'Voluntary prayer is one of the best ways to draw near to Allah the Almighty. Alongside Fard and Wajib, voluntary worship adds weight to a servant’s record of deeds and makes up for any shortfall in Fard on the Day of Judgement.',
+'রাসূলে কারীম (সা.) ইরশাদ করেছেন, বান্দা নফল ইবাদতের মাধ্যমে আল্লাহর এত বেশি নিকটবর্তী হতে থাকে যে, একপর্যায়ে আল্লাহ তাকে এমনভাবে ভালোবাসতে শুরু করেন যে, সে যার দ্বারা দেখে, তা দিয়েই সে দেখে; যার দ্বারা শুনে, তা দিয়েই সে শুনে।':'The Prophet (ﷺ) said that a servant keeps drawing nearer to Allah through voluntary worship, until Allah loves him so much that He becomes the sight with which he sees and the hearing with which he hears.',
+'সহিহ বুখারি':'Sahih al-Bukhari',
+'কবরের আলো ও শান্তি':'Light and peace in the grave',
+'নিয়মিত নফল নামাজ—বিশেষ করে তাহাজ্জুদ ও চাশত—কবরের অন্ধকার দূর করে এবং পরকালের চিরস্থায়ী জীবনের প্রস্তুতি সহজ করে তোলে।':'Regular voluntary prayers — especially Tahajjud and Duha — dispel the darkness of the grave and make preparing for the eternal life of the Hereafter easier.',
+'২–৮ রাকাত · রাতের শেষ তৃতীয়াংশের নিরিবিলি ইবাদত':'2–8 rak’ahs · quiet worship in the last third of the night',
+'সময়':'Time',
+'এশার পর থেকে সুবহে সাদিকের আগ পর্যন্ত; রাতের শেষ তৃতীয়াংশে পড়াই উত্তম':'From after Isha until before Subh Sadiq (true dawn); best prayed in the last third of the night',
+'রাকাত':'Rak’ah',
+'কমপক্ষে ২ রাকাত; সর্বোচ্চ ৮ রাকাত পর্যন্ত পড়া উত্তম':'At least 2 rak’ahs; up to 8 rak’ahs is best',
+'মাসায়েল':'Rulings',
+'এশার ফরজ ও সুন্নতের পর ঘুমিয়ে উঠে এই নামাজ আদায় করা হয়। ঘুম থেকে উঠতে না পারার আশঙ্কা থাকলে ঘুমানোর আগেও পড়ে নেওয়া যায়।':'This prayer is offered after waking from sleep, following the Isha Fard and Sunnah. If you fear you may not wake up, it can also be prayed before sleeping.',
+'চাশতের নামাজ (দোহা)':'Duha (Chasht) prayer',
+'২–১২ রাকাত · সূর্য ওঠার পর থেকে দুপুরের আগ পর্যন্ত':'2–12 rak’ahs · from after sunrise until before noon',
+'সূর্য ভালোভাবে ওপরে ওঠার পর (সূর্যোদয়ের প্রায় ২০–২৫ মিনিট পর) থেকে দ্বিপ্রহরের ঠিক আগ মুহূর্ত পর্যন্ত':'From after the sun has risen well (about 20–25 minutes after sunrise) until just before midday',
+'ন্যূনতম ২, সর্বোচ্চ ১২ রাকাত; সাধারণত ৪ বা ৮ রাকাত পড়া মুস্তাহাব':'Minimum 2, maximum 12 rak’ahs; praying 4 or 8 is usually mustahab',
+'হযরত আবু হুরায়রা (রা.) বলেন, আমার বন্ধু (রাসূল সা.) আমাকে তিনটি ওসিয়ত করেছেন… তার মধ্যে অন্যতম হলো প্রতিদিন চাশতের দুই রাকাত নামাজ আদায় করা।':'Abu Hurairah (may Allah be pleased with him) said: My friend (the Prophet ﷺ) gave me three counsels… one of them was to pray two rak’ahs of Duha every day.',
+'সহিহ বুখারি ও মুসলিম':'Sahih al-Bukhari and Muslim',
+'সালাতুত তওবা (তওবার নামাজ)':'Salat al-Tawbah (prayer of repentance)',
+'২ রাকাত · গুনাহের পর অনুশোচনায়':'2 rak’ahs · in remorse after a sin',
+'কোনো গুনাহ হয়ে গেলে লজ্জা ও অনুশোচনা নিয়ে অজু করে দুই রাকাত নফল নামাজ পড়ুন, তারপর আল্লাহর দরবারে মনপ্রাণ উজাড় করে ক্ষমা চান।':'If you commit a sin, make wudu with shame and remorse, pray two rak’ahs of voluntary prayer, then ask Allah’s forgiveness with all your heart.',
+'রাসূলুল্লাহ (সা.) বলেছেন, কোনো বান্দা গুনাহ করার পর সুন্দরভাবে অজু করে দুই রাকাত নামাজ পড়ে আল্লাহর কাছে ক্ষমা চাইলে আল্লাহ তাকে অবশ্যই ক্ষমা করেন।':'The Messenger of Allah (ﷺ) said: if a servant commits a sin, makes wudu well, prays two rak’ahs and asks Allah’s forgiveness, Allah will surely forgive him.',
+'তিরমিজি ও আবু দাউদ':'Tirmidhi and Abu Dawud',
+'নামাজের নিষিদ্ধ সময়সমূহ':'Prohibited times for prayer',
+'দিনের তিনটি সময়ে কোনো নামাজই পড়া যায় না':'No prayer may be offered at three times of the day',
+'দিনে মোট তিনটি সময়ে যেকোনো নামাজ—ফরজ, ওয়াজিব, কাযা কিংবা নফল—পড়া নিষিদ্ধ।':'At three times of the day, any prayer — Fard, Wajib, Qaza or voluntary — is prohibited.',
+'সূর্য উদিত হতে শুরু করে কিছুটা ওপরে না ওঠা পর্যন্ত (প্রায় ১৫–২০ মিনিট)।':'From when the sun begins to rise until it has climbed a little (about 15–20 minutes).',
+'দুপুরের মধ্যবর্তী সময় (জাওয়াল)':'Midday (Zawal)',
+'সূর্য ঠিক মাথার ওপর স্থির থাকে, ছায়া প্রায় মিলিয়ে যায়; যোহরের ওয়াক্ত শুরুর আগের কয়েকটি মিনিট।':'The sun stands right overhead and shadows almost vanish; the few minutes before Dhuhr begins.',
+'সূর্য হলুদ আভা ধারণ করার পর থেকে পুরোপুরি অস্ত যাওয়া পর্যন্ত। আসরের পর থেকে সূর্যাস্ত পর্যন্ত নফল নামাজও নিষেধ।':'From when the sun turns yellow until it has fully set. Voluntary prayers are also forbidden from after Asr until sunset.',
+'রাসূলুল্লাহ (সা.) আমাদের তিনটি সময়ে নামাজ পড়তে এবং মৃতদের দাফন করতে নিষেধ করতেন: ১. যখন সূর্য উদিত হতে থাকে, যতক্ষণ না তা উঁচুতে ওঠে; ২. যখন ঠিক দুপুরে সূর্য আকাশের মধ্যভাগে থাকে, যতক্ষণ না তা ঢলে পড়ে; এবং ৩. যখন সূর্য অস্ত যাওয়ার উপক্রম হয়, যতক্ষণ না তা ডুবে যায়। (হযরত উকবা ইবনু আমির আল-জুহানি রা.)':'The Messenger of Allah (ﷺ) used to forbid us from praying and from burying our dead at three times: 1. when the sun is rising, until it is high; 2. when the sun is at the middle of the sky at noon, until it declines; and 3. when the sun is about to set, until it has set. (Uqbah ibn Amir al-Juhani, may Allah be pleased with him)',
+'সহিহ মুসলিম: ৮৩১, তিরমিজি: ১০৩০':'Sahih Muslim: 831, Tirmidhi: 1030',
+'ফজরের নামাজ':'Fajr prayer',
+'যোহরের নামাজ':'Dhuhr prayer',
+'আসরের নামাজ':'Asr prayer',
+'মাগরিবের নামাজ':'Maghrib prayer',
+'এশার নামাজ':'Isha prayer',
+'জুম্মার নামাজ':'Jumu’ah prayer',
+'২ রাকাত ফরজ · সুবহে সাদিক থেকে সূর্যোদয়ের আগ':'2 rak’ahs Fard · from Subh Sadiq until before sunrise',
+'আগের সুন্নত':'Sunnah before',
+'পরের সুন্নত':'Sunnah after',
+'মুয়াক্কাদা':'Muakkadah',
+'গাইরে মুয়াক্কাদা':'Ghayr Muakkadah',
+'ফরজ':'Fard',
+'সুবহে সাদিক থেকে সূর্যোদয়ের আগ পর্যন্ত':'From Subh Sadiq (true dawn) until before sunrise',
+'সূর্যোদয় শুরু হলেই নিষিদ্ধ সময় এসে যায়, তাই তার আগেই ফজর আদায় করে নিন।':'The prohibited time begins as soon as the sunrise starts, so pray Fajr before then.',
+'৪ রাকাত ফরজ · জাওয়ালের পর থেকে':'4 rak’ahs Fard · from after Zawal',
+'সূর্য ঢলে পড়ার (জাওয়ালের) পর থেকে আসরের ওয়াক্ত শুরুর আগ পর্যন্ত':'From after the sun passes its zenith (Zawal) until before Asr begins',
+'শুক্রবারে যোহরের পরিবর্তে জুম্মার নামাজ আদায় করা হয়।':'On Fridays, Jumu’ah prayer is offered instead of Dhuhr.',
+'৪ রাকাত ফরজ · সূর্যাস্তের আগ পর্যন্ত':'4 rak’ahs Fard · until before sunset',
+'আসরের ওয়াক্ত শুরু থেকে সূর্যাস্তের আগ পর্যন্ত':'From the start of Asr until before sunset',
+'সূর্য হলুদ হয়ে গেলে আসর পড়া মাকরূহ, তাই সময় থাকতেই আদায় করে নিন।':'Praying Asr once the sun has turned yellow is makruh, so pray it while there is time.',
+'৩ রাকাত ফরজ · সূর্যাস্তের পরপর':'3 rak’ahs Fard · right after sunset',
+'সূর্যাস্ত থেকে এশার ওয়াক্ত শুরুর আগ পর্যন্ত':'From sunset until before Isha begins',
+'মাগরিবের ওয়াক্ত তুলনামূলক সংক্ষিপ্ত, তাই দেরি না করে আদায় করাই উত্তম।':'The Maghrib window is comparatively short, so it is best to pray without delay.',
+'৪ রাকাত ফরজ · রাতের নামাজ':'4 rak’ahs Fard · night prayer',
+'এশার ওয়াক্ত শুরু থেকে সুবহে সাদিকের আগ পর্যন্ত':'From the start of Isha until before Subh Sadiq',
+'বিতর নামাজ ওয়াজিব; এশার ফরজ ও সুন্নতের পর এটি আদায় করতে হয়।':'Witr prayer is Wajib; it is offered after the Isha Fard and Sunnah.',
+'২ রাকাত ফরজ · জামাত ও খুতবাসহ · যোহরের ওয়াক্তে':'2 rak’ahs Fard · with congregation and khutbah · at Dhuhr time',
+'যোহরের ওয়াক্তে — সূর্য ঢলে পড়ার (জাওয়ালের) পর থেকে আসরের ওয়াক্ত শুরুর আগ পর্যন্ত':'At Dhuhr time — from after the sun passes its zenith (Zawal) until before Asr begins',
+'২ রাকাত, ইমামের খুতবা শোনার পর জামাতের সাথে':'2 rak’ahs, in congregation after listening to the imam’s khutbah',
+'কার ওপর ফরজ':'Who it is obligatory for',
+'প্রাপ্তবয়স্ক, সুস্থ ও মুকিম (সফরে নেই এমন) মুসলিম পুরুষের ওপর জুম্মা ফরজ। জুম্মার জন্য জামাত ও খুতবা শর্ত, তাই এটি একা পড়া যায় না।':'Jumu’ah is Fard on adult, healthy, resident (not travelling) Muslim men. Congregation and khutbah are conditions for Jumu’ah, so it cannot be prayed alone.',
+'আজানের পর':'After the adhan',
+'জুম্মার আজান হলে কেনাবেচাসহ সব দুনিয়াবি কাজ রেখে মসজিদের পথে রওনা দিতে হয় (সূরা জুমুআ: ৯)। খুতবা চলাকালে কথা বলা ও অন্য নামাজ পড়া নিষেধ।':'When the Jumu’ah adhan is called, leave all worldly affairs including trade and head to the mosque (Surah al-Jumu’ah: 9). Talking and praying other prayers during the khutbah is forbidden.',
+'জুম্মা ছুটে গেলে':'If you miss Jumu’ah',
+'জুম্মার কাযা হয় না। জামাত না পেলে বা কোনো কারণে জুম্মা পড়তে না পারলে সেদিন ৪ রাকাত যোহর আদায় করতে হয়।':'Jumu’ah has no Qaza. If you miss the congregation or cannot pray Jumu’ah for any reason, pray 4 rak’ahs of Dhuhr that day.',
+'সুন্নত আমল':'Sunnah practices',
+'শুক্রবারে গোসল করা, পরিচ্ছন্ন পোশাক পরা, সুগন্ধি লাগানো, আগেভাগে মসজিদে যাওয়া এবং সূরা কাহফ তিলাওয়াত করা মুস্তাহাব।':'On Fridays it is mustahab to bathe, wear clean clothes, apply perfume, go to the mosque early and recite Surah al-Kahf.',
+'জামাত':'Jamaat',
+'আরও জানুন':'Learn more',
+'নফল নামাজের ফজিলত':'Virtues of voluntary prayers',
+'ফজিলত ও গুরুত্ব':'Virtues and importance',
+'সালাতুত তওবা':'Salat al-Tawbah',
+'২ রাকাত · গুনাহের পর':'2 rak’ahs · after a sin',
+'আদায় হয়েছে ✓':'Done ✓',
+'কাযা আদায় ✓':'Qaza done ✓',
+'ওয়াক্ত শেষ':'Time over',
+'আজকের অগ্রগতি':'Today’s progress',
+'মোট আমল':'Total deeds',
+'ফরজ নামাজ':'Fard prayers',
+'আদায় হলে টিক দিন · বিস্তারিত জানতে নামে ট্যাপ করুন':'Tick when done · tap a name for details',
+'কাযা আদায় হয়েছে':'Qaza completed',
+'কাযা আদায় হয়েছে (মোট)':'Qaza completed (total)',
+'✓ কোনো কাযা নেই — মাশাআল্লাহ':'✓ No Qaza due — MashaAllah',
+'ওয়াক্ত শেষ হয়েছে অথচ টিক দেওয়া হয়নি, সেগুলো এখানে জমা থাকে।':'Prayers whose time has ended without being ticked collect here.',
+'কাযা আদায় করে ওয়াক্তের নামে ট্যাপ করুন — আদায় হিসেবে গণ্য হবে এবং তালিকা থেকে সরে যাবে।':'After praying the Qaza, tap the prayer’s name — it will count as done and leave the list.',
+'কাযা গণনা শুরুর তারিখ':'Qaza counting start date',
+'গণনা শুরু':'Counting from',
+'এ সপ্তাহের ফরজ':'This week’s Fard',
+'এ সপ্তাহ':'This week',
+'সব ওয়াক্ত আদায় হয়েছে':'All prayers completed',
+'ওয়াক্ত শুরু':'Prayer start',
+'অটো:':'Auto:',
+'জামাত / একামত':'Jamaat / Iqamah',
+'খালি = নেই':'Empty = none',
+'কত মিনিট আগে জানাবে':'Remind how many minutes before',
+'০ = রিমাইন্ডার বন্ধ':'0 = reminder off',
+'জুম্মার জামাত (শুক্রবার)':'Jumu’ah Jamaat (Friday)',
+'স্থানীয় সময় ও রিমাইন্ডার':'Local times & reminders',
+'বন্ধ':'Off',
+'নামাজের রিমাইন্ডার চালু করুন':'Turn on prayer reminders',
+'লুকান':'Hide',
+'সেটিংস':'Settings',
+'নোটিফিকেশন অনুমতি:':'Notification permission:',
+'অনুমতি দেওয়া আছে ✓':'Granted ✓',
+'বন্ধ আছে (ব্রাউজারের সেটিংসে গিয়ে চালু করুন)':'Blocked (turn it on in your browser settings)',
+'এই ব্রাউজারে নেই':'Not available in this browser',
+'এখনও অনুমতি দেওয়া হয়নি':'Permission not granted yet',
+'অনুমতি দিন':'Allow',
+'টেস্ট':'Test',
+'সব ওয়াক্তে একই মিনিট':'Same minutes for all prayers',
+'সবগুলোতে বসান':'Apply to all',
+'আপনার এলাকার মসজিদের সময় দিলে ওয়াক্ত শুরুর সময় ও তার হিসাব সেই অনুযায়ী মিলে যাবে; খালি রাখলে স্বয়ংক্রিয় সময়ই থাকবে। জামাতের সময় দিলে রিমাইন্ডার জামাতের আগে আসবে, না দিলে ওয়াক্ত শুরুর আগে। নামাজে টিক দিলে সেই ওয়াক্তের রিমাইন্ডার আর আসবে না। অ্যাপ খোলা থাকলে ঠিক সময়েই রিমাইন্ডার পাবেন। অ্যাপ বন্ধ থাকলে Android Chrome-এ ইনস্টল করা অ্যাপ ব্যাকগ্রাউন্ডে সময় দেখে নেওয়ার চেষ্টা করে — তাই সময় কিছুটা আগে-পিছে হতে পারে।':'If you enter your local mosque’s times, the prayer start times and their calculations will follow them; if left empty, the automatic times stay. If you enter a jamaat time, the reminder comes before the jamaat, otherwise before the prayer starts. Once you tick a prayer, its reminder will not come again. While the app is open you will get reminders right on time. When the app is closed, the installed app on Android Chrome tries to check the time in the background — so timing may be slightly early or late.',
+'জামাত:':'Jamaat:',
+'নিজের এলাকার ওয়াক্ত ও জামাতের সময় যোগ করতে "সেটিংস" খুলুন':'To add your local prayer and jamaat times, open “Settings”',
+'ফরজ, নফল ও নিষিদ্ধ সময়ের নিখুঁত হিসাব':'Accurate times for Fard, voluntary and prohibited prayers',
+'টেস্ট রিমাইন্ডার':'Test reminder',
+'রিমাইন্ডার এভাবেই আপনাকে জানাবে':'This is how reminders will notify you',
+'ওয়াক্ত':'Prayer time',
+'পরবর্তী ওয়াক্ত':'Next prayer',
+'বন্ধ করুন':'Close',
+'নামাজের নিষিদ্ধ সময়':'Prohibited prayer times',
+'রাসূলুল্লাহ (সা.) এই সময়ে নামাজ পড়তে ও মৃতদের দাফন করতে নিষেধ করতেন:':'The Messenger of Allah (ﷺ) used to forbid praying and burying the dead at this time:',
+'যখন সূর্য উদিত হতে থাকে, যতক্ষণ না তা উঁচুতে ওঠে':'when the sun is rising, until it is high',
+'যখন ঠিক দুপুরে সূর্য আকাশের মধ্যভাগে থাকে, যতক্ষণ না তা ঢলে পড়ে':'when the sun is at the middle of the sky at noon, until it declines',
+'যখন সূর্য অস্ত যাওয়ার উপক্রম হয়, যতক্ষণ না তা ডুবে যায়':'when the sun is about to set, until it has set',
+'মনে রাখবেন':'Remember',
+'এই সময়ে ফরজ, ওয়াজিব, কাযা ও নফল — কোনো নামাজই পড়া যায় না।':'At this time no prayer — Fard, Wajib, Qaza or voluntary — may be offered.',
+/* পড়াশোনা পেজ — রুটিন ও বার্তা */
+'আজকের লক্ষ্য পূরণ হয়েছে। এই ধারাবাহিকতাই আসল শক্তি।':'Today\u2019s goal is reached. This consistency is the real strength.','আজকের প্রথম সেশনটা এখনই শুরু করুন।':'Start today\u2019s first session now.','দৈনিক লক্ষ্য':'Daily goal','রুটিন':'Routine','দৈনিক রুটিন':'Daily routine','অন্যান্য দিনের রুটিন':'Routines for other days','আজকের জন্য কোনো রুটিন নেই।':'No routine for today.','প্রতিদিনের নির্দিষ্ট পড়া এখানে ঠিক করে রাখুন, যেমন "গণিত · ৪৫ মিনিট"। টিক দিলে সময়টা সেই বিষয়ে যোগ হবে।':'Set up your fixed daily study here, e.g. \u201cMaths \u00b7 45 min\u201d. Ticking it adds the time to that subject.','কী পড়বেন? যেমন: গণিত অনুশীলন':'What will you study? e.g. Maths practice','রুটিনে যোগ করুন':'Add to routine','রুটিনটি মুছে ফেলবেন?':'Delete this routine?','৫ সপ্তাহের ধারাবাহিকতা':'5-week consistency','কম':'Less','বেশি':'More','সম্পন্ন':'done','প্রতিদিন (মিনিট)':'Minutes per day','গোল্ড + এমারেল্ড':'Gold + Emerald','গোল্ড + নেভি':'Gold + Navy','গোল্ড + বারগান্ডি':'Gold + Burgundy',
+/* হিসাব পেজ */
+'খাবার':'Food','বিল':'Bills','কেনাকাটা':'Shopping','স্বাস্থ্য':'Health','বিনোদন':'Entertainment','শিক্ষা':'Education','বেতন':'Salary','ব্যবসা':'Business','অন্য আয়':'Other income',
+'আগের মাস':'Previous month','পরের মাস':'Next month','অঙ্ক লুকান':'Hide amounts','এ মাসে অবশিষ্ট':'Remaining this month','সঞ্চয়ের হার':'Savings rate',
+'হিসাব এডিট':'Edit entry','নতুন হিসাব':'New entry','বিবরণ (ঐচ্ছিক)':'Description (optional)','বাজেট (৳)':'Budget (\u09f3)',
+'মাসিক বাজেট':'Monthly budget','সেট':'Set','বাজেট দিলে খরচের সীমা ও সতর্কবার্তা দেখাবে।':'Set a budget to see your spending limit and alerts.',
+'সঞ্চয় লক্ষ্য':'Savings goal','লক্ষ্য (যেমন: বাইক)':'Goal (e.g. bike)','সেভ':'Save','মোট সঞ্চিত':'Total saved',
+'ব্যয়ের ধরন':'Spending by category','এ মাসে কোনো ব্যয় নেই।':'No expenses this month.','৬ মাসের ধারা':'6-month trend',
+'কোনো হিসাব পাওয়া যায়নি। উপরের ফর্ম থেকে প্রথমটি যোগ করুন।':'No entries found. Add the first one from the form above.','এই হিসাবটি মুছবেন?':'Delete this entry?','ধরন':'Type','ক্যাটাগরি':'Category',
+'কাজ এডিট':'Edit task',
+/* রোজা পেজ */
+/* রোজা পেজ — অতিরিক্ত */
+'✓ আজ রোজা রেখেছি':'✓ I fasted today','রমজান শুরু':'Ramadan begins','রমজান চলছে':'Ramadan is ongoing','শাওয়ালের ছয় রোজা শুরু':'Six fasts of Shawwal begin','আইয়ামে বীজ (১৩–১৫)':'Ayyam al-Bid (13–15)','এ মাসে (নফল)':'This month (voluntary)','মোট নফল':'Total voluntary','এ মাসে নফল রোজা':'Voluntary fasts this month','হিজরি তারিখ সমন্বয়':'Hijri date adjustment',
 
-.cd{text-align:center}
-.cd h2{justify-content:center}
-.cdw{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:18px 22px;margin:6px 0 4px}
-.ring{position:relative;width:138px;height:138px;flex:none}
-.ring svg{width:100%;height:100%;transform:rotate(-90deg);overflow:visible}
-.ring .tr{fill:none;stroke:var(--b);stroke-width:7}
-.ring .pg{fill:none;stroke:url(#rg);stroke-width:7;stroke-linecap:round;filter:drop-shadow(0 0 6px var(--sh));transition:stroke-dashoffset 1s linear}
-.rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
-.rc b{font-size:22px;font-weight:700;font-family:"Noto Serif Bengali";background:linear-gradient(90deg,var(--pc),var(--pc2));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.2}
-.rc span{font-size:12px;color:var(--m)}
-.tiles{display:flex;align-items:center;gap:6px}
-.tl{min-width:62px;padding:10px 6px 8px;border-radius:16px;background:linear-gradient(160deg,color-mix(in srgb,var(--pc) 20%,transparent),color-mix(in srgb,var(--pc2) 8%,transparent));border:1px solid color-mix(in srgb,var(--pc) 45%,transparent);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 8px 18px -12px var(--pc)}
-.tl b{display:block;font-size:30px;font-weight:700;line-height:1.15;font-family:"Noto Serif Bengali";background:linear-gradient(180deg,var(--pc2),var(--pc));-webkit-background-clip:text;background-clip:text;color:transparent}
-.tl small{font-size:11px;color:var(--m)}
-.cl{font-size:24px;color:var(--pc);opacity:.7;margin-top:-14px}
-.cds{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:14px}
-.cdc{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;font-size:12px;color:var(--m);border:1px solid color-mix(in srgb,var(--pc) 40%,transparent);transition:.3s}
-.cdc::before{content:"";width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,var(--pc2),var(--pc))}
-.cdc.past{opacity:.5;text-decoration:line-through;text-decoration-color:var(--b)}
-.cdc.on{background:linear-gradient(135deg,var(--pc),var(--pc2));color:#fff;border-color:transparent;font-weight:600;box-shadow:0 6px 14px -6px var(--pc)}
-.cdc.on::before{background:#fff}
-.cd{border-color:color-mix(in srgb,var(--pc) 50%,transparent);box-shadow:0 12px 32px -14px var(--pc)}
-.cd::after{background:linear-gradient(90deg,var(--pc),var(--pc2))}
-.cd h2{color:var(--t)}
+'শা\'বান':'Sha’ban',
+'আগের ও পরের এক বছরের গুনাহের কাফফারা (সহিহ মুসলিম)':'Expiates the sins of the previous and the coming year (Sahih Muslim)',
+'গত এক বছরের গুনাহের কাফফারা (সহিহ মুসলিম)':'Expiates the sins of the previous year (Sahih Muslim)',
+'প্রতি মাসের তিন রোজা সারা বছর রোজা রাখার সমান সওয়াব (বুখারি–মুসলিম)':'Three fasts each month earn the reward of fasting the whole year (Bukhari–Muslim)',
+'রমজানের পর ছয় রোজা পুরো বছরের রোজার সমান (সহিহ মুসলিম)':'Six fasts after Ramadan equal fasting the whole year (Sahih Muslim)',
+'সোম–বৃহস্পতিবার আমল আল্লাহর কাছে পেশ করা হয় (তিরমিযি)':'Deeds are presented to Allah on Mondays and Thursdays (Tirmidhi)',
+'সময় লোড হয়নি':'Times did not load',
+'আবার চেষ্টা করুন':'Try again',
+'সেহরি শেষ হতে':'Until Suhoor ends',
+'ইফতারে বাকি':'Left until Iftar',
+'ইফতারের সময় 🌙':'Iftar time 🌙',
+'রোজার সঙ্গী · নফল ট্র্যাকার, সময় ও দোয়া':'Fasting companion · voluntary tracker, times & duas',
+'হিজরি':'Hijri',
+'আজ রমজানের রোজা রেখেছি':'I fasted today (Ramadan)',
+'নফল রোজা / বিশেষ দিন':'Voluntary fast / special day',
+'রমজানের রোজা':'Ramadan fasts',
+'নিষিদ্ধ দিনে রোজা রাখা যায় না':'Fasting is not allowed on prohibited days',
+'ঘরের নিচের ছোট সংখ্যা হিজরি তারিখ। ভবিষ্যতের তারিখ চিহ্নিত করা যায় না।':'The small number under each date is the Hijri date. Future dates cannot be marked.',
+'আমার পরিসংখ্যান':'My statistics',
+'এ বছরে (নফল)':'This year (voluntary)',
+'এ বছরে':'This year',
+'বর্তমান টানা':'Current streak',
+'সর্বোচ্চ টানা':'Best streak',
+'📤 শেয়ার কার্ড':'📤 Share card',
+'সামনের রোজার দিন':'Upcoming fast days',
+'রাখা হয়েছে':'kept',
+'রমজান আসতে বাকি':'Until Ramadan',
+'রমজানের কাযা রোজা':'Ramadan Qaza fasts',
+'এখনো বাকি আছে এমন কাযা রোজার সংখ্যা। একটি রাখলে − চাপুন।':'Number of Qaza fasts still owed. Tap − when you keep one.',
+'দোয়া ও নিয়ত':'Duas & intentions',
+'ইফতারের দোয়া':'Iftar dua',
+'অর্থ: পিপাসা মিটেছে, শিরা-উপশিরা সিক্ত হয়েছে এবং ইনশাআল্লাহ প্রতিদান নির্ধারিত হয়েছে। (আবু দাউদ)':'Meaning: The thirst is gone, the veins are moistened, and the reward is confirmed, if Allah wills. (Abu Dawud)',
+'অর্থ: হে আল্লাহ, আপনার জন্যই রোজা রেখেছি এবং আপনার দেওয়া রিজিক দিয়েই ইফতার করছি। (প্রচলিত দোয়া)':'Meaning: O Allah, I fasted for You and I break my fast with the provision You gave. (commonly recited dua)',
+'সেহরির নিয়ত':'Suhoor intention',
+'অর্থ: আমি আগামীকাল আল্লাহর জন্য রোজা রাখার নিয়ত করলাম। নিয়ত মূলত মনের সংকল্প, মুখে বলা জরুরি নয়।':'Meaning: I intend to fast tomorrow for the sake of Allah. Intention is mainly a resolve of the heart; saying it aloud is not required.',
+'সমন্বয়':'Adjustments',
+'হিজরি তারিখ':'Hijri date',
+'চাঁদ দেখা অনুযায়ী মিলিয়ে নিন':'Adjust to the moon sighting',
+'সেহরি-ইফতারের অবস্থান':'Suhoor & Iftar location',
+'আপনার অবস্থান ব্যবহার হচ্ছে':'Using your location',
+'এখন ঢাকার সময় দেখাচ্ছে':'Currently showing Dhaka time',
+'📍 আপডেট':'📍 Update',
+'🌙 আমার রোজা':'🌙 My fasts',
+'আমার রোজা':'My fasts',
+'এই ব্রাউজারে অবস্থান সমর্থিত নয়':'Location is not supported in this browser',
+'অবস্থানের অনুমতি পাওয়া যায়নি':'Location permission was not granted',
+/* কাজের সারাংশ নোটিফিকেশন */
+'কাজের সারাংশ নোটিফিকেশন':'Task summary notifications','চালু':'On','বন্ধ':'Off',
+'প্রথম সময়':'First time','আজ কী কী কাজ করতে হবে':'What you have to do today',
+'দ্বিতীয় সময়':'Second time','আজ এখনো কী কী বাকি':'What is still pending today',
+'🔔 নোটিফিকেশন চালু করুন':'🔔 Enable notifications','প্রথমটি পরীক্ষা':'Test the first','দ্বিতীয়টি পরীক্ষা':'Test the second',
+'নোটিফিকেশন চালু আছে':'Notifications are on','নোটিফিকেশন চালু নেই — নিচের বাটন চাপুন':'Notifications are off — tap the button below',
+'ব্রাউজারে নোটিফিকেশন বন্ধ করা আছে — সাইট সেটিং থেকে "Allow" করুন':'Notifications are blocked in the browser — set them to \u201cAllow\u201d in site settings',
+'ঠিক সময়ে পেতে অ্যাপটি Home Screen-এ ইনস্টল করে রাখুন। অ্যাপ/পেজ একেবারে বন্ধ থাকলে ব্রাউজার সময়মতো জাগাতে নাও পারে — তখন পরের বার খুললেই সামারি আসবে।':'For on-time delivery, install the app to your Home Screen. If the app is fully closed, the browser may not wake it on time \u2014 the summary will then arrive the next time you open it.',
+'এই ব্রাউজারে নোটিফিকেশন সমর্থিত নয়':'Notifications are not supported in this browser',
+'অনুমতি দেওয়া হয়নি':'Permission was not granted','আগে নোটিফিকেশন চালু করুন':'Enable notifications first',
+/* পপআপ */
+'নিশ্চিত করুন':'Please confirm','বার্তা':'Notice','ঠিক আছে':'OK','হ্যাঁ, নিশ্চিত':'Yes, confirm','হ্যাঁ, মুছুন':'Yes, delete','হ্যাঁ, বাদ দিন':'Yes, dismiss',
+'কাজটি মুছে ফেলবেন?':'Delete this task?','সব বাকি কাজ বাদ দেবেন?':'Dismiss all pending tasks?','এগুলো বাকি কাজ খাতা থেকে মুছে যাবে।':'These will be removed from the pending log.',
+'📲 অ্যাপ বন্ধ থাকলেও (পুশ)':'📲 Even when the app is closed (push)','পুশ চালু আছে':'Push is on','পুশ চালু নেই':'Push is off','এই ডিভাইসে পুশ চালু করুন':'Enable push on this device','পুশ পরীক্ষা':'Test push','পুশ বন্ধ করুন':'Turn off push','⏰ কাজের নিজস্ব সময়ে রিমাইন্ডার':'⏰ Reminder at each task\u2019s own time','কাজে সময় দেওয়া থাকলে ঠিক সেই সময়ে নোটিফিকেশন (পুশ চালু থাকতে হবে)':'A notification at the exact time set on a task (push must be on)','ঠিক সময়ে':'On time','৫ মিনিট আগে':'5 min before','১০ মিনিট আগে':'10 min before','১৫ মিনিট আগে':'15 min before','৩০ মিনিট আগে':'30 min before',
+'সময় (ঐচ্ছিক)':'Time (optional)','সময় নেই':'No time','নির্দিষ্ট মাস পর পর (যেমন ২ মাসে একবার)':'Every N months (e.g. every 2 months)','মাস পর পর':'months apart',
+/* হিসাব পেজ: খাত (পড়াশোনা/চাকরি), অটো-দান, খাতা সংযোগ */
+'খাত':'Purpose',
+'সব খাত':'All purposes',
+'কোন খাতের খরচ?':'Which purpose is this expense for?',
+'চাকরি':'Job',
+'পড়াশোনার খরচ':'Study expenses',
+'চাকরির খরচ':'Job expenses',
+'এ পর্যন্ত মোট':'Total so far',
+'এ মাস':'This month',
+'সব সময়':'All time',
+'প্রাইভেট / কোচিং':'Tutoring / coaching',
+'আবেদন ফি':'Application fee',
+'ট্রেনিং':'Training',
+'পোশাক':'Clothing',
+'দান':'Donation',
+'স্বয়ংক্রিয় দান':'Auto donation',
+'স্বয়ংক্রিয় দৈনিক দান':'Automatic daily donation',
+'চালু করুন':'Turn on',
+'পরের কাটা':'Next deduction',
+'দানের টাকা ও সময় দুটোই দিন':'Enter both the donation amount and the time',
+'খাতা · দিলাম':'Ledger · I gave',
+'খাতা · পেলাম':'Ledger · I received',
+'খাতা খুলুন →':'Open ledger →',
+'খাতায় দেখুন':'View in ledger',
+'ধার মিটলে মোট সঞ্চয়':'Total savings once loans are settled',
+'সব হিসাবে তুলুন':'Add all to accounts',
+'এ মাসে কোনো খরচ নেই':'No expenses this month',
+'এখনো কোনো খরচ নেই':'No expenses yet',
+'খাতায় এখনো কোনো লেনদেন নেই':'No ledger transactions yet',
+'কোনো হিসাব নেই':'No entries',
+'সব সরান':'Remove all',
+'হিসাব থেকে সরান':'Remove from accounts',
+'দান বন্ধ করুন':'Turn off',
+'এটি আয়-ব্যয়ের হিসাব থেকে সরাবেন? খাতায় লেনদেনটি থেকে যাবে।':'Remove this from income & expenses? The transaction will stay in the ledger.',
+/* পড়াশোনা পেজ — পরীক্ষা কার্ড */
+'নতুন পরীক্ষা':'New exam','পরীক্ষা যোগ করুন':'Add exam','সংরক্ষণ করুন':'Save changes','বাতিল':'Cancel','তারিখ':'Date','রুম নং (ঐচ্ছিক)':'Room no. (optional)','রুম নং':'Room no.','রুম':'Room','এডিট করুন':'Edit','পরীক্ষাটি মুছে ফেলবেন?':'Delete this exam?','যেমন: অর্থনীতি':'e.g. Economics','যেমন: ২০৩ বা ক-১২':'e.g. 203 or A-12','সাজেশন সরান':'Remove suggestion','দিন ছুটি':'days off','ছুটি নেই':'No break','একই দিনে':'Same day','পরবর্তী পরীক্ষা':'Next exam','আসন্ন পরীক্ষা':'Upcoming exams','মোট ছুটি':'Total break','শেষ পরীক্ষা পর্যন্ত':'Until the last exam'
+};
+/* অক্ষরের বদলে শব্দ — গণনার পরে প্রযোজ্য */
+const U={'ঘণ্টা':'Hours','মিনিট':'Minutes','সেকেন্ড':'Seconds','থেকে':'from','পর্যন্ত':'until','ভোর':'Dawn','সকাল':'Morning','দুপুর':'Noon','বিকাল':'Afternoon','সন্ধ্যা':'Evening','রাত':'Night','টি':'items','মোট':'Total'};
 
-.warn{margin:12px 0 0;padding:10px 14px;border-radius:14px;background:rgba(220,60,60,.12);border:1px solid rgba(220,60,60,.4);color:#d33;font-size:13px;font-weight:600;line-height:1.6}
-.warn b{font-size:18px;letter-spacing:.5px;margin:0 4px}
-.okb{margin:10px 0 0;padding:9px 14px;border-radius:14px;background:rgba(31,157,107,.13);border:1px solid rgba(31,157,107,.4);color:#1f9d6b;font-size:13px;font-weight:600}
-:root[data-d="1"] .warn{color:#ff8a8a}:root[data-d="1"] .okb{color:#4fd7a0}
-.sp{margin-top:16px;text-align:left}
-.spt{font-size:12px;font-weight:600;color:var(--m);letter-spacing:.4px;margin:12px 0 4px;padding-bottom:4px;border-bottom:1px solid var(--b)}
-.sr{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:6px 8px;border-radius:10px;font-size:13px;color:var(--m)}
-.sr span:first-child{display:flex;align-items:center;gap:8px;color:var(--t)}
-.sr span:first-child::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--b);flex:none}
-.sr.on{font-weight:600}
-.sr.on.f{background:rgba(220,60,60,.12);color:#d33}.sr.on.f span:first-child::before{background:#d33;box-shadow:0 0 0 4px rgba(220,60,60,.2)}
-.sr.on.n{background:rgba(31,157,107,.13);color:#1f9d6b}.sr.on.n span:first-child::before{background:#1f9d6b;box-shadow:0 0 0 4px rgba(31,157,107,.2)}
-:root[data-d="1"] .sr.on.f{color:#ff8a8a}:root[data-d="1"] .sr.on.n{color:#4fd7a0}
-.ram{border-color:var(--g)}
+const esc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+const B='\u0980-\u09FF\u200c\u200d';
+const mk=o=>new RegExp('(?<![' +B+ '])(?:'+Object.keys(o).sort((a,b)=>b.length-a.length).map(esc).join('|')+')(?![' +B+ '])','g');
+const RD=mk(D),RU=mk(U);
+const num=s=>s.replace(/[০-৯]/g,d=>'০১২৩৪৫৬৭৮৯'.indexOf(d));
+const BD='[০-৯]';
+function tm(h,m,p){h=+num(h);m=num(m);let ap;
+ if(p==='ভোর'||p==='সকাল')ap='AM';else if(p==='রাত')ap=(h===12||h<=4)?'AM':'PM';else ap='PM';
+ return h+':'+m+' '+ap}
+function tr(s){
+ if(!/[\u0980-\u09FF]/.test(s))return s;
+ /* সেটিং পেজ: সময়/সংখ্যা বসানো বাক্য */
+ const Pl=(n,w)=>(+num(n)===1?'1 '+w:num(n)+' '+w+'s');
+ s=s.replace(new RegExp('^(.+) দেখান$'),'Show $1');
+ s=s.replace(new RegExp('🔥 ('+BD+'+) দিন সব ওয়াক্ত','g'),(_,n)=>'🔥 '+Pl(n,'day')+' · all prayers');
+ s=s.replace(new RegExp('🔥 ('+BD+'+) দিন টানা সব ওয়াক্ত','g'),(_,n)=>'🔥 '+Pl(n,'day')+' in a row · all prayers');
+ s=s.replace(new RegExp('('+BD+'+) মিনিট পরে \\(','g'),'In $1 min (');
+ s=s.replace(new RegExp('রমজানের ('+BD+'+) তম দিন','g'),'Day $1 of Ramadan');
+ s=s.replace(new RegExp('^('+BD+'+) দিন পর$'),(_,n)=>'in '+Pl(n,'day'));
+ s=s.replace(new RegExp('⚠️ শেষ ব্যাকআপ ('+BD+'+) দিন আগের। নতুন একটি নিন।','g'),(_,n)=>'⚠️ Your last backup was '+Pl(n,'day')+' ago. Please take a new one.');
+ s=s.replace(new RegExp('✅ শেষ ব্যাকআপ ('+BD+'+) দিন আগে।','g'),(_,n)=>'✅ Last backup: '+Pl(n,'day')+' ago.');
+ s=s.replace(new RegExp('('+BD+'+) মিনিট আগে','g'),'$1 min ago').replace(new RegExp('('+BD+'+) ঘণ্টা আগে','g'),'$1 h ago').replace(new RegExp('('+BD+'+) দিন আগে','g'),(_,n)=>Pl(n,'day')+' ago');
+ s=s.replace(new RegExp('('+BD+'+)টি বদল পাঠানো বাকি','g'),(_,n)=>(+num(n)===1?'1 change':num(n)+' changes')+' waiting to be sent');
+ s=s.replace(new RegExp('আর ('+BD+'+) দিন বাকি','g'),'$1 days left');
+ /* লেনদেনের খাতা: নাম/সংখ্যা বসানো বাক্য */
+ const Nn=(n,one,many)=>(+num(n)===1?'1 '+one:num(n)+' '+many);
+ s=s.replace(new RegExp('^✓ (.+?)-এর আগের হিসাব মিটে গেছে। এখন লেনদেন করলে নতুন পর্ব শুরু হবে — আগের হিসাব “লেনদেনসমূহ”-এ আর বিবরণীর পর্ব-বোতামে থেকে যাবে।$'),'\u2713 $1\u2019s earlier account is settled. A new transaction now starts a new cycle \u2014 the earlier account stays under \u201cTransactions\u201d and in the statement\u2019s cycle buttons.');
+ s=s.replace(new RegExp('^✓ (.+?)-এর আগের হিসাব মিটে গেছে — নতুন লেনদেনে নতুন পর্ব শুরু হবে।$'),'\\u2713 $1\\u2019s earlier account is settled \\u2014 a new transaction starts a new cycle.');
+ s=s.replace(new RegExp('^(.+)-এর সব লেনদেন মুছে ফেলবেন\\? এটা ফেরানো যাবে না।$'),'Delete all of $1\u2019s transactions? This cannot be undone.');
+ s=s.replace(new RegExp('^(.+)-এর লেনদেন$'),'$1\u2019s transactions');
+ s=s.replace(new RegExp('^এই লেনদেনটি \\((.+?)\\) মুছে ফেলবেন\\?$'),'Delete this transaction ($1)?');
+ s=s.replace(new RegExp('^আপনি (.+?)-কে পুরো (৳ [০-৯,.]+) ফেরত দিয়েছেন — মিটিয়ে দেবেন\\?$'),'You repaid $1 the full $2 \u2014 mark as settled?');
+ s=s.replace(new RegExp('^(.+?) পুরো (৳ [০-৯,.]+) ফেরত দিয়েছে — মিটিয়ে দেবেন\\?$'),'$1 has repaid the full $2 \u2014 mark as settled?');
+ s=s.replace(new RegExp('('+BD+'+)টি লেনদেন','g'),(_,n)=>Nn(n,'transaction','transactions'));
+ s=s.replace(new RegExp('('+BD+'+)টি জিনিস সেভ হয়েছে','g'),(_,n)=>Nn(n,'item','items')+' saved');
+ s=s.replace(new RegExp('('+BD+'+) জন(?!['+B+'])','g'),(_,n)=>Nn(n,'person','people'));
+ s=s.replace(new RegExp('(['+BD.slice(1,-1)+']+ \\S+ ['+BD.slice(1,-1)+']+) থেকে (['+BD.slice(1,-1)+']+ \\S+ ['+BD.slice(1,-1)+']+) পর্যন্ত','g'),'from $1 to $2');
+ s=s.replace(new RegExp('মোট বাকি: আপনি আমাকে (৳ [০-৯,.]+) দেবেন','g'),'Total due: you owe me $1');
+ s=s.replace(new RegExp('মোট দেনা: আমি আপনাকে (৳ [০-৯,.]+) দেব','g'),'Total owed: I owe you $1');
 
-.rdy .card{animation:none}
-.wx{background:linear-gradient(135deg,color-mix(in srgb,var(--wt) 22%,var(--c)),var(--c) 70%);border-color:color-mix(in srgb,var(--wt) 50%,transparent);box-shadow:0 12px 32px -16px var(--wt)}
-.wx::after{background:linear-gradient(90deg,var(--wt),var(--a2))}
-.wx .ic{font-size:44px;line-height:1;filter:drop-shadow(0 6px 10px color-mix(in srgb,var(--wt) 55%,transparent))}
-.wx .chp{padding:3px 10px;border-radius:99px;background:color-mix(in srgb,var(--wt) 14%,transparent);border:1px solid color-mix(in srgb,var(--wt) 28%,transparent);font-size:12px;font-weight:600;white-space:nowrap}
-.wx .fc{padding:5px 0;border-radius:12px;background:color-mix(in srgb,var(--wt) 10%,transparent);border:1px solid color-mix(in srgb,var(--wt) 20%,transparent);line-height:1.25}
+ const wd=w=>w==='কাল'?'Tomorrow':'Trip time';
+ s=s.replace(new RegExp('(কাল|যাত্রার সময়) বৃষ্টির সম্ভাবনা ('+BD+'+)%, (ছাতা ও রেইনকোট|ছাতা) যোগ করুন।','g'),(_,w,n,i)=>wd(w)+': '+n+'% chance of rain — add '+(i==='ছাতা'?'an umbrella':'an umbrella and raincoat')+'.');
+ s=s.replace(new RegExp('(কাল|যাত্রার সময়) সর্বোচ্চ ('+BD+'+)° — গরম থাকবে, পানির বোতল ও টুপি যোগ করুন।','g'),(_,w,n)=>wd(w)+': up to '+n+'° — hot, add a water bottle and a cap.');
+ s=s.replace(new RegExp('(কাল|যাত্রার সময়) সর্বনিম্ন ('+BD+'+)° — ঠান্ডা থাকবে, চাদর/সোয়েটার ও মাফলার যোগ করুন।','g'),(_,w,n)=>wd(w)+': down to '+n+'° — cold, add a shawl/sweater and a scarf.');
+ s=s.replace(/^লক্ষ্যে পৌঁছাতে আর (.+) বাকি।$/,'$1 left to reach your goal.');
+ s=s.replace(new RegExp('^(?:⚠️ )?বাজেট (৳ [০-৯,.]+) ছাড়িয়েছে$'),'Over budget by $1');
+ s=s.replace(new RegExp('^(?:⚠️ )?বাজেটের ('+BD+'+)% শেষ$'),'$1% of budget used');
+ s=s.replace(new RegExp('^মাসের ('+BD+'+)%$'),'$1% of this month\u2019s spending');
+ s=s.replace(new RegExp('^(?:✅ )?দৈনিক খরচের সীমা (৳ [০-৯,.]+)$'),'Daily spending limit: $1');
+ s=s.replace(RD,m=>D[m]);
+ s=s.replace(new RegExp('(ভোর|সকাল|দুপুর|বিকাল|সন্ধ্যা|রাত) ('+BD+'+):('+BD+'+)','g'),(_,p,h,m)=>tm(h,m,p));
+ s=s.replace(/(\d+:\d\d [AP]M) থেকে Isha পর্যন্ত/g,'from $1 until Isha');
+ s=s.replace(/(\d+:\d\d [AP]M) থেকে/g,'from $1').replace(/(\d+:\d\d [AP]M) পর্যন্ত/g,'until $1');
+ s=s.replace(new RegExp('('+BD+'+) দিন পর পর','g'),'Every $1 days');
+ s=s.replace(new RegExp('('+BD+'+) ?ঘণ্টা (?='+BD+')','g'),'$1 h ').replace(new RegExp('('+BD+'+) ঘণ্টা','g'),'$1 h').replace(new RegExp('('+BD+'+) মিনিট','g'),'$1 min');
+ s=s.replace(new RegExp('('+BD+'+) ?টি(?![\u0980-\u09FF])','g'),(_,n)=>(+num(n)===1?n+' item':n+' items'));
+ s=s.replace(RU,m=>U[m]);
+ return num(s).replace(/।/g,'.')}
+window.L=tr;
 
-/* ── Premium polish ── */
-html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--a) 55%,transparent) transparent}
-::selection{background:var(--a2);color:#1F1608}
-h1{letter-spacing:-.3px;line-height:1.25}
-.card:not(.cd):not(.wx):not(.ram){border-color:color-mix(in srgb,var(--a) 38%,transparent);box-shadow:0 20px 42px -26px var(--sh),0 2px 6px -3px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.55)}
-:root[data-d="1"] .card:not(.cd):not(.wx):not(.ram){box-shadow:0 20px 42px -26px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.07)}
-.card::after{height:2px;opacity:.9}
-h2{font-size:16px;font-weight:700;letter-spacing:.2px}
-h2::before{width:4px;height:16px;background:linear-gradient(var(--a2),var(--a));box-shadow:0 0 10px -1px var(--sh)}
-.row{border-bottom:1px solid var(--b);border-image:linear-gradient(90deg,color-mix(in srgb,var(--a) 38%,transparent),transparent) 1}
-.row:last-child{border:0;border-image:none}
-.pill{border:1px solid color-mix(in srgb,var(--a) 42%,transparent);background:linear-gradient(135deg,color-mix(in srgb,var(--a) 22%,transparent),color-mix(in srgb,var(--a2) 10%,transparent))}
-.bad{border-color:rgba(220,60,60,.4)}
-.bar{height:6px}
-.bar i{box-shadow:0 0 12px -1px var(--sh);border-radius:9px}
-.chk:checked{box-shadow:0 4px 12px -4px var(--pc,var(--sh))}
-
-/* ── পড়াশোনা পেজ ── */
-button.opt{padding:6px 14px;border-radius:99px;border:1px solid var(--cb);background:transparent;color:var(--t);font-size:13px;font-weight:600;box-shadow:none;letter-spacing:0}
-button.opt:hover{background:color-mix(in srgb,var(--a) 14%,transparent);box-shadow:none}
-button.opt.on{background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on);border-color:transparent;box-shadow:0 6px 14px -8px var(--sh)}
-.chs{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:12px}
-.chs select{min-width:190px;max-width:100%;text-align:center;font-weight:600}
-.bt{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}
-button.go{background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on);border:1px solid var(--a2);font-size:15px;font-weight:700;padding:12px 30px;min-width:150px;border-radius:99px;box-shadow:0 12px 24px -12px var(--sh),inset 0 1px 0 rgba(255,255,255,.55)}
-button.go:hover{background:linear-gradient(135deg,var(--a2),#FFF0C2);box-shadow:0 14px 26px -12px var(--sh),inset 0 1px 0 rgba(255,255,255,.6)}
-.bt button.g{border-radius:99px;padding:12px 20px}
-form select{flex:1 1 110px}
-.wk{display:flex;gap:8px;height:150px;margin-top:6px}
-.wc{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px}
-.wv{font-size:11px;color:var(--m);height:14px;font-weight:600}
-.wbw{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center;border-radius:10px;background:color-mix(in srgb,var(--a) 7%,transparent)}
-.wb{display:block;width:62%;max-width:38px;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,var(--a2),var(--a));opacity:.72;transition:height .6s}
-.wb.td{opacity:1;box-shadow:0 8px 18px -8px var(--sh)}
-.wb.ok{background:linear-gradient(180deg,#4fd7a0,#1f9d6b);opacity:1}
-.wd{font-size:12px;color:var(--m);font-weight:500}.wd.on{color:var(--t);font-weight:700}
-.lg{width:10px;height:10px;border-radius:3px;background:linear-gradient(180deg,#4fd7a0,#1f9d6b);display:inline-block}
-.stk{display:flex;height:8px;border-radius:9px;overflow:hidden;gap:2px}.stk i{display:block;min-width:4px}
-.dt{width:10px;height:10px;border-radius:50%;flex:none}
-.srow{cursor:pointer;border-radius:12px;padding:9px 8px;transition:background .2s}
-.srow:hover{background:color-mix(in srgb,var(--a) 8%,transparent)}
-.srow.on{background:color-mix(in srgb,var(--a) 14%,transparent);box-shadow:inset 3px 0 0 var(--a)}
-.okb.wide{text-align:center}
-
-/* ── হিরো · রুটিন · হিটম্যাপ ── */
-.hero{display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;padding:24px 26px;background:linear-gradient(125deg,color-mix(in srgb,var(--g) 20%,var(--c)),var(--c) 62%)}
-.hd{font-size:clamp(30px,6vw,44px);font-weight:700;line-height:1.25;margin:2px 0 6px;font-family:"Noto Serif Bengali",serif}
-.hmsg{font-size:15px;line-height:1.7;max-width:34ch;color:var(--m)}
-.hcs{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.hrs{display:flex;gap:20px}
-.mr{display:flex;flex-direction:column;align-items:center;gap:6px}
-.mrw{position:relative;width:96px;height:96px}
-.mrw svg{width:100%;height:100%;transform:rotate(-90deg)}
-.mrw .t{fill:none;stroke:var(--b);stroke-width:6}
-.mrw .p{fill:none;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .8s;filter:drop-shadow(0 0 5px var(--sh))}
-.mrw b{position:absolute;inset:0;display:grid;place-items:center;font-size:17px;font-family:"Noto Serif Bengali",serif}
-.mr>span{font-size:12px;color:var(--m);font-weight:600}
-.dys{flex:1 1 100%;display:flex;gap:6px;flex-wrap:wrap}
-.dy{position:relative;cursor:pointer}
-.dy input{position:absolute;opacity:0;width:0;height:0;min-width:0;padding:0;flex:none}
-.dy span{display:inline-block;padding:6px 13px;border-radius:99px;border:1px solid var(--cb);font-size:13px;font-weight:600;color:var(--m);transition:.2s}
-.dy input:checked+span{background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on);border-color:transparent;box-shadow:0 6px 14px -8px var(--sh)}
-.dy input:focus-visible+span{outline:2px solid var(--g);outline-offset:2px}
-.rt.dn .rn,.rt.dn .m{opacity:.5}.rt.dn .rn{text-decoration:line-through}
-.hm5{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-.hw{text-align:center;font-size:11px;color:var(--m);font-weight:600}
-.hx{display:block;height:30px;border-radius:8px;background:var(--b)}
-.hx.f{background:none;border:1px dashed var(--b)}
-.hx.l1{background:color-mix(in srgb,var(--a) 24%,transparent)}.hx.l2{background:color-mix(in srgb,var(--a) 48%,transparent)}.hx.l3{background:color-mix(in srgb,var(--a) 74%,transparent)}
-.hx.l4{background:linear-gradient(135deg,var(--a),var(--a2));box-shadow:0 4px 10px -5px var(--sh)}
-.hx.td{outline:2px solid var(--g);outline-offset:1px}
-.lgd{margin-top:12px;display:flex;align-items:center;gap:6px}.lgd .hx{width:14px;height:14px;border-radius:4px}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
-
-
-/* ── Refined premium layer ── */
-body{font-feature-settings:"tnum" 1,"lnum" 1;line-height:1.55}
-body::before{height:46vh;opacity:.7;background:radial-gradient(55% 70% at 50% 0,color-mix(in srgb,var(--a) 13%,transparent),transparent)}
-main{padding:32px 20px 80px}
-header{margin-bottom:26px}
-h1{font-size:clamp(28px,5vw,40px);font-weight:700;letter-spacing:-.4px;color:var(--t)}
-.grid{gap:18px}
-.card{padding:22px 24px;border-radius:18px}
-:root main .grid>.card:not(.cd):not(.wx):not(.ram){border:1px solid var(--b);box-shadow:0 1px 2px rgba(40,28,8,.05),0 18px 36px -24px var(--sh)}
-:root:not([data-d="1"]) .card{background:color-mix(in srgb,#fff 72%,var(--bg))}
-.card::after{display:none}
-.cd::after,.hero::after{display:block;height:2px;opacity:1}
-h2{font-size:15px;font-weight:700;letter-spacing:.1px;margin-bottom:16px;color:var(--t)}
-h2::before{display:none}
-h2 .pill{margin-left:auto}
-.pill{padding:3px 11px;font-size:12px;font-weight:600;background:color-mix(in srgb,var(--a) 12%,transparent);border:1px solid color-mix(in srgb,var(--a) 34%,transparent);color:var(--p)}
-.bad{background:rgba(200,50,50,.1);border-color:rgba(200,50,50,.32)}
-.row{border-bottom:1px solid var(--b);border-image:none;padding:11px 0}
-.row:last-child{border:0}
-.m{color:var(--m);font-size:13px}
-.spt{letter-spacing:.2px;margin-top:16px}
-input,select{border-radius:10px;padding:10px 13px;background:color-mix(in srgb,var(--bg) 55%,#fff);border:1px solid color-mix(in srgb,var(--t) 14%,transparent);transition:border-color .2s,box-shadow .2s}
-:root[data-d="1"] input,:root[data-d="1"] select{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12)}
-input:focus,select:focus{outline:0;border-color:var(--a);box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 22%,transparent)}
-button{border-radius:10px;box-shadow:none;letter-spacing:.2px}
-button:hover{box-shadow:0 6px 16px -10px var(--sh)}
-button.opt,.bt button.g{box-shadow:none}
-button.go{box-shadow:0 10px 22px -14px var(--sh);padding:12px 34px}
-button.go:hover{box-shadow:0 12px 24px -14px var(--sh)}
-.chk{border-radius:7px;border-width:1.5px}
-.st div{background:transparent;border:1px solid var(--b);border-radius:12px;padding:12px 8px}
-.bar{height:5px;background:color-mix(in srgb,var(--t) 9%,transparent)}
-.bar i{box-shadow:none}
-.big{filter:none;font-weight:700}
-/* হিরো — পেজের একমাত্র গাঢ় অংশ */
-.hero{--t:#F6EDD8;--m:rgba(246,237,216,.64);--b:rgba(255,255,255,.14);--a:#E0B84F;--a2:#F2D88A;--p:#F2D88A;color:var(--t);padding:32px 34px;border:1px solid rgba(224,184,79,.32)!important;box-shadow:0 30px 60px -34px rgba(20,12,0,.6)!important;background:radial-gradient(60% 130% at 100% 0,rgba(224,184,79,.18),transparent 62%),linear-gradient(135deg,color-mix(in srgb,var(--g) 40%,#17110a),#120d08 72%)!important}
-.hero .hd{font-size:clamp(32px,6vw,48px);letter-spacing:-.5px;color:var(--a2);margin:4px 0 10px}
-.hero .hmsg{color:rgba(246,237,216,.78);font-size:15px}
-.hero .pill{background:rgba(224,184,79,.12);border-color:rgba(224,184,79,.4);color:var(--a2)}
-.hero .pill.bad{background:rgba(255,120,120,.12);border-color:rgba(255,120,120,.4);color:#ffb0b0}
-.hero .mrw{width:104px;height:104px}
-.hero .mrw .t{stroke-width:5}.hero .mrw .p{stroke-width:5;filter:none}
-.hero .mrw b{font-size:18px;color:var(--t)}
-.hero .mr>span{color:var(--m);font-weight:500}
-.hrs{gap:26px}
-/* টাইমার */
-.cd{box-shadow:0 1px 2px rgba(40,28,8,.05),0 22px 44px -28px var(--pc)}
-.ring{width:156px;height:156px}
-.ring .tr{stroke-width:5}.ring .pg{stroke-width:5;filter:none}
-.rc b#tm{font-size:36px!important;font-weight:700;letter-spacing:-.5px}
-.rc span{letter-spacing:.3px}
-button.opt{padding:6px 15px;font-weight:600}
-button.opt.on{box-shadow:none}
-/* সাপ্তাহিক চার্ট ও হিটম্যাপ */
-.wk{height:164px;gap:10px}
-.wbw{background:none;border-bottom:1px solid var(--b);border-radius:0}
-.wb{width:44%;max-width:30px;border-radius:6px 6px 0 0;opacity:.5}
-.wb.td{opacity:1;box-shadow:none}
-.wb.ok{background:linear-gradient(180deg,#4fd7a0,#1f9d6b)}
-.hm5{gap:7px}
-.hx{height:30px;border-radius:7px}
-.hx.l4{box-shadow:none}
-.hx.td{outline:1.5px solid var(--t);outline-offset:2px}
-.dy span{padding:6px 14px;font-weight:600}
-.srow.on{box-shadow:inset 2px 0 0 var(--a);background:color-mix(in srgb,var(--a) 10%,transparent)}
-.stk{height:6px}
-@media (max-width:560px){main{padding:22px 14px 64px}.card{padding:18px}.hero{padding:24px 22px}.hrs{width:100%;justify-content:space-between}}
-
-/* পরীক্ষা কার্ড */
-.exg{display:flex;align-items:center;gap:10px;margin:-2px 0}
-.exg::before,.exg::after{content:"";flex:1;border-top:1px dashed var(--cb)}
-.exg span{font-size:11px;font-weight:600;color:var(--m);padding:2px 10px;border-radius:99px;border:1px solid var(--b);background:var(--c)}
-.exg span.ok{color:#1f9d6b;border-color:rgba(31,157,107,.4);background:rgba(31,157,107,.1)}
-:root[data-d="1"] .exg span.ok{color:#4fd7a0}
-.exl{display:flex;flex-direction:column;gap:10px}
-.ex{display:flex;align-items:center;gap:12px;padding:11px 8px 11px 11px;border-radius:16px;border:1px solid var(--b);background:color-mix(in srgb,var(--a) 4%,transparent);transition:border-color .2s,box-shadow .2s}
-.ex.nx{border-color:color-mix(in srgb,var(--a) 70%,transparent);background:linear-gradient(135deg,color-mix(in srgb,var(--a) 15%,transparent),color-mix(in srgb,var(--a2) 4%,transparent));box-shadow:0 10px 22px -14px var(--sh)}
-.ex.ps{opacity:.55}
-.ex.ed{display:block;padding:14px;border-color:var(--a);background:color-mix(in srgb,var(--a) 7%,transparent)}
-.exd{flex:none;min-width:58px;padding:7px 4px 8px;border-radius:14px;text-align:center;color:#FFF6DC;background:linear-gradient(160deg,var(--g),color-mix(in srgb,var(--g) 58%,#000));box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 8px 16px -10px var(--sh)}
-:root[data-d="1"] .exd{background:linear-gradient(145deg,var(--a),var(--a2));color:var(--on)}
-.exd small{display:block;font-size:10px;line-height:1.5;opacity:.92;white-space:nowrap}
-.exd b{display:block;font-size:24px;line-height:1.15;font-weight:700;font-family:"Noto Serif Bengali",serif}
-.exb{flex:1;min-width:0}
-.exn{font-weight:700;font-size:15px;line-height:1.4;overflow-wrap:anywhere}
-.exm{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:7px}
-.chip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:99px;font-size:12px;color:var(--m);border:1px solid var(--b);background:var(--c);white-space:nowrap}
-.chip svg,.ib svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.pill.wn{background:rgba(224,150,30,.16);color:#a8650a}
-:root[data-d="1"] .pill.wn{color:#f0b95a}
-.exz{flex:none;display:flex;flex-direction:column;gap:2px}
-.ib{width:30px;height:30px;padding:0;display:grid;place-items:center;border-radius:9px;color:var(--m)}
-.ib svg{width:15px;height:15px}
-.ib:hover{background:color-mix(in srgb,var(--a) 15%,transparent);color:var(--t)}
-.ib.dl:hover{background:rgba(220,60,60,.12);color:#d33}
-.exf{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0}
-.exf .fl{display:flex;flex-direction:column;gap:5px;min-width:0;font-size:12px;font-weight:600;color:var(--m);letter-spacing:.2px}
-.exf .fl.w{grid-column:1/-1}
-.exf input:not([type=hidden]){width:100%;min-width:0;min-height:42px;flex:none;font-size:14px;font-weight:500;padding:9px 12px;border-radius:12px;background:var(--bg);color:var(--t);border:1px solid var(--cb)}
-.exf input:focus{outline:2px solid var(--g);outline-offset:1px}
-:root[data-d="1"] .exf input{color-scheme:dark}
-.exa{grid-column:1/-1;display:flex;gap:8px;margin-top:2px}
-.exa button{flex:1}
-.exf .fl.w{position:relative}
-.sgs{display:none;position:absolute;left:0;right:0;top:100%;margin-top:4px;z-index:30;max-height:200px;overflow-y:auto;padding:5px;border-radius:14px;background:var(--bg);border:1px solid var(--cb);box-shadow:0 18px 34px -12px rgba(0,0,0,.3),0 0 0 3px color-mix(in srgb,var(--a) 10%,transparent);animation:sgin .16s ease-out}
-.sgs.on{display:block}
-@keyframes sgin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
-.sg{display:flex;align-items:center;border-radius:10px;font-size:14px;font-weight:500;color:var(--t);cursor:pointer}
-.sg+.sg{margin-top:1px}
-.sg:hover{background:color-mix(in srgb,var(--a) 14%,transparent)}
-.sgt{flex:1;min-width:0;padding:9px 10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sgt mark{background:none;color:var(--g);font-weight:700}
-:root[data-d="1"] .sgt mark{color:var(--a2)}
-.sgx{flex:none;padding:9px 12px;color:var(--m);font-size:11px}
-.sgx:hover{color:#d33}
-.exe0{padding:26px 12px;text-align:center;color:var(--m);font-size:14px;border:1px dashed var(--cb);border-radius:16px}
-.exp .spt{margin-top:16px}
-@media(min-width:680px){.exc{grid-column:span 2}}
-@media(min-width:760px){
- .exw{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:26px;align-items:start}
- .exp{position:sticky;top:14px;padding:16px;border-radius:18px;border:1px solid var(--cb);background:color-mix(in srgb,var(--a) 6%,transparent)}
- .exp .spt{margin:0 0 12px;padding-bottom:8px;font-size:13px;color:var(--t)}
- .exc{padding:22px 24px}
- .exc h2{font-size:19px;margin-bottom:16px}
- .exl{gap:12px}
- .ex{padding:14px 12px 14px 14px;gap:16px;border-radius:18px}
- .ex.ed{padding:18px}
- .exd{min-width:68px;padding:9px 6px 10px;border-radius:16px}
- .exd b{font-size:30px}.exd small{font-size:11px}
- .exn{font-size:17px}
- .exm{gap:8px;margin-top:9px}
- .chip{font-size:13px;padding:4px 11px}
- .exz{flex-direction:row;gap:4px}
- .ib{width:34px;height:34px}
- .ex:hover{border-color:color-mix(in srgb,var(--a) 55%,transparent)}
-}
-.exc{overflow:visible}
-.exc::after{border-radius:20px 20px 0 0}
-.exc:focus-within{z-index:20}
-</style></head>
-<body><script src="header.js"></script>
-<main id="app"></main>
-<script>
-const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
-const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const MON=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
-const WSD=['রবি','সোম','মঙ্গল','বুধ','বৃহ','শুক্র','শনি'];
-const TH=[['শ্যাম্পেইন গোল্ড','#8A6420'],['গোল্ড + এমারেল্ড','#0D4C3C'],['গোল্ড + নেভি','#16213E'],['গোল্ড + বারগান্ডি','#5B1A2B']];
-const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-// অন্য পেজের সাথে একই স্টোরেজ কী ('dl'); পড়াশোনার তথ্য S.st-এ জমা হয়
-let S={theme:0,dark:0,tasks:[],done:{},pr:{},fin:[],url:'',notif:0,qaza:[0,0,0,0,0,0],fast:{},ram:{},rm:0};
-try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
-if(!TH[S.theme])S.theme=0;
-const D=S.st=Object.assign({subj:[],log:{},ses:{},goal:120,exams:[],pre:[25,5],mode:'f',sel:0,run:null,rt:[],rd:{}},S.st||{});
-if(!Array.isArray(D.subj))D.subj=[];if(!Array.isArray(D.exams))D.exams=[];if(!Array.isArray(D.exn))D.exn=[];if(!D.exc||typeof D.exc!='object'||Array.isArray(D.exc))D.exc={};if(!D.exm){D.exm=1;D.exams.forEach(e=>{if(e.n&&!D.exn.includes(e.n))D.exn.push(e.n)})}D.exn.forEach(n=>{if(!D.exc[n])D.exc[n]=Math.max(1,D.exams.filter(e=>e.n===n).length)});if(!Array.isArray(D.pre)||D.pre.length!=2)D.pre=[25,5];
-if(!D.log||typeof D.log!='object')D.log={};if(!D.ses||typeof D.ses!='object')D.ses={};
-if(!Array.isArray(D.rt))D.rt=[];if(!D.rd||typeof D.rd!='object')D.rd={};
-const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
-const $=document.getElementById('app'),root=document.documentElement;
-const COL=['#4F73F0','#DB9A12','#E8782B','#D8456B','#6A4FD0','#1F9D6B','#0EA5B7','#8A6420'];
-const PRE=[[25,5],[50,10],[90,15]];
-const CIR=2*Math.PI*56;
-const dayAt=i=>{const t=new Date();return new Date(t.getFullYear(),t.getMonth(),t.getDate()-i)};
-const tot=k=>Object.values(D.log[k]||{}).reduce((a,b)=>a+b,0);
-const fm=m=>{m=Math.round(m);const h=Math.floor(m/60),r=m%60;return h?bn(h)+' ঘণ্টা'+(r?' '+bn(r)+' মিনিট':''):bn(r)+' মিনিট'};
-const nm=id=>{const x=D.subj.find(s=>s.id==id);return x?x.name:'সাধারণ'};
-const cl=id=>{const x=D.subj.find(s=>s.id==id);return x?x.c:'#B8892B'};
-const addMin=(id,m)=>{if(!(m>0))return;const k=key(new Date()),L=D.log[k]=D.log[k]||{};L[id]=(L[id]||0)+m};
-const WFD=['রবিবার','সোমবার','মঙ্গলবার','বুধবার','বৃহস্পতিবার','শুক্রবার','শনিবার'];
-const subMin=(k,id,m)=>{const L=D.log[k];if(L&&m>0){L[id]=Math.max(0,(L[id]||0)-m);if(!L[id])delete L[id]}};
-const dsum=d=>d.length==7?'প্রতিদিন':d.slice().sort((a,b)=>a-b).map(x=>WSD[x]).join(', ');
-
-/* পরীক্ষা: সময়ের লেখা, আইকন, ফর্ম, নামের সাজেশন */
-let EXED=null;
-const fmT=t=>{if(!/^\d\d:\d\d$/.test(t||''))return '';const h=+t.slice(0,2),m=t.slice(3),p=h<4?'রাত':h<6?'ভোর':h<12?'সকাল':h<15?'দুপুর':h<18?'বিকাল':h<20?'সন্ধ্যা':'রাত';return p+' '+bn(h%12||12)+':'+bn(m)};
-const IC={clk:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',door:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v17"/><path d="M3 21h18"/><path d="M12.5 12h.01"/></svg>',ed:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>',del:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'};
-const addExn=n=>{D.exc[n]=(D.exc[n]||0)+1;D.exn=D.exn.filter(x=>x!==n);D.exn.push(n);if(D.exn.length>40){D.exn.slice(0,D.exn.length-40).forEach(x=>delete D.exc[x]);D.exn=D.exn.slice(-40)}};
-const exForm=(k,e)=>{e=e||{};const ed=k=='exe',id=ed?'ed':'new';
-return `<form class="exf" data-f="${k}" autocomplete="off">${ed?`<input type="hidden" name="id" value="${e.id}">`:''}
-<div class="fl w"><label for="exn-${id}">পরীক্ষার নাম</label><input id="exn-${id}" name="n" data-sgi maxlength="40" placeholder="যেমন: অর্থনীতি" required value="${esc(e.n||'')}" autocomplete="off"><div class="sgs"></div></div>
-<label class="fl">তারিখ<input name="d" type="date" required value="${esc(e.d||'')}"></label>
-<label class="fl">সময় (ঐচ্ছিক)<input name="t" type="time" value="${esc(e.t||'')}"></label>
-<label class="fl w">রুম নং (ঐচ্ছিক)<input name="r" maxlength="20" placeholder="যেমন: ২০৩ বা ক-১২" value="${esc(e.r||'')}" autocomplete="off"></label>
-<div class="exa">${ed?'<button class="g" type="button" data-a="ec">বাতিল</button>':''}<button>${ed?'সংরক্ষণ করুন':'পরীক্ষা যোগ করুন'}</button></div></form>`};
-const RG=2*Math.PI*34;
-const mr=(p,c,txt,lb)=>`<div class="mr"><div class="mrw"><svg viewBox="0 0 80 80"><circle class="t" cx="40" cy="40" r="34"/><circle class="p" cx="40" cy="40" r="34" style="stroke:${c}" stroke-dasharray="${RG}" stroke-dashoffset="${RG*(1-Math.min(1,p))}"/></svg><b>${txt}</b></div><span>${lb}</span></div>`;
-const tmTot=()=>D.run?D.run.tot:(D.mode=='f'?D.pre[0]:D.pre[1])*60000;
-const tmRem=()=>{const r=D.run;return r?(r.end?Math.max(0,r.end-Date.now()):r.left):tmTot()};
-const mmss=ms=>{const q=Math.ceil(ms/1000);return String(Math.floor(q/60)).padStart(2,'0')+':'+String(q%60).padStart(2,'0')};
-window.MSG='';
-function ping(msg){
- try{if(S.notif&&window.Notification&&Notification.permission=='granted')hayatNotify(msg)}catch(e){}
- try{const A=window.AudioContext||window.webkitAudioContext,c=new A(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=880;g.gain.setValueAtTime(.0001,c.currentTime);g.gain.exponentialRampToValueAtTime(.25,c.currentTime+.05);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.9);o.start();o.stop(c.currentTime+1)}catch(e){}
- window.MSG=msg;setTimeout(()=>{window.MSG='';render()},9000)}
-function done(){const r=D.run;if(!r)return;
- if(r.m=='f'){addMin(r.s,Math.round(r.tot/60000));const k=key(new Date());D.ses[k]=(D.ses[k]||0)+1;D.mode='b'}else D.mode='f';
- D.run=null;save();
- ping(r.m=='f'?'ফোকাস সেশন সম্পন্ন। বিরতি নিন।':'বিরতি শেষ। ফোকাসে ফিরুন।');render()}
-
-function render(){
- root.dataset.t=S.theme;root.dataset.d=S.dark;
- const now=new Date(),K=key(now),r=D.run,m=r?r.m:D.mode,isB=m=='b',tt=tmTot(),rem=tmRem(),run=!!(r&&r.end),paused=!!(r&&!r.end);
- const pc=isB?['#1F9D6B','#7AE0B8']:['var(--a)','var(--a2)'];
- /* সপ্তাহ */
- const wk=Array.from({length:7},(_,i)=>{const d=dayAt(6-i);return{d,k:key(d),m:tot(key(d))}});
- const wsum=wk.reduce((a,x)=>a+x.m,0),wmax=Math.max(D.goal,...wk.map(x=>x.m),1),avg=wsum/7;
- const tdm=tot(K),pct=Math.min(100,Math.round(tdm/D.goal*100)),ses=D.ses[K]||0;
- let st=0,i0=tdm>0?0:1;while(tot(key(dayAt(i0)))>0&&st<3650){st++;i0++}
- const ids=[0,...D.subj.map(s=>s.id)];
- const wt=id=>wk.reduce((a,x)=>a+(((D.log[x.k]||{})[id])||0),0);
- const opts=sel=>`<option value="0" ${sel==0?'selected':''}>সাধারণ</option>`+D.subj.map(s=>`<option value="${s.id}" ${sel==s.id?'selected':''}>${esc(s.name)}</option>`).join('');
- const selId=D.subj.some(s=>s.id==D.sel)?D.sel:0;
-
- const timer=`<section class="card cd" style="--pc:${pc[0]};--pc2:${pc[1]}"><h2>ফোকাস টাইমার</h2>
-<div class="cdw"><div class="ring"><svg viewBox="0 0 140 140"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--pc2)"/><stop offset="1" style="stop-color:var(--pc)"/></linearGradient></defs><circle class="tr" cx="70" cy="70" r="56"/><circle class="pg" id="cdr" cx="70" cy="70" r="56" stroke-dasharray="${CIR}" stroke-dashoffset="${CIR*(1-Math.min(1,rem/tt))}"/></svg><div class="rc"><b id="tm" style="font-size:30px">${bn(mmss(rem))}</b><span>${isB?'বিরতি':'ফোকাস'}</span></div></div></div>
-${r?'':`<div class="chs"><button class="opt ${!isB?'on':''}" data-a="md" data-i="f">ফোকাস</button><button class="opt ${isB?'on':''}" data-a="md" data-i="b">বিরতি</button></div><div class="chs">${PRE.map((p,i)=>`<button class="opt ${D.pre[0]==p[0]&&D.pre[1]==p[1]?'on':''}" data-a="pr" data-i="${i}">${bn(p[0])}/${bn(p[1])} মিনিট</button>`).join('')}</div>`}
-<div class="chs"><select data-a="sub" aria-label="কোন বিষয়">${opts(r?r.s:selId)}</select></div>
-<div class="bt">${run?`<button class="go" data-a="pa">থামান</button>`:`<button class="go" data-a="go">${paused?'চালিয়ে যান':'শুরু করুন'}</button>`}${r?`<button class="g" data-a="fin">সেশন শেষ</button><button class="g" data-a="rs">রিসেট</button>`:''}</div></section>`;
-
- const today=`<section class="card"><h2>আজকের পড়া ${pct>=100?'<span class="pill">লক্ষ্য পূরণ</span>':''}</h2>
-<div class="big" style="font-size:30px">${fm(tdm)}</div>
-<div class="bar"><i style="width:${pct}%"></i></div>
-<div class="row" style="margin-top:6px"><span class="m">লক্ষ্য · ${fm(D.goal)}</span><span style="display:flex;gap:6px"><button class="g opt" data-a="gl" data-i="-15">−</button><button class="g opt" data-a="gl" data-i="15">+</button></span></div>
-<div class="st" style="grid-template-columns:repeat(3,1fr);margin-top:8px"><div><b style="font-size:19px">${bn(st)}</b><div class="m">দিনের ধারা</div></div><div><b style="font-size:19px">${bn(ses)}</b><div class="m">সেশন</div></div><div><b style="font-size:14px;line-height:1.9;display:block">${fm(wsum)}</b><div class="m">এ সপ্তাহ</div></div></div>
-<form data-f="man"><select name="s" aria-label="কোন বিষয়">${opts(selId)}</select><input name="m" type="number" min="1" max="600" placeholder="মিনিট" required><button>ম্যানুয়াল যোগ</button></form></section>`;
-
- const week=`<section class="card wide"><h2>সাপ্তাহিক পড়া <span class="pill">${fm(wsum)}</span></h2>
-<div class="wk">${wk.map((x,i)=>`<div class="wc" title="${fm(x.m)}"><div class="wv">${x.m?bn(x.m):''}</div><div class="wbw"><i class="wb ${x.m>=D.goal?'ok':''} ${i==6?'td':''}" style="height:${x.m?Math.max(4,x.m/wmax*100):0}%"></i></div><div class="wd ${i==6?'on':''}">${i==6?'আজ':WSD[x.d.getDay()]}</div></div>`).join('')}</div>
-<div class="m" style="margin-top:10px;display:flex;gap:16px;flex-wrap:wrap"><span>গড় ${fm(avg)}</span><span style="display:inline-flex;align-items:center;gap:6px"><i class="lg"></i>লক্ষ্য পূরণ</span></div></section>`;
-
- const wsAll=ids.map(id=>wt(id)),wsTot=wsAll.reduce((a,b)=>a+b,0);
- const subs=`<section class="card"><h2>বিষয়সমূহ</h2>
-${wsTot?`<div class="stk">${ids.map((id,j)=>wsAll[j]?`<i style="flex:${wsAll[j]};background:${cl(id)}" title="${esc(nm(id))} · ${fm(wsAll[j])}"></i>`:'').join('')}</div>`:''}
-<div style="margin-top:8px">${ids.map(id=>`<div class="row srow ${selId==id?'on':''}" data-a="ss" data-i="${id}"><span style="display:flex;align-items:center;gap:10px;min-width:0"><i class="dt" style="background:${cl(id)}"></i><b style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(nm(id))}</b></span><span class="m" style="display:flex;align-items:center;gap:6px;flex:none">আজ ${fm((D.log[K]||{})[id]||0)}${id?`<button class="x" data-a="sd" data-i="${id}" aria-label="মুছুন">✕</button>`:''}</span></div>`).join('')}</div>
-<form data-f="sj"><input name="n" maxlength="30" placeholder="বিষয়ের নাম" required><button>যোগ করুন</button></form></section>`;
-
- const ex=[...D.exams].sort((a,b)=>(a.d+(a.t||''))<(b.d+(b.t||''))?-1:1);
- const nxi=(ex.find(e=>e.d>=K)||{}).id;
- const exGap=(p,e)=>{if(!p||e.d<K)return '';const g=Math.round((new Date(e.d+'T00:00')-new Date(p.d+'T00:00'))/864e5)-1;
-  return `<div class="exg"><span class="${g>=2?'ok':''}">${g<0?'একই দিনে':g==0?'ছুটি নেই':bn(g)+' দিন ছুটি'}</span></div>`};
- const exRow=e=>{if(EXED!=null&&e.id==EXED)return `<div class="ex ed">${exForm('exe',e)}</div>`;
-  const dt=new Date(e.d+'T00:00'),n=Math.round((dt-new Date(K+'T00:00'))/864e5),lb=n<0?'শেষ হয়েছে':n==0?'আজ':n==1?'আগামীকাল':bn(n)+' দিন বাকি',cs=n<0?'':n<=3?'bad':n<=7?'wn':'',tt=fmT(e.t);
-  return `<div class="ex ${n<0?'ps':''} ${e.id==nxi?'nx':''}"><div class="exd"><small>${MON[dt.getMonth()]}</small><b>${bn(dt.getDate())}</b><small>${WSD[dt.getDay()]}</small></div><div class="exb"><div class="exn">${esc(e.n)}</div><div class="exm"><span class="pill ${cs}">${lb}</span>${tt?`<span class="chip">${IC.clk}${tt}</span>`:''}${e.r?`<span class="chip">${IC.door}রুম ${esc(e.r)}</span>`:''}</div></div><div class="exz"><button class="x ib" data-a="ee" data-i="${e.id}" aria-label="এডিট করুন">${IC.ed}</button><button class="x ib dl" data-a="ed" data-i="${e.id}" aria-label="মুছুন">${IC.del}</button></div></div>`};
- const upc=ex.filter(e=>e.d>=K).length;
- const exams=`<section class="card exc"><h2>পরীক্ষা ${upc?`<span class="pill">${bn(upc)}টি বাকি</span>`:''}</h2>
-<div class="exw"><div class="exlw">${ex.length?`<div class="exl">${ex.map((e,i)=>exGap(ex[i-1],e)+exRow(e)).join('')}</div>`:'<div class="exe0">কোনো পরীক্ষা নেই</div>'}</div>
-<aside class="exp"><div class="spt">নতুন পরীক্ষা</div>${exForm('ex')}</aside></div></section>`;
-
- const dow=now.getDay();
- const due=D.rt.filter(r=>r.d.includes(dow)).sort((a,b)=>(a.t||'99')<(b.t||'99')?-1:1);
- const rdn=D.rd[K]||{},rdone=due.filter(r=>rdn[r.id]).length,rpct=due.length?rdone/due.length:0;
- const later=D.rt.filter(r=>!r.d.includes(dow));
- const nx=ex.find(e=>e.d>=K),nxn=nx?Math.round((new Date(nx.d+'T00:00')-new Date(K+'T00:00'))/864e5):0;
- const msg=pct>=100?'আজকের লক্ষ্য পূরণ হয়েছে।':(tdm==0&&!rdone)?'আজকের প্রথম সেশন শুরু করুন।':'লক্ষ্যে পৌঁছাতে আর '+fm(D.goal-tdm)+' বাকি।';
-
- const hero=`<section class="card hero wide"><div><div class="m">${bn(now.getDate())} ${MON[now.getMonth()]} ${bn(now.getFullYear())}</div><div class="hd">${WFD[dow]}</div><div class="hmsg">${msg}</div><div class="hcs">${st?`<span class="pill">${bn(st)} দিনের ধারা</span>`:''}${nx?`<span class="pill ${nxn<=7?'bad':''}">${esc(nx.n)} · ${nxn==0?'আজ':bn(nxn)+' দিন বাকি'}</span>`:''}</div></div><div class="hrs">${mr(pct/100,'var(--a)',bn(pct)+'%','দৈনিক লক্ষ্য')}${mr(rpct,'#1f9d6b',due.length?bn(rdone)+'/'+bn(due.length):'—','রুটিন')}</div></section>`;
-
- const rows=due.map(r=>{const sid=D.subj.some(s=>s.id==r.s)?r.s:0,dn=!!rdn[r.id];return `<div class="row rt ${dn?'dn':''}"><label style="display:flex;align-items:center;gap:12px;min-width:0;flex:1;cursor:pointer"><input type="checkbox" class="chk" data-a="rc" data-i="${r.id}" ${dn?'checked':''} style="--pc:${cl(sid)};--pc2:${cl(sid)}" aria-label="${esc(r.n)}"><span style="min-width:0"><b class="rn" style="overflow-wrap:anywhere">${esc(r.n)}</b><div class="m"><i class="dt" style="background:${cl(sid)};display:inline-block;margin-right:6px"></i>${esc(nm(sid))}${r.t?' · '+bn(r.t):''}${r.m?' · '+fm(r.m):''}</div></span></label><button class="x" data-a="rd" data-i="${r.id}" aria-label="মুছুন">✕</button></div>`}).join('');
- const lt=later.length?`<div class="spt">অন্যান্য দিনের রুটিন</div>`+later.map(r=>`<div class="row" style="opacity:.7"><div style="min-width:0"><b style="overflow-wrap:anywhere">${esc(r.n)}</b><div class="m">${dsum(r.d)}${r.t?' · '+bn(r.t):''}${r.m?' · '+fm(r.m):''}</div></div><button class="x" data-a="rd" data-i="${r.id}" aria-label="মুছুন">✕</button></div>`).join(''):'';
- const dyc=WSD.map((w,j)=>`<label class="dy"><input type="checkbox" name="d" value="${j}" checked><span>${w}</span></label>`).join('');
- const routine=`<section class="card wide"><h2>দৈনিক রুটিন ${due.length?`<span class="pill">${bn(rdone)}/${bn(due.length)} সম্পন্ন</span>`:''}</h2>
-${due.length?`<div class="bar" style="margin:0 0 6px"><i style="width:${Math.round(rpct*100)}%;background:linear-gradient(90deg,#4fd7a0,#1f9d6b)"></i></div>${rows}`:`<div class="m">${D.rt.length?'আজকের জন্য কোনো রুটিন নেই।':'প্রতিদিনের পড়া ঠিক করুন। টিক দিলে সময় যোগ হবে।'}</div>`}
-${lt}
-<form data-f="rt"><input name="n" maxlength="40" placeholder="রুটিনের নাম" required style="flex:2 1 200px"><select name="s" aria-label="কোন বিষয়">${opts(selId)}</select><input name="m" type="number" min="0" max="600" placeholder="মিনিট" style="flex:0 1 90px"><input name="t" type="time" aria-label="সময়" style="flex:0 1 120px"><div class="dys">${dyc}</div><button>রুটিনে যোগ করুন</button></form></section>`;
-
- const h0=dayAt(dow+28);let act=0;
- const cells=Array.from({length:35},(_,i)=>{const d=new Date(h0.getFullYear(),h0.getMonth(),h0.getDate()+i);if(d>now)return '<i class="hx f"></i>';const m=tot(key(d)),q=m<=0?0:m<D.goal*.34?1:m<D.goal*.67?2:m<D.goal?3:4;if(m>0)act++;return `<i class="hx l${q} ${key(d)==K?'td':''}" title="${bn(d.getDate())} ${MON[d.getMonth()]} · ${fm(m)}"></i>`}).join('');
- const heat=`<section class="card"><h2>৫ সপ্তাহের ধারাবাহিকতা <span class="pill">${bn(act)}/${bn(35)} দিন</span></h2><div class="hm5">${WSD.map(w=>`<span class="hw">${w}</span>`).join('')}${cells}</div><div class="m lgd">কম <i class="hx l1"></i><i class="hx l2"></i><i class="hx l3"></i><i class="hx l4"></i> বেশি</div></section>`;
-
- document.title=L('পড়াশোনা')+' · Hayat';
- $.innerHTML=`<header><div><h1>পড়াশোনা</h1></div></header>
-<div class="grid">${window.MSG?`<div class="okb wide">${window.MSG}</div>`:''}${hero}${routine}${timer}${today}${subs}${week}${exams}${heat}</div>`}
-
-document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;const a=t.dataset.a,i=t.dataset.i;
- if(a=='sub')return;
- if(a=='go'){const r=D.run;if(r){if(!r.end)r.end=Date.now()+r.left}else{const x=tmTot();D.run={m:D.mode,tot:x,end:Date.now()+x,left:x,s:D.sel}}}
- if(a=='pa'&&D.run&&D.run.end){D.run.left=Math.max(0,D.run.end-Date.now());D.run.end=0}
- if(a=='fin'&&D.run){const r=D.run,el=r.tot-(r.end?Math.max(0,r.end-Date.now()):r.left);if(r.m=='f'){const mm=Math.floor(el/60000);if(mm>0){addMin(r.s,mm);const k=key(new Date());D.ses[k]=(D.ses[k]||0)+1}}D.run=null}
- if(a=='rs')D.run=null;
- if(a=='md'&&!D.run)D.mode=i=='b'?'b':'f';
- if(a=='pr'&&!D.run&&PRE[+i])D.pre=PRE[+i].slice();
- if(a=='gl')D.goal=Math.max(15,Math.min(720,D.goal+ +i));
- if(a=='ss'){D.sel=+i;if(D.run&&D.run.m=='f')D.run.s=+i}
- if(a=='sd'){if(!confirm('বিষয়টি মুছে ফেলবেন?'))return;const id=+i;D.subj=D.subj.filter(s=>s.id!=id);for(const k in D.log){const L=D.log[k];if(L[id]){L[0]=(L[0]||0)+L[id];delete L[id]}}if(D.sel==id)D.sel=0;if(D.run&&D.run.s==id)D.run.s=0}
- if(a=='ed'){if(!confirm('পরীক্ষাটি মুছে ফেলবেন?'))return;D.exams=D.exams.filter(x=>x.id!=i);if(EXED==i)EXED=null}
- if(a=='ee')EXED=+i;
- if(a=='ec')EXED=null;
- if(a=='rc'){const id=+i,r=D.rt.find(x=>x.id==id);if(r){const k=key(new Date()),dn=D.rd[k]=D.rd[k]||{};if(dn[id]){subMin(k,dn[id].s,dn[id].m);delete dn[id]}else{const sid=D.subj.some(s=>s.id==r.s)?r.s:0;dn[id]={s:sid,m:r.m};addMin(sid,r.m)}}}
- if(a=='rd'){if(!confirm('রুটিনটি মুছে ফেলবেন?'))return;D.rt=D.rt.filter(x=>x.id!=+i)}
- save();render()});
-document.addEventListener('change',e=>{const t=e.target;if(t.dataset&&t.dataset.a=='sub'){D.sel=+t.value;if(D.run&&D.run.m=='f')D.run.s=+t.value;save();render()}});
-$.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target),k=e.target.dataset.f;
- if(k=='man'){addMin(+f.get('s')||0,Math.round(+f.get('m')||0))}
- if(k=='sj'){const n=String(f.get('n')||'').trim();if(n)D.subj.push({id:Date.now(),name:n,c:COL[D.subj.length%COL.length]})}
- if(k=='ex'||k=='exe'){const n=String(f.get('n')||'').trim(),d=f.get('d'),t=String(f.get('t')||''),r=String(f.get('r')||'').trim().slice(0,20);
-  if(n&&d){if(k=='ex')D.exams.push({id:Date.now(),n,d,t,r});else{const x=D.exams.find(x=>x.id==+f.get('id'));if(x){x.n=n;x.d=d;x.t=t;x.r=r}EXED=null}addExn(n)}}
- if(k=='rt'){const n=String(f.get('n')||'').trim(),d=f.getAll('d').map(Number);if(n&&d.length)D.rt.push({id:Date.now(),n,s:+f.get('s')||0,m:Math.max(0,Math.min(600,Math.round(+f.get('m')||0))),t:String(f.get('t')||''),d})}
- save();render()});
-/* পরীক্ষার নামের সাজেশন: আগে যা লিখেছেন তা মনে রাখে */
-function sgShow(inp){const box=inp.parentNode.querySelector('.sgs');if(!box)return;const q=inp.value.trim().toLowerCase();
- const a=D.exn.map((n,i)=>[n,i]).filter(([n])=>n.toLowerCase()!==q&&(!q||n.toLowerCase().includes(q))).sort((x,y)=>(D.exc[y[0]]||0)-(D.exc[x[0]]||0)||y[1]-x[1]).slice(0,6).map(x=>x[0]);
- box.innerHTML=a.map(n=>{const i=q?n.toLowerCase().indexOf(q):-1;return `<div class="sg"><span class="sgt" data-sg="p" data-v="${esc(n)}" role="option">${i<0?esc(n):`${esc(n.slice(0,i))}<mark>${esc(n.slice(i,i+q.length))}</mark>${esc(n.slice(i+q.length))}`}</span><span class="sgx" data-sg="x" data-v="${esc(n)}" role="button" aria-label="সাজেশন সরান">✕</span></div>`}).join('');box.classList.toggle('on',a.length>0)}
-document.addEventListener('focusin',e=>{if(e.target.matches&&e.target.matches('input[data-sgi]'))sgShow(e.target)});
-document.addEventListener('input',e=>{if(e.target.matches&&e.target.matches('input[data-sgi]'))sgShow(e.target)});
-document.addEventListener('focusout',e=>{const t=e.target;if(t.matches&&t.matches('input[data-sgi]'))setTimeout(()=>{const b=t.parentNode&&t.parentNode.querySelector('.sgs');if(b&&!b.contains(document.activeElement))b.classList.remove('on')},200)});
-document.addEventListener('mousedown',e=>{if(e.target.closest&&e.target.closest('[data-sg]'))e.preventDefault()});
-document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('[data-sg]');if(!t)return;const f=t.closest('.fl'),inp=f&&f.querySelector('input');if(!inp)return;
- if(t.dataset.sg=='p'){inp.value=t.dataset.v;f.querySelector('.sgs').classList.remove('on')}
- else{D.exn=D.exn.filter(n=>n!==t.dataset.v);delete D.exc[t.dataset.v];save();sgShow(inp)}});
-let LK=key(new Date());
-setInterval(()=>{
- if(key(new Date())!==LK){LK=key(new Date());render();return}
- const r=D.run;if(!r||!r.end)return;const rem=r.end-Date.now();
- if(rem<=0){done();return}
- const e=id=>document.getElementById(id);
- if(e('tm'))e('tm').textContent=bn(mmss(rem));
- const c=e('cdr');if(c)c.setAttribute('stroke-dashoffset',CIR*(1-Math.min(1,rem/r.tot)));
- document.title=mmss(rem)+' · Hayat'},1000);
-render();
-</script><script src="suggest.js"></script><script src="pwa.js"></script></body></html>
+const SKIP={SCRIPT:1,STYLE:1,TEXTAREA:1,NOSCRIPT:1};
+const ATTR=['placeholder','title','aria-label','alt'];
+function node(n){
+ if(n.nodeType===3){if(!n.parentNode||SKIP[n.parentNode.nodeName])return;const v=n.nodeValue,t=tr(v);if(t!==v)n.nodeValue=t;return}
+ if(n.nodeType!==1||SKIP[n.nodeName])return;
+ for(const a of ATTR){if(n.hasAttribute&&n.hasAttribute(a)){const v=n.getAttribute(a),t=tr(v);if(t!==v)n.setAttribute(a,t)}}
+ for(let c=n.firstChild;c;c=c.nextSibling)node(c)}
+new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes)node(n)}).observe(document,{childList:true,subtree:true});
+document.addEventListener('DOMContentLoaded',()=>{document.documentElement.lang='en';node(document.documentElement)});
+['alert','confirm'].forEach(f=>{const o=window[f];window[f]=m=>o.call(window,tr(String(m)))});
+if(window.Notification){const N=window.Notification;const W=function(t,o){return new N(tr(String(t)),o&&o.body?Object.assign({},o,{body:tr(o.body)}):o)};
+ Object.defineProperty(W,'permission',{get:()=>N.permission});W.requestPermission=(...a)=>N.requestPermission(...a);window.Notification=W}
+})();
