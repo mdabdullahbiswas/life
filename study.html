@@ -268,6 +268,11 @@ button.opt.on{box-shadow:none}
 @media (max-width:560px){main{padding:22px 14px 64px}.card{padding:18px}.hero{padding:24px 22px}.hrs{width:100%;justify-content:space-between}}
 
 /* পরীক্ষা কার্ড */
+.exg{display:flex;align-items:center;gap:10px;margin:-2px 0}
+.exg::before,.exg::after{content:"";flex:1;border-top:1px dashed var(--cb)}
+.exg span{font-size:11px;font-weight:600;color:var(--m);padding:2px 10px;border-radius:99px;border:1px solid var(--b);background:var(--c)}
+.exg span.ok{color:#1f9d6b;border-color:rgba(31,157,107,.4);background:rgba(31,157,107,.1)}
+:root[data-d="1"] .exg span.ok{color:#4fd7a0}
 .exl{display:flex;flex-direction:column;gap:10px}
 .ex{display:flex;align-items:center;gap:12px;padding:11px 8px 11px 11px;border-radius:16px;border:1px solid var(--b);background:color-mix(in srgb,var(--a) 4%,transparent);transition:border-color .2s,box-shadow .2s}
 .ex.nx{border-color:color-mix(in srgb,var(--a) 70%,transparent);background:linear-gradient(135deg,color-mix(in srgb,var(--a) 15%,transparent),color-mix(in srgb,var(--a2) 4%,transparent));box-shadow:0 10px 22px -14px var(--sh)}
@@ -403,11 +408,13 @@ ${wsTot?`<div class="stk">${ids.map((id,j)=>wsAll[j]?`<i style="flex:${wsAll[j]}
 
  const ex=[...D.exams].sort((a,b)=>(a.d+(a.t||''))<(b.d+(b.t||''))?-1:1);
  const nxi=(ex.find(e=>e.d>=K)||{}).id;
+ const exGap=(p,e)=>{if(!p||e.d<K)return '';const g=Math.round((new Date(e.d+'T00:00')-new Date(p.d+'T00:00'))/864e5)-1;
+  return `<div class="exg"><span class="${g>=2?'ok':''}">${g<0?'একই দিনে':g==0?'ছুটি নেই':bn(g)+' দিন ছুটি'}</span></div>`};
  const exRow=e=>{if(EXED!=null&&e.id==EXED)return `<div class="ex ed">${exForm('exe',e)}</div>`;
   const dt=new Date(e.d+'T00:00'),n=Math.round((dt-new Date(K+'T00:00'))/864e5),lb=n<0?'শেষ হয়েছে':n==0?'আজ':n==1?'আগামীকাল':bn(n)+' দিন বাকি',cs=n<0?'':n<=3?'bad':n<=7?'wn':'',tt=fmT(e.t);
   return `<div class="ex ${n<0?'ps':''} ${e.id==nxi?'nx':''}"><div class="exd"><small>${MON[dt.getMonth()]}</small><b>${bn(dt.getDate())}</b><small>${WSD[dt.getDay()]}</small></div><div class="exb"><div class="exn">${esc(e.n)}</div><div class="exm"><span class="pill ${cs}">${lb}</span>${tt?`<span class="chip">${IC.clk}${tt}</span>`:''}${e.r?`<span class="chip">${IC.door}রুম ${esc(e.r)}</span>`:''}</div></div><div class="exz"><button class="x ib" data-a="ee" data-i="${e.id}" aria-label="এডিট করুন">${IC.ed}</button><button class="x ib dl" data-a="ed" data-i="${e.id}" aria-label="মুছুন">${IC.del}</button></div></div>`};
  const exams=`<section class="card"><h2>পরীক্ষা</h2>
-${ex.length?`<div class="exl">${ex.map(exRow).join('')}</div>`:'<div class="m">কোনো পরীক্ষা নেই</div>'}
+${ex.length?`<div class="exl">${ex.map((e,i)=>exGap(ex[i-1],e)+exRow(e)).join('')}</div>`:'<div class="m">কোনো পরীক্ষা নেই</div>'}
 <div class="spt" style="margin-top:16px">নতুন পরীক্ষা</div>
 ${exForm('ex')}</section>`;
 
@@ -463,9 +470,8 @@ $.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target
  save();render()});
 /* পরীক্ষার নামের সাজেশন: আগে যা লিখেছেন তা মনে রাখে */
 function sgShow(inp){const box=inp.parentNode.querySelector('.sgs');if(!box)return;const q=inp.value.trim().toLowerCase();
- const a=D.exn.slice().reverse().filter(n=>n.toLowerCase()!==q&&(!q||n.toLowerCase().includes(q))).slice(0,6);
+ const a=q?D.exn.slice().reverse().filter(n=>n.toLowerCase()!==q&&n.toLowerCase().includes(q)).slice(0,6):[];
  box.innerHTML=a.map(n=>`<span class="sg"><span data-sg="p" data-v="${esc(n)}" role="button" tabindex="0">${esc(n)}</span><span class="sgx" data-sg="x" data-v="${esc(n)}" role="button" aria-label="সাজেশন সরান">✕</span></span>`).join('');box.classList.toggle('on',a.length>0)}
-document.addEventListener('focusin',e=>{if(e.target.matches&&e.target.matches('input[data-sgi]'))sgShow(e.target)});
 document.addEventListener('input',e=>{if(e.target.matches&&e.target.matches('input[data-sgi]'))sgShow(e.target)});
 document.addEventListener('focusout',e=>{const t=e.target;if(t.matches&&t.matches('input[data-sgi]'))setTimeout(()=>{const b=t.parentNode&&t.parentNode.querySelector('.sgs');if(b&&!b.contains(document.activeElement))b.classList.remove('on')},200)});
 document.addEventListener('mousedown',e=>{if(e.target.closest&&e.target.closest('[data-sg]'))e.preventDefault()});
