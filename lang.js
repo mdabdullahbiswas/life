@@ -482,7 +482,9 @@ const D={
 'সব সরান':'Remove all',
 'হিসাব থেকে সরান':'Remove from accounts',
 'দান বন্ধ করুন':'Turn off',
-'এটি আয়-ব্যয়ের হিসাব থেকে সরাবেন? খাতায় লেনদেনটি থেকে যাবে।':'Remove this from income & expenses? The transaction will stay in the ledger.'
+'এটি আয়-ব্যয়ের হিসাব থেকে সরাবেন? খাতায় লেনদেনটি থেকে যাবে।':'Remove this from income & expenses? The transaction will stay in the ledger.',
+/* পড়াশোনা পেজ — পরীক্ষা কার্ড */
+'নতুন পরীক্ষা':'New exam','পরীক্ষা যোগ করুন':'Add exam','সংরক্ষণ করুন':'Save changes','বাতিল':'Cancel','তারিখ':'Date','রুম নং (ঐচ্ছিক)':'Room no. (optional)','রুম নং':'Room no.','রুম':'Room','এডিট করুন':'Edit','পরীক্ষাটি মুছে ফেলবেন?':'Delete this exam?','যেমন: অর্থনীতি':'e.g. Economics','যেমন: ২০৩ বা ক-১২':'e.g. 203 or A-12','সাজেশন সরান':'Remove suggestion'
 };
 /* অক্ষরের বদলে শব্দ — গণনার পরে প্রযোজ্য */
 const U={'ঘণ্টা':'Hours','মিনিট':'Minutes','সেকেন্ড':'Seconds','থেকে':'from','পর্যন্ত':'until','ভোর':'Dawn','সকাল':'Morning','দুপুর':'Noon','বিকাল':'Afternoon','সন্ধ্যা':'Evening','রাত':'Night','টি':'items','মোট':'Total'};
