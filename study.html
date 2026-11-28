@@ -268,42 +268,58 @@ button.opt.on{box-shadow:none}
 @media (max-width:560px){main{padding:22px 14px 64px}.card{padding:18px}.hero{padding:24px 22px}.hrs{width:100%;justify-content:space-between}}
 
 /* পরীক্ষা কার্ড */
-.exg{display:flex;align-items:center;gap:10px;margin:-2px 0}
-.exg::before,.exg::after{content:"";flex:1;border-top:1px dashed var(--cb)}
-.exg span{font-size:11px;font-weight:600;color:var(--m);padding:2px 10px;border-radius:99px;border:1px solid var(--b);background:var(--c)}
-.exg span.ok{color:#1f9d6b;border-color:rgba(31,157,107,.4);background:rgba(31,157,107,.1)}
-:root[data-d="1"] .exg span.ok{color:#4fd7a0}
-.exl{display:flex;flex-direction:column;gap:10px}
-.ex{display:flex;align-items:center;gap:12px;padding:11px 8px 11px 11px;border-radius:16px;border:1px solid var(--b);background:color-mix(in srgb,var(--a) 4%,transparent);transition:border-color .2s,box-shadow .2s}
-.ex.nx{border-color:color-mix(in srgb,var(--a) 70%,transparent);background:linear-gradient(135deg,color-mix(in srgb,var(--a) 15%,transparent),color-mix(in srgb,var(--a2) 4%,transparent));box-shadow:0 10px 22px -14px var(--sh)}
-.ex.ps{opacity:.55}
-.ex.ed{display:block;padding:14px;border-color:var(--a);background:color-mix(in srgb,var(--a) 7%,transparent)}
-.exd{flex:none;min-width:58px;padding:7px 4px 8px;border-radius:14px;text-align:center;color:#FFF6DC;background:linear-gradient(160deg,var(--g),color-mix(in srgb,var(--g) 58%,#000));box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 8px 16px -10px var(--sh)}
-:root[data-d="1"] .exd{background:linear-gradient(145deg,var(--a),var(--a2));color:var(--on)}
-.exd small{display:block;font-size:10px;line-height:1.5;opacity:.92;white-space:nowrap}
-.exd b{display:block;font-size:24px;line-height:1.15;font-weight:700;font-family:"Noto Serif Bengali",serif}
+.exc{overflow:visible}
+.exc::after{border-radius:20px 20px 0 0}
+.exc:focus-within{z-index:20}
+.exc h2{margin-bottom:16px}
+.exh{position:relative;display:flex;align-items:center;gap:20px;padding:20px 22px;margin-bottom:16px;border-radius:22px;overflow:hidden;color:#F7EBCB;background:linear-gradient(135deg,color-mix(in srgb,var(--g) 52%,#000),color-mix(in srgb,var(--g) 82%,#000));border:1px solid rgba(242,216,138,.32);box-shadow:0 22px 40px -22px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,236,170,.18)}
+.exh::before{content:"";position:absolute;right:-70px;top:-90px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(242,216,138,.2),transparent 68%);pointer-events:none}
+.exhn{position:relative;flex:none;min-width:78px;text-align:center;padding-right:20px;border-right:1px solid rgba(242,216,138,.28)}
+.exhn b{display:block;font-size:46px;line-height:1.1;font-weight:700;font-family:"Noto Serif Bengali",serif;background:linear-gradient(180deg,#FFF1C2,#E2C275);-webkit-background-clip:text;background-clip:text;color:transparent}
+.exhn small{display:block;margin-top:2px;font-size:11px;letter-spacing:.4px;color:rgba(247,235,203,.75)}
+.exhb{position:relative;min-width:0}
+.exhl{font-size:11px;font-weight:600;letter-spacing:.8px;color:#E2C275}
+.exht{margin-top:4px;font-size:21px;font-weight:700;line-height:1.35;overflow-wrap:break-word}
+.exhm{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:13px;color:rgba(247,235,203,.85)}
+.exhm span{display:inline-flex;align-items:center;gap:6px}
+.exhm svg,.exm svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.exl{border:1px solid var(--cb);border-radius:20px;overflow:hidden;background:var(--c)}
+.ex{display:flex;align-items:center;gap:16px;padding:14px 10px 14px 16px;border-bottom:1px solid var(--b);transition:background .2s}
+.ex:last-child{border-bottom:0}
+.ex:hover{background:color-mix(in srgb,var(--a) 6%,transparent)}
+.ex.ps{opacity:.5}
+.ex.ed{display:block;padding:18px;background:color-mix(in srgb,var(--a) 7%,transparent)}
+.exd{flex:none;min-width:52px;padding-right:16px;text-align:center;border-right:1px solid var(--b)}
+.exd b{display:block;font-size:27px;line-height:1.15;font-weight:700;font-family:"Noto Serif Bengali",serif;background:linear-gradient(180deg,var(--a2),var(--g));-webkit-background-clip:text;background-clip:text;color:transparent}
+:root[data-d="1"] .exd b{background:linear-gradient(180deg,#FFF1C2,var(--a));-webkit-background-clip:text;background-clip:text}
+.exd small{display:block;font-size:11px;color:var(--m);white-space:nowrap}
 .exb{flex:1;min-width:0}
-.exn{font-weight:700;font-size:15px;line-height:1.4;overflow-wrap:break-word}
-.exm{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:7px}
-.chip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:99px;font-size:12px;color:var(--m);border:1px solid var(--b);background:var(--c);white-space:nowrap}
-.chip svg,.ib svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.exm .pill{white-space:nowrap}
+.exn{font-weight:600;font-size:16px;line-height:1.4;overflow-wrap:break-word}
+.exm{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin-top:5px;font-size:13px;color:var(--m)}
+.exm span.ct{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
 .pill.wn{background:rgba(224,150,30,.16);color:#a8650a}
 :root[data-d="1"] .pill.wn{color:#f0b95a}
-.exz{flex:none;display:flex;flex-direction:column;gap:2px}
-.ib{width:30px;height:30px;padding:0;display:grid;place-items:center;border-radius:9px;color:var(--m)}
-.ib svg{width:15px;height:15px}
+.exm .pill,.pd{white-space:nowrap}
+.pd{display:none;flex:none}
+.exz{flex:none;display:flex;gap:2px}
+.ib{width:32px;height:32px;padding:0;display:grid;place-items:center;border-radius:9px;color:var(--m)}
+.ib svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .ib:hover{background:color-mix(in srgb,var(--a) 15%,transparent);color:var(--t)}
 .ib.dl:hover{background:rgba(220,60,60,.12);color:#d33}
-.exf{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0}
-.exf .fl{display:flex;flex-direction:column;gap:5px;min-width:0;font-size:12px;font-weight:600;color:var(--m);letter-spacing:.2px}
-.exf .fl.w{grid-column:1/-1}
-.exf input:not([type=hidden]){width:100%;min-width:0;min-height:42px;flex:none;font-size:14px;font-weight:500;padding:9px 12px;border-radius:12px;background:var(--bg);color:var(--t);border:1px solid var(--cb)}
-.exf input:focus{outline:2px solid var(--g);outline-offset:1px}
+.exg{display:flex;justify-content:center;padding:6px 0;font-size:11px;font-weight:600;letter-spacing:.3px;color:var(--m);background:color-mix(in srgb,var(--a) 5%,transparent);border-bottom:1px solid var(--b)}
+.exg span.ok{color:#1f9d6b}
+:root[data-d="1"] .exg span.ok{color:#4fd7a0}
+.exe0{padding:28px 12px;text-align:center;color:var(--m);font-size:14px}
+.exp{margin-top:22px}
+.exp .spt{margin:0 0 12px;padding:0;border:0;font-size:12px;letter-spacing:.6px;color:var(--m)}
+.exf{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0}
+.exf .fl{display:flex;flex-direction:column;gap:6px;min-width:0;font-size:12px;font-weight:600;color:var(--m);letter-spacing:.2px}
+.exf .fl.w{grid-column:1/-1;position:relative}
+.exf input:not([type=hidden]){width:100%;min-width:0;min-height:44px;flex:none;font-size:14px;font-weight:500;padding:10px 13px;border-radius:12px;background:var(--bg);color:var(--t);border:1px solid var(--b);transition:border-color .2s,box-shadow .2s}
+.exf input:focus{outline:0;border-color:var(--a);box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 22%,transparent)}
 :root[data-d="1"] .exf input{color-scheme:dark}
 .exa{grid-column:1/-1;display:flex;gap:8px;margin-top:2px}
-.exa button{flex:1}
-.exf .fl.w{position:relative}
+.exa button{flex:1;min-height:44px;border-radius:12px}
 .sgs{display:none;position:absolute;left:0;right:0;top:100%;margin-top:4px;z-index:30;max-height:200px;overflow-y:auto;padding:5px;border-radius:14px;background:var(--bg);border:1px solid var(--cb);box-shadow:0 18px 34px -12px rgba(0,0,0,.3),0 0 0 3px color-mix(in srgb,var(--a) 10%,transparent);animation:sgin .16s ease-out}
 .sgs.on{display:block}
 @keyframes sgin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
@@ -315,75 +331,20 @@ button.opt.on{box-shadow:none}
 :root[data-d="1"] .sgt mark{color:var(--a2)}
 .sgx{flex:none;padding:9px 12px;color:var(--m);font-size:11px}
 .sgx:hover{color:#d33}
-.ex{position:relative}
-.exh{position:relative;display:flex;align-items:center;gap:16px;padding:16px;margin-bottom:12px;border-radius:20px;overflow:hidden;color:#FFF6DC;background:linear-gradient(135deg,var(--g),color-mix(in srgb,var(--g) 52%,#000));box-shadow:0 18px 34px -18px var(--sh),inset 0 1px 0 rgba(255,255,255,.22)}
-.exh::before{content:"";position:absolute;right:-50px;top:-70px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.24),transparent 70%);pointer-events:none}
-:root[data-d="1"] .exh{background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on)}
-.exhn{position:relative;flex:none;min-width:74px;padding:10px 8px;border-radius:16px;text-align:center;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3)}
-:root[data-d="1"] .exhn{background:rgba(0,0,0,.1);border-color:rgba(0,0,0,.2)}
-.exhn b{display:block;font-size:34px;line-height:1.15;font-weight:700;font-family:"Noto Serif Bengali",serif}
-.exhn small{display:block;font-size:11px;opacity:.92}
-.exhb{position:relative;min-width:0}
-.exhl{font-size:11px;font-weight:600;letter-spacing:.5px;opacity:.85}
-.exht{font-size:19px;font-weight:700;line-height:1.35;margin-top:3px;overflow-wrap:break-word}
-.exhm{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
-.exhm span{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;font-size:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26)}
-:root[data-d="1"] .exhm span{background:rgba(0,0,0,.09);border-color:rgba(0,0,0,.2)}
-.exhm svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.exs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:6px}
-.exs>div{padding:11px 6px 10px;border-radius:15px;text-align:center;border:1px solid var(--b);background:color-mix(in srgb,var(--a) 5%,transparent)}
-.exs b{display:block;font-size:22px;line-height:1.25;font-weight:700;font-family:"Noto Serif Bengali",serif;background:linear-gradient(90deg,var(--a),var(--g));-webkit-background-clip:text;background-clip:text;color:transparent}
-.exs b i{font-style:normal;font-size:12px;margin-left:3px;font-weight:600}
-.exs small{display:block;font-size:11px;color:var(--m);margin-top:1px}
-.exr{margin:0 0 16px;padding:0 14px}
-.exrt{position:relative;height:8px;margin:28px 0 9px;border-radius:9px;background:var(--b)}
-.exrf{position:absolute;left:0;top:0;bottom:0;border-radius:9px;background:linear-gradient(90deg,var(--a),var(--g))}
-.exrd{position:absolute;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;box-sizing:border-box;border-radius:50%;background:var(--bg);border:3px solid var(--a);box-shadow:0 2px 6px -2px var(--sh)}
-.exrd.ps{border-color:var(--m);opacity:.7}
-.exrn{position:absolute;top:-7px;bottom:-7px;width:2px;margin-left:-1px;border-radius:2px;background:var(--t)}
-.exrn em{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:3px;font-style:normal;font-size:10px;font-weight:700;padding:1px 8px;border-radius:99px;background:var(--t);color:var(--bg);white-space:nowrap}
-.exre{display:flex;justify-content:space-between;font-size:11px;color:var(--m)}
-.exe0{padding:26px 12px;text-align:center;color:var(--m);font-size:14px;border:1px dashed var(--cb);border-radius:16px}
-.exp .spt{margin-top:16px}
+@media(hover:hover){.exz{opacity:0;transition:opacity .2s}.ex:hover .exz,.ex:focus-within .exz{opacity:1}}
 @media(min-width:680px){
- .exc{grid-column:span 2;padding:22px 24px}
- .exc h2{font-size:19px;margin-bottom:16px}
- .extop{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:12px;margin-bottom:8px}
- .extop .exh{margin:0;padding:20px 22px;gap:18px;border-radius:22px}
- .exhn{min-width:84px;padding:13px 8px}.exhn b{font-size:40px}
- .exht{font-size:21px}.exhm span{font-size:13px;padding:4px 12px}
- .extop .exs{grid-template-columns:1fr;grid-auto-rows:1fr;margin:0;gap:8px}
- .extop .exs>div{display:flex;flex-direction:row-reverse;align-items:center;justify-content:space-between;gap:10px;padding:8px 18px;text-align:left;border-radius:16px}
- .extop .exs small{font-size:13px;color:var(--t);margin:0}
- .extop .exs b{font-size:26px}
- .exr{margin:6px 0 22px}
- .exl{position:relative;padding-left:28px;gap:12px}
- .exl::before{content:"";position:absolute;left:8px;top:14px;bottom:14px;width:2px;border-radius:2px;background:linear-gradient(var(--a),color-mix(in srgb,var(--a) 14%,transparent))}
- .ex{padding:13px 12px 13px 14px;gap:16px;border-radius:18px}
- .ex.ed{padding:18px}
- .ex::after{content:"";position:absolute;left:-28px;top:50%;width:18px;height:18px;margin-top:-9px;box-sizing:border-box;border-radius:50%;background:var(--bg);border:3px solid var(--a)}
- .ex.ps::after{border-color:var(--m)}.ex.u1::after{border-color:#d33}.ex.u2::after{border-color:#e0961e}
- .ex.nx::after{background:var(--a);box-shadow:0 0 0 5px color-mix(in srgb,var(--a) 26%,transparent)}
- .ex.ed::after{display:none}
- .ex:hover{border-color:color-mix(in srgb,var(--a) 55%,transparent)}
- .exd{min-width:66px;padding:8px 6px 9px;border-radius:15px}
- .exd b{font-size:28px}.exd small{font-size:11px}
+ .exc{grid-column:span 2;padding:24px 26px}
+ .exc h2{font-size:19px;margin-bottom:18px}
+ .ex{gap:20px;padding:16px 12px 16px 22px}
+ .exd{min-width:60px;padding-right:20px}.exd b{font-size:30px}
  .exn{font-size:17px}
- .exm{gap:8px;margin-top:8px}
- .chip{font-size:13px;padding:4px 11px}
- .exz{flex-direction:row;gap:4px}
- .ib{width:34px;height:34px}
- .exg{justify-content:flex-start}.exg::before,.exg::after{display:none}
- .exp{margin-top:20px;padding:16px 18px 18px;border-radius:18px;border:1px solid var(--cb);background:color-mix(in srgb,var(--a) 6%,transparent)}
- .exp .spt{margin:0 0 12px;padding-bottom:8px;font-size:13px;color:var(--t)}
- .exp .exf{grid-template-columns:repeat(3,minmax(0,1fr))}
- .exp .fl.w{grid-column:auto}
- .exp .fl.nm{grid-column:1/-1}
- .exp .exa{grid-column:1/-1}
+ .exm .pm{display:none}
+ .pd{display:inline-block}
+ .exg{padding:7px 0}
+ .exp{margin-top:26px}
+ .exf{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .exf .fl.w:not(.nm){grid-column:auto}
 }
-.exc{overflow:visible}
-.exc::after{border-radius:20px 20px 0 0}
-.exc:focus-within{z-index:20}
 </style></head>
 <body><script src="header.js"></script>
 <main id="app"></main>
@@ -482,25 +443,18 @@ ${wsTot?`<div class="stk">${ids.map((id,j)=>wsAll[j]?`<i style="flex:${wsAll[j]}
 <form data-f="sj"><input name="n" maxlength="30" placeholder="বিষয়ের নাম" required><button>যোগ করুন</button></form></section>`;
 
  const ex=[...D.exams].sort((a,b)=>(a.d+(a.t||''))<(b.d+(b.t||''))?-1:1);
- const nxi=(ex.find(e=>e.d>=K)||{}).id;
- const exGap=(p,e)=>{if(!p||e.d<K)return '';const g=Math.round((new Date(e.d+'T00:00')-new Date(p.d+'T00:00'))/864e5)-1;
+ const exGap=(p,e)=>{if(!p||p.d<K)return '';const g=Math.round((new Date(e.d+'T00:00')-new Date(p.d+'T00:00'))/864e5)-1;
   return `<div class="exg"><span class="${g>=2?'ok':''}">${g<0?'একই দিনে':g==0?'ছুটি নেই':bn(g)+' দিন ছুটি'}</span></div>`};
  const exRow=e=>{if(EXED!=null&&e.id==EXED)return `<div class="ex ed">${exForm('exe',e)}</div>`;
-  const dt=new Date(e.d+'T00:00'),n=Math.round((dt-new Date(K+'T00:00'))/864e5),lb=n<0?'শেষ হয়েছে':n==0?'আজ':n==1?'আগামীকাল':bn(n)+' দিন বাকি',cs=n<0?'':n<=3?'bad':n<=7?'wn':'',uc=n<0?'':n<=3?'u1':n<=7?'u2':'',tt=fmT(e.t);
-  return `<div class="ex ${n<0?'ps':''} ${uc} ${e.id==nxi?'nx':''}"><div class="exd"><small>${MON[dt.getMonth()]}</small><b>${bn(dt.getDate())}</b><small>${WSD[dt.getDay()]}</small></div><div class="exb"><div class="exn">${esc(e.n)}</div><div class="exm"><span class="pill ${cs}">${lb}</span>${tt?`<span class="chip">${IC.clk}${tt}</span>`:''}${e.r?`<span class="chip">${IC.door}রুম ${esc(e.r)}</span>`:''}</div></div><div class="exz"><button class="x ib" data-a="ee" data-i="${e.id}" aria-label="এডিট করুন">${IC.ed}</button><button class="x ib dl" data-a="ed" data-i="${e.id}" aria-label="মুছুন">${IC.del}</button></div></div>`};
- const upL=ex.filter(e=>e.d>=K),upc=upL.length,nxE=upL[0];
+  const dt=new Date(e.d+'T00:00'),n=Math.round((dt-new Date(K+'T00:00'))/864e5),lb=n<0?'শেষ হয়েছে':n==0?'আজ':n==1?'আগামীকাল':bn(n)+' দিন বাকি',cs=n<0?'':n<=3?'bad':n<=7?'wn':'',tt=fmT(e.t);
+  return `<div class="ex ${n<0?'ps':''}"><div class="exd"><b>${bn(dt.getDate())}</b><small>${MON[dt.getMonth()]}</small></div><div class="exb"><div class="exn">${esc(e.n)}</div><div class="exm"><span class="ct">${WFD[dt.getDay()]}</span>${tt?`<span class="ct">${IC.clk}${tt}</span>`:''}${e.r?`<span class="ct">${IC.door}রুম ${esc(e.r)}</span>`:''}<span class="pill pm ${cs}">${lb}</span></div></div><span class="pill pd ${cs}">${lb}</span><div class="exz"><button class="x ib" data-a="ee" data-i="${e.id}" aria-label="এডিট করুন">${IC.ed}</button><button class="x ib dl" data-a="ed" data-i="${e.id}" aria-label="মুছুন">${IC.del}</button></div></div>`};
+ const nxE=ex.find(e=>e.d>=K);
  const dd=(x,y)=>Math.round((new Date(y+'T00:00')-new Date(x+'T00:00'))/864e5),fd=d=>{const t=new Date(d+'T00:00');return bn(t.getDate())+' '+MON[t.getMonth()]};
- let top='',tp='';
+ let top='';
  if(nxE){const n=dd(K,nxE.d),dt=new Date(nxE.d+'T00:00'),tt=fmT(nxE.t);
-  tp+=`<div class="exh"><div class="exhn"><b>${n==0?'আজ':bn(n)}</b>${n>0?'<small>দিন বাকি</small>':''}</div><div class="exhb"><div class="exhl">পরবর্তী পরীক্ষা</div><div class="exht">${esc(nxE.n)}</div><div class="exhm"><span>${WFD[dt.getDay()]}, ${fd(nxE.d)}</span>${tt?`<span>${IC.clk}${tt}</span>`:''}${nxE.r?`<span>${IC.door}রুম ${esc(nxE.r)}</span>`:''}</div></div></div>`;
-  const tg=upL.reduce((s,e,i)=>{if(!i)return s;const g=dd(upL[i-1].d,e.d)-1;return s+(g>0?g:0)},0),ln=dd(K,upL[upL.length-1].d);
-  tp+=`<div class="exs"><div><b>${bn(upc)}</b><small>আসন্ন পরীক্ষা</small></div><div><b>${bn(tg)}<i>দিন</i></b><small>মোট ছুটি</small></div><div><b>${bn(ln)}<i>দিন</i></b><small>শেষ পরীক্ষা পর্যন্ত</small></div></div>`;top+=`<div class="extop">${tp}</div>`}
- if(ex.length>1){const s0=ex[0].d<K?ex[0].d:K,e0=ex[ex.length-1].d,sp=dd(s0,e0);
-  if(sp>0){const ps=d=>Math.max(0,Math.min(100,dd(s0,d)/sp*100)),inR=K<=e0;
-   top+=`<div class="exr"><div class="exrt"><span class="exrf" style="width:${inR?ps(K):100}%"></span>${ex.map(e=>`<i class="exrd ${e.d<K?'ps':''}" style="left:${ps(e.d)}%" title="${esc(e.n)}"></i>`).join('')}${inR?`<span class="exrn" style="left:${ps(K)}%"><em>আজ</em></span>`:''}</div><div class="exre"><span>${fd(s0)}</span><span>${fd(e0)}</span></div></div>`}}
- const exams=`<section class="card exc"><h2>পরীক্ষা ${upc?`<span class="pill">${bn(upc)}টি বাকি</span>`:''}</h2>
-<div class="exw"><div class="exlw">${top}${ex.length?`<div class="exl">${ex.map((e,i)=>exGap(ex[i-1],e)+exRow(e)).join('')}</div>`:'<div class="exe0">কোনো পরীক্ষা নেই</div>'}</div>
-<aside class="exp"><div class="spt">নতুন পরীক্ষা</div>${exForm('ex')}</aside></div></section>`;
+  top=`<div class="exh"><div class="exhn"><b>${n==0?'আজ':bn(n)}</b>${n>0?'<small>দিন বাকি</small>':''}</div><div class="exhb"><div class="exhl">পরবর্তী পরীক্ষা</div><div class="exht">${esc(nxE.n)}</div><div class="exhm"><span>${WFD[dt.getDay()]}, ${fd(nxE.d)}</span>${tt?`<span>${IC.clk}${tt}</span>`:''}${nxE.r?`<span>${IC.door}রুম ${esc(nxE.r)}</span>`:''}</div></div></div>`}
+ const exams=`<section class="card exc"><h2>পরীক্ষা</h2>${top}${ex.length?`<div class="exl">${ex.map((e,i)=>exGap(ex[i-1],e)+exRow(e)).join('')}</div>`:'<div class="exl"><div class="exe0">কোনো পরীক্ষা নেই</div></div>'}
+<div class="exp"><div class="spt">নতুন পরীক্ষা</div>${exForm('ex')}</div></section>`;
 
  const dow=now.getDay();
  const due=D.rt.filter(r=>r.d.includes(dow)).sort((a,b)=>(a.t||'99')<(b.t||'99')?-1:1);
