@@ -298,7 +298,7 @@ const sum=(l,t)=>l.filter(f=>f.t==t).reduce((a,f)=>a+f.a,0);
 const r2=n=>Math.round(n*100)/100;
 const hue=n=>{let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))%360;return h};
 const LO={give:1,repay:1,recv:0,owe:0},LS={give:1,repay:1,recv:-1,owe:-1};
-const virt=()=>S.led.filter(e=>e&&e.hs&&e.t in LO&&/^\d{4}-\d{2}-\d{2}$/.test(e.d||'')&&+e.a>0).map(e=>({t:LO[e.t]?'out':'in',c:LO[e.t]?'kd':'kr',a:+e.a,d:e.d,n:(e.p||'').trim()+(e.n?' · '+e.n:''),p:(e.p||'').trim(),lid:e.id,v:1,i:-1}));
+const virt=()=>S.led.filter(e=>e&&e.hs&&e.t in LO&&/^\d{4}-\d{2}-\d{2}$/.test(e.d||'')&&+e.a>0).map(e=>({t:LO[e.t]?'out':'in',c:LO[e.t]?'kd':'kr',a:+e.a,d:e.d,n:(e.p||'').trim()+(e.n?' · '+e.n:''),p:(e.p||'').trim(),lid:e.id,v:1,i:-1,w:e.w}));
 function kh(){const m={};S.led.forEach(e=>{const p=((e&&e.p)||'').trim();if(!p||!(e.t in LS))return;const o=m[p]||(m[p]={n:p,b:0,h:0,c:0}),v=LS[e.t]*(+e.a||0);o.b+=v;if(e.hs)o.h+=v;o.c++});
  const L=Object.values(m).map(o=>({...o,b:r2(o.b),h:r2(o.h)}));
  return{L,G:r2(L.filter(x=>x.b>0).reduce((s,x)=>s+x.b,0)),O:r2(L.filter(x=>x.b<0).reduce((s,x)=>s-x.b,0)),Hn:r2(L.reduce((s,x)=>s+x.h,0)),hc:S.led.filter(e=>e&&e.hs&&e.t in LS).length,tot:S.led.filter(e=>e&&e.t in LS).length}}
@@ -393,7 +393,7 @@ if(D.ty){kf(()=>{T=D.ty;if(T=='tf')E=null;render()});return}
 if(D.ws&&D.ws.startsWith('a:')){const id=D.ws.slice(2),x0=document.getElementById('aa'),y0=document.getElementById('at'),v0=[x0&&x0.value,y0&&y0.value];AW=id;render();const x1=document.getElementById('aa'),y1=document.getElementById('at');if(v0[0]!=null&&x1)x1.value=v0[0];if(v0[1]&&y1)y1.value=v0[1];return}
 if(D.ws){const q=D.ws.split(':'),sl=q[0],id=q.slice(1).join(':'),oth=x=>(S.wal.find(w=>w.id!=x)||{id:x}).id;kf(()=>{if(sl=='w')WS=id;else if(sl=='f'){TF.from=id;if(TF.to==id)TF.to=oth(id)}else{TF.to=id;if(TF.from==id)TF.from=oth(id)}render()},1);return}
 if(D.deltf){const tid=D.deltf;ask({t:'ট্রান্সফারটি মুছবেন?',m:'দুই অ্যাকাউন্টের ব্যালান্স আগের অবস্থায় ফিরে যাবে। এর চার্জ (থাকলে) সেটিও মুছে যাবে।',ok:'হ্যাঁ, মুছুন',danger:1}).then(y=>{if(!y)return;S.tf=S.tf.filter(x=>x.id!==tid);S.fin=S.fin.filter(x=>x.tid!==tid);E=null;save();render()});return}
-if(D.wdel){const id=D.wdel,w=WM()[id];if(!w)return;if(S.fin.some(f=>f.w==id)||S.tf.some(x=>x.from==id||x.to==id)){ask({t:'মুছা যাবে না',m:'এই অ্যাকাউন্টে লেনদেন আছে, মুছলে হিসাব এলোমেলো হয়ে যাবে।',no:null});return}ask({t:'অ্যাকাউন্টটি মুছবেন?',m:wdn(w)+' তালিকা থেকে সরে যাবে।',ok:'হ্যাঁ, মুছুন',danger:1}).then(y=>{if(!y)return;S.wal=S.wal.filter(x=>x.id!==id);if(WS==id)WS='cash';save();render()});return}
+if(D.wdel){const id=D.wdel,w=WM()[id];if(!w)return;if(S.fin.some(f=>f.w==id)||S.led.some(e=>e&&e.w==id)||S.tf.some(x=>x.from==id||x.to==id)){ask({t:'মুছা যাবে না',m:'এই অ্যাকাউন্টে লেনদেন আছে, মুছলে হিসাব এলোমেলো হয়ে যাবে।',no:null});return}ask({t:'অ্যাকাউন্টটি মুছবেন?',m:wdn(w)+' তালিকা থেকে সরে যাবে।',ok:'হ্যাঁ, মুছুন',danger:1}).then(y=>{if(!y)return;S.wal=S.wal.filter(x=>x.id!==id);if(WS==id)WS='cash';save();render()});return}
 if(D.pp!=null){kf(()=>{PP=D.pp;render()},1);return}
 if(D.pv){const q=D.pv.split(':');kf(()=>{PV[q[0]]=q[1];render()},1);return}
 if(D.lk!=null){location.href='invoice.html'+(D.lk?'?p='+encodeURIComponent(D.lk):'');return}
