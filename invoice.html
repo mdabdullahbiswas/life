@@ -164,6 +164,11 @@ details.cy[open]>summary{color:var(--t)}
 button.g.hsb{padding:5px 9px;opacity:.5;filter:grayscale(1)}
 button.g.hsb.on{opacity:1;filter:none;background:linear-gradient(135deg,var(--a),var(--a2));border-color:transparent}
 .hero .hf{align-items:center}
+.wcr{display:flex;flex-wrap:wrap;gap:8px}
+button.wc{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:12px;background:transparent;color:var(--t);border:1px solid var(--b);box-shadow:none;font-size:13px;font-weight:600}
+button.wc i{width:9px;height:9px;border-radius:50%;background:var(--wc);flex:none}
+button.wc:hover:not(.on){filter:none;background:color-mix(in srgb,var(--wc) 9%,transparent)}
+button.wc.on{background:color-mix(in srgb,var(--wc) 15%,transparent);border-color:var(--wc)}
 
 /* ===== ক্লিন · প্রিমিয়াম ===== */
 body::before{background:radial-gradient(60% 60% at 30% 30%,color-mix(in srgb,var(--g) 11%,transparent),transparent),radial-gradient(50% 50% at 80% 20%,color-mix(in srgb,var(--a) 7%,transparent),transparent)}
@@ -218,6 +223,7 @@ button.g.hsb{font-weight:700;font-size:13px;padding:5px 11px}
    <div class="itot"><button class="g sm" type="button" data-a="addi">+ আরেকটা জিনিস</button><span>মোট <b id="itot">৳ ০</b></span></div>
    
    <label class="hs" for="hs"><input type="checkbox" id="hs"><span><b>আয়-ব্যয়ের হিসাবেও রাখুন</b></span></label>
+   <div class="fg hidden" id="ww" style="margin-top:12px"><label class="l" id="wl">কোন অ্যাকাউন্ট</label><div class="wcr" id="wc"></div></div>
    <div class="acts"><button type="button" data-a="save" id="save">লেনদেন সেভ করুন</button><button class="g" type="button" data-a="cancel" id="cancel" hidden>বাতিল</button></div>
   </section>
 
@@ -319,7 +325,17 @@ const phoneOf=n=>(S.ppl[n]&&S.ppl[n].ph)||'';
 const waNum=p=>{const d=toEn(p).replace(/\D/g,'');return d.startsWith('880')?d:d.startsWith('0')?'88'+d:d.length===10?'880'+d:d};
 
 /* ---------- ফর্ম ---------- */
-function paintTy(){$('tg').innerHTML=TY.map(k=>`<button type="button" data-ty="${k}" class="${k===tyOf(TYP)?'on':''}">${T[k].l}</button>`).join('')}
+function paintTy(){$('tg').innerHTML=TY.map(k=>`<button type="button" data-ty="${k}" class="${k===tyOf(TYP)?'on':''}">${T[k].l}</button>`).join('');paintW()}
+/* অ্যাকাউন্ট: হিসাব পেজের ওয়ালেট তালিকা (dl.wal) থেকে পড়ি, এখানে বদলাই না। আয়-ব্যয়ের হিসাবে রাখলে তবেই ব্যালান্সে প্রভাব পড়ে */
+const ENW={cash:'Cash in hand',bkash:'bKash',nagad:'Nagad',rocket:'Rocket',save:'Savings'};
+let WSEL='cash';
+function wals(){let w=[];try{w=(JSON.parse(localStorage.getItem('dl')||'{}')||{}).wal}catch(e){}w=Array.isArray(w)?w.filter(x=>x&&x.id):[];return w.length?w:[{id:'cash',n:'হাতে',c:'#B8892B'}]}
+const wname=w=>(window.LANG==='en'&&ENW[w.id])||w.n;
+const wnById=id=>{const w=wals().find(x=>x.id===id);return w?wname(w):''};
+function paintW(){const W=wals();if(!W.some(x=>x.id===WSEL))WSEL=W[0].id;
+ $('ww').classList.toggle('hidden',!$('hs').checked);
+ $('wl').textContent=tyOf(TYP)==='recv'?'কোন অ্যাকাউন্টে পেলেন':'কোন অ্যাকাউন্ট থেকে দিলেন';
+ $('wc').innerHTML=W.map(w=>`<button type="button" class="wc${w.id===WSEL?' on':''}" style="--wc:${w.c||'#B8892B'}" data-wc="${ex(w.id)}" aria-pressed="${w.id===WSEL}"><i></i>${ex(wname(w))}</button>`).join('')}
 /* আগে যেকোনো মানুষের বেলায় লেখা জিনিসের নাম সবার জন্য সাজেশন; সাথে শেষবারের টাকা মনে রাখে */
 let SG={};
 function sugs(){
@@ -360,12 +376,12 @@ function saveEntry(){
  const bad=L.findIndex(x=>!(x.a>0));if(bad>=0){toast('প্রতিটি জিনিসের টাকা লিখুন');const r=rows().filter(r=>r.children[0].value.trim()||r.children[1].value.trim())[bad];if(r)r.children[1].focus();return}
  if(!d){toast('তারিখ দিন');return}
  const was=editId!=null,t0=Date.now(),hsv=$('hs').checked?1:0;S.hsAuto=hsv;
- L.forEach((x,i)=>{const id=was&&i===0?editId:t0+i,rec={id,p,t:TYP,a:x.a,d,n:x.n,hs:hsv},ix=S.led.findIndex(e=>String(e.id)===String(id));if(ix>=0)S.led[ix]=rec;else S.led.push(rec)});
+ L.forEach((x,i)=>{const id=was&&i===0?editId:t0+i,rec={id,p,t:TYP,a:x.a,d,n:x.n,hs:hsv,w:wals().some(q=>q.id===WSEL)?WSEL:'cash'},ix=S.led.findIndex(e=>String(e.id)===String(id));if(ix>=0)S.led[ix]=rec;else S.led.push(rec)});
  const ph=$('ph').value.trim();if(ph)S.ppl[p]=Object.assign({},S.ppl[p],{ph});
  SEL=p;CY=null;save();resetForm(true);render();toast(was&&L.length===1?'আপডেট হয়েছে ✓':L.length>1?bn(L.length)+'টি জিনিস সেভ হয়েছে ✓':'সেভ হয়েছে ✓')}
 function editEntry(id){
  const e=S.led.find(x=>String(x.id)===String(id));if(!e)return;
- editId=e.id;TYP=tyOf(e.t);$('hs').checked=!!e.hs;$('p').value=e.p;$('ph').value=phoneOf(e.p);$('d').value=e.d;
+ editId=e.id;TYP=tyOf(e.t);$('hs').checked=!!e.hs;WSEL=e.w||'cash';$('p').value=e.p;$('ph').value=phoneOf(e.p);$('d').value=e.d;
  $('items').innerHTML='';addRow(e.n||'',e.a,false);
  $('save').textContent='আপডেট করুন';$('cancel').hidden=false;$('ed-t').textContent='লেনদেন এডিট';paintTy();$('ed').scrollIntoView({behavior:'smooth',block:'start'})}
 
@@ -421,13 +437,14 @@ function paper(P){
  if(done){$('p-sd').textContent='হিসাব মিটে গেছে · '+bd(cdate(K.c).z||key(new Date()));$('p-ty').textContent='জাযাকাল্লাহু খাইরান'}
  else $('p-ty').textContent='হিসাবে কোনো ভুল থাকলে জানাবেন — ধন্যবাদ';
  $('ents-t').textContent=SEL+'-এর লেনদেন';
- const rowH=e=>{const t=T[e.t];return`<div class="row"><div class="rt"><div>${ex(e.n)||'—'}</div><div class="m">${bd(e.d)} · <span class="pill ${t.s>0?'ok':'er'}">${t.l}</span></div></div><b class="nm">${fm(e.a)}</b><div style="display:flex;gap:6px;flex:none"><button class="g sm hsb${e.hs?' on':''}" data-a="hs" data-i="${ex(e.id)}" aria-label="হিসাবে দেখান" title="${e.hs?'হিসাব থেকে সরান':'আয়-ব্যয়ের হিসাবেও রাখুন'}">৳</button><button class="g sm" data-a="edit" data-i="${ex(e.id)}" aria-label="এডিট">✎</button><button class="x sm" style="padding:5px 10px" data-a="del" data-i="${ex(e.id)}" aria-label="মুছুন">✕</button></div></div>`};
+ const rowH=e=>{const t=T[e.t];return`<div class="row"><div class="rt"><div>${ex(e.n)||'—'}</div><div class="m">${bd(e.d)} · <span class="pill ${t.s>0?'ok':'er'}">${t.l}</span>${e.hs&&e.w&&wnById(e.w)?' · '+ex(wnById(e.w)):''}</div></div><b class="nm">${fm(e.a)}</b><div style="display:flex;gap:6px;flex:none"><button class="g sm hsb${e.hs?' on':''}" data-a="hs" data-i="${ex(e.id)}" aria-label="হিসাবে দেখান" title="${e.hs?'হিসাব থেকে সরান':'আয়-ব্যয়ের হিসাবেও রাখুন'}">৳</button><button class="g sm" data-a="edit" data-i="${ex(e.id)}" aria-label="এডিট">✎</button><button class="x sm" style="padding:5px 10px" data-a="del" data-i="${ex(e.id)}" aria-label="মুছুন">✕</button></div></div>`};
  const C=K.C,lastC=C[C.length-1],openNow=lastC&&!lastC.closed;let h='';
  if(openNow)h+=`<div class="cyh"><span>চলমান হিসাব</span><span class="m">${bn(lastC.es.length)}টি লেনদেন · ${fm(Math.abs(cbal(lastC)))} ${cbal(lastC)>0?'পাব':'দেব'}</span></div>`+lastC.es.slice().reverse().map(rowH).join('');
  else h+=`<div class="cyh"><span>✓ সব হিসাব মিটে গেছে</span></div>`;
  C.filter(c=>c.closed).reverse().forEach(c=>{const cd=cdate(c),id=SEL+'|'+c.es[0].id;h+=`<details class="cy" data-cid="${ex(id)}"${OPENCY.has(id)?' open':''}><summary><span>✓ মিটেছে · ${sd(cd.a)}${cd.a!==cd.z?' – '+sd(cd.z):''}</span><span class="m">${bn(c.es.length)}টি লেনদেন</span></summary>${c.es.slice().reverse().map(rowH).join('')}</details>`});
  $('el').innerHTML=h}
 $('q').addEventListener('input',render);
+$('hs').addEventListener('change',paintW);
 document.addEventListener('toggle',e=>{const d=e.target;if(d&&d.classList&&d.classList.contains('cy')){d.open?OPENCY.add(d.dataset.cid):OPENCY.delete(d.dataset.cid)}},true);
 $('me').addEventListener('input',()=>{S.myName=$('me').value.trim();save();render()});
 
@@ -455,6 +472,7 @@ const saveBlob=(b,nm)=>{const a=document.createElement('a');a.download=nm;a.href
 function dl(name,type,data){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 
 document.addEventListener('click',e=>{
+ const wcb=e.target.closest('[data-wc]');if(wcb){WSEL=wcb.dataset.wc;paintW();return}
  const ty=e.target.closest('[data-ty]');if(ty){TYP=ty.dataset.ty;paintTy();return}
  const cp=e.target.closest('[data-cp]');if(cp){const nm=cp.dataset.cp;let r=rows().find(x=>!x.children[0].value.trim()&&!x.children[1].value.trim())||rows().find(x=>!x.children[0].value.trim());if(!r){addRow('','',false);r=rows().pop()}r.children[0].value=nm;const s=SG[nm];if(s&&s.a&&!r.children[1].value.trim())r.children[1].value=s.a;itot();r.children[1].focus();return}
  const ac=e.target.closest('[data-ac]');if(ac){curAcc=+ac.dataset.ac;S.invAcc=curAcc;save();paintAcc();paintBg();return}
@@ -473,7 +491,7 @@ document.addEventListener('click',e=>{
  else if(a==='hsall'){const es=entsOf(SEL),all=es.length&&es.every(v=>v.hs);es.forEach(v=>{v.hs=all?0:1});save();render();toast(all?'সব হিসাব থেকে সরানো হয়েছে':'সব লেনদেন হিসাবে যুক্ত হয়েছে')}
  else if(a==='settle'){const es=entsOf(SEL),bal=r2(es.reduce((s,v)=>s+T[v.t].s*v.a,0));if(!bal)return;
   if(!confirm(bal>0?SEL+' পুরো '+fm(bal)+' ফেরত দিয়েছে — মিটিয়ে দেবেন?':'আপনি '+SEL+'-কে পুরো '+fm(-bal)+' ফেরত দিয়েছেন — মিটিয়ে দেবেন?'))return;
-  S.led.push({id:Date.now(),p:SEL,t:bal>0?'recv':'give',a:Math.abs(bal),d:key(new Date()),n:'হিসাব মিটল',hs:(es.length&&es[es.length-1].hs)?1:0});CY=null;save();render();toast('হিসাব মিটে গেছে ✓')}
+  S.led.push({id:Date.now(),p:SEL,t:bal>0?'recv':'give',a:Math.abs(bal),d:key(new Date()),n:'হিসাব মিটল',hs:(es.length&&es[es.length-1].hs)?1:0,w:(es.length&&es[es.length-1].w)||'cash'});CY=null;save();render();toast('হিসাব মিটে গেছে ✓')}
  else if(a==='wa'){const ph=phoneOf(SEL),msg=waMsg(),mob=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent),
    url=(ph?'https://wa.me/'+waNum(ph):'https://api.whatsapp.com/send')+(ph?'?':'?')+'text='+encodeURIComponent(msg);
   /* কম্পিউটারে: ছবি আগেই কপি হয়, চ্যাট খুলে Ctrl+V করলেই ছবি যায়। ট্যাব আগেই খুলে রাখি যাতে পপআপ ব্লক না হয় */
