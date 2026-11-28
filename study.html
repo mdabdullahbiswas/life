@@ -266,6 +266,44 @@ button.opt.on{box-shadow:none}
 .srow.on{box-shadow:inset 2px 0 0 var(--a);background:color-mix(in srgb,var(--a) 10%,transparent)}
 .stk{height:6px}
 @media (max-width:560px){main{padding:22px 14px 64px}.card{padding:18px}.hero{padding:24px 22px}.hrs{width:100%;justify-content:space-between}}
+
+/* পরীক্ষা কার্ড */
+.exl{display:flex;flex-direction:column;gap:10px}
+.ex{display:flex;align-items:center;gap:12px;padding:11px 8px 11px 11px;border-radius:16px;border:1px solid var(--b);background:color-mix(in srgb,var(--a) 4%,transparent);transition:border-color .2s,box-shadow .2s}
+.ex.nx{border-color:color-mix(in srgb,var(--a) 70%,transparent);background:linear-gradient(135deg,color-mix(in srgb,var(--a) 15%,transparent),color-mix(in srgb,var(--a2) 4%,transparent));box-shadow:0 10px 22px -14px var(--sh)}
+.ex.ps{opacity:.55}
+.ex.ed{display:block;padding:14px;border-color:var(--a);background:color-mix(in srgb,var(--a) 7%,transparent)}
+.exd{flex:none;min-width:58px;padding:7px 4px 8px;border-radius:14px;text-align:center;color:#FFF6DC;background:linear-gradient(160deg,var(--g),color-mix(in srgb,var(--g) 58%,#000));box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 8px 16px -10px var(--sh)}
+:root[data-d="1"] .exd{background:linear-gradient(145deg,var(--a),var(--a2));color:var(--on)}
+.exd small{display:block;font-size:10px;line-height:1.5;opacity:.92;white-space:nowrap}
+.exd b{display:block;font-size:24px;line-height:1.15;font-weight:700;font-family:"Noto Serif Bengali",serif}
+.exb{flex:1;min-width:0}
+.exn{font-weight:700;font-size:15px;line-height:1.4;overflow-wrap:anywhere}
+.exm{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:7px}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:99px;font-size:12px;color:var(--m);border:1px solid var(--b);background:var(--c);white-space:nowrap}
+.chip svg,.ib svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pill.wn{background:rgba(224,150,30,.16);color:#a8650a}
+:root[data-d="1"] .pill.wn{color:#f0b95a}
+.exz{flex:none;display:flex;flex-direction:column;gap:2px}
+.ib{width:30px;height:30px;padding:0;display:grid;place-items:center;border-radius:9px;color:var(--m)}
+.ib svg{width:15px;height:15px}
+.ib:hover{background:color-mix(in srgb,var(--a) 15%,transparent);color:var(--t)}
+.ib.dl:hover{background:rgba(220,60,60,.12);color:#d33}
+.exf{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0}
+.exf .fl{display:flex;flex-direction:column;gap:5px;min-width:0;font-size:12px;font-weight:600;color:var(--m);letter-spacing:.2px}
+.exf .fl.w{grid-column:1/-1}
+.exf input:not([type=hidden]){width:100%;min-width:0;min-height:42px;flex:none;font-size:14px;font-weight:500;padding:9px 12px;border-radius:12px;background:var(--bg);color:var(--t);border:1px solid var(--cb)}
+.exf input:focus{outline:2px solid var(--g);outline-offset:1px}
+:root[data-d="1"] .exf input{color-scheme:dark}
+.exa{grid-column:1/-1;display:flex;gap:8px;margin-top:2px}
+.exa button{flex:1}
+.sgs{display:none;flex-wrap:wrap;gap:6px;margin-top:1px}
+.sgs.on{display:flex}
+.sg{display:inline-flex;align-items:center;border-radius:99px;font-size:12px;font-weight:500;color:var(--t);border:1px solid color-mix(in srgb,var(--a) 50%,transparent);background:color-mix(in srgb,var(--a) 11%,transparent);cursor:pointer}
+.sg>span{padding:4px 4px 4px 10px}
+.sg>.sgx{padding:4px 9px 4px 4px;color:var(--m);font-size:11px}
+.sg>.sgx:hover{color:#d33}
+.sg:hover{border-color:var(--a)}
 </style></head>
 <body><script src="header.js"></script>
 <main id="app"></main>
@@ -281,7 +319,7 @@ let S={theme:0,dark:0,tasks:[],done:{},pr:{},fin:[],url:'',notif:0,qaza:[0,0,0,0
 try{Object.assign(S,JSON.parse(localStorage.getItem('dl')||'{}'))}catch(e){}
 if(!TH[S.theme])S.theme=0;
 const D=S.st=Object.assign({subj:[],log:{},ses:{},goal:120,exams:[],pre:[25,5],mode:'f',sel:0,run:null,rt:[],rd:{}},S.st||{});
-if(!Array.isArray(D.subj))D.subj=[];if(!Array.isArray(D.exams))D.exams=[];if(!Array.isArray(D.pre)||D.pre.length!=2)D.pre=[25,5];
+if(!Array.isArray(D.subj))D.subj=[];if(!Array.isArray(D.exams))D.exams=[];if(!Array.isArray(D.exn))D.exn=[];if(!D.exm){D.exm=1;D.exams.forEach(e=>{if(e.n&&!D.exn.includes(e.n))D.exn.push(e.n)})}if(!Array.isArray(D.pre)||D.pre.length!=2)D.pre=[25,5];
 if(!D.log||typeof D.log!='object')D.log={};if(!D.ses||typeof D.ses!='object')D.ses={};
 if(!Array.isArray(D.rt))D.rt=[];if(!D.rd||typeof D.rd!='object')D.rd={};
 const save=()=>{try{localStorage.setItem('dl',JSON.stringify(S))}catch(e){}};
@@ -298,6 +336,19 @@ const addMin=(id,m)=>{if(!(m>0))return;const k=key(new Date()),L=D.log[k]=D.log[
 const WFD=['রবিবার','সোমবার','মঙ্গলবার','বুধবার','বৃহস্পতিবার','শুক্রবার','শনিবার'];
 const subMin=(k,id,m)=>{const L=D.log[k];if(L&&m>0){L[id]=Math.max(0,(L[id]||0)-m);if(!L[id])delete L[id]}};
 const dsum=d=>d.length==7?'প্রতিদিন':d.slice().sort((a,b)=>a-b).map(x=>WSD[x]).join(', ');
+
+/* পরীক্ষা: সময়ের লেখা, আইকন, ফর্ম, নামের সাজেশন */
+let EXED=null;
+const fmT=t=>{if(!/^\d\d:\d\d$/.test(t||''))return '';const h=+t.slice(0,2),m=t.slice(3),p=h<4?'রাত':h<6?'ভোর':h<12?'সকাল':h<15?'দুপুর':h<18?'বিকাল':h<20?'সন্ধ্যা':'রাত';return p+' '+bn(h%12||12)+':'+bn(m)};
+const IC={clk:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',door:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v17"/><path d="M3 21h18"/><path d="M12.5 12h.01"/></svg>',ed:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>',del:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'};
+const addExn=n=>{D.exn=D.exn.filter(x=>x!==n);D.exn.push(n);if(D.exn.length>40)D.exn=D.exn.slice(-40)};
+const exForm=(k,e)=>{e=e||{};const ed=k=='exe',id=ed?'ed':'new';
+return `<form class="exf" data-f="${k}" autocomplete="off">${ed?`<input type="hidden" name="id" value="${e.id}">`:''}
+<div class="fl w"><label for="exn-${id}">পরীক্ষার নাম</label><input id="exn-${id}" name="n" data-sgi maxlength="40" placeholder="যেমন: অর্থনীতি" required value="${esc(e.n||'')}" autocomplete="off"><div class="sgs"></div></div>
+<label class="fl">তারিখ<input name="d" type="date" required value="${esc(e.d||'')}"></label>
+<label class="fl">সময় (ঐচ্ছিক)<input name="t" type="time" value="${esc(e.t||'')}"></label>
+<label class="fl w">রুম নং (ঐচ্ছিক)<input name="r" maxlength="20" placeholder="যেমন: ২০৩ বা ক-১২" value="${esc(e.r||'')}" autocomplete="off"></label>
+<div class="exa">${ed?'<button class="g" type="button" data-a="ec">বাতিল</button>':''}<button>${ed?'সংরক্ষণ করুন':'পরীক্ষা যোগ করুন'}</button></div></form>`};
 const RG=2*Math.PI*34;
 const mr=(p,c,txt,lb)=>`<div class="mr"><div class="mrw"><svg viewBox="0 0 80 80"><circle class="t" cx="40" cy="40" r="34"/><circle class="p" cx="40" cy="40" r="34" style="stroke:${c}" stroke-dasharray="${RG}" stroke-dashoffset="${RG*(1-Math.min(1,p))}"/></svg><b>${txt}</b></div><span>${lb}</span></div>`;
 const tmTot=()=>D.run?D.run.tot:(D.mode=='f'?D.pre[0]:D.pre[1])*60000;
@@ -350,11 +401,15 @@ ${wsTot?`<div class="stk">${ids.map((id,j)=>wsAll[j]?`<i style="flex:${wsAll[j]}
 <div style="margin-top:8px">${ids.map(id=>`<div class="row srow ${selId==id?'on':''}" data-a="ss" data-i="${id}"><span style="display:flex;align-items:center;gap:10px;min-width:0"><i class="dt" style="background:${cl(id)}"></i><b style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(nm(id))}</b></span><span class="m" style="display:flex;align-items:center;gap:6px;flex:none">আজ ${fm((D.log[K]||{})[id]||0)}${id?`<button class="x" data-a="sd" data-i="${id}" aria-label="মুছুন">✕</button>`:''}</span></div>`).join('')}</div>
 <form data-f="sj"><input name="n" maxlength="30" placeholder="বিষয়ের নাম" required><button>যোগ করুন</button></form></section>`;
 
- const ex=[...D.exams].sort((a,b)=>a.d<b.d?-1:1);
+ const ex=[...D.exams].sort((a,b)=>(a.d+(a.t||''))<(b.d+(b.t||''))?-1:1);
+ const nxi=(ex.find(e=>e.d>=K)||{}).id;
+ const exRow=e=>{if(EXED!=null&&e.id==EXED)return `<div class="ex ed">${exForm('exe',e)}</div>`;
+  const dt=new Date(e.d+'T00:00'),n=Math.round((dt-new Date(K+'T00:00'))/864e5),lb=n<0?'শেষ হয়েছে':n==0?'আজ':n==1?'আগামীকাল':bn(n)+' দিন বাকি',cs=n<0?'':n<=3?'bad':n<=7?'wn':'',tt=fmT(e.t);
+  return `<div class="ex ${n<0?'ps':''} ${e.id==nxi?'nx':''}"><div class="exd"><small>${MON[dt.getMonth()]}</small><b>${bn(dt.getDate())}</b><small>${WSD[dt.getDay()]}</small></div><div class="exb"><div class="exn">${esc(e.n)}</div><div class="exm"><span class="pill ${cs}">${lb}</span>${tt?`<span class="chip">${IC.clk}${tt}</span>`:''}${e.r?`<span class="chip">${IC.door}রুম ${esc(e.r)}</span>`:''}</div></div><div class="exz"><button class="x ib" data-a="ee" data-i="${e.id}" aria-label="এডিট করুন">${IC.ed}</button><button class="x ib dl" data-a="ed" data-i="${e.id}" aria-label="মুছুন">${IC.del}</button></div></div>`};
  const exams=`<section class="card"><h2>পরীক্ষা</h2>
-${ex.length?ex.map(e=>{const dt=new Date(e.d+'T00:00'),n=Math.round((dt-new Date(K+'T00:00'))/864e5),lb=n<0?'শেষ হয়েছে':n==0?'আজ':n==1?'আগামীকাল':bn(n)+' দিন বাকি';
- return `<div class="row" style="${n<0?'opacity:.55':''}"><div style="min-width:0"><b style="overflow-wrap:anywhere">${esc(e.n)}</b><div class="m">${bn(dt.getDate())} ${MON[dt.getMonth()]} ${bn(dt.getFullYear())}</div></div><span style="display:flex;align-items:center;gap:6px;flex:none"><span class="pill ${n>=0&&n<=7?'bad':''}">${lb}</span><button class="x" data-a="ed" data-i="${e.id}" aria-label="মুছুন">✕</button></span></div>`}).join(''):'<div class="m">কোনো পরীক্ষা নেই</div>'}
-<form data-f="ex"><input name="n" maxlength="40" placeholder="পরীক্ষার নাম" required><input name="d" type="date" required><button>যোগ করুন</button></form></section>`;
+${ex.length?`<div class="exl">${ex.map(exRow).join('')}</div>`:'<div class="m">কোনো পরীক্ষা নেই</div>'}
+<div class="spt" style="margin-top:16px">নতুন পরীক্ষা</div>
+${exForm('ex')}</section>`;
 
  const dow=now.getDay();
  const due=D.rt.filter(r=>r.d.includes(dow)).sort((a,b)=>(a.t||'99')<(b.t||'99')?-1:1);
@@ -392,7 +447,9 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t
  if(a=='gl')D.goal=Math.max(15,Math.min(720,D.goal+ +i));
  if(a=='ss'){D.sel=+i;if(D.run&&D.run.m=='f')D.run.s=+i}
  if(a=='sd'){if(!confirm('বিষয়টি মুছে ফেলবেন?'))return;const id=+i;D.subj=D.subj.filter(s=>s.id!=id);for(const k in D.log){const L=D.log[k];if(L[id]){L[0]=(L[0]||0)+L[id];delete L[id]}}if(D.sel==id)D.sel=0;if(D.run&&D.run.s==id)D.run.s=0}
- if(a=='ed')D.exams=D.exams.filter(x=>x.id!=i);
+ if(a=='ed'){if(!confirm('পরীক্ষাটি মুছে ফেলবেন?'))return;D.exams=D.exams.filter(x=>x.id!=i);if(EXED==i)EXED=null}
+ if(a=='ee')EXED=+i;
+ if(a=='ec')EXED=null;
  if(a=='rc'){const id=+i,r=D.rt.find(x=>x.id==id);if(r){const k=key(new Date()),dn=D.rd[k]=D.rd[k]||{};if(dn[id]){subMin(k,dn[id].s,dn[id].m);delete dn[id]}else{const sid=D.subj.some(s=>s.id==r.s)?r.s:0;dn[id]={s:sid,m:r.m};addMin(sid,r.m)}}}
  if(a=='rd'){if(!confirm('রুটিনটি মুছে ফেলবেন?'))return;D.rt=D.rt.filter(x=>x.id!=+i)}
  save();render()});
@@ -400,9 +457,21 @@ document.addEventListener('change',e=>{const t=e.target;if(t.dataset&&t.dataset.
 $.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target),k=e.target.dataset.f;
  if(k=='man'){addMin(+f.get('s')||0,Math.round(+f.get('m')||0))}
  if(k=='sj'){const n=String(f.get('n')||'').trim();if(n)D.subj.push({id:Date.now(),name:n,c:COL[D.subj.length%COL.length]})}
- if(k=='ex'){const n=String(f.get('n')||'').trim(),d=f.get('d');if(n&&d)D.exams.push({id:Date.now(),n,d})}
+ if(k=='ex'||k=='exe'){const n=String(f.get('n')||'').trim(),d=f.get('d'),t=String(f.get('t')||''),r=String(f.get('r')||'').trim().slice(0,20);
+  if(n&&d){if(k=='ex')D.exams.push({id:Date.now(),n,d,t,r});else{const x=D.exams.find(x=>x.id==+f.get('id'));if(x){x.n=n;x.d=d;x.t=t;x.r=r}EXED=null}addExn(n)}}
  if(k=='rt'){const n=String(f.get('n')||'').trim(),d=f.getAll('d').map(Number);if(n&&d.length)D.rt.push({id:Date.now(),n,s:+f.get('s')||0,m:Math.max(0,Math.min(600,Math.round(+f.get('m')||0))),t:String(f.get('t')||''),d})}
  save();render()});
+/* পরীক্ষার নামের সাজেশন: আগে যা লিখেছেন তা মনে রাখে */
+function sgShow(inp){const box=inp.parentNode.querySelector('.sgs');if(!box)return;const q=inp.value.trim().toLowerCase();
+ const a=D.exn.slice().reverse().filter(n=>n.toLowerCase()!==q&&(!q||n.toLowerCase().includes(q))).slice(0,6);
+ box.innerHTML=a.map(n=>`<span class="sg"><span data-sg="p" data-v="${esc(n)}" role="button" tabindex="0">${esc(n)}</span><span class="sgx" data-sg="x" data-v="${esc(n)}" role="button" aria-label="সাজেশন সরান">✕</span></span>`).join('');box.classList.toggle('on',a.length>0)}
+document.addEventListener('focusin',e=>{if(e.target.matches&&e.target.matches('input[data-sgi]'))sgShow(e.target)});
+document.addEventListener('input',e=>{if(e.target.matches&&e.target.matches('input[data-sgi]'))sgShow(e.target)});
+document.addEventListener('focusout',e=>{const t=e.target;if(t.matches&&t.matches('input[data-sgi]'))setTimeout(()=>{const b=t.parentNode&&t.parentNode.querySelector('.sgs');if(b&&!b.contains(document.activeElement))b.classList.remove('on')},200)});
+document.addEventListener('mousedown',e=>{if(e.target.closest&&e.target.closest('[data-sg]'))e.preventDefault()});
+document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('[data-sg]');if(!t)return;const f=t.closest('.fl'),inp=f&&f.querySelector('input');if(!inp)return;
+ if(t.dataset.sg=='p'){inp.value=t.dataset.v;f.querySelector('.sgs').classList.remove('on')}
+ else{D.exn=D.exn.filter(n=>n!==t.dataset.v);save();sgShow(inp)}});
 let LK=key(new Date());
 setInterval(()=>{
  if(key(new Date())!==LK){LK=key(new Date());render();return}
