@@ -345,8 +345,13 @@ function sugs(){
  const have=new Set(own.map(x=>x.n));CH.forEach(c=>{if(!have.has(c))own.push({n:c,c:0,last:'',a:0})});
  return own}
 function paintSug(){
- const L=sugs();SG={};L.forEach(x=>SG[x.n]=x);
- $('sugs').innerHTML=L.map(x=>`<option value="${ex(x.n)}">`).join('');}
+ SGL=sugs();SG={};SGL.forEach(x=>SG[x.n]=x);sgFill('')}
+/* সাজেশন একবারে সর্বোচ্চ ৫টি: ঘর ফাঁকা থাকলে সবচেয়ে বেশি ব্যবহৃত, লিখতে শুরু করলে লেখার সাথে মেলা (শুরুতে মেলাগুলো আগে) */
+let SGL=[];
+function sgFill(q){
+ q=String(q||'').trim().toLowerCase();let L=SGL;
+ if(q){L=L.filter(x=>x.n.toLowerCase().includes(q)&&x.n.toLowerCase()!==q).sort((a,b)=>(b.n.toLowerCase().startsWith(q)-a.n.toLowerCase().startsWith(q))||b.c-a.c||b.last.localeCompare(a.last))}
+ $('sugs').innerHTML=L.slice(0,5).map(x=>`<option value="${ex(x.n)}">`).join('')}
 const rows=()=>[...$('items').children];
 function itot(){$('itot').textContent=fm(rows().reduce((s,r)=>s+num(r.children[1].value),0))}
 function addRow(n='',a='',focus=true){
@@ -356,6 +361,7 @@ function addRow(n='',a='',focus=true){
  const x=Object.assign(document.createElement('button'),{type:'button',className:'x',textContent:'✕',title:'সরান'});x.setAttribute('aria-label','জিনিসটি সরান');
  x.onclick=()=>{if(rows().length>1){r.remove()}else{i1.value='';i2.value=''}itot()};
  i1.addEventListener('change',()=>{const s=SG[i1.value.trim()];if(s&&s.a&&!i2.value.trim()){i2.value=s.a;itot()}});   /* চেনা জিনিস হলে শেষবারের টাকা বসে */
+ i1.addEventListener('input',()=>sgFill(i1.value));i1.addEventListener('focus',()=>sgFill(i1.value));
  i2.addEventListener('input',itot);
  i1.enterKeyHint='next';i2.enterKeyHint='next';i2.addEventListener('focus',()=>i2.select());   /* আগে বসে থাকা টাকা সিলেক্ট হয়, নতুন লিখলে বদলে যায় */
  r.append(i1,i2,x);$('items').appendChild(r);if(focus)i1.focus();itot()}
