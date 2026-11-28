@@ -269,7 +269,7 @@ let V=new Date();V.setDate(1);let Q='',F='all',T='out',E=null,PP='',FP='',PV={ed
 const PU={edu:['🎓','পড়াশোনার খরচ','পড়াশোনা','cap'],job:['💼','চাকরির খরচ','চাকরি','bag']};
 /* খাত/ধরন বদলালে ফর্ম নতুন করে আঁকা হয় — তাই আগে টাইপ করা টাকা, তারিখ, বিবরণ ধরে রেখে ফেরত দিই */
 function kf(fn,kc){const f=$.querySelector('form[data-f=fin]'),g0=n=>f&&f.elements[n]?f.elements[n].value:null,v=f?{a:g0('a'),d:g0('d'),n:g0('n'),fee:g0('fee'),c:g0('c')}:null;fn();const g=v&&$.querySelector('form[data-f=fin]');if(g){['a','d','n','fee'].forEach(k=>{if(v[k]!=null&&g.elements[k])g.elements[k].value=v[k]});if(kc&&v.c!=null&&g.elements.c){g.elements.c.value=v.c;sg()}}}
-let OE=0;
+let OE=0,AW=null;
 const netNow=()=>{const A=S.fin.concat(virt());return sum(A,'in')-sum(A,'out')};
 /* ===== অ্যাকাউন্ট (হাতে, বিকাশ, নগদ, রকেট, জমা…): প্রতিটি আয়-ব্যয়ে w = অ্যাকাউন্টের আইডি। w না থাকলে (পুরোনো এন্ট্রি, খাতা, স্বয়ংক্রিয় দান) 'হাতে' ধরা হয়। ট্রান্সফার আলাদা তালিকা S.tf-এ — আয়-ব্যয়ে গোনা হয় না ===== */
 const DW=[{id:'cash',n:'হাতে',k:'wallet',c:'#B8892B'},{id:'bkash',n:'বিকাশ',k:'phone',c:'#E2136E'},{id:'nagad',n:'নগদ',k:'phone',c:'#F26A21'},{id:'rocket',n:'রকেট',k:'phone',c:'#8E2A8F'},{id:'save',n:'জমা',k:'bank',c:'#1B9A8C'}];
@@ -312,7 +312,7 @@ function autoRun(){
  const A=S.auto;if(!A.on||!(+A.a>0)||!/^\d{2}:\d{2}$/.test(A.t||'')||!/^\d{4}-\d{2}-\d{2}$/.test(A.last||''))return 0;
  const now=new Date(),td=key(now),hm=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
  let n=0;const d=new Date(A.last+'T12:00:00');
- for(let i=0;i<400;i++){d.setDate(d.getDate()+1);const k=key(d);if(k>td||(k==td&&hm<A.t))break;S.fin.push({t:'out',c:'don',a:+A.a,n:'স্বয়ংক্রিয় দান',d:k,au:1});A.last=k;n++}
+ for(let i=0;i<400;i++){d.setDate(d.getDate()+1);const k=key(d);if(k>td||(k==td&&hm<A.t))break;S.fin.push({t:'out',c:'don',a:+A.a,n:'স্বয়ংক্রিয় দান',d:k,au:1,w:WM()[A.w]?A.w:'cash'});A.last=k;n++}
  if(n)save();return n}
 function tick(){if(autoRun()){const a=document.activeElement;if(!(a&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)&&$.contains(a)))render()}}
 function render(){
@@ -341,9 +341,9 @@ const wform=`<form data-f="wal"><div class="m f2" style="margin-top:-4px;font-si
 const wcard=`<section class="card wide k-wal"><h2>${H('wallet','আমার টাকা কোথায়')}<span class="wtot${rvc('tot')}" data-rv="tot" role="button" tabindex="0" aria-label="মোট ব্যালান্স দেখতে চাপুন">মোট <b class="wv">${fm(wtot())}</b></span></h2>${WE?wform:`<div class="wg">${wtl}</div>${S.wal.every(w=>!(+w.o))?'<div class="okb">প্রথমে “ব্যালান্স ঠিক করুন” চেপে প্রতিটি অ্যাকাউন্টে এখন কত আছে বসিয়ে নিন।</div>':''}<div class="m wnote">অঙ্ক দেখতে অ্যাকাউন্টে চাপ দিন — ৫ সেকেন্ড পর আবার ঝাপসা হয়ে যাবে।</div><div class="acts"><button class="g" data-a="wtf">⇄ টাকা সরান</button><button class="g" data-a="wedit">ব্যালান্স ঠিক করুন</button></div>`}</section>`;
 const tfm=`<div class="f2 wl"><span class="ol">কোথা থেকে</span>${wchips('f',TF.from)}</div><div class="f2 wl"><span class="ol">কোথায়</span>${wchips('t',TF.to)}</div><input name="a" type="number" min="1" step="any" enterkeyhint="next" placeholder="টাকা" required><input name="d" type="date" aria-label="তারিখ" value="${isNow?key(now):mk+'-01'}"><input class="f2" name="fee" type="number" min="0" step="any" inputmode="decimal" placeholder="চার্জ (ঐচ্ছিক — যেমন ক্যাশ-আউট ফি)"><input class="f2" name="n" enterkeyhint="done" placeholder="বিবরণ (ঐচ্ছিক)"><div class="m f2" style="font-size:12.5px;line-height:1.5">যেমন বিকাশ থেকে তুলে হাতে রাখলে মোট টাকা একই থাকে — এটি আয়-ব্যয়ে গোনা হয় না। শুধু চার্জ ব্যয় হিসেবে কাটা হয়।</div><button class="f2">ট্রান্সফার করুন</button>`;
 // auto donation
-const A=S.auto,ay=(()=>{const d=new Date();d.setDate(d.getDate()+1);return key(d)})();
-let as='';if(A.on&&A.a>0&&A.last){const nd=new Date(A.last+'T12:00:00');nd.setDate(nd.getDate()+1);const nk=key(nd);as=`<div class="okb nm">পরের কাটা: ${nk==key(now)?'আজ':nk==ay?'কাল':bn(nk.slice(8))+' '+MON[+nk.slice(5,7)-1]} ${tmf(A.t)} · ${fm(A.a)}</div>`}
-const ac=`<section class="card k-don"><h2>${H('heart','স্বয়ংক্রিয় দৈনিক দান')}${A.on?'<span class="pill">চালু</span>':''}</h2><div class="inl"><input id="aa" type="number" min="1" step="any" placeholder="টাকা" value="${A.a||''}"><input id="at" type="time" value="${A.t||'06:00'}"></div><div class="acts" style="margin-top:8px"><button class="g" data-a="auto">${A.on?'আপডেট করুন':'চালু করুন'}</button>${A.on?'<button class="g" data-a="autooff">দান বন্ধ করুন</button>':''}</div>${as}</section>`;
+const A=S.auto,aw=WMp[AW||A.w]?(AW||A.w):'cash',ay=(()=>{const d=new Date();d.setDate(d.getDate()+1);return key(d)})();
+let as='';if(A.on&&A.a>0&&A.last){const nd=new Date(A.last+'T12:00:00');nd.setDate(nd.getDate()+1);const nk=key(nd);as=`<div class="okb nm">পরের কাটা: ${nk==key(now)?'আজ':nk==ay?'কাল':bn(nk.slice(8))+' '+MON[+nk.slice(5,7)-1]} ${tmf(A.t)} · ${fm(A.a)} · ${ex(wnm(WMp[A.w]?A.w:'cash'))}</div>`}
+const ac=`<section class="card k-don"><h2>${H('heart','স্বয়ংক্রিয় দৈনিক দান')}${A.on?'<span class="pill">চালু</span>':''}</h2><div class="inl"><input id="aa" type="number" min="1" step="any" placeholder="টাকা" value="${A.a||''}"><input id="at" type="time" value="${A.t||'06:00'}"></div><div class="wl" style="margin-top:12px"><span class="ol">কোন অ্যাকাউন্ট থেকে কাটবে</span>${wchips('a',aw)}</div><div class="acts" style="margin-top:8px"><button class="g" data-a="auto">${A.on?'আপডেট করুন':'চালু করুন'}</button>${A.on?'<button class="g" data-a="autooff">দান বন্ধ করুন</button>':''}</div>${as}</section>`;
 // goal
 const net=sum(AL,'in')-sum(AL,'out'),gp=S.goal.a>0?Math.max(0,Math.min(100,net/S.goal.a*100)):0;
 const KB=kh(),kc=`<section class="card wide kh k-kh"><h2>${H('book','খাতা')}<a class="lk" href="invoice.html">খাতা খুলুন →</a></h2>${KB.tot?`<div class="chips kt"><div class="chip i">আমি পাব<b class="nm">${fm(KB.G)}</b></div><div class="chip o">আমি দেব<b class="nm">${fm(KB.O)}</b></div><div class="chip">ধার মিটলে মোট সঞ্চয়<b class="nm">${fm(net+KB.Hn)}</b></div></div>${KB.L.filter(x=>x.b!==0).sort((a,b)=>Math.abs(b.b)-Math.abs(a.b)).slice(0,4).map(x=>`<div class="kp" data-lk="${ex(x.n)}"><div class="kav" style="--h:${hue(x.n)}">${ex(Array.from(x.n)[0])}</div><div class="rt"><div>${ex(x.n)}</div><div class="m">${bn(x.c)}টি লেনদেন</div></div><b class="nm" style="color:var(--${x.b>0?'ok':'er'})">${fm(Math.abs(x.b))} <span class="m">${x.b>0?'পাব':'দেব'}</span></b></div>`).join('')||'<div class="empty">সব হিসাব মিটে গেছে ✓</div>'}<div class="acts"><button class="g" data-a="hsall">সব হিসাবে তুলুন</button><button class="g" data-a="hsnone">সব সরান</button></div>`:'<div class="empty">খাতায় এখনো কোনো লেনদেন নেই</div>'}</section>`;
@@ -390,6 +390,7 @@ $.addEventListener('click',e=>{const t=e.target.closest('[data-nav],[data-a],[da
 if(D.nav){V=new Date(V.getFullYear(),V.getMonth()+ +D.nav,1);return render()}
 if(D.rv){const id=D.rv,q='[data-rv="'+id+'"]';clearTimeout(RT[id]);if(RV[id]>Date.now()){RV[id]=0;document.querySelectorAll(q).forEach(x=>x.classList.remove('rv'));return}RV[id]=Date.now()+5000;document.querySelectorAll(q).forEach(x=>x.classList.add('rv'));RT[id]=setTimeout(()=>{RV[id]=0;document.querySelectorAll(q).forEach(x=>x.classList.remove('rv'))},5000);return}
 if(D.ty){kf(()=>{T=D.ty;if(T=='tf')E=null;render()});return}
+if(D.ws&&D.ws.startsWith('a:')){const id=D.ws.slice(2),x0=document.getElementById('aa'),y0=document.getElementById('at'),v0=[x0&&x0.value,y0&&y0.value];AW=id;render();const x1=document.getElementById('aa'),y1=document.getElementById('at');if(v0[0]!=null&&x1)x1.value=v0[0];if(v0[1]&&y1)y1.value=v0[1];return}
 if(D.ws){const q=D.ws.split(':'),sl=q[0],id=q.slice(1).join(':'),oth=x=>(S.wal.find(w=>w.id!=x)||{id:x}).id;kf(()=>{if(sl=='w')WS=id;else if(sl=='f'){TF.from=id;if(TF.to==id)TF.to=oth(id)}else{TF.to=id;if(TF.from==id)TF.from=oth(id)}render()},1);return}
 if(D.deltf){const tid=D.deltf;ask({t:'ট্রান্সফারটি মুছবেন?',m:'দুই অ্যাকাউন্টের ব্যালান্স আগের অবস্থায় ফিরে যাবে। এর চার্জ (থাকলে) সেটিও মুছে যাবে।',ok:'হ্যাঁ, মুছুন',danger:1}).then(y=>{if(!y)return;S.tf=S.tf.filter(x=>x.id!==tid);S.fin=S.fin.filter(x=>x.tid!==tid);E=null;save();render()});return}
 if(D.wdel){const id=D.wdel,w=WM()[id];if(!w)return;if(S.fin.some(f=>f.w==id)||S.tf.some(x=>x.from==id||x.to==id)){ask({t:'মুছা যাবে না',m:'এই অ্যাকাউন্টে লেনদেন আছে, মুছলে হিসাব এলোমেলো হয়ে যাবে।',no:null});return}ask({t:'অ্যাকাউন্টটি মুছবেন?',m:wdn(w)+' তালিকা থেকে সরে যাবে।',ok:'হ্যাঁ, মুছুন',danger:1}).then(y=>{if(!y)return;S.wal=S.wal.filter(x=>x.id!==id);if(WS==id)WS='cash';save();render()});return}
@@ -410,7 +411,7 @@ if(a=='cancel'){E=null;return render()}
 if(a=='auto'){const am=+document.getElementById('aa').value||0,tm=document.getElementById('at').value;if(!(am>0)||!tm){ask({t:'তথ্য অসম্পূর্ণ',m:'দানের টাকা ও সময় দুটোই দিন',no:null});return}
  const now=new Date(),hm=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
  if(!S.auto.on||!S.auto.last){const y=new Date();if(hm<tm)y.setDate(y.getDate()-1);S.auto.last=key(y)}
- S.auto.on=1;S.auto.a=am;S.auto.t=tm;save();autoRun();return render()}
+ S.auto.on=1;S.auto.a=am;S.auto.t=tm;S.auto.w=WM()[AW||S.auto.w]?(AW||S.auto.w):'cash';AW=null;save();autoRun();return render()}
 if(a=='autooff'){S.auto.on=0;save();return render()}
 if(a=='hide'){S.hide=S.hide?0:1}
 else if(a=='bud'){S.bud=+document.getElementById('bud').value||0}
