@@ -314,6 +314,27 @@ button.opt.on{box-shadow:none}
 :root[data-d="1"] .sgt mark{color:var(--a2)}
 .sgx{flex:none;padding:9px 12px;color:var(--m);font-size:11px}
 .sgx:hover{color:#d33}
+.exe0{padding:26px 12px;text-align:center;color:var(--m);font-size:14px;border:1px dashed var(--cb);border-radius:16px}
+.exp .spt{margin-top:16px}
+@media(min-width:680px){.exc{grid-column:span 2}}
+@media(min-width:760px){
+ .exw{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:26px;align-items:start}
+ .exp{position:sticky;top:14px;padding:16px;border-radius:18px;border:1px solid var(--cb);background:color-mix(in srgb,var(--a) 6%,transparent)}
+ .exp .spt{margin:0 0 12px;padding-bottom:8px;font-size:13px;color:var(--t)}
+ .exc{padding:22px 24px}
+ .exc h2{font-size:19px;margin-bottom:16px}
+ .exl{gap:12px}
+ .ex{padding:14px 12px 14px 14px;gap:16px;border-radius:18px}
+ .ex.ed{padding:18px}
+ .exd{min-width:68px;padding:9px 6px 10px;border-radius:16px}
+ .exd b{font-size:30px}.exd small{font-size:11px}
+ .exn{font-size:17px}
+ .exm{gap:8px;margin-top:9px}
+ .chip{font-size:13px;padding:4px 11px}
+ .exz{flex-direction:row;gap:4px}
+ .ib{width:34px;height:34px}
+ .ex:hover{border-color:color-mix(in srgb,var(--a) 55%,transparent)}
+}
 .exc{overflow:visible}
 .exc::after{border-radius:20px 20px 0 0}
 .exc:focus-within{z-index:20}
@@ -421,10 +442,10 @@ ${wsTot?`<div class="stk">${ids.map((id,j)=>wsAll[j]?`<i style="flex:${wsAll[j]}
  const exRow=e=>{if(EXED!=null&&e.id==EXED)return `<div class="ex ed">${exForm('exe',e)}</div>`;
   const dt=new Date(e.d+'T00:00'),n=Math.round((dt-new Date(K+'T00:00'))/864e5),lb=n<0?'শেষ হয়েছে':n==0?'আজ':n==1?'আগামীকাল':bn(n)+' দিন বাকি',cs=n<0?'':n<=3?'bad':n<=7?'wn':'',tt=fmT(e.t);
   return `<div class="ex ${n<0?'ps':''} ${e.id==nxi?'nx':''}"><div class="exd"><small>${MON[dt.getMonth()]}</small><b>${bn(dt.getDate())}</b><small>${WSD[dt.getDay()]}</small></div><div class="exb"><div class="exn">${esc(e.n)}</div><div class="exm"><span class="pill ${cs}">${lb}</span>${tt?`<span class="chip">${IC.clk}${tt}</span>`:''}${e.r?`<span class="chip">${IC.door}রুম ${esc(e.r)}</span>`:''}</div></div><div class="exz"><button class="x ib" data-a="ee" data-i="${e.id}" aria-label="এডিট করুন">${IC.ed}</button><button class="x ib dl" data-a="ed" data-i="${e.id}" aria-label="মুছুন">${IC.del}</button></div></div>`};
- const exams=`<section class="card exc"><h2>পরীক্ষা</h2>
-${ex.length?`<div class="exl">${ex.map((e,i)=>exGap(ex[i-1],e)+exRow(e)).join('')}</div>`:'<div class="m">কোনো পরীক্ষা নেই</div>'}
-<div class="spt" style="margin-top:16px">নতুন পরীক্ষা</div>
-${exForm('ex')}</section>`;
+ const upc=ex.filter(e=>e.d>=K).length;
+ const exams=`<section class="card exc"><h2>পরীক্ষা ${upc?`<span class="pill">${bn(upc)}টি বাকি</span>`:''}</h2>
+<div class="exw"><div class="exlw">${ex.length?`<div class="exl">${ex.map((e,i)=>exGap(ex[i-1],e)+exRow(e)).join('')}</div>`:'<div class="exe0">কোনো পরীক্ষা নেই</div>'}</div>
+<aside class="exp"><div class="spt">নতুন পরীক্ষা</div>${exForm('ex')}</aside></div></section>`;
 
  const dow=now.getDay();
  const due=D.rt.filter(r=>r.d.includes(dow)).sort((a,b)=>(a.t||'99')<(b.t||'99')?-1:1);
